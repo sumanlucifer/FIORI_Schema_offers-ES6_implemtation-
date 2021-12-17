@@ -101,6 +101,20 @@ sap.ui.define([
 
 
         },
+        onIcnTbarChange: function (oEvent) {
+            var c1, c2, c3;
+            var othat = this;
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl");
+            c1 = othat._AddTableFragment();
+            oModelControl.setProperty("/PageBusy", true);
+            c1.then(function () {
+                c2 = othat._GetSelectedCategoryData();
+                c2.then(function(){
+                    oModelControl.setProperty("/PageBusy", false);
+                })
+            })
+        },
         onApproveImage: function (oEvent) {
             var oView = this.getView();
             var oSource = oEvent.getSource();
@@ -115,7 +129,7 @@ sap.ui.define([
                 onClose: function (sAction) {
                     if (sAction === "YES") {
                         this._ChangePortImageStatus(oPayload);
-                      
+
                     }
                 }.bind(this)
             });
@@ -136,14 +150,14 @@ sap.ui.define([
                 onClose: function (sAction) {
                     if (sAction === "YES") {
                         this._ChangePortImageStatus(oPayload);
-                      
+
                     }
                 }.bind(this)
             });
 
 
         },
-        
+
         _ChangePortImageStatus: function (oPayload) {
             var c1, c2, c3;
             var oView = this.getView();
@@ -195,7 +209,14 @@ sap.ui.define([
                 });
 
             } else {
-
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath()
+                    .split("/");
+                var oTable = oModelControl.getProperty("/TableData1");
+                oTable.splice(sPath[sPath.length - 1], 1);
+                oModelControl.refresh();
             }
 
         },
@@ -407,15 +428,22 @@ sap.ui.define([
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
             var oIcontTab = oView.byId("iconTabBar");
+            var sKey = oIcontTab.getSelectedKey();
+            var oItems = oIcontTab.getItems();
+            var sSelectedItem;
+            for (var x of oItems) {
+                x.destroyContent();
+                if (x.getBindingContext().getObject()["Id"] == sKey) {
+                    sSelectedItem = x;
+                }
+            }
             return Fragment.load({
                 id: oView.getId(),
                 name: oModelControl.getProperty("/resourcePath") + ".view.fragments.TableCategoryImages",
                 controller: this
             }).then(function (oTable) {
-                var oItem = oIcontTab.getItems()[0];
-                oItem.destroyContent();
                 oView.addDependent(oTable);
-                oItem.addContent(oTable)
+                sSelectedItem.addContent(oTable)
                 promise.resolve();
                 return promise;
             });

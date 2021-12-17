@@ -11,7 +11,7 @@ sap.ui.define([], function () {
          */
         fmtLowerCase: function (mParam) {
             var sStatus = "";
-            if(!mParam){
+            if (!mParam) {
                 return "NA"
             }
 
@@ -31,12 +31,18 @@ sap.ui.define([], function () {
             return sStatus;
         },
         generateImageUrl: function (oMetadata, sId) {
-
-            if (oMetadata && oMetadata.media_src) {
-
-                return "/KNPL_PAINTER_API" + "/PainterSet(" + sId + ")$value";
+            if (oMetadata) {
+                if (oMetadata.media_src) {
+                    return "https://".concat(
+                        location.host,
+                        "/KNPL_PAINTER_API",
+                        new URL(oMetadata.media_src).pathname
+                    );
+                }
             }
+
             return "";
+
         },
         formatURL: function (sURL) {
             if (sURL) {
@@ -59,17 +65,17 @@ sap.ui.define([], function () {
             }
             return "Information";
         },
-        fmtBtnApproveImage:function(mParam1,mParam2){
-            if(!mParam1){
-                if(mParam2 ==="PENDING" || mParam2 ==="REJECTED"){
+        fmtBtnApproveImage: function (mParam1, mParam2) {
+            if (!mParam1) {
+                if (mParam2 === "PENDING" || mParam2 === "REJECTED") {
                     return true;
                 }
             }
             return false;
         },
-        fmtBtnRejectImage:function(mParam1,mParam2){
-            if(!mParam1){
-                if(mParam2 ==="PENDING" || mParam2 ==="APPROVED"){
+        fmtBtnRejectImage: function (mParam1, mParam2) {
+            if (!mParam1) {
+                if (mParam2 === "PENDING" || mParam2 === "APPROVED") {
                     return true;
                 }
             }

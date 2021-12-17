@@ -14,7 +14,7 @@
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
-                        <Avatar  fallbackIcon="sap-icon://picture" src="{parts:['__metadata','Painter/Id'],formatter:'.formatter.generateImageUrl'}"  displaySize="L" displayShape="Circle"/>
+                        <Avatar  fallbackIcon="sap-icon://picture" src="{parts:['Painter/__metadata'],formatter:'.formatter.generateImageUrl'}"  displaySize="L" displayShape="Circle"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
