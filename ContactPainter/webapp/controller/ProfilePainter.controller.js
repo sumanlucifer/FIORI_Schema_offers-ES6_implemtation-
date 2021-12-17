@@ -1874,9 +1874,20 @@ sap.ui.define(
                 },
                 onInpAccNumberChange: function () {
                     var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
                     var sBankAccNo = oView.byId("NewAccountNumber").getValue().trim();
+                    var sIfscCode = oView.byId("NewIfscCode").getValue().trim();
+                    if (!sIfscCode) {
+                        oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
+                        var sMessage1 = this.geti18nText("Message2");
+                        MessageToast.show(sMessage1, {
+                            duration: 6000
+                        })
+                        return;
+                    }
                     if (sBankAccNo) {
                         this._CheckBankExistDetails();
+                        return
                     }
 
                 },
@@ -1929,13 +1940,13 @@ sap.ui.define(
                         oModelCtrl.setProperty("/EditFieldKyc", false);
                     }
                     // Here 2 diff kinds of fields will be displayed based on if intial kyc value is null or non null
-                    
-                  
+
+
                     var sSouceId = oEvent.getSource().getId();
                     var sGovtTypeId = oModelView.getProperty("/PainterKycDetails/KycTypeId");
                     var sKycId1 = this.createId("kycIdNo");
                     var sKycId2 = this.createId("kycIdNoEdit");
-                    
+
                     if (sSouceId === sKycId1) {
                         var sKyCNumber = oView.byId("kycIdNo").getValue().trim();
                         if (sKyCNumber && sGovtTypeId) {
