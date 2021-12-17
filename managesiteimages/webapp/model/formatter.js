@@ -11,6 +11,9 @@ sap.ui.define([], function () {
          */
         fmtLowerCase: function (mParam) {
             var sStatus = "";
+            if(!mParam){
+                return "NA"
+            }
 
             if (mParam.split("_").length > 1) {
                 var mArray = mParam.split("_");
@@ -27,6 +30,27 @@ sap.ui.define([], function () {
             }
             return sStatus;
         },
+        generateImageUrl: function (oMetadata, sId) {
+
+            if (oMetadata && oMetadata.media_src) {
+
+                return "/KNPL_PAINTER_API" + "/PainterSet(" + sId + ")$value";
+            }
+            return "";
+        },
+        fmtCheckStatusColor: function (mParam) {
+            if (mParam === "APPROVED") {
+                return "Success";
+            }
+            if (mParam === "REJECTED") {
+                return "Error";
+            }
+            if (mParam === "PENDING") {
+                return "Warning";
+            }
+            return "Information";
+        },
+
         fmtCheckNull: function (mParam1) {
             if (!mParam1) {
                 return "NA"

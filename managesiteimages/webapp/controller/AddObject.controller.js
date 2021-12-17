@@ -50,20 +50,172 @@ sap.ui.define([
         _initData: function () {
             var oView = this.getView();
             var othat = this;
-            var c1, c2, c3;
+            var c1, c2, c3, c4;
             var c1 = othat._AddObjectControlModel("Add", null);
             c1.then(function () {
                 c1.then(function () {
                     c2 = othat._setInitViewModel();
                     c2.then(function () {
-                        c3 = othat._LoadAddFragment("AddSiteImage");
+                        c3 = othat._DummyPromise("AddSiteImage");
                         c3.then(function () {
-                            oView.getModel("oModelControl").setProperty("/PageBusy", false);
+                            c4 = othat._openPainterPopOver();
+                            c4.then(function () {
+                                oView.getModel("oModelControl").setProperty("/PageBusy", false);
+                            })
+
                         })
                     })
                 })
             })
 
+        },
+        _DummyPromise: function () {
+            var promise = jQuery.Deferred();
+            promise.resolve()
+            return promise;
+        },
+        onValueHelpConfirm: function (oEvent) {
+            var sObject = oEvent.getParameter("selectedItem").getBindingContext().getObject();
+            var oView = this.getView();
+            var othat = this;
+            var oModelControl = oView.getModel("oModelControl");
+            oModelControl.setProperty("/PainterId", sObject["Id"]);
+            oModelControl.setProperty("/PageBusy", true);
+            var c1, c2, c3, c4, c5;
+            c1 = this._Createportfolio(sObject["Id"]);
+            c1.then(function (mParam1) {
+                c2 = othat._DisplayDetailsPainter(mParam1);
+                c2.then(function () {
+                    c3 = othat._SetIconTabData();
+                    c3.then(function () {
+                        c4 = othat._AddTableFragment();
+                        c4.then(function () {
+                            c5 = othat._GetSelectedCategoryData();
+                            oModelControl.setProperty("/PageBusy", false);
+                        })
+                    })
+                })
+            })
+
+
+        },
+        _GetSelectedCategoryData:function(){
+            var promise = jQuery.Deferred();
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl")
+            var oIcontTab = oView.byId("iconTabBar");
+            var sKey = oIcontTab.getSelectedKey();
+            var oDataModel = oView.getModel();
+            var sPainterId = oModelControl.getProperty("/PainterId");
+            return new Promise ((resolve,reject)=>{
+                oDataModel.read("/PainterPortfolioImageSet",{
+                    urlParamerters:{
+                        select:"Id,Remark,ApprovalStatus,PortfolioCategoryId,PainterId"
+                    },
+                    filters:[new Filter("PortfolioCategoryId",FilterOperator.EQ,sKey),new Filter("PainterId",FilterOperator.EQ,sPainterId)],
+                    success:function(oData){
+                        oModelControl.setProperty("/TableData1",oData["results"]);
+                        resolve();
+                    },
+                    error:function(){
+
+                    }
+                })
+            })
+        },
+        _AddTableFragment: function () {
+            var promise = jQuery.Deferred();
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl")
+            var oIcontTab = oView.byId("iconTabBar");
+            return Fragment.load({
+                id: oView.getId(),
+                name: oModelControl.getProperty("/resourcePath") + ".view.fragments.TableCategoryImages",
+                controller: this
+            }).then(function (oTable) {
+                var oItem = oIcontTab.getItems()[0];
+                oItem.destroyContent();
+                oItem.addContent(oTable)
+                promise.resolve();
+                return promise;
+            });
+
+        },
+        _SetIconTabData: function () {
+            var promise = jQuery.Deferred();
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl")
+            var oIcontTab = oView.byId("iconTabBar");
+            var oObject = oIcontTab.getItems()[0].getBindingContext().getObject();
+            oModelControl.setProperty("/IconTabKey", oObject["Id"]);
+
+            promise.resolve()
+            return promise;
+        },
+        _DisplayDetailsPainter: function (mParam1) {
+            var promise = jQuery.Deferred();
+            var iPortFolioId = mParam1;
+            var oView = this.getView();
+
+            oView.bindElement({
+                path: "/PainterPortfolioSet(" + iPortFolioId + ")",
+                parameters: {
+                    expand: "Painter/Depot",
+                    select: "Id,PortfolioCode,Painter/Id,Painter/Name,Painter/MembershipCard,Painter/ZoneId,Painter/Depot/Depot,Painter/DivisionId"
+                },
+                events: {
+                    dataRequested: function (oEvent) {
+
+                    },
+                    dataReceived: function (oEvent) {
+
+                    },
+                },
+            });
+            promise.resolve()
+            return promise;
+        },
+        _Createportfolio: function (mParam1) {
+            var iPainterId = mParam1;
+            var oView = this.getView();
+            var oDataModel = oView.getModel();
+            var oModelControl = oView.getModel("oModelControl")
+            var oPayload = {
+                "PainterId": iPainterId
+            };
+            return new Promise((resolve, reject) => {
+                oDataModel.create("/PainterPortfolioSet", oPayload, {
+                    success: function (oData) {
+                        oModelControl.setProperty("/PortfolioId", oData["Id"]);
+                        resolve(oData["Id"])
+                    },
+                    error: function (oData) {
+
+                    }
+                })
+            })
+        },
+        _openPainterPopOver: function () {
+            var promise = jQuery.Deferred();
+
+            var oView = this.getView();
+
+            if (!this._pValueHelpDialog) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "com.knpl.pragati.managesiteimages.view.fragments.ValueHelpDialog",
+                    controller: this,
+                }).then(function (oDialog) {
+                    this._pValueHelpDialog = oDialog
+                    oView.addDependent(this._pValueHelpDialog);
+                    this._pValueHelpDialog.open();
+                }.bind(this));
+            } else {
+                this._pValueHelpDialog.open();
+            }
+
+            promise.resolve();
+            return promise;
         },
         _setInitViewModel: function () {
             /*
@@ -113,72 +265,25 @@ sap.ui.define([
         },
 
         onValueHelpRequest: function (oEvent) {
-            var sInputValue = oEvent.getSource().getValue(),
-                oView = this.getView();
 
-            if (!this._pValueHelpDialog) {
-                this._pValueHelpDialog = Fragment.load({
-                    id: oView.getId(),
-                    name:
-                        "com.knpl.pragati.managesiteimages.view.fragments.ValueHelpDialog",
-                    controller: this,
-                }).then(function (oDialog) {
-                    oView.addDependent(oDialog);
-                    return oDialog;
-                });
-            }
-            this._pValueHelpDialog.then(function (oDialog) {
-                // Create a filter for the binding
-                oDialog
-                    .getBinding("items")
-                    .filter([
-                        new Filter(
-                            [
-                                new Filter(
-                                    {
-                                        path: "Name",
-                                        operator: "Contains",
-                                        value1: sInputValue.trim(),
-                                        caseSensitive: false
-                                    }
-                                ),
-                                new Filter(
-                                    {
-                                        path: "Mobile",
-                                        operator: "Contains",
-                                        value1: sInputValue.trim(),
-                                        caseSensitive: false
-                                    }
-                                ),
-                            ],
-                            false
-                        ),
-                    ]);
-                // Open ValueHelpDialog filtered by the input's value
-                oDialog.open(sInputValue);
-            });
         },
 
         onValueHelpSearch: function (oEvent) {
             var sValue = oEvent.getParameter("value");
             var oFilter = new Filter(
                 [
-                    new Filter(
-                        {
-                            path: "Name",
-                            operator: "Contains",
-                            value1: sValue.trim(),
-                            caseSensitive: false
-                        }
-                    ),
-                    new Filter(
-                        {
-                            path: "Mobile",
-                            operator: "Contains",
-                            value1: sValue.trim(),
-                            caseSensitive: false
-                        }
-                    )
+                    new Filter({
+                        path: "Name",
+                        operator: "Contains",
+                        value1: sValue.trim(),
+                        caseSensitive: false
+                    }),
+                    new Filter({
+                        path: "Mobile",
+                        operator: "Contains",
+                        value1: sValue.trim(),
+                        caseSensitive: false
+                    })
                 ],
                 false
             );
@@ -187,32 +292,15 @@ sap.ui.define([
         },
 
         onValueHelpClose: function (oEvent) {
-            var oSelectedItem = oEvent.getParameter("selectedItem");
-            oEvent.getSource().getBinding("items").filter([]);
-            var oModelControl = this.getView().getModel("oModelControl");
-            var oModelView = this.getView().getModel("oModelView");
-            if (!oSelectedItem) {
-                return;
-            }
-            var obj = oSelectedItem.getBindingContext().getObject();
-            oModelView.setProperty("/PainterId", obj["Id"]);
-
-            oModelControl.setProperty("/MembershipCard", obj["MembershipCard"]);
-            oModelControl.setProperty("/Mobile", obj["Mobile"]);
-            oModelControl.setProperty("/Name", obj["Name"]);
-            oModelControl.setProperty("/DivisionId", obj.DivisionId);
-            oModelControl.setProperty("/ZoneId", obj.ZoneId);
-            oModelControl.setProperty("/DepotId", "");
-            //Fallback as Preliminary context not supported
-            this._getDepot(obj.DepotId);
+            this.onNavToHome();
             //DivisionId,ZoneId
         },
 
         _getDepot: function (sDepotId) {
             if (!sDepotId) return;
             var sPath = this.getModel().createKey("/MasterDepotSet", {
-                Id: sDepotId
-            }),
+                    Id: sDepotId
+                }),
                 oModel = this.getModel("oModelControl");
 
             this.getModel().read(sPath, {
@@ -282,13 +370,13 @@ sap.ui.define([
             c1 = othat._CheckEmptyFieldsPostPayload();
             // c1.then(function (oPayload) {
             //     c2 = othat._CreateObject(oPayload);
-                c1.then(function (oPayload) {
-                    c2 = othat._uploadFile(oPayload);
-                    c2.then(function () {
-                        oModelControl.setProperty("/PageBusy", false);
-                        othat.onNavToHome();
-                    })
+            c1.then(function (oPayload) {
+                c2 = othat._uploadFile(oPayload);
+                c2.then(function () {
+                    oModelControl.setProperty("/PageBusy", false);
+                    othat.onNavToHome();
                 })
+            })
             // })
         },
 
@@ -381,6 +469,9 @@ sap.ui.define([
                 IsArchived: false
             });
             this.getModel("oModelControl").refresh();
+        },
+        onExit: function () {
+            console.log("exited the view");
         }
 
     });

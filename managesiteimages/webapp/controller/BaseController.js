@@ -64,7 +64,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? this.geti18nText("AddPortfoliImageDetails"):this.geti18nText("EditPortfoliImageDetails"),
+                Pagetitle: "Portfolio Details",
                 mode: mParam1,
                 Mobile: "",
                 Name: "",
@@ -72,10 +72,13 @@ sap.ui.define([
                 ZoneId: "",
                 DivisionId : "",
                 Depot : "",
-                SiteImageId: mParam2,
+                PortfolioId: null,
                 editable: true,
-                bindProp: "PainterPortfolioSet(" + mParam2 + ")",
-                resourcePath: "com.knpl.pragati.managesiteimages"
+                bindProp: "",
+                resourcePath: "com.knpl.pragati.managesiteimages",
+                TableData1:[],
+                IconTabKey:null,
+                PainterId:mParam2
             };
             var oModelControl = new JSONModel(oDataControl)
             oView.setModel(oModelControl, "oModelControl");
