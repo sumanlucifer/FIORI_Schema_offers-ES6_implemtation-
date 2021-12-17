@@ -78,7 +78,8 @@ sap.ui.define([
                 resourcePath: "com.knpl.pragati.managesiteimages",
                 TableData1:[],
                 IconTabKey:null,
-                PainterId:mParam2
+                PainterId:mParam2,
+                dataSource:"/KNPL_PAINTER_API"
             };
             var oModelControl = new JSONModel(oDataControl)
             oView.setModel(oModelControl, "oModelControl");
@@ -113,6 +114,13 @@ sap.ui.define([
         geti18nText: function (mParam, mParam2) {
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             return oModel.getText(mParam, mParam2);
+        },
+        _showMessageToast:function(mParam, mParam2){
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            var sText =  oModel.getText(mParam, mParam2);
+            MessageToast.show(sText,{
+                duration:6000
+            })
         },
         _RemoveEmptyValue: function (mParam) {
             var obj = Object.assign({}, mParam);

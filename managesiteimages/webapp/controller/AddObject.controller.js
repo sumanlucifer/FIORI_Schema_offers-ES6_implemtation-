@@ -99,7 +99,75 @@ sap.ui.define([
 
 
         },
-        _GetSelectedCategoryData:function(){
+        onSaveCategoryImage:function(oEvent){
+            var oView = this.getView();
+            var oSource = oEvent.getSource();
+            var oModelControl = oView.getModel("oModelControl")
+            var oBject = oSource.getBindingContext("oModelControl").getObject();
+            var oControl = oSource.getParent().getParent().getCells()[0].getItems()[0];
+            if(oControl.data()){
+                if(oControl.data()["type"]==="fileUploader"){
+                    var sPath1 = oModelControl.getProperty("/dataSource")+"/PainterPortfolioImageSet(0)/$value";
+                    var sPath2 = "?painterId="+oBject["PainterId"]+"&categoryId="+oBject["PortfolioCategoryId"]+"&ApprovalStatus=PENDING";
+                    console.log(sPath1+sPath2)
+
+                }
+            }
+
+            
+        },
+        onPressAddNewImage: function (oEvent) {
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl")
+            var oIcontTab = oView.byId("iconTabBar");
+            var sKey = oIcontTab.getSelectedKey();
+            var sObject = oView.byId("categoryTable").getParent().getBindingContext().getObject();
+            var sMaxImages = sObject["MAXIMAGES"];
+            var sPainterId = oModelControl.getProperty("/PainterId");
+            var oTableData = oModelControl.getProperty("/TableData1");
+            if (oEvent !== "add") {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getObject();
+                oObject["editable"] = true;
+                oModel.refresh();
+            } else {
+                var bFlag = true;
+
+                if (oTableData.length > 0 && oTableData.length <= sMaxImages) {
+                    for (var prop of oTableData) {
+                        if (prop["editable"] == true) {
+                            bFlag = false;
+                            this._showMessageToast("Message7")
+                            return;
+                            break;
+                        }
+                    }
+                }
+                if (oTableData.length >= sMaxImages) {
+                    this._showMessageToast("Message6", [sMaxImages])
+                    bFlag = false;
+                    return;
+                }
+                if (bFlag == true) {
+                    oTableData.push({
+                        ApprovalStatus: null,
+                        editable: true,
+                        PainterId:sPainterId,
+                        PortfolioCategoryId:sObject["Id"],
+                        Remark:null
+                    });
+                    //relvalue and editable properties are added here and will be removed in the postsave function
+                }
+                oModelControl.refresh();
+            }
+
+        },
+
+        _GetSelectedCategoryData: function () {
             var promise = jQuery.Deferred();
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
@@ -107,17 +175,17 @@ sap.ui.define([
             var sKey = oIcontTab.getSelectedKey();
             var oDataModel = oView.getModel();
             var sPainterId = oModelControl.getProperty("/PainterId");
-            return new Promise ((resolve,reject)=>{
-                oDataModel.read("/PainterPortfolioImageSet",{
-                    urlParamerters:{
-                        select:"Id,Remark,ApprovalStatus,PortfolioCategoryId,PainterId"
+            return new Promise((resolve, reject) => {
+                oDataModel.read("/PainterPortfolioImageSet", {
+                    urlParamerters: {
+                        "$select": "Id,Remark,ApprovalStatus,PortfolioCategoryId,PainterId"
                     },
-                    filters:[new Filter("PortfolioCategoryId",FilterOperator.EQ,sKey),new Filter("PainterId",FilterOperator.EQ,sPainterId)],
-                    success:function(oData){
-                        oModelControl.setProperty("/TableData1",oData["results"]);
+                    filters: [new Filter("PortfolioCategoryId", FilterOperator.EQ, sKey), new Filter("PainterId", FilterOperator.EQ, sPainterId)],
+                    success: function (oData) {
+                        oModelControl.setProperty("/TableData1", oData["results"]);
                         resolve();
                     },
-                    error:function(){
+                    error: function () {
 
                     }
                 })
@@ -460,6 +528,9 @@ sap.ui.define([
                     name: sFileName
                 });
             });
+        },
+        onFilteMisMatch:function(){
+            this._showMessageToast("Message8")
         },
 
         _fnAddFile: function (oItem) {

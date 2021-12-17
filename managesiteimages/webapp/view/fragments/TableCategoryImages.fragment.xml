@@ -1,7 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
 	xmlns:u="sap.ui.unified"
+     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:core="sap.ui.core">
-    <Table  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false" width="auto" noDataText="{i18n>tableNoDataText}">
+    <Table id="categoryTable"  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false" width="auto" noDataText="{i18n>tableNoDataText}">
                 <headerToolbar>
                     <Toolbar>
                             <ToolbarSpacer ></ToolbarSpacer>
@@ -11,6 +12,9 @@
                 <columns>
                     <Column >
                         <Text text="{i18n>Image}"/>
+                    </Column>
+                      <Column >
+                        <Text text="{i18n>Remark}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>Status}"/>
@@ -25,15 +29,16 @@
                     <ColumnListItem>
                         <cells>
                             <VBox >
-                                	<u:FileUploader name="abc" placeholder="{i18n>Message5}"	tooltip="{i18n>Message5}"  visible="{= ${oModelControl>editable} === true }"/>
+                                	<u:FileUploader app:type="fileUploader" typeMissmatch="onFilteMisMatch" fileType="jpg,jpeg,png" placeholder="{i18n>Message5}" tooltip="{i18n>Message5}"  visible="{= ${oModelControl>editable} === true }"/>
                                     <Link text="{i18n>ViewImage}" press="onViewImage"  visible="{= ${oModelControl>editable} !== true }"/>
                             </VBox>
+                              <Text text="{ path:'oModelControl>Remark',formatter:'.formatter.fmtCheckNull'}" />
                               <VBox >
                                 	<ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                             </VBox>
                              <HBox>
                                 <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddRewardsV1"></Button>
-                                <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveReward"></Button>
+                                <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveCategoryImage"></Button>
                                 <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedReward"></Button>
                             </HBox>
                         </cells>
