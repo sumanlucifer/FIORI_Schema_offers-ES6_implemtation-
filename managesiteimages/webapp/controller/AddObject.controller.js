@@ -41,11 +41,17 @@ sap.ui.define([
 
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("Add").attachMatched(this._onRouterMatched, this);
+            oRouter.getRoute("Detail").attachMatched(this._onRouterMatchedDetail, this);
 
 
         },
-        _onRouterMatched: function (oEvent) {
+        _onRouterMatchedDetail: function (oEvent) {
             var sPainterId = oEvent.getParameter("arguments").Id;
+            console.log("details data")
+            this._initDetailData(sPainterId)
+        },
+        _onRouterMatched: function (oEvent) {
+
             this._initData();
         },
         _initData: function () {
@@ -68,6 +74,42 @@ sap.ui.define([
                     })
                 })
             })
+
+        },
+        _initDetailData: function (sPainterId) {
+
+            var oView = this.getView();
+            var othat = this;
+          
+            var c1, c1A, c1B, c2, c3, c4, c5;
+
+            c1A = othat._AddObjectControlModel("Add", null);
+            c1A.then(function () {
+                c1B = othat._setInitViewModel();
+                c1B.then(function () {
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/PainterId", sPainterId);
+                    oModelControl.setProperty("/PageBusy", true);
+                    c1 = othat._Createportfolio(sPainterId);
+                    c1.then(function (mParam1) {
+                        c2 = othat._DisplayDetailsPainter(mParam1);
+                        c2.then(function () {
+                            c3 = othat._SetIconTabData();
+                            c3.then(function () {
+                                c4 = othat._AddTableFragment();
+                                c4.then(function () {
+                                    c5 = othat._GetSelectedCategoryData();
+                                    c5.then(function () {
+                                        oModelControl.setProperty("/PageBusy", false);
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+
+            })
+
 
         },
         _DummyPromise: function () {
@@ -102,6 +144,7 @@ sap.ui.define([
 
 
         },
+
         onIcnTbarChange: function (oEvent) {
             var c1, c2, c3;
             var othat = this;
@@ -122,8 +165,8 @@ sap.ui.define([
             var oModelControl = oView.getModel("oModelControl");
             var othat = this;
             var oBj = oSource.getBindingContext("oModelControl").getObject();
-            var sStatus=oEvent.getSource().data("status");
-            console.log(oBj,sStatus)
+            var sStatus = oEvent.getSource().data("status");
+
             if (!this._RemarksDialog) {
                 Fragment.load({
                     id: oView.getId(),
@@ -153,11 +196,11 @@ sap.ui.define([
                 this._showMessageToast("Message16");
                 return;
             }
-            this._ChangePortImageStatus2();
+            this._ChangePortImageStatus();
 
 
         },
-        _ChangePortImageStatus2: function () {
+        _ChangePortImageStatus: function () {
             var c1, c2, c3;
             var oView = this.getView();
             var othat = this;
@@ -182,67 +225,7 @@ sap.ui.define([
                     othat._RemarksDialog.close();
                     oModelControl.setProperty("/Dialog/Remarks", "")
                     oModelControl.setProperty("/PageBusy", false);
-                   
-                })
-            })
 
-        },
-        onApproveImage: function (oEvent) {
-            var oView = this.getView();
-            var oSource = oEvent.getSource();
-            var oModelControl = oView.getModel("oModelControl");
-            var othat = this;
-            var oBj = oSource.getBindingContext("oModelControl").getObject();
-            var oPayload = Object.assign({}, oBj);
-            oPayload["ApprovalStatus"] = "APPROVED";
-
-
-
-            MessageBox.information(this.geti18nText("Message13"), {
-                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
-                onClose: function (sAction) {
-                    if (sAction === "YES") {
-                        this._ChangePortImageStatus(oPayload);
-
-                    }
-                }.bind(this)
-            });
-
-
-        },
-        onRejectImage: function (oEvent) {
-            var oView = this.getView();
-            var oSource = oEvent.getSource();
-            var oModelControl = oView.getModel("oModelControl");
-            var othat = this;
-            var oBj = oSource.getBindingContext("oModelControl").getObject();
-            var oPayload = Object.assign({}, oBj);
-            oPayload["ApprovalStatus"] = "REJECTED";
-
-            MessageBox.information(this.geti18nText("Message14"), {
-                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
-                onClose: function (sAction) {
-                    if (sAction === "YES") {
-                        this._ChangePortImageStatus(oPayload);
-
-                    }
-                }.bind(this)
-            });
-
-
-        },
-
-        _ChangePortImageStatus: function (oPayload) {
-            var c1, c2, c3;
-            var oView = this.getView();
-            var othat = this;
-            var oModelControl = oView.getModel("oModelControl");
-            oModelControl.setProperty("/PageBusy", true);
-            c1 = othat._SendReqForImageStatus(oPayload);
-            c1.then(function () {
-                c2 = othat._GetSelectedCategoryData();
-                c2.then(function () {
-                    oModelControl.setProperty("/PageBusy", false);
                 })
             })
 
@@ -563,7 +546,7 @@ sap.ui.define([
             var oDataModel = oView.getModel();
             var oModelControl = oView.getModel("oModelControl")
             var oPayload = {
-                "PainterId": iPainterId
+                "PainterId": parseInt(iPainterId)
             };
             return new Promise((resolve, reject) => {
                 oDataModel.create("/PainterPortfolioSet", oPayload, {
