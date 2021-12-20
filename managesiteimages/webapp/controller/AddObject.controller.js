@@ -47,7 +47,6 @@ sap.ui.define([
         },
         _onRouterMatchedDetail: function (oEvent) {
             var sPainterId = oEvent.getParameter("arguments").Id;
-            console.log("details data")
             this._initDetailData(sPainterId)
         },
         _onRouterMatched: function (oEvent) {
@@ -201,6 +200,7 @@ sap.ui.define([
 
         },
         _ChangePortImageStatus: function () {
+            this._RemarksDialog.setBusy(true)
             var c1, c2, c3;
             var oView = this.getView();
             var othat = this;
@@ -223,6 +223,7 @@ sap.ui.define([
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
                     othat._RemarksDialog.close();
+                    othat._RemarksDialog.setBusy(false);
                     oModelControl.setProperty("/Dialog/Remarks", "")
                     oModelControl.setProperty("/PageBusy", false);
 
