@@ -16,31 +16,31 @@
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <Avatar  fallbackIcon="sap-icon://picture" src="{parts:['Painter/__metadata'],formatter:'.formatter.generateImageUrl'}"  displaySize="L" displayShape="Circle"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
-                        <layout:HorizontalLayout class="sapUiTinyMarginBottom">
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                        <layout:HorizontalLayout >
                             <Label class="sapUiTinyMarginEnd" text="{i18n>PainterName}:"/>
                             <Text text="{path:'Painter/Name'}"/>
                         </layout:HorizontalLayout>
-                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                        <layout:HorizontalLayout >
                             <Label class="sapUiTinyMarginEnd" text="{i18n>Mobile}:"/>
                             <Text text="{Painter/Mobile}"/>
                         </layout:HorizontalLayout>
-                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                        <layout:HorizontalLayout >
                             <Label class="sapUiTinyMarginEnd" text="{i18n>MembershipId}:"/>
                             <Text text="{Painter/MembershipCard}"/>
                         </layout:HorizontalLayout>
                        
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiLargeMarginEnd">
-                        <layout:HorizontalLayout class="sapUiTinyMarginBottom">
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                        <layout:HorizontalLayout>
                             <Label class="sapUiTinyMarginEnd" text="{i18n>Zone}:"/>
                             <Text text="{path:'Painter/ZoneId'}"/>
                         </layout:HorizontalLayout>
-                        <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                        <layout:HorizontalLayout >
                             <Label class="sapUiTinyMarginEnd" text="{i18n>Division}:"/>
                             <Text text="{path:'Painter/DivisionId'}"/>
                         </layout:HorizontalLayout>
-                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                         <layout:HorizontalLayout >
                             <Label class="sapUiTinyMarginEnd" text="{i18n>Depot}:"/>
                             <Text text="{path:'Painter/Depot/Depot'}"/>
                         </layout:HorizontalLayout>
