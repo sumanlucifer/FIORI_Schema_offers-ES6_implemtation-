@@ -70,16 +70,19 @@ sap.ui.define([
                 Name: "",
                 MembershipCard: "",
                 ZoneId: "",
-                DivisionId : "",
-                Depot : "",
+                DivisionId: "",
+                Depot: "",
                 PortfolioId: null,
                 editable: true,
                 bindProp: "",
                 resourcePath: "com.knpl.pragati.managesiteimages",
-                TableData1:[],
-                IconTabKey:null,
-                PainterId:mParam2,
-                dataSource:"/"+this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
+                TableData1: [],
+                IconTabKey: null,
+                PainterId: mParam2,
+                Dialog: {
+                    Remarks: ""
+                },
+                dataSource: "/" + this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
             };
             var oModelControl = new JSONModel(oDataControl)
             oView.setModel(oModelControl, "oModelControl");
@@ -115,11 +118,11 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             return oModel.getText(mParam, mParam2);
         },
-        _showMessageToast:function(mParam, mParam2){
+        _showMessageToast: function (mParam, mParam2) {
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            var sText =  oModel.getText(mParam, mParam2);
-            MessageToast.show(sText,{
-                duration:6000
+            var sText = oModel.getText(mParam, mParam2);
+            MessageToast.show(sText, {
+                duration: 6000
             })
         },
         _RemoveEmptyValue: function (mParam) {
@@ -139,7 +142,7 @@ sap.ui.define([
             var oModelData = oModel.getData();
             //1.Clone the payload and convert string to integer values based on odata model entity
             var oPayLoad = this._RemoveEmptyValue(oModelData);
-            
+
             var inTegerProperty = [
                 "PainterId",
                 "PortfolioCategoryId"
@@ -172,9 +175,15 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
         },
-           onDialogClose: function () {
+        onDialogClose: function () {
+            var oView = this.getView(),
+            oModelContrl = oView.getModel("oModelControl");
             if (this._ViewImageDialog) {
                 this._ViewImageDialog.close();
+            }
+            if (this._RemarksDialog) {
+                this._RemarksDialog.close();
+                oModelContrl.setProperty("/Dialog/Remarks","")
             }
         },
         /*
@@ -185,7 +194,7 @@ sap.ui.define([
         showWarning: function (sMsgTxt, _fnYes) {
             var that = this;
             // MessageBox.warning(this.getResourceBundle().getText(sMsgTxt), {
-                MessageBox.warning(this.geti18nText(sMsgTxt), {
+            MessageBox.warning(this.geti18nText(sMsgTxt), {
                 actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
                 onClose: function (sAction) {
                     if (sAction === "YES") {
