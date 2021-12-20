@@ -125,7 +125,7 @@
                     ]
                 },
                 {
-                    "pattern": "Detail/{Mode}/{Id}",
+                    "pattern": "Detail/{Id}",
                     "name": "Detail",
                     "target": [
                         "Detail"
@@ -156,8 +156,8 @@
                     "viewId": "objectNotFound"
                 },
                 "Detail": {
-                    "viewName": "Detail",
-                    "viewId": "Detail",
+                    "viewName": "AddObject",
+                    "viewId": "object",
                     "viewLevel": 2
                 },
                 "notFound": {

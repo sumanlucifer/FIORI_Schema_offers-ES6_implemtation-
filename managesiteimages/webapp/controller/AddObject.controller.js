@@ -8,8 +8,9 @@ sap.ui.define([
     "sap/ui/core/ValueState",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast) {
+    "sap/m/MessageToast",
+    "./Validator"
+], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast, Validator) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.managesiteimages.controller.AddObject", {
@@ -40,11 +41,17 @@ sap.ui.define([
 
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("Add").attachMatched(this._onRouterMatched, this);
+            oRouter.getRoute("Detail").attachMatched(this._onRouterMatchedDetail, this);
 
 
         },
-        _onRouterMatched: function (oEvent) {
+        _onRouterMatchedDetail: function (oEvent) {
             var sPainterId = oEvent.getParameter("arguments").Id;
+            console.log("details data")
+            this._initDetailData(sPainterId)
+        },
+        _onRouterMatched: function (oEvent) {
+
             this._initData();
         },
         _initData: function () {
@@ -67,6 +74,42 @@ sap.ui.define([
                     })
                 })
             })
+
+        },
+        _initDetailData: function (sPainterId) {
+
+            var oView = this.getView();
+            var othat = this;
+          
+            var c1, c1A, c1B, c2, c3, c4, c5;
+
+            c1A = othat._AddObjectControlModel("Add", null);
+            c1A.then(function () {
+                c1B = othat._setInitViewModel();
+                c1B.then(function () {
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/PainterId", sPainterId);
+                    oModelControl.setProperty("/PageBusy", true);
+                    c1 = othat._Createportfolio(sPainterId);
+                    c1.then(function (mParam1) {
+                        c2 = othat._DisplayDetailsPainter(mParam1);
+                        c2.then(function () {
+                            c3 = othat._SetIconTabData();
+                            c3.then(function () {
+                                c4 = othat._AddTableFragment();
+                                c4.then(function () {
+                                    c5 = othat._GetSelectedCategoryData();
+                                    c5.then(function () {
+                                        oModelControl.setProperty("/PageBusy", false);
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+
+            })
+
 
         },
         _DummyPromise: function () {
@@ -101,6 +144,7 @@ sap.ui.define([
 
 
         },
+
         onIcnTbarChange: function (oEvent) {
             var c1, c2, c3;
             var othat = this;
@@ -110,65 +154,78 @@ sap.ui.define([
             oModelControl.setProperty("/PageBusy", true);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
-                c2.then(function(){
+                c2.then(function () {
                     oModelControl.setProperty("/PageBusy", false);
                 })
             })
         },
-        onApproveImage: function (oEvent) {
+        onStatusChanged: function (oEvent) {
             var oView = this.getView();
             var oSource = oEvent.getSource();
             var oModelControl = oView.getModel("oModelControl");
             var othat = this;
             var oBj = oSource.getBindingContext("oModelControl").getObject();
-            var oPayload = Object.assign({}, oBj);
-            oPayload["ApprovalStatus"] = "APPROVED";
+            var sStatus = oEvent.getSource().data("status");
 
-            MessageBox.information(this.geti18nText("Message13"), {
-                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
-                onClose: function (sAction) {
-                    if (sAction === "YES") {
-                        this._ChangePortImageStatus(oPayload);
+            if (!this._RemarksDialog) {
+                Fragment.load({
+                    id: oView.getId(),
+                    controller: this,
+                    name: oModelControl.getProperty("/resourcePath") + ".view.fragments.RemarksDialog"
+                }).then(function (oDialog) {
+                    this._RemarksDialog = oDialog;
+                    oView.addDependent(this._RemarksDialog);
+                    this._RemarksDialog.data("Id", oBj["Id"]);
+                    this._RemarksDialog.data("status", sStatus)
+                    this._RemarksDialog.open();
 
-                    }
-                }.bind(this)
-            });
-
-
+                }.bind(this))
+            } else {
+                this._RemarksDialog.data("Id", oBj["Id"]);
+                this._RemarksDialog.data("status", sStatus)
+                this._RemarksDialog.open();
+            }
         },
-        onRejectImage: function (oEvent) {
+        onApproveReject: function () {
             var oView = this.getView();
-            var oSource = oEvent.getSource();
-            var oModelControl = oView.getModel("oModelControl");
-            var othat = this;
-            var oBj = oSource.getBindingContext("oModelControl").getObject();
-            var oPayload = Object.assign({}, oBj);
-            oPayload["ApprovalStatus"] = "REJECTED";
-
-            MessageBox.information(this.geti18nText("Message14"), {
-                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
-                onClose: function (sAction) {
-                    if (sAction === "YES") {
-                        this._ChangePortImageStatus(oPayload);
-
-                    }
-                }.bind(this)
-            });
+            var oModelContrl = oView.getModel("oModelControl");
+            var oValidator = new Validator();
+            var oForm = oView.byId("RemarkForm");
+            var bValidate = oValidator.validate(oForm)
+            if (!bValidate) {
+                this._showMessageToast("Message16");
+                return;
+            }
+            this._ChangePortImageStatus();
 
 
         },
-
-        _ChangePortImageStatus: function (oPayload) {
+        _ChangePortImageStatus: function () {
             var c1, c2, c3;
             var oView = this.getView();
             var othat = this;
             var oModelControl = oView.getModel("oModelControl");
+            var oTableData = oModelControl.getProperty("/TableData1");
+            var oData = this._RemarksDialog.data();
+            var obj = null;
+            for (var x of oTableData) {
+                if (x["Id"] == oData["Id"]) {
+                    obj = x;
+                    break;
+                }
+            }
+            var oPayload = Object.assign({}, obj);
+            oPayload["ApprovalStatus"] = oData["status"];
+            oPayload["Remark"] = oModelControl.getProperty("/Dialog/Remarks")
             oModelControl.setProperty("/PageBusy", true);
             c1 = othat._SendReqForImageStatus(oPayload);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
+                    othat._RemarksDialog.close();
+                    oModelControl.setProperty("/Dialog/Remarks", "")
                     oModelControl.setProperty("/PageBusy", false);
+
                 })
             })
 
@@ -489,7 +546,7 @@ sap.ui.define([
             var oDataModel = oView.getModel();
             var oModelControl = oView.getModel("oModelControl")
             var oPayload = {
-                "PainterId": iPainterId
+                "PainterId": parseInt(iPainterId)
             };
             return new Promise((resolve, reject) => {
                 oDataModel.create("/PainterPortfolioSet", oPayload, {
@@ -572,9 +629,7 @@ sap.ui.define([
             });
         },
 
-        onValueHelpRequest: function (oEvent) {
 
-        },
 
         onValueHelpSearch: function (oEvent) {
             var sValue = oEvent.getParameter("value");
@@ -636,31 +691,6 @@ sap.ui.define([
 
         },
 
-        // _postDataToSave: function () {
-        //     /*
-        //      * Author: manik saluja
-        //      * Date: 02-Dec-2021
-        //      * Language:  JS
-        //      * Purpose: Payload is ready and we have to send the same based to server but before that we have to modify it slighlty
-        //      */
-        //     var oView = this.getView();
-        //     var oData = this.getView().getModel();
-        //     var oModelControl = oView.getModel("oModelControl");
-        //     oModelControl.setProperty("/PageBusy", true);
-        //     var othat = this;
-        //     var c1, c2, c3, c4;
-        //     c1 = othat._CheckEmptyFieldsPostPayload();
-        //     c1.then(function (oPayload) {
-        //         c2 = othat._CreateObject(oPayload);
-        //         c2.then(function (oData) {
-        //             c3 = othat._uploadFile(oData);
-        //             c3.then(function () {
-        //                 oModelControl.setProperty("/PageBusy", false);
-        //                 othat.onNavToHome();
-        //             })
-        //         })
-        //     })
-        // },
 
         _postDataToSave: function () {
             /*
@@ -688,87 +718,12 @@ sap.ui.define([
             // })
         },
 
-        // _CreateObject: function (oPayLoad) {
-        //     //console.log(oPayLoad);
-        //     var othat = this;
-        //     var oView = this.getView();
-        //     var oDataModel = oView.getModel();
-        //     var oModelControl = oView.getModel("oModelControl");
-        //     return new Promise((resolve, reject) => {
-        //         oDataModel.create("/PainterPortfolioImageSet", oPayLoad, {
-        //             success: function (data) {
-        //                 MessageToast.show(othat.geti18nText("Message1"));
-        //                 oModelControl.setProperty("/SiteImageId", data["Id"]);
-        //                 resolve(data);
-        //             },
-        //             error: function (data) {
-        //                 MessageToast.show(othat.geti18nText("errorMessage2"));
-        //                 oModelControl.setProperty("/PageBusy", false);
-        //                 reject(data);
-        //             },
-        //         });
-        //     });
-        // },
-
-        _uploadFile: function (oData) {
-            var that = this;
-            var oModelContrl = this.getView().getModel("oModelControl");
-            var oImage = this.getView().getModel("oModelControl").getProperty("/oImage");
-            var newSpath = "/PainterPortfolioImageSet(0)";
-            return new Promise(function (resolve, reject) {
-                var settings = {
-                    url: "/KNPL_PAINTER_API/api/v2/odata.svc" + newSpath + "/$value?painterId=" + oData.PainterId + "&categoryId=" + oData.PortfolioCategoryId,
-                    data: oImage.Image,
-                    method: "PUT",
-                    headers: that.getModel().getHeaders(),
-                    contentType: "image/png",
-                    processData: false,
-                    success: function (x) {
-                        oModelContrl.setProperty("/busy", false);
-                        MessageToast.show(that.geti18nText("Message4"));
-                        resolve(x);
-                    },
-                    error: function (a) {
-                        oModelContrl.setProperty("/busy", false);
-                        MessageToast.show(that.geti18nText("errorMessage3"));
-                        reject(a);
-                    }
-                };
-                $.ajax(settings);
-            })
-        },
-
         onUpload: function (oEvent) {
             var oFile = oEvent.getSource().FUEl.files[0];
             this.getImageBinary(oFile).then(this._fnAddFile.bind(this));
         },
 
-        handleTypeMissmatch: function () {
 
-        },
-
-        getImageBinary: function (oFile) {
-            var oFileReader = new FileReader();
-            var sFileName = oFile.name;
-            return new Promise(function (res, rej) {
-
-                if (!(oFile instanceof File)) {
-                    res(oFile);
-                    return;
-                }
-
-                oFileReader.onload = function () {
-                    res({
-                        Image: oFileReader.result,
-                        name: sFileName
-                    });
-                };
-                res({
-                    Image: oFile,
-                    name: sFileName
-                });
-            });
-        },
         onFilteMisMatch: function () {
             this._showMessageToast("Message8")
         },
