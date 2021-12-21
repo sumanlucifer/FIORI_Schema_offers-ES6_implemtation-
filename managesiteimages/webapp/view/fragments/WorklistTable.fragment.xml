@@ -48,7 +48,7 @@
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 5 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
                     </customData>
-                    <Text text="{i18n>ApprovalStatus}"/>
+                    <Text text="{i18n>PortfolioStatus}"/>
                 </Column>
                  <Column hAlign="Begin">
                     <customData>

@@ -79,7 +79,7 @@ sap.ui.define([
 
             var oView = this.getView();
             var othat = this;
-          
+
             var c1, c1A, c1B, c2, c3, c4, c5;
 
             c1A = othat._AddObjectControlModel("Add", null);
@@ -730,7 +730,7 @@ sap.ui.define([
         },
         onFileSizeMismatch: function (oEvent) {
             var sMaxfilesize = oEvent.getSource().getMaximumFileSize();
-            this._showMessageToast("Message17",[sMaxfilesize])
+            this._showMessageToast("Message17", [sMaxfilesize])
         },
 
         _fnAddFile: function (oItem) {
@@ -740,6 +740,13 @@ sap.ui.define([
                 IsArchived: false
             });
             this.getModel("oModelControl").refresh();
+        },
+        onDownloadProtfolio: function () {
+            var oView = this.getView(),
+                oModelControl = oView.getModel("oModelControl"),
+                sPath, sPortfolioid = oModelControl.getProperty("/PortfolioId");
+                sPath = oModelControl.getProperty("/dataSource")+"PainterPortfolioSet("+sPortfolioid+")/$value";
+            sap.m.URLHelper.redirect(sPath, true);
         },
         onExit: function () {
             console.log("exited the view");
