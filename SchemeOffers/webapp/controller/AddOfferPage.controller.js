@@ -565,7 +565,7 @@ sap.ui.define(
                     });
                 },
                 _CreateOffer: function (oPayLoad) {
-                    console.log(oPayLoad);
+                    //console.log(oPayLoad);
                     var promise = jQuery.Deferred();
                     var othat = this;
                     var oView = this.getView();
