@@ -63,7 +63,7 @@ sap.ui.define([], function () {
             if (mParam === "PENDING") {
                 return "Warning";
             }
-            return "Information";
+            return "None";
         },
         fmtBtnApproveImage: function (mParam1, mParam2) {
             if (!mParam1) {
