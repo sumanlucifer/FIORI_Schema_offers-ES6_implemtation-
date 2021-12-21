@@ -107,8 +107,8 @@ modules:
       name: reports
       target-path: resources/
     - artifacts:
-      - managesiteimages-content.zip
-      name: managesiteimages
+      - painterportfolio-content.zip
+      name: painterportfolio
       target-path: resources/
 - name: MDM
   type: html5
@@ -272,9 +272,9 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: managesiteimages
+- name: painterportfolio
   type: html5
-  path: managesiteimages
+  path: painterportfolio
   build-parameters:
     builder: custom
     commands:

@@ -8,14 +8,14 @@
 |**Floorplan Used**<br>1worklist|
 |**Service Type**<br>SAP System (ABAP On Premise)|
 |**Service URL**<br>https://services.odata.org/V2/Northwind/Northwind.svc/
-|**Module Name**<br>managesiteimages|
+|**Module Name**<br>painterportfolio|
 |**Application Title**<br>Manage Site Images|
 |**Namespace**<br>com.knpl.pragati|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|
 |**Enable Telemetry**<br>True|
 
-## managesiteimages
+## painterportfolio
 
 
 
