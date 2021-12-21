@@ -61,8 +61,8 @@ sap.ui.define([
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=com.knpl.pragati.managesiteimages",
-									"url": sap.ui.require.toUrl("com/knpl/pragati/managesiteimages")
+									"additionalInformation": "SAPUI5.Component=com.knpl.pragati.painterportfolio",
+									"url": sap.ui.require.toUrl("com/knpl/pragati/painterportfolio")
 								}
 							}
 						}

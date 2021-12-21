@@ -31,7 +31,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.managesiteimages.controller.Detail", {
+            "com.knpl.pragati.painterportfolio.controller.Detail", {
             formatter: formatter,
 
             onInit: function () {
@@ -68,7 +68,7 @@ sap.ui.define(
                     SiteImageId: oProp,
                     PageBusy: true,
                     IcnTabKey: "0",
-                    resourcePath: "com.knpl.pragati.managesiteimages"
+                    resourcePath: "com.knpl.pragati.painterportfolio"
                 };
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelDisplay");
@@ -248,7 +248,7 @@ sap.ui.define(
                 var oThat = this;
                 if (!oThat.ImageDialog) {
                     Fragment.load({
-                        name: "com.knpl.pragati.managesiteimages.view.fragments.ImageDialog",
+                        name: "com.knpl.pragati.painterportfolio.view.fragments.ImageDialog",
                         controller: oThat,
                     }).then(
                         function (oDialog) {

@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.managesiteimages.controller.App", {
+    return BaseController.extend("com.knpl.pragati.painterportfolio.controller.App", {
 
         onInit: function () {
             var oViewModel,

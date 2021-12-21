@@ -12,28 +12,41 @@
         <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
            
             <columns>
-                <Column hAlign="Begin">
+                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Name", "leadingProperty": "Painter/Name", "columnIndex": 0 ,"sortProperty": "Painter/Name","filterProperty": "Painter/Name"}'/>
-                    </customData>
-                    <Text text="{i18n>PainterName}"/>
-                </Column>
-                <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCode", "leadingProperty": "PortfolioCode", "columnIndex": 1 ,"sortProperty": "PortfolioCode","filterProperty": "PortfolioCode"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCode", "leadingProperty": "PortfolioCode", "columnIndex": 0 ,"sortProperty": "PortfolioCode","filterProperty": "PortfolioCode"}'/>
                     </customData>
                     <Text text="{i18n>PortfolioCode}"/>
                 </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Name", "leadingProperty": "Painter/Name", "columnIndex": 1 ,"sortProperty": "Painter/Name","filterProperty": "Painter/Name"}'/>
+                    </customData>
+                    <Text text="{i18n>PainterName}"/>
+                </Column>
+                  <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/MembershipCard", "leadingProperty": "Painter/MembershipCard", "columnIndex": 2 ,"sortProperty": "Painter/MembershipCard","filterProperty": "Painter/MembershipCard"}'/>
+                    </customData>
+                    <Text text="{i18n>MembershipId}"/>
+                </Column>
+                  <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Mobile", "leadingProperty": "Painter/Mobile", "columnIndex": 3 ,"sortProperty": "Painter/Mobile","filterProperty": "Painter/Mobile"}'/>
+                    </customData>
+                    <Text text="{i18n>Mobile}"/>
+                </Column>
+               
                 
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 2 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 4 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>CreatedAt}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 3 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 5 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
                     </customData>
                     <Text text="{i18n>ApprovalStatus}"/>
                 </Column>
@@ -48,8 +61,11 @@
             <items>
                 <ColumnListItem press="onListItemPress" type="Navigation">
                     <cells>
+                      <Text text="{PortfolioCode}"/>
                         <Text text="{Painter/Name}"/>
-                        <Text text="{PortfolioCode}"/>
+                          <Text text="{Painter/MembershipCard}"/>
+                            <Text text="{Painter/Mobile}"/>
+                      
                              <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
                        <ObjectStatus text="{path:'ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                         <HBox >

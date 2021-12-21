@@ -13,7 +13,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast, Validator) {
     "use strict";
 
-    return BaseController.extend("com.knpl.pragati.managesiteimages.controller.AddObject", {
+    return BaseController.extend("com.knpl.pragati.painterportfolio.controller.AddObject", {
 
         formatter: formatter,
 
@@ -569,7 +569,7 @@ sap.ui.define([
             if (!this._pValueHelpDialog) {
                 Fragment.load({
                     id: oView.getId(),
-                    name: "com.knpl.pragati.managesiteimages.view.fragments.ValueHelpDialog",
+                    name: "com.knpl.pragati.painterportfolio.view.fragments.ValueHelpDialog",
                     controller: this,
                 }).then(function (oDialog) {
                     this._pValueHelpDialog = oDialog
@@ -727,6 +727,10 @@ sap.ui.define([
 
         onFilteMisMatch: function () {
             this._showMessageToast("Message8")
+        },
+        onFileSizeMismatch: function (oEvent) {
+            var sMaxfilesize = oEvent.getSource().getMaximumFileSize();
+            this._showMessageToast("Message17",[sMaxfilesize])
         },
 
         _fnAddFile: function (oItem) {

@@ -4,7 +4,7 @@ sap.ui.define(
     "use strict";
 
     return SimpleType.extend(
-      "com.knpl.pragati.managesiteimages.model.cmbxDtype2",
+      "com.knpl.pragati.painterportfolio.model.cmbxDtype2",
       {
         formatValue: function (oValue) {
          

@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"com/knpl/pragati/managesiteimages/model/formatter"
+	"com/knpl/pragati/painterportfolio/model/formatter"
 ], function (formatter) {
 	"use strict";
 
