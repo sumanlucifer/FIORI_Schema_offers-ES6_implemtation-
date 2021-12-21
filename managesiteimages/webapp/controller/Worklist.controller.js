@@ -26,7 +26,7 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.managesiteimages.controller.Worklist", {
+            "com.knpl.pragati.painterportfolio.controller.Worklist", {
                 formatter: formatter,
 
                 /* =========================================================== */
@@ -248,6 +248,18 @@ sap.ui.define(
                                             }),
                                             new Filter({
                                                 path: "PortfolioCode",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "Painter/MembershipCard",
+                                                operator: "Contains",
+                                                value1: oViewFilter[prop].trim(),
+                                                caseSensitive: false
+                                            }),
+                                            new Filter({
+                                                path: "Painter/Mobile",
                                                 operator: "Contains",
                                                 value1: oViewFilter[prop].trim(),
                                                 caseSensitive: false

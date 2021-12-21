@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"com/knpl/pragati/managesiteimages/test/unit/AllTests"
+		"com/knpl/pragati/painterportfolio/test/unit/AllTests"
 	], function () {
 		QUnit.start();
 	});

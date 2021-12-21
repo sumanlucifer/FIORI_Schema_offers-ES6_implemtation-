@@ -10,7 +10,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "com.knpl.pragati.managesiteimages.view.",
+		viewNamespace: "com.knpl.pragati.painterportfolio.view.",
 		autoWait: true
 	});
 

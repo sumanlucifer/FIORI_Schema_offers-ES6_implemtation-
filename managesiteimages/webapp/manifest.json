@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "com.knpl.pragati.managesiteimages",
+        "id": "com.knpl.pragati.painterportfolio",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "title": "{{appTitle}}",
@@ -54,7 +54,7 @@
     },
     "sap.ui5": {
         "rootView": {
-            "viewName": "com.knpl.pragati.managesiteimages.view.App",
+            "viewName": "com.knpl.pragati.painterportfolio.view.App",
             "type": "XML",
             "async": true,
             "id": "app"
@@ -75,7 +75,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.knpl.pragati.managesiteimages.i18n.i18n"
+                    "bundleName": "com.knpl.pragati.painterportfolio.i18n.i18n"
                 }
             },
             "": {
@@ -107,7 +107,7 @@
             "config": {
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
-                "viewPath": "com.knpl.pragati.managesiteimages.view",
+                "viewPath": "com.knpl.pragati.painterportfolio.view",
                 "controlId": "app",
                 "controlAggregation": "pages",
                 "bypassed": {

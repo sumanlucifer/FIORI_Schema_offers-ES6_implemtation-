@@ -1,11 +1,11 @@
 sap.ui.define([
 	"sap/ui/test/Opa5",
-	"com/knpl/pragati/managesiteimages/localService/mockserver",
+	"com/knpl/pragati/painterportfolio/localService/mockserver",
 	"sap/ui/model/odata/v2/ODataModel"
 ], function(Opa5, mockserver, ODataModel) {
 	"use strict";
 
-	return Opa5.extend("com.knpl.pragati.managesiteimages.test.integration.arrangements.Startup", {
+	return Opa5.extend("com.knpl.pragati.painterportfolio.test.integration.arrangements.Startup", {
 
 		/**
 		 * Initializes mock server, then starts the app component
@@ -29,7 +29,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "com.knpl.pragati.managesiteimages",
+					name: "com.knpl.pragati.painterportfolio",
 					async: true
 				},
 				hash: oOptions.hash,

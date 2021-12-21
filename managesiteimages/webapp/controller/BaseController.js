@@ -14,7 +14,7 @@ sap.ui.define([
     // shortcut for sap.m.URLHelper
     var URLHelper = mobileLibrary.URLHelper;
 
-    return Controller.extend("com.knpl.pragati.managesiteimages.controller.BaseController", {
+    return Controller.extend("com.knpl.pragati.painterportfolio.controller.BaseController", {
         /**
          * Convenience method for accessing the router.
          * @public
@@ -75,7 +75,7 @@ sap.ui.define([
                 PortfolioId: null,
                 editable: true,
                 bindProp: "",
-                resourcePath: "com.knpl.pragati.managesiteimages",
+                resourcePath: "com.knpl.pragati.painterportfolio",
                 TableData1: [],
                 IconTabKey: null,
                 PainterId: mParam2,

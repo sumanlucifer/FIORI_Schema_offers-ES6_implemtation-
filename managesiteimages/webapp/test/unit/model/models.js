@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"com/knpl/pragati/managesiteimages/model/models",
+	"com/knpl/pragati/painterportfolio/model/models",
 	"sap/ui/Device"
 ], function (models, Device) {
 	"use strict";

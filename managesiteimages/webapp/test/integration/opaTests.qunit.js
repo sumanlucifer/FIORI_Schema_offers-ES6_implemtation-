@@ -6,7 +6,7 @@ sap.ui.getCore().attachInit(function() {
 	"use strict";
 
 	sap.ui.require([
-		"com/knpl/pragati/managesiteimages/test/integration/AllJourneys"
+		"com/knpl/pragati/painterportfolio/test/integration/AllJourneys"
 	], function() {
 		QUnit.start();
 	});
