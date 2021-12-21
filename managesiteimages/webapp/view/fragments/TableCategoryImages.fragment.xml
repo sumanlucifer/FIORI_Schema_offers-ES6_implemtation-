@@ -2,7 +2,7 @@
 	xmlns:u="sap.ui.unified"
      xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:core="sap.ui.core">
-    <Table id="categoryTable"  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false" width="auto" noDataText="{i18n>tableNoDataText}">
+    <Table id="categoryTable" width="100%"  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false"  noDataText="{i18n>tableNoDataText}">
                 <headerToolbar>
                     <Toolbar>
                             <ToolbarSpacer ></ToolbarSpacer>
@@ -13,22 +13,22 @@
                     <Column >
                         <Text text="{i18n>Image}"/>
                     </Column>
-                     <Column >
+                     <Column width="8%" >
                         <Text text="{i18n>CreatedAt}"/>
                     </Column>
-                     <Column >
+                     <Column width="8%" >
                         <Text text="{i18n>CreatedBy}"/>
                     </Column>
-                     <Column >
+                     <Column width="8%">
                         <Text text="{i18n>UpdatedAt}"/>
                     </Column>
-                       <Column >
+                       <Column width="8%" >
                         <Text text="{i18n>UpdatedBy}"/>
                     </Column>
                       <Column >
                         <Text text="{i18n>Remark}"/>
                     </Column>
-                    <Column>
+                    <Column width="7%">
                         <Text text="{i18n>Status}"/>
                     </Column>
                    
