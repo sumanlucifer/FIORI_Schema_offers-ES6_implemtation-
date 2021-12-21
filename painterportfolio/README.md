@@ -9,7 +9,7 @@
 |**Service Type**<br>SAP System (ABAP On Premise)|
 |**Service URL**<br>https://services.odata.org/V2/Northwind/Northwind.svc/
 |**Module Name**<br>painterportfolio|
-|**Application Title**<br>Manage Site Images|
+|**Application Title**<br>Painter portfolio|
 |**Namespace**<br>com.knpl.pragati|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|
