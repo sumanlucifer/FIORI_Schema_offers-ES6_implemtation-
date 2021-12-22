@@ -63,7 +63,7 @@
         <f:content>
             <IconTabBar  select="onIcnTbarChange" items="{path:'/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], parameters:{select:'Id, category,MAXIMAGES' } }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
-                    <IconTabFilter  text="{category}" key="{Id}" >
+                    <IconTabFilter  text="{path:'category',formatter:'.formatter.fmtLowerCase'}" key="{Id}" >
                       
                     </IconTabFilter>
                 </items>
