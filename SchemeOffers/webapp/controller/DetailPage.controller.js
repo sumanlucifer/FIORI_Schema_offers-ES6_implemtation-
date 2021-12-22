@@ -1893,7 +1893,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                    console.log(oPayLoad);
+                    //console.log(oPayLoad);
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {

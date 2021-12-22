@@ -9,7 +9,7 @@
 		items="{path:'/MasterProductSet',sorter:{path:'ProductName'},parameters:{select:'Id,ProductName'} }"
 	    search="_handlePValueHelpSearch3"
 		confirm="_handleProdValueHelpConfirm3"
-        cancel="_handleProdValueHelpClose3"
+        cancel="_handleProdValueHelpClose"
 		multiSelect="false">
 		<StandardListItem
 			iconDensityAware="false"

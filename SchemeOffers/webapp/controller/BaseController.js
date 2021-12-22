@@ -3223,7 +3223,7 @@ sap.ui.define(
                     }
                 },
                 _handlePackValueHelpConfirm: function (oEvent) {
-                    var oSelected = oEvent.getParameter("selectedItems");
+                    var oSelected = oEvent.getParameter("selectedContexts");
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var aField = oModel.getProperty("/Dialog/PackVH");
@@ -3231,7 +3231,7 @@ sap.ui.define(
                     var aProds = [],
                         oBj;
                     for (var a of oSelected) {
-                        oBj = a.getBindingContext().getObject();
+                        oBj = a.getObject();
                         aProds.push({
                             Name: oBj["Description"],
                             Id: oBj["SkuCode"],
@@ -3241,6 +3241,7 @@ sap.ui.define(
                     oView
                         .getModel("oModelControl")
                         .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
+                    this._handleProdValueHelpClose();
                     if (aNumber == "1") {
                         this._CheckCondContriTable();
                     } else if (aNumber == "4") {
@@ -3313,7 +3314,7 @@ sap.ui.define(
                     this._FilterForProds1(mParam1);
                 },
                 _handleProdValueHelpConfirm: function (oEvent) {
-                    var oSelected = oEvent.getParameter("selectedItems");
+                    var oSelected = oEvent.getParameter("selectedContexts");
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var aField = oModel.getProperty("/Dialog/ProdVH");
@@ -3321,7 +3322,7 @@ sap.ui.define(
                     var aProds = [],
                         oBj;
                     for (var a of oSelected) {
-                        oBj = a.getBindingContext().getObject();
+                        oBj = a.getObject();
                         aProds.push({
                             Name: oBj["ProductName"],
                             Id: oBj["Id"],
@@ -3329,6 +3330,8 @@ sap.ui.define(
                     }
                     oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
                     oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
+                    this._handleProdValueHelpClose();
+                    // calling this method to destroy the dialog so that remembeslections get resetted
                     if (aNumber == "1") {
                         this._CheckCondProdTable();
                         this._CheckCondContriTable();
@@ -3337,6 +3340,7 @@ sap.ui.define(
                     }
                 },
                 _handleProdValueHelpClose: function () {
+
                     if (this._ProdValueHelpDialog) {
                         this._ProdValueHelpDialog.destroy();
                         delete this._ProdValueHelpDialog;

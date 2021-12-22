@@ -5,6 +5,7 @@
 		title="Packs"
         growing="true"
         growingThreshold="10"
+        rememberSelections="true"
 		class="sapUiPopupWithPadding"
 		items="{path:'/MasterRepProductSkuSet',parameters:{select:'SkuCode,Description,ProductCode'} }"
 	    search="_handlePackValueHelpSearch"
