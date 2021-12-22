@@ -13,18 +13,17 @@
                     <fb:FilterBar showRestoreButton="false" id="filterbar" reset="onResetFilterBar" search="onFilterBarGo" useToolbar="false" showRestoreOnFB="true">
                         <fb:filterGroupItems>
                        
-                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <DatePicker placeholder="{i18n>DDMMYYYY}"  value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
-                            </fb:FilterGroupItem> -->
-                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="CategoryId" label="{i18n>Category}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            </fb:FilterGroupItem>
+                               <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox placeholder="{i18n>Select} {i18n>Category}" selectionChange="onCategoryChange" items="{ path: '/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], parameters:{select:'Id, category' } }" selectedKey="{oModelControl>/filterBar/CategoryId}">
-										<core:Item key="{Id}" text="{category}"/>
-									</ComboBox>
+                                    <DatePicker placeholder="{i18n>DDMMYYYY}"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:true } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
-                            </fb:FilterGroupItem> -->
+                            </fb:FilterGroupItem>
+                          
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>ApprovalStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <ComboBox id="idStatus" placeholder="{i18n>Select} {i18n>ApprovalStatus}" selectionChange="onStatusChange" selectedKey="{path:'oModelControl>/filterBar/Status' }">
