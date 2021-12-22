@@ -43,7 +43,8 @@ sap.ui.define(
                         filterBar: {
                             Status: "",
                             Search: "",
-                            CategoryId: null
+                            StartDate:null,
+                            EndDate:null
                         },
                         PageBusy: true
                     };
@@ -226,12 +227,16 @@ sap.ui.define(
                             //         )
                             //     );
                             // } else
-                            if (prop === "CategoryId") {
+                            if (prop === "StartDate") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("PortfolioCategoryId", FilterOperator.EQ, oViewFilter[prop]));
-                            } else
-                            if (prop === "Status") {
+                                    new Filter("CreatedAt", FilterOperator.GE,  new Date(oViewFilter[prop])));
+                            } else if (prop === "EndDate") {
+                                aFlaEmpty = false;
+                                var oDate = oViewFilter[prop].setDate(oViewFilter[prop].getDate() + 1);
+                                aCurrentFilterValues.push(
+                                    new Filter("CreatedAt", FilterOperator.LT,oDate));
+                            }  else if (prop === "Status") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("ApprovalStatus", FilterOperator.EQ, oViewFilter[prop]));
@@ -292,7 +297,8 @@ sap.ui.define(
                     var aResetProp = {
                         Status: "",
                         Search: "",
-                        CategoryId: null
+                        StartDate:null,
+                        EndDate:null
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);

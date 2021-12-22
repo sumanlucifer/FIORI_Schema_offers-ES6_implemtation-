@@ -65,11 +65,11 @@
                         <Text text="{Painter/Name}"/>
                           <Text text="{Painter/MembershipCard}"/>
                             <Text text="{Painter/Mobile}"/>
-                      
-                             <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
+                              <!-- UTC should be false in displaying date but the case for filtering it will be different -->
+                             <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a', UTC:false} }" />
                        <ObjectStatus text="{path:'ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                         <HBox >
-                            <!-- <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/> -->
+                         
                             <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>
                         </HBox>
                     </cells>
