@@ -199,6 +199,7 @@ sap.ui.define([
 
 
         },
+       
         _ChangePortImageStatus: function () {
             this._RemarksDialog.setBusy(true)
             var c1, c2, c3;
@@ -214,11 +215,12 @@ sap.ui.define([
                     break;
                 }
             }
-            var oPayload = Object.assign({}, obj);
+            //var oPayload = Object.assign({}, obj);
+            var oPayload = {};
             oPayload["ApprovalStatus"] = oData["status"];
             oPayload["Remark"] = oModelControl.getProperty("/Dialog/Remarks")
             oModelControl.setProperty("/PageBusy", true);
-            c1 = othat._SendReqForImageStatus(oPayload);
+            c1 = othat._SendReqForImageStatus(oPayload,obj["Id"]);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
@@ -231,11 +233,49 @@ sap.ui.define([
             })
 
         },
-        _SendReqForImageStatus: function (oPayload) {
+        onApproveImage: function (oEvent) {
+            var oView = this.getView();
+            var oSource = oEvent.getSource();
+            var oModelControl = oView.getModel("oModelControl");
+            var othat = this;
+            var oBj = oSource.getBindingContext("oModelControl").getObject();
+            var oPayload = {};
+            oPayload["ApprovalStatus"] = "APPROVED";
+
+            MessageBox.information(this.geti18nText("Message13"), {
+                actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                onClose: function (sAction) {
+                    if (sAction === "YES") {
+                        this._ChangePortImageStatusApproved(oPayload,oBj["Id"]);
+                      
+                    }
+                }.bind(this)
+            });
+
+
+        },
+        _ChangePortImageStatusApproved: function (oPayload,sId) {
+            var c1, c2, c3;
+            var oView = this.getView();
+            var othat = this;
+            var oModelControl = oView.getModel("oModelControl");
+            oModelControl.setProperty("/PageBusy", true);
+            c1 = othat._SendReqForImageStatus(oPayload,sId);
+            c1.then(function () {
+                c2 = othat._GetSelectedCategoryData();
+                c2.then(function () {
+                    oModelControl.setProperty("/PageBusy", false);
+                })
+            })
+
+        },
+
+
+        _SendReqForImageStatus: function (oPayload,sId) {
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl");
             var oDataModel = oView.getModel();
-            var sPath = "/PainterPortfolioImageSet(" + oPayload["Id"] + ")";
+            var sPath = "/PainterPortfolioImageSet(" + sId + ")/ApprovalStatus";
             return new Promise((resolve, reject) => {
                 oDataModel.update(sPath, oPayload, {
                     success: function () {

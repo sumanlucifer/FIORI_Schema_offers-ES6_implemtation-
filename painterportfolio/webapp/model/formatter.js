@@ -67,7 +67,7 @@ sap.ui.define([], function () {
         },
         fmtBtnApproveImage: function (mParam1, mParam2) {
             if (!mParam1) {
-                if (mParam2 === "PENDING" || mParam2 === "REJECTED") {
+                if (mParam2 === "PENDING") {
                     return true;
                 }
             }
@@ -75,7 +75,7 @@ sap.ui.define([], function () {
         },
         fmtBtnRejectImage: function (mParam1, mParam2) {
             if (!mParam1) {
-                if (mParam2 === "PENDING" || mParam2 === "APPROVED") {
+                if (mParam2 === "PENDING") {
                     return true;
                 }
             }
