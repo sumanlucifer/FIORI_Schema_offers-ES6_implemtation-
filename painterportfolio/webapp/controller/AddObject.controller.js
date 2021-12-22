@@ -614,14 +614,21 @@ sap.ui.define([
                 }).then(function (oDialog) {
                     this._pValueHelpDialog = oDialog
                     oView.addDependent(this._pValueHelpDialog);
+                    this._setInitFilters();
                     this._pValueHelpDialog.open();
                 }.bind(this));
             } else {
+                this._setInitFilters();
                 this._pValueHelpDialog.open();
             }
 
             promise.resolve();
             return promise;
+        },
+        _setInitFilters:function(){
+            /* Control param in the filters means that on the existing filters will get applied.
+            */ 
+            this._pValueHelpDialog.getBinding("items").filter([],"Control");
         },
         _setInitViewModel: function () {
             /*
@@ -692,7 +699,7 @@ sap.ui.define([
                 false
             );
 
-            oEvent.getSource().getBinding("items").filter([oFilter]);
+            oEvent.getSource().getBinding("items").filter([oFilter],"Control");
         },
 
         onValueHelpClose: function (oEvent) {

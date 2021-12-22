@@ -180,6 +180,7 @@ sap.ui.define([
             oModelContrl = oView.getModel("oModelControl");
             if (this._ViewImageDialog) {
                 this._ViewImageDialog.close();
+                
             }
             if (this._RemarksDialog) {
                 this._RemarksDialog.close();
