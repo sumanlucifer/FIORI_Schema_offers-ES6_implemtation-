@@ -1,12 +1,5 @@
 <mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.painterportfolio.controller.Worklist" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
     <f:DynamicPage busyIndicatorDelay="0" busy="{oModelControl>/PageBusy}" id="dynamicPageId" headerExpanded="true">
-        <f:title>
-			<f:DynamicPageTitle>
-				<f:heading>
-					<Title text="{i18n>worklistTitle}"/>
-				</f:heading>
-			</f:DynamicPageTitle>
-		</f:title>
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
