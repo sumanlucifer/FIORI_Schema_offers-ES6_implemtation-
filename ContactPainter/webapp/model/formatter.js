@@ -203,6 +203,12 @@ sap.ui.define([
                 return "In Progress"
             }
         },
+        fmtCheckSettlemnetPoints:function(mParam1,mParam2){
+            if(mParam2 === "REDEEMED"){
+                return "-"+mParam1
+            }
+            return mParam1;
+        },
         dateFormatter: function (jsonDateString) {
             const dt = DateFormat.getDateTimeInstance({
                 pattern: "dd/MM/yyyy"

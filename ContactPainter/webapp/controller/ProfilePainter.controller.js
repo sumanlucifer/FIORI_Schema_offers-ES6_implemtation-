@@ -3142,6 +3142,21 @@ sap.ui.define(
                             return ele.sPath !== "CreatedAt";
                         });
                     aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+                    var aFilter1 = new Filter({
+                        path: "PointTransactionType",
+                        operator: FilterOperator.EQ,
+                        value1: "ACCRUED"
+                    });
+                    var aFilter2 = new Filter ([new Filter({
+                        path: "PointTransactionType",
+                        operator: FilterOperator.EQ,
+                        value1: "REDEEMED"
+                    }),new Filter({
+                        path: "PointType",
+                        operator: FilterOperator.EQ,
+                        value1: "SETTLEMENT"
+                    })],true);
+                    var aFinalFilter1 = new Filter([aFilter1,aFilter2],false)
                     if (bApplyCurrentFinancialYear)
                         aFilters.push(
                             new Filter({
@@ -3159,11 +3174,7 @@ sap.ui.define(
                         })
                     );
                     aFilters.push(
-                        new Filter({
-                            path: "PointTransactionType",
-                            operator: FilterOperator.EQ,
-                            value1: "ACCRUED"
-                        })
+                      aFinalFilter1
                     );
                     oBindingParams.filters.push(
                         new Filter({
