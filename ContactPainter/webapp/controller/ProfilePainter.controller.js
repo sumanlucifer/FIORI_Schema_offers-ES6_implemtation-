@@ -3374,6 +3374,7 @@ sap.ui.define(
                     );
                     oBindingParams.filters.push(oFilter1);
                     oBindingParams.filters.push(oFilter2);
+                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
                 },
                 onBeforeRebindTrainingTable: function (oEvent) {
                     // Live Training
@@ -3391,6 +3392,7 @@ sap.ui.define(
                     );
                     oBindingParams.filters.push(oFilter1);
                     oBindingParams.filters.push(oFilter2);
+                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
                 },
                 onViewQuestionaire: function (oEvent) {
                     var object = oEvent.getSource().getBindingContext().getObject();
@@ -3485,6 +3487,7 @@ sap.ui.define(
                     oBindingParams.parameters["expand"] = "LearningDetails";
                     var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
                     oBindingParams.filters.push(oFilter);
+                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
                 },
                 onViewQuestionaireLearning: function (oEvent) {
                     var object = oEvent.getSource().getBindingContext().getObject();
