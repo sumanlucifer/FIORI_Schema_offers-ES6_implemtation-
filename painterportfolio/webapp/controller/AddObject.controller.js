@@ -241,7 +241,7 @@ sap.ui.define([
             var oBj = oSource.getBindingContext("oModelControl").getObject();
             var oPayload = {};
             oPayload["ApprovalStatus"] = "APPROVED";
-
+            oPayload["Remark"] = "Approved";
             MessageBox.information(this.geti18nText("Message13"), {
                 actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
                 onClose: function (sAction) {

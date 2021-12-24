@@ -43,8 +43,8 @@ sap.ui.define(
                         filterBar: {
                             Status: "",
                             Search: "",
-                            StartDate:null,
-                            EndDate:null
+                            StartDate: null,
+                            EndDate: null
                         },
                         PageBusy: true
                     };
@@ -230,13 +230,13 @@ sap.ui.define(
                             if (prop === "StartDate") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("CreatedAt", FilterOperator.GE,  new Date(oViewFilter[prop])));
+                                    new Filter("CreatedAt", FilterOperator.GE, new Date(oViewFilter[prop])));
                             } else if (prop === "EndDate") {
                                 aFlaEmpty = false;
                                 var oDate = oViewFilter[prop].setDate(oViewFilter[prop].getDate() + 1);
                                 aCurrentFilterValues.push(
-                                    new Filter("CreatedAt", FilterOperator.LT,oDate));
-                            }  else if (prop === "Status") {
+                                    new Filter("CreatedAt", FilterOperator.LT, oDate));
+                            } else if (prop === "Status") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("ApprovalStatus", FilterOperator.EQ, oViewFilter[prop]));
@@ -297,8 +297,8 @@ sap.ui.define(
                     var aResetProp = {
                         Status: "",
                         Search: "",
-                        StartDate:null,
-                        EndDate:null
+                        StartDate: null,
+                        EndDate: null
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
@@ -309,7 +309,7 @@ sap.ui.define(
                 onListItemPress: function (oEvent) {
                     var oBj = oEvent.getSource().getBindingContext().getObject();
                     var oRouter = this.getOwnerComponent().getRouter();
-                  
+
                     if (oBj.Painter["__ref"]) {
                         var sPainterId = oBj.Painter["__ref"].match(/\d{1,}/)[0];
                         oRouter.navTo("Detail", {
@@ -336,7 +336,8 @@ sap.ui.define(
                     function onYes() {
                         var data = sPath + "/IsArchived";
                         that.getModel().update(data, {
-                            IsArchived: true
+                            IsArchived: true,
+                            ApprovalStatus: "NONE"
                         }, {
                             success: MessageToast.show(that.geti18nText("Message3"))
                         });
