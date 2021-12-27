@@ -80,7 +80,7 @@ sap.ui.define([
             var oView = this.getView();
             var othat = this;
 
-            var c1, c1A, c1B, c2, c3, c4, c5;
+            var c1, c1A, c1B, c2, c2A, c3, c4, c5;
 
             c1A = othat._AddObjectControlModel("Add", null);
             c1A.then(function () {
@@ -93,9 +93,9 @@ sap.ui.define([
                     c1.then(function (mParam1) {
                         c2 = othat._DisplayDetailsPainter(mParam1);
                         c2.then(function () {
-                            c3 = othat._SetIconTabData();
+                            c3 = othat._getPortfolioCategoryData(sPainterId);
                             c3.then(function () {
-                                c4 = othat._AddTableFragment();
+                                c4 = othat._SetIconTabData();
                                 c4.then(function () {
                                     c5 = othat._GetSelectedCategoryData();
                                     c5.then(function () {
@@ -122,44 +122,82 @@ sap.ui.define([
             var othat = this;
             var oModelControl = oView.getModel("oModelControl");
             oModelControl.setProperty("/PainterId", sObject["Id"]);
-            oModelControl.setProperty("/PageBusy", true);
-            var c1, c2, c3, c4, c5;
+            oModelControl.setProperty("/PageBusy", false);
+            var c1, c2A, c2, c3, c4, c5;
             c1 = this._Createportfolio(sObject["Id"]);
+
             c1.then(function (mParam1) {
                 c2 = othat._DisplayDetailsPainter(mParam1);
                 c2.then(function () {
-                    c3 = othat._SetIconTabData();
-                    c3.then(function () {
-                        c4 = othat._AddTableFragment();
-                        c4.then(function () {
-                            c5 = othat._GetSelectedCategoryData();
-                            c5.then(function () {
-                                oModelControl.setProperty("/PageBusy", false);
+                    c2A = othat._getPortfolioCategoryData(sObject["Id"]);
+                    c2A.then(function () {
+                        c3 = othat._SetIconTabData();
+                        c3.then(function () {
+                            c4 = othat._GetSelectedCategoryData();
+                            c4.then(function () {
+                                c5 = othat._DummyPromise();
+                                c5.then(function () {
+                                    oModelControl.setProperty("/PageBusy", false);
+                                })
                             })
                         })
                     })
+
                 })
             })
 
 
         },
-        onImagesUpdaed:function(oEvent){
-           var sTotalItems = oEvent.getParameter("total");
-           var oTable = oEvent.getSource();
-           var sTitle;
-           if(sTotalItems && oTable.getBinding("items").isLengthFinal){
-                sTitle = this.geti18nText("ImagesCount",[sTotalItems])
-           }else {
-            sTitle = this.geti18nText("ImagesCount",[0])
-           }
-           this.getView().getModel("oModelControl").setProperty("/ImagesCount",sTitle)
+        onIcontabDataReceived: function () {
+            console.log("data received event trigerred")
+            var c1, c2;
+            var othat = this;
+            var c1 = othat._SetIconTabData();
+            c1.then(function () {
+                c2 = othat._GetSelectedCategoryData();
+            })
+        },
+        _getPortfolioCategoryData: function (mPainterId) {
+            var iPainterId = mPainterId;
+            var oView = this.getView();
+            var oDataModel = oView.getModel();
+            //this.getView().byId("iconTabBar").getBinding("items").attachEvent('dataReceived',function(){console.log("event trigered")});
+            var oModelControl = oView.getModel("oModelControl")
+            var sCustom = "painterId=" + iPainterId
+            return new Promise((resolve, reject) => {
+                oDataModel.read("/PortfolioCategorySet", {
+                    urlParameters: {
+                        custom: sCustom
+                    },
+                    success: function (oData) {
+                        oModelControl.setProperty("/PortfolioCategory", oData["results"]);
+
+                        resolve()
+                    },
+                    error: function (oData) {
+
+                    }
+                })
+            })
+
+        },
+        onImagesUpdaed: function (oEvent) {
+            var sTotalItems = oEvent.getParameter("total");
+            var oTable = oEvent.getSource();
+            var sTitle;
+            if (sTotalItems && oTable.getBinding("items").isLengthFinal) {
+                sTitle = this.geti18nText("ImagesCount", [sTotalItems])
+            } else {
+                sTitle = this.geti18nText("ImagesCount", [0])
+            }
+            this.getView().getModel("oModelControl").setProperty("/ImagesCount", sTitle)
         },
         onIcnTbarChange: function (oEvent) {
             var c1, c2, c3;
             var othat = this;
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl");
-            c1 = othat._AddTableFragment();
+            c1 = othat._DummyPromise();
             oModelControl.setProperty("/PageBusy", true);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
@@ -209,7 +247,7 @@ sap.ui.define([
 
 
         },
-       
+
         _ChangePortImageStatus: function () {
             this._RemarksDialog.setBusy(true)
             var c1, c2, c3;
@@ -230,7 +268,7 @@ sap.ui.define([
             oPayload["ApprovalStatus"] = oData["status"];
             oPayload["Remark"] = oModelControl.getProperty("/Dialog/Remarks")
             oModelControl.setProperty("/PageBusy", true);
-            c1 = othat._SendReqForImageStatus(oPayload,obj["Id"]);
+            c1 = othat._SendReqForImageStatus(oPayload, obj["Id"]);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
@@ -256,21 +294,21 @@ sap.ui.define([
                 actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
                 onClose: function (sAction) {
                     if (sAction === "YES") {
-                        this._ChangePortImageStatusApproved(oPayload,oBj["Id"]);
-                      
+                        this._ChangePortImageStatusApproved(oPayload, oBj["Id"]);
+
                     }
                 }.bind(this)
             });
 
 
         },
-        _ChangePortImageStatusApproved: function (oPayload,sId) {
+        _ChangePortImageStatusApproved: function (oPayload, sId) {
             var c1, c2, c3;
             var oView = this.getView();
             var othat = this;
             var oModelControl = oView.getModel("oModelControl");
             oModelControl.setProperty("/PageBusy", true);
-            c1 = othat._SendReqForImageStatus(oPayload,sId);
+            c1 = othat._SendReqForImageStatus(oPayload, sId);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
@@ -281,7 +319,7 @@ sap.ui.define([
         },
 
 
-        _SendReqForImageStatus: function (oPayload,sId) {
+        _SendReqForImageStatus: function (oPayload, sId) {
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl");
             var oDataModel = oView.getModel();
@@ -338,8 +376,12 @@ sap.ui.define([
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
-                    oModelControl.setProperty("/PageBusy", false);
-                    othat._showMessageToast("Message11")
+                    c3 = othat._getPortfolioCategoryData(oModelControl.getProperty("/PainterId"));
+                    c3.then(function () {
+                        oModelControl.setProperty("/PageBusy", false);
+                        othat._showMessageToast("Message11")
+                    })
+
                 })
             })
         },
@@ -378,14 +420,19 @@ sap.ui.define([
                 if (oControl.data()["type"] === "fileUploader") {
                     var sFile = oControl.oFileUpload.files[0];
                     if (sFile) {
-                        var c1, c2;
+                        var c1, c2, c2A;
                         oModelControl.setProperty("/PageBusy", true)
                         c1 = this._UploadNewImage(sFile, oBject);
                         c1.then(function () {
                             c2 = othat._GetSelectedCategoryData();
+
                             c2.then(function () {
-                                oModelControl.setProperty("/PageBusy", false);
-                                othat._showMessageToast("Meesage9");
+                                c2A = othat._getPortfolioCategoryData(oModelControl.getProperty("/PainterId"));
+                                c2A.then(function () {
+                                    oModelControl.setProperty("/PageBusy", false);
+                                    othat._showMessageToast("Meesage9");
+                                })
+
                             })
 
                         })
@@ -462,8 +509,17 @@ sap.ui.define([
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
             var oIcontTab = oView.byId("iconTabBar");
+            var sItems = oIcontTab.getItems();
+            var sObject = ""
             var sKey = oIcontTab.getSelectedKey();
-            var sObject = oView.byId("categoryTable").getParent().getBindingContext().getObject();
+            for (var x of sItems) {
+                if (x.getBindingContext("oModelControl").getObject()["Id"] == sKey) {
+                    sObject = x.getBindingContext("oModelControl").getObject();
+                    break;
+                }
+            }
+
+            //var sObject = oView.byId("categoryTable").getParent().getBindingContext().getObject();
             var sMaxImages = sObject["MAXIMAGES"];
             var sPainterId = oModelControl.getProperty("/PainterId");
             var oTableData = oModelControl.getProperty("/TableData1");
@@ -515,7 +571,7 @@ sap.ui.define([
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
             var oIcontTab = oView.byId("iconTabBar");
-            var sKey = oIcontTab.getSelectedKey();
+            var sKey = oModelControl.getProperty("/IconTabKey")
             var oDataModel = oView.getModel();
             var sPainterId = oModelControl.getProperty("/PainterId");
             return new Promise((resolve, reject) => {
@@ -562,7 +618,7 @@ sap.ui.define([
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
             var oIcontTab = oView.byId("iconTabBar");
-            var oObject = oIcontTab.getItems()[0].getBindingContext().getObject();
+            var oObject = oIcontTab.getItems()[0].getBindingContext("oModelControl").getObject();
             oModelControl.setProperty("/IconTabKey", oObject["Id"]);
 
             promise.resolve()
@@ -636,10 +692,10 @@ sap.ui.define([
             promise.resolve();
             return promise;
         },
-        _setInitFilters:function(){
+        _setInitFilters: function () {
             /* Control param in the filters means that on the existing filters will get applied.
-            */ 
-            this._pValueHelpDialog.getBinding("items").filter([],"Control");
+             */
+            this._pValueHelpDialog.getBinding("items").filter([], "Control");
         },
         _setInitViewModel: function () {
             /*
@@ -710,7 +766,7 @@ sap.ui.define([
                 false
             );
 
-            oEvent.getSource().getBinding("items").filter([oFilter],"Control");
+            oEvent.getSource().getBinding("items").filter([oFilter], "Control");
         },
 
         onValueHelpClose: function (oEvent) {
@@ -804,7 +860,7 @@ sap.ui.define([
                 oModelControl = oView.getModel("oModelControl"),
                 sPath, sPortfolioid = oModelControl.getProperty("/PortfolioId");
             var sTokenCode = oModelControl.getProperty("/Portfolio/PortfolioTokenCode");
-                sPath = oModelControl.getProperty("/dataSource")+"PainterPortfolioSet("+sPortfolioid+")/$value?portfolioTokenCode="+sTokenCode;
+            sPath = oModelControl.getProperty("/dataSource") + "PainterPortfolioSet(" + sPortfolioid + ")/$value?portfolioTokenCode=" + sTokenCode;
             sap.m.URLHelper.redirect(sPath, true);
         },
         onExit: function () {

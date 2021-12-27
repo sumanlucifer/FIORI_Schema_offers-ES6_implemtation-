@@ -61,13 +61,20 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <IconTabBar  select="onIcnTbarChange" items="{path:'/PortfolioCategorySet', filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], parameters:{select:'Id, category,MAXIMAGES' } }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <layout:VerticalLayout width="100%" >
+                <IconTabBar  select="onIcnTbarChange" items="{path:'oModelControl>/PortfolioCategory',events:{dataReceived:'.onIcontabDataReceived'} }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
-                    <IconTabFilter  text="{parts:['category','MAXIMAGES'],formatter:'.formatter.fmtIcontabBartitle'}" key="{Id}" >
+                    <IconTabFilter  text="{oModelControl>category} ({oModelControl>TOTAL_IMAGES}/{oModelControl>MAXIMAGES})" key="{oModelControl>Id}" >
                       
                     </IconTabFilter>
                 </items>
             </IconTabBar>
+          
+                   <core:Fragment fragmentName="com.knpl.pragati.painterportfolio.view.fragments.TableCategoryImages" type="XML"/>
+    
+            
+            </layout:VerticalLayout>
+           
         </f:content>
         <f:footer>
             <OverflowToolbar>

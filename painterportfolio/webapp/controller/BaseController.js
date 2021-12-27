@@ -80,6 +80,7 @@ sap.ui.define([
                 IconTabKey: null,
                 PainterId: mParam2,
                 ImagesCount:"",
+                PortfolioCategory:[],
                 Portfolio:{
                     PortfolioTokenCode:""
                 },
