@@ -334,11 +334,7 @@ sap.ui.define(
                     var that = this;
 
                     function onYes() {
-                        var data = sPath + "/IsArchived";
-                        that.getModel().update(data, {
-                            IsArchived: true,
-                            ApprovalStatus: "NONE"
-                        }, {
+                        that.getView().getModel().remove(sPath, {
                             success: MessageToast.show(that.geti18nText("Message3"))
                         });
                     }
