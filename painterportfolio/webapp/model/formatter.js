@@ -86,6 +86,25 @@ sap.ui.define([], function () {
                 return "NA"
             }
             return mParam1;
+        },
+        fmtIcontabBartitle:function(mParam,mParam2){
+            var sStatus = "";
+        
+
+            if (mParam.split("_").length > 1) {
+                var mArray = mParam.split("_");
+
+            } else {
+                var mArray = mParam.split(" ");
+
+            }
+            for (var x of mArray) {
+                var a = x.toLowerCase() + " ";
+                var b = a[0].toUpperCase() + a.slice(1);
+
+                sStatus += b;
+            }
+            return sStatus + " ("+mParam2+")";
         }
     };
 
