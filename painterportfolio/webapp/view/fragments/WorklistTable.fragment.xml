@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PainterPortfolios}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id,Painter/Id" >
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PainterPortfolios}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id,Painter/Id,DownloadApplicable,PortfolioTokenCode" >
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
@@ -48,7 +48,13 @@
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 5 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
                     </customData>
-                    <Text text="{i18n>PortfolioStatus}"/>
+                    <Text text="{i18n>ApprovalStatus}"/>
+                </Column>
+                  <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Download"}'/>
+                    </customData>
+                    <Text text="{i18n>Download}"/>
                 </Column>
                  <Column hAlign="Begin">
                     <customData>
@@ -66,8 +72,9 @@
                           <Text text="{Painter/MembershipCard}"/>
                             <Text text="{Painter/Mobile}"/>
                               <!-- UTC should be false in displaying date but the case for filtering it will be different -->
-                             <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a', UTC:false} }" />
+                             <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
                        <ObjectStatus text="{path:'ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
+                        <Button visible="{= ${DownloadApplicable} === true }" icon="sap-icon://download" press="onDownloadMainTable" type="Ghost" tooltip="{i18n>Delete}"/>
                         <HBox >
                          
                             <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>

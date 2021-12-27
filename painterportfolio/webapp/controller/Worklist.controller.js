@@ -328,7 +328,11 @@ sap.ui.define(
                     });
 
                 },
-
+                onDownloadMainTable: function (oEvent) {
+                    var oObject = oEvent.getSource().getBindingContext().getObject();
+                    var sPath =  "/KNPL_PAINTER_API/api/v2/odata.svc/PainterPortfolioSet(" + oObject["Id"] + ")/$value?portfolioTokenCode=" + oObject["PortfolioTokenCode"];
+                    sap.m.URLHelper.redirect(sPath, true);
+                },
                 onDeleteSiteImage: function (oEvent) {
                     var sPath = oEvent.getSource().getBindingContext().getPath();
                     var that = this;
