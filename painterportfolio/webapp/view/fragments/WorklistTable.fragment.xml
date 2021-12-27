@@ -74,7 +74,7 @@
                               <!-- UTC should be false in displaying date but the case for filtering it will be different -->
                              <Text text="{ path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
                        <ObjectStatus text="{path:'ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
-                        <Button visible="{= ${DownloadApplicable} === true }" icon="sap-icon://download" press="onDownloadMainTable" type="Ghost" tooltip="{i18n>Delete}"/>
+                        <Button visible="{= ${DownloadApplicable} === true }" icon="sap-icon://download" press="onDownloadMainTable" type="Ghost" tooltip="{i18n>Download}"/>
                         <HBox >
                          
                             <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>
