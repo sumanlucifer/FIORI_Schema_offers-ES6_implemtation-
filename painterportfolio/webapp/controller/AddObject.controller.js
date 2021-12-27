@@ -603,6 +603,7 @@ sap.ui.define([
                 oDataModel.create("/PainterPortfolioSet", oPayload, {
                     success: function (oData) {
                         oModelControl.setProperty("/PortfolioId", oData["Id"]);
+                        oModelControl.setProperty("/Portfolio/PortfolioTokenCode", oData["PortfolioTokenCode"]);
                         resolve(oData["Id"])
                     },
                     error: function (oData) {
@@ -802,7 +803,8 @@ sap.ui.define([
             var oView = this.getView(),
                 oModelControl = oView.getModel("oModelControl"),
                 sPath, sPortfolioid = oModelControl.getProperty("/PortfolioId");
-                sPath = oModelControl.getProperty("/dataSource")+"PainterPortfolioSet("+sPortfolioid+")/$value";
+            var sTokenCode = oModelControl.getProperty("/Portfolio/PortfolioTokenCode");
+                sPath = oModelControl.getProperty("/dataSource")+"PainterPortfolioSet("+sPortfolioid+")/$value?portfolioTokenCode="+sTokenCode;
             sap.m.URLHelper.redirect(sPath, true);
         },
         onExit: function () {

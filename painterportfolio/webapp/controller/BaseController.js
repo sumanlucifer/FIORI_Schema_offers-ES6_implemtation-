@@ -80,6 +80,9 @@ sap.ui.define([
                 IconTabKey: null,
                 PainterId: mParam2,
                 ImagesCount:"",
+                Portfolio:{
+                    PortfolioTokenCode:""
+                },
                 Dialog: {
                     Remarks: ""
                 },
