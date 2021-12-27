@@ -104,7 +104,7 @@ sap.ui.define([], function () {
 
                 sStatus += b;
             }
-            return sStatus + " ("+mParam2+")";
+            return sStatus + " (Max: "+mParam2+")";
         }
     };
 
