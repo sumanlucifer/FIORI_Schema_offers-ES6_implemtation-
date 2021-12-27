@@ -99,7 +99,7 @@ sap.ui.define(
 
                 },
                 _dummyFunction: function () {
-                    var promise = jQuerry.Deferred();
+                    var promise = jQuery.Deferred();
                     promise.resolve()
                     return promise;
                 },
@@ -162,6 +162,9 @@ sap.ui.define(
                         return promise;
                     }
 
+                },
+                onAfterRendering: function () {
+                    //this._initTableData();
                 },
                 _initTableData: function () {
                     /*
@@ -330,7 +333,7 @@ sap.ui.define(
                 },
                 onDownloadMainTable: function (oEvent) {
                     var oObject = oEvent.getSource().getBindingContext().getObject();
-                    var sPath =  "/KNPL_PAINTER_API/api/v2/odata.svc/PainterPortfolioSet(" + oObject["Id"] + ")/$value?portfolioTokenCode=" + oObject["PortfolioTokenCode"];
+                    var sPath = "/KNPL_PAINTER_API/api/v2/odata.svc/PainterPortfolioSet(" + oObject["Id"] + ")/$value?portfolioTokenCode=" + oObject["PortfolioTokenCode"];
                     sap.m.URLHelper.redirect(sPath, true);
                 },
                 onDeleteSiteImage: function (oEvent) {
