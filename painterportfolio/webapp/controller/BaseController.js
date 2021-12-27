@@ -79,6 +79,7 @@ sap.ui.define([
                 TableData1: [],
                 IconTabKey: null,
                 PainterId: mParam2,
+                ImagesCount:"",
                 Dialog: {
                     Remarks: ""
                 },

@@ -143,7 +143,17 @@ sap.ui.define([
 
 
         },
-
+        onImagesUpdaed:function(oEvent){
+           var sTotalItems = oEvent.getParameter("total");
+           var oTable = oEvent.getSource();
+           var sTitle;
+           if(sTotalItems && oTable.getBinding("items").isLengthFinal){
+                sTitle = this.geti18nText("ImagesCount",[sTotalItems])
+           }else {
+            sTitle = this.geti18nText("ImagesCount",[0])
+           }
+           this.getView().getModel("oModelControl").setProperty("/ImagesCount",sTitle)
+        },
         onIcnTbarChange: function (oEvent) {
             var c1, c2, c3;
             var othat = this;
