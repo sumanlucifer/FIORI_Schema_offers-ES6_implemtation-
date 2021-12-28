@@ -253,7 +253,7 @@ sap.ui.define([
                     break;
                 }
             }
-      
+
             var oPayload = {};
             oPayload["ApprovalStatus"] = oData["status"];
             oPayload["Remark"] = oModelControl.getProperty("/Dialog/Remarks")
@@ -262,11 +262,13 @@ sap.ui.define([
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
-                    othat._RemarksDialog.close();
-                    othat._RemarksDialog.setBusy(false);
-                    oModelControl.setProperty("/Dialog/Remarks", "")
-                    oModelControl.setProperty("/PageBusy", false);
-
+                    c3 = othat._DummyPromise();
+                    c3.then(function () {
+                        othat._RemarksDialog.close();
+                        othat._RemarksDialog.setBusy(false);
+                        oModelControl.setProperty("/Dialog/Remarks", "")
+                        oModelControl.setProperty("/PageBusy", false);
+                    })
                 })
             })
 
@@ -302,7 +304,11 @@ sap.ui.define([
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
-                    oModelControl.setProperty("/PageBusy", false);
+                    c3 = othat._UpdateBindings();
+                    c3.then(function () {
+                        oModelControl.setProperty("/PageBusy", false);
+                    })
+
                 })
             })
 
@@ -361,15 +367,19 @@ sap.ui.define([
             var othat = this;
             var oModelControl = oView.getModel("oModelControl");
             oModelControl.setProperty("/PageBusy", true);
-            var c1, c2, c3;
+            var c1, c2, c3, c4;
             c1 = othat._DeletPortRequest(oBject);
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
                     c3 = othat._getPortfolioCategoryData(oModelControl.getProperty("/PainterId"));
                     c3.then(function () {
-                        oModelControl.setProperty("/PageBusy", false);
-                        othat._showMessageToast("Message11")
+                        c4 = othat._UpdateBindings();
+                        c4.then(function () {
+                            oModelControl.setProperty("/PageBusy", false);
+                            othat._showMessageToast("Message11")
+                        })
+
                     })
 
                 })
@@ -388,6 +398,12 @@ sap.ui.define([
                 })
             })
 
+        },
+        _UpdateBindings: function () {
+            var promise = jQuery.Deferred();
+            this.getView().getModel().refresh();
+            promise.resolve()
+            return promise;
         },
         onCancelImagesTable: function (oEvent) {
             var oView = this.getView();
@@ -509,7 +525,7 @@ sap.ui.define([
                 }
             }
 
-         
+
             var sMaxImages = sObject["MAXIMAGES"];
             var sPainterId = oModelControl.getProperty("/PainterId");
             var oTableData = oModelControl.getProperty("/TableData1");
