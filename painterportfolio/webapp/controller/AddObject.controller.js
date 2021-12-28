@@ -148,22 +148,12 @@ sap.ui.define([
 
 
         },
-        onIcontabDataReceived: function () {
-            console.log("data received event trigerred")
-            var c1, c2;
-            var othat = this;
-            var c1 = othat._SetIconTabData();
-            c1.then(function () {
-                c2 = othat._GetSelectedCategoryData();
-            })
-        },
+
         _getPortfolioCategoryData: function (mPainterId) {
             var iPainterId = mPainterId;
             var oView = this.getView();
             var oDataModel = oView.getModel();
-            //this.getView().byId("iconTabBar").getBinding("items").attachEvent('dataReceived',function(){console.log("event trigered")});
             var oModelControl = oView.getModel("oModelControl")
-            console.log(iPainterId)
             return new Promise((resolve, reject) => {
                 oDataModel.read("/PortfolioCategorySet", {
                     urlParameters: {
@@ -263,7 +253,7 @@ sap.ui.define([
                     break;
                 }
             }
-            //var oPayload = Object.assign({}, obj);
+      
             var oPayload = {};
             oPayload["ApprovalStatus"] = oData["status"];
             oPayload["Remark"] = oModelControl.getProperty("/Dialog/Remarks")
@@ -519,7 +509,7 @@ sap.ui.define([
                 }
             }
 
-            //var sObject = oView.byId("categoryTable").getParent().getBindingContext().getObject();
+         
             var sMaxImages = sObject["MAXIMAGES"];
             var sPainterId = oModelControl.getProperty("/PainterId");
             var oTableData = oModelControl.getProperty("/TableData1");
