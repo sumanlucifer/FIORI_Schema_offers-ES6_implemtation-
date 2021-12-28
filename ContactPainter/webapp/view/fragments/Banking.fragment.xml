@@ -37,7 +37,7 @@
                  <core:Title text=""/>
                 <Label text="{i18n>TransactionStatus}" design="Bold"/>
                 <Text text="{path:'PainterBankDetails/PaymentTransactionStatus',formatter:'.fmtLowerCase'}" />
-                <Label text="{i18n>TrasnsactionRefId}"/>
+                <Label text="{i18n>TransactionRefId}"/>
                 <Text text="{PainterBankDetails/PaymentReferenceId}" />
                 <Label text="{i18n>TransactionMessage}"/>
                 <Text text="{PainterBankDetails/PaymentTransactionMessage}" />

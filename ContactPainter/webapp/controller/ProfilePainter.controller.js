@@ -3142,6 +3142,21 @@ sap.ui.define(
                             return ele.sPath !== "CreatedAt";
                         });
                     aFilters.push(new Filter("PainterId", FilterOperator.EQ, oPainterId));
+                    var aFilter1 = new Filter({
+                        path: "PointTransactionType",
+                        operator: FilterOperator.EQ,
+                        value1: "ACCRUED"
+                    });
+                    var aFilter2 = new Filter([new Filter({
+                        path: "PointTransactionType",
+                        operator: FilterOperator.EQ,
+                        value1: "REDEEMED"
+                    }), new Filter({
+                        path: "PointType",
+                        operator: FilterOperator.EQ,
+                        value1: "SETTLEMENT"
+                    })], true);
+                    var aFinalFilter1 = new Filter([aFilter1, aFilter2], false)
                     if (bApplyCurrentFinancialYear)
                         aFilters.push(
                             new Filter({
@@ -3159,11 +3174,7 @@ sap.ui.define(
                         })
                     );
                     aFilters.push(
-                        new Filter({
-                            path: "PointTransactionType",
-                            operator: FilterOperator.EQ,
-                            value1: "ACCRUED"
-                        })
+                        aFinalFilter1
                     );
                     oBindingParams.filters.push(
                         new Filter({
@@ -3171,6 +3182,7 @@ sap.ui.define(
                             and: true,
                         })
                     );
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
                 _getfinanceYear: function () {
                     var oNow = new Date(),
@@ -3245,6 +3257,8 @@ sap.ui.define(
                             and: true,
                         })
                     );
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
+
                 },
                 onBeforeRebindRdmdCash: function (oEvent) {
                     // console.log("Binding Trigerred for loyalty redeemed cash")
@@ -3304,6 +3318,7 @@ sap.ui.define(
                             and: true,
                         })
                     );
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
                 /*Aditya loyalty chnages end */
                 // knowledge table changes
@@ -3359,6 +3374,7 @@ sap.ui.define(
                     );
                     oBindingParams.filters.push(oFilter1);
                     oBindingParams.filters.push(oFilter2);
+                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
                 },
                 onBeforeRebindTrainingTable: function (oEvent) {
                     // Live Training
@@ -3376,6 +3392,7 @@ sap.ui.define(
                     );
                     oBindingParams.filters.push(oFilter1);
                     oBindingParams.filters.push(oFilter2);
+                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
                 },
                 onViewQuestionaire: function (oEvent) {
                     var object = oEvent.getSource().getBindingContext().getObject();
@@ -3470,6 +3487,7 @@ sap.ui.define(
                     oBindingParams.parameters["expand"] = "LearningDetails";
                     var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
                     oBindingParams.filters.push(oFilter);
+                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
                 },
                 onViewQuestionaireLearning: function (oEvent) {
                     var object = oEvent.getSource().getBindingContext().getObject();

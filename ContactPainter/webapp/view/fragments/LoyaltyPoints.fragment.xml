@@ -5,7 +5,7 @@
         selectedKey="{oModelControl2>/IctabBarLoyalty}"
 		class="sapUiResponsiveContentPadding">
 		<items>
-			<IconTabFilter text="Accrued" key="accrued">
+			<IconTabFilter text="{i18n>Table1RewardsHeading}" key="accrued">
 			
                     <smartTable:SmartTable
                             id="smrtLoyalty"
@@ -72,7 +72,7 @@
                                     <ColumnListItem>
                                         <cells>
                                                <Text text="{path:'PointType',formatter:'.fmtStatusType'}" />
-                                               <Text text="{path:'RewardPoints'}" />
+                                               <Text text="{parts:['RewardPoints','PointTransactionType'], formatter:'.formatter.fmtCheckSettlemnetPoints'}" />
                                                <Text text="{path:'TotalPoints'}" />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
