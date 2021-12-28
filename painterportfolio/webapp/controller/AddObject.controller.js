@@ -163,11 +163,11 @@ sap.ui.define([
             var oDataModel = oView.getModel();
             //this.getView().byId("iconTabBar").getBinding("items").attachEvent('dataReceived',function(){console.log("event trigered")});
             var oModelControl = oView.getModel("oModelControl")
-            var sCustom = "painterId=" + iPainterId
+            console.log(iPainterId)
             return new Promise((resolve, reject) => {
                 oDataModel.read("/PortfolioCategorySet", {
                     urlParameters: {
-                        custom: sCustom
+                        painterId: "" + iPainterId + ""
                     },
                     success: function (oData) {
                         oModelControl.setProperty("/PortfolioCategory", oData["results"]);
