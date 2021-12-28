@@ -2,7 +2,7 @@
 	xmlns:u="sap.ui.unified"
      xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:core="sap.ui.core">
-    <Table id="categoryTable" updateFinished="onImagesUpdaed"  width="100%"  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false"  noDataText="{i18n>tableNoDataText}">
+    <Table id="categoryTable" class="sapUiTinyMarginBegin" updateFinished="onImagesUpdaed"  width="98%"  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false"  noDataText="{i18n>tableNoDataText}">
                 <headerToolbar>
                     <Toolbar>
                             <Title text="{oModelControl>/ImagesCount}"/>
