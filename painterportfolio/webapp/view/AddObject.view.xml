@@ -80,7 +80,8 @@
             <OverflowToolbar>
               <ToolbarSpacer/>
               <Button press="onNavToHome" type="Ghost"  text="{i18n>Cancel}"  />
-              <Button press="onDownloadProtfolio" type="Emphasized" text="{i18n>Download}" />
+              <Button press="onDownloadProtfolio" type="Emphasized" text="{i18n>Download}" visible="{= ${DownloadApplicable} === true }" />
+             
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

@@ -633,7 +633,7 @@ sap.ui.define([
                 path: "/PainterPortfolioSet(" + iPortFolioId + ")",
                 parameters: {
                     expand: "Painter/Depot",
-                    select: "Id,PortfolioCode,Painter/Id,Painter/Name,Painter/MembershipCard,Painter/ZoneId,Painter/Depot/Depot,Painter/DivisionId"
+                    select: "Id,PortfolioCode,Painter/Id,Painter/Name,Painter/MembershipCard,Painter/ZoneId,Painter/Depot/Depot,Painter/DivisionId,DownloadApplicable"
                 },
                 events: {
                     dataRequested: function (oEvent) {
