@@ -54,6 +54,12 @@ sap.ui.define([
             this._initData();
         },
         _initData: function () {
+             /*
+             * Author: manik saluja
+             * Date: 02-Dec-2021
+             * Language:  JS
+             * Purpose: used for the inital load of data in case the route is add
+             */
             var oView = this.getView();
             var othat = this;
             var c1, c2, c3, c4;
@@ -76,7 +82,12 @@ sap.ui.define([
 
         },
         _initDetailData: function (sPainterId) {
-
+             /*
+             * Author: manik saluja
+             * Date: 02-Dec-2021
+             * Language:  JS
+             * Purpose: used in the intial load of the data in case the route is get details of exising portfolio
+             */
             var oView = this.getView();
             var othat = this;
 
@@ -117,6 +128,12 @@ sap.ui.define([
             return promise;
         },
         onValueHelpConfirm: function (oEvent) {
+             /*
+             * Author: manik saluja
+             * Date: 02-Dec-2021
+             * Language:  JS
+             * Purpose: This method is used to fetch the data of the painter once its selected in the value help. This will only run in case route is add.
+             */
             var sObject = oEvent.getParameter("selectedItem").getBindingContext().getObject();
             var oView = this.getView();
             var othat = this;
@@ -224,6 +241,12 @@ sap.ui.define([
             }
         },
         onApproveReject: function () {
+             /*
+             * Author: manik saluja
+             * Date: 02-Dec-2021
+             * Language:  JS
+             * Purpose: This method trigerres when the user clicks on the save in the remarks dialog that pops up when we want to reject a portfolio. 
+             */
             var oView = this.getView();
             var oModelContrl = oView.getModel("oModelControl");
             var oValidator = new Validator();
@@ -482,6 +505,12 @@ sap.ui.define([
 
         },
         onViewImage: function (oEvent) {
+             /*
+             * Author: manik saluja
+             * Date: 27-Dec-2021
+             * Language:  JS
+             * Purpose: open the dialog from the line item in the table TableCategoryImages on click of the relevent link.
+             */
             var oView = this.getView();
             var oSource = oEvent.getSource();
             var oModelControl = oView.getModel("oModelControl")
@@ -512,6 +541,12 @@ sap.ui.define([
         },
 
         onPressAddNewImage: function (oEvent) {
+             /*
+             * Author: manik saluja
+             * Date: 27-Dec-2021
+             * Language:  JS
+             * Purpose: Used to add new image (and also have the validation). This method runs on the add of the table TableCategoryImages
+             */
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
             var oIcontTab = oView.byId("iconTabBar");
@@ -573,6 +608,12 @@ sap.ui.define([
         },
 
         _GetSelectedCategoryData: function () {
+             /*
+             * Author: manik saluja
+             * Date: 27-Dec-2021
+             * Language:  JS
+             * Purpose: used to get the category data for the painter and the category selected in the icon tab
+             */
             var promise = jQuery.Deferred();
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
@@ -620,6 +661,12 @@ sap.ui.define([
 
         },
         _SetIconTabData: function () {
+             /*
+             * Author: manik saluja
+             * Date: 27-Dec-2021
+             * Language:  JS
+             * Purpose: This method only runs at the inital load of category data for the incontab bar. Once the data is loaded we select the first tab
+             */
             var promise = jQuery.Deferred();
             var oView = this.getView();
             var oModelControl = oView.getModel("oModelControl")
@@ -631,6 +678,12 @@ sap.ui.define([
             return promise;
         },
         _DisplayDetailsPainter: function (mParam1) {
+             /*
+             * Author: manik saluja
+             * Date: 27-Dec-2021
+             * Language:  JS
+             * Purpose: used to get the details of the portfolio and the expand of the painter with it to display the data in the object page layout. 
+             */
             var promise = jQuery.Deferred();
             var iPortFolioId = mParam1;
             var oView = this.getView();
@@ -654,6 +707,13 @@ sap.ui.define([
             return promise;
         },
         _Createportfolio: function (mParam1) {
+            /*
+             * Author: manik saluja
+             * Date: 27-Dec-2021
+             * Language:  JS
+             * Purpose: This method is used to check if the portfolio exists or not for the given painter id. If the portfolio doesnt exist for the painter
+             * a new portfolio will get created by the service. 
+             */
             var iPainterId = mParam1;
             var oView = this.getView();
             var oDataModel = oView.getModel();
