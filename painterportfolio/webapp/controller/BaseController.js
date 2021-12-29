@@ -79,10 +79,10 @@ sap.ui.define([
                 TableData1: [],
                 IconTabKey: null,
                 PainterId: mParam2,
-                ImagesCount:"",
-                PortfolioCategory:[],
-                Portfolio:{
-                    PortfolioTokenCode:""
+                ImagesCount: "",
+                PortfolioCategory: [],
+                Portfolio: {
+                    PortfolioTokenCode: ""
                 },
                 Dialog: {
                     Remarks: ""
@@ -182,14 +182,19 @@ sap.ui.define([
         },
         onDialogClose: function () {
             var oView = this.getView(),
-            oModelContrl = oView.getModel("oModelControl");
+                oModelContrl = oView.getModel("oModelControl");
+            if (this._pValueHelpDialog) {
+
+                this._pValueHelpDialog.destroy();
+                delete this._pValueHelpDialog;
+            }
             if (this._ViewImageDialog) {
                 this._ViewImageDialog.close();
-                
+
             }
             if (this._RemarksDialog) {
                 this._RemarksDialog.close();
-                oModelContrl.setProperty("/Dialog/Remarks","")
+                oModelContrl.setProperty("/Dialog/Remarks", "")
             }
         },
         /*
