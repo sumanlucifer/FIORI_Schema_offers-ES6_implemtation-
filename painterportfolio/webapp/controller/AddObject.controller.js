@@ -54,7 +54,7 @@ sap.ui.define([
             this._initData();
         },
         _initData: function () {
-             /*
+            /*
              * Author: manik saluja
              * Date: 02-Dec-2021
              * Language:  JS
@@ -82,7 +82,7 @@ sap.ui.define([
 
         },
         _initDetailData: function (sPainterId) {
-             /*
+            /*
              * Author: manik saluja
              * Date: 02-Dec-2021
              * Language:  JS
@@ -128,12 +128,13 @@ sap.ui.define([
             return promise;
         },
         onValueHelpConfirm: function (oEvent) {
-             /*
+            /*
              * Author: manik saluja
              * Date: 02-Dec-2021
              * Language:  JS
              * Purpose: This method is used to fetch the data of the painter once its selected in the value help. This will only run in case route is add.
              */
+            this.onDialogClose();
             var sObject = oEvent.getParameter("selectedItem").getBindingContext().getObject();
             var oView = this.getView();
             var othat = this;
@@ -141,6 +142,7 @@ sap.ui.define([
             oModelControl.setProperty("/PainterId", sObject["Id"]);
             oModelControl.setProperty("/PageBusy", false);
             var c1, c2A, c2, c3, c4, c5;
+
             c1 = this._Createportfolio(sObject["Id"]);
 
             c1.then(function (mParam1) {
@@ -241,7 +243,7 @@ sap.ui.define([
             }
         },
         onApproveReject: function () {
-             /*
+            /*
              * Author: manik saluja
              * Date: 02-Dec-2021
              * Language:  JS
@@ -449,7 +451,7 @@ sap.ui.define([
                 if (oControl.data()["type"] === "fileUploader") {
                     var sFile = oControl.oFileUpload.files[0];
                     if (sFile) {
-                        var c1, c2, c2A,c3;
+                        var c1, c2, c2A, c3;
                         oModelControl.setProperty("/PageBusy", true)
                         c1 = this._UploadNewImage(sFile, oBject);
                         c1.then(function () {
@@ -458,11 +460,11 @@ sap.ui.define([
                                 c2A = othat._getPortfolioCategoryData(oModelControl.getProperty("/PainterId"));
                                 c2A.then(function () {
                                     c3 = othat._UpdateBindings();
-                                    c3.then(function(){
+                                    c3.then(function () {
                                         oModelControl.setProperty("/PageBusy", false);
                                         othat._showMessageToast("Meesage9");
                                     })
-                                  
+
                                 })
 
                             })
@@ -508,7 +510,7 @@ sap.ui.define([
 
         },
         onViewImage: function (oEvent) {
-             /*
+            /*
              * Author: manik saluja
              * Date: 27-Dec-2021
              * Language:  JS
@@ -544,7 +546,7 @@ sap.ui.define([
         },
 
         onPressAddNewImage: function (oEvent) {
-             /*
+            /*
              * Author: manik saluja
              * Date: 27-Dec-2021
              * Language:  JS
@@ -611,7 +613,7 @@ sap.ui.define([
         },
 
         _GetSelectedCategoryData: function () {
-             /*
+            /*
              * Author: manik saluja
              * Date: 27-Dec-2021
              * Language:  JS
@@ -664,7 +666,7 @@ sap.ui.define([
 
         },
         _SetIconTabData: function () {
-             /*
+            /*
              * Author: manik saluja
              * Date: 27-Dec-2021
              * Language:  JS
@@ -681,7 +683,7 @@ sap.ui.define([
             return promise;
         },
         _DisplayDetailsPainter: function (mParam1) {
-             /*
+            /*
              * Author: manik saluja
              * Date: 27-Dec-2021
              * Language:  JS
@@ -839,6 +841,7 @@ sap.ui.define([
         },
 
         onValueHelpClose: function (oEvent) {
+            this.onDialogClose();
             this.onNavToHome();
             //DivisionId,ZoneId
         },
