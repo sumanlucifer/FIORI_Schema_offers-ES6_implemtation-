@@ -342,7 +342,10 @@ sap.ui.define(
 
                     function onYes() {
                         that.getView().getModel().remove(sPath, {
-                            success: MessageToast.show(that.geti18nText("Message3"))
+                            success: function(){
+                                MessageToast.show(that.geti18nText("Message3"));
+                                that.getView().byId("idWorkListTable1").rebindTable()
+                            }
                         });
                     }
                     that.showWarning("MSG_CONFIRM_DELETE", onYes);
