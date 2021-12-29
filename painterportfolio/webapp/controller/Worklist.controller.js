@@ -44,7 +44,8 @@ sap.ui.define(
                             Status: "",
                             Search: "",
                             StartDate: null,
-                            EndDate: null
+                            EndDate: null,
+                            DownloadAppl:""
                         },
                         PageBusy: true
                     };
@@ -243,6 +244,10 @@ sap.ui.define(
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("ApprovalStatus", FilterOperator.EQ, oViewFilter[prop]));
+                            } else if (prop === "DownloadAppl") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("DownloadApplicable", FilterOperator.EQ, JSON.parse(oViewFilter[prop])));
                             } else if (prop === "Search") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -301,7 +306,8 @@ sap.ui.define(
                         Status: "",
                         Search: "",
                         StartDate: null,
-                        EndDate: null
+                        EndDate: null,
+                        DownloadAppl:""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);

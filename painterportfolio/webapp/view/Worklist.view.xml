@@ -27,6 +27,14 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Download" label="{i18n>DownloadApplicable}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox placeholder="{i18n>Select}" selectedKey="{path:'oModelControl>/filterBar/DownloadAppl' }">
+                                       <core:Item text="{i18n>Yes}" key="true"/>
+                                        <core:Item text="{i18n>No}" key="false"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
