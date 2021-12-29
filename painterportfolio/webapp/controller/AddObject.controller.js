@@ -426,7 +426,8 @@ sap.ui.define([
         },
         _UpdateBindings: function () {
             var promise = jQuery.Deferred();
-            this.getView().getModel().refresh();
+          
+            this.getView().getElementBinding().refresh();
             promise.resolve()
             return promise;
         },
