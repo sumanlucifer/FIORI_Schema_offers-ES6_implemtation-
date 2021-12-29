@@ -285,7 +285,7 @@ sap.ui.define([
             c1.then(function () {
                 c2 = othat._GetSelectedCategoryData();
                 c2.then(function () {
-                    c3 = othat._DummyPromise();
+                    c3 = othat._UpdateBindings();
                     c3.then(function () {
                         othat._RemarksDialog.close();
                         othat._RemarksDialog.setBusy(false);
@@ -449,17 +449,20 @@ sap.ui.define([
                 if (oControl.data()["type"] === "fileUploader") {
                     var sFile = oControl.oFileUpload.files[0];
                     if (sFile) {
-                        var c1, c2, c2A;
+                        var c1, c2, c2A,c3;
                         oModelControl.setProperty("/PageBusy", true)
                         c1 = this._UploadNewImage(sFile, oBject);
                         c1.then(function () {
                             c2 = othat._GetSelectedCategoryData();
-
                             c2.then(function () {
                                 c2A = othat._getPortfolioCategoryData(oModelControl.getProperty("/PainterId"));
                                 c2A.then(function () {
-                                    oModelControl.setProperty("/PageBusy", false);
-                                    othat._showMessageToast("Meesage9");
+                                    c3 = othat._UpdateBindings();
+                                    c3.then(function(){
+                                        oModelControl.setProperty("/PageBusy", false);
+                                        othat._showMessageToast("Meesage9");
+                                    })
+                                  
                                 })
 
                             })
