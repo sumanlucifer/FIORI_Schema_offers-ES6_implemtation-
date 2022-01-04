@@ -45,7 +45,10 @@ sap.ui.define(
                             Search: "",
                             StartDate: null,
                             EndDate: null,
-                            DownloadAppl:""
+                            DownloadAppl:"",
+                            ZoneId:"",
+                            DivisionId:"",
+                            DepotId:""
                         },
                         PageBusy: true
                     };
@@ -248,7 +251,19 @@ sap.ui.define(
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("DownloadApplicable", FilterOperator.EQ, JSON.parse(oViewFilter[prop])));
-                            } else if (prop === "Search") {
+                            }else if (prop === "ZoneId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
+                            } else if (prop === "DivisionId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/DivisionId", FilterOperator.EQ, oViewFilter[prop]));
+                            } else if (prop === "DepotId") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop]));
+                            }  else if (prop === "Search") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -307,7 +322,10 @@ sap.ui.define(
                         Search: "",
                         StartDate: null,
                         EndDate: null,
-                        DownloadAppl:""
+                        DownloadAppl:"",
+                        ZoneId:"",
+                        DivisionId:"",
+                        DepotId:""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
@@ -341,6 +359,33 @@ sap.ui.define(
                     var oObject = oEvent.getSource().getBindingContext().getObject();
                     var sPath = "/KNPL_PAINTER_API/api/v2/odata.svc/PainterPortfolioSet(" + oObject["Id"] + ")/$value?portfolioTokenCode=" + oObject["PortfolioTokenCode"];
                     sap.m.URLHelper.redirect(sPath, true);
+                },
+                onZoneChange: function (oEvent) {
+                    var sId = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+
+                    var oDivision = oView.byId("idDivision");
+                    var oDivItems = oDivision.getBinding("items");
+                    var oDivSelItm = oDivision.getSelectedItem(); //.getBindingContext().getObject()
+                    oDivision.clearSelection();
+                    oDivision.setValue("");
+                    oDivItems.filter(new Filter("Zone", FilterOperator.EQ, sId));
+                    //setting the data for depot;
+                    var oDepot = oView.byId("idDepot");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    // clearning data for dealer
+
+                },
+                onDivisionChange: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oDepot = oView.byId("idDepot");
+                    var oDepBindItems = oDepot.getBinding("items");
+                    oDepot.clearSelection();
+                    oDepot.setValue("");
+                    oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
                 },
                 onDeleteSiteImage: function (oEvent) {
                     var sPath = oEvent.getSource().getBindingContext().getPath();
