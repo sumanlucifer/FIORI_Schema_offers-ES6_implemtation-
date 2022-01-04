@@ -8,6 +8,12 @@
                         <Link text="{i18n>worklistViewTitle}" press="onNavToHome"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
+                 <f:heading>
+                    <Title text="{Painter/Name}"/>
+                </f:heading>
+                <f:expandedContent>
+                    <Label text="{Painter/MembershipCard}"/>
+                </f:expandedContent>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
@@ -47,7 +53,7 @@
         </f:header>
         <f:content>
             <layout:VerticalLayout width="100%" >
-                <IconTabBar  select="onIcnTbarChange" items="{path:'oModelControl>/PortfolioCategory',events:{dataReceived:'.onIcontabDataReceived'} }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+                <IconTabBar  select="onIcnTbarChange" items="{path:'oModelControl>/PortfolioCategory' }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
                     <IconTabFilter  text="{oModelControl>category} ({oModelControl>TOTAL_IMAGES}/{oModelControl>MAXIMAGES})" key="{oModelControl>Id}" >
                       

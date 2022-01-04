@@ -35,6 +35,27 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox id="idZone" placeholder="{i18n>Select} {i18n>Zone}" selectionChange="onZoneChange"  items="{path:'/MasterZoneSet',select:'Id'}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
+                                        <core:Item text="{Id} " key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                      <ComboBox  enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Select} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{path:'/MasterDivisionSet',select:'Id'}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
+                                        <core:Item text="{Id}" key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Depot" label="{i18n>Depot}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                     <ComboBox enabled="{= ${oModelControl>/filterBar/DivisionId}.length>1}" id="idDepot" placeholder="{i18n>Select} {i18n>Depot}" selectionChange="onDepotChange"  items="{path:'/MasterDepotSet',select:'Depot,Id'}" selectedKey="{path:'oModelControl>/filterBar/DepotId' }">
+                                        <core:Item text="{Depot} ( {Id} )" key="{Id}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
