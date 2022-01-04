@@ -44,6 +44,18 @@ sap.ui.define([], function () {
             return "";
 
         },
+        fmtAgeGrp: function (mParam1) {
+            if (mParam1) {
+                return mParam1 + " years";
+            }
+        },
+        fmtAddress: function (mParam1, mParam2, mParam3) {
+            if (mParam1) {
+                return mParam1.trim() + ", " + mParam2 + ", " + mParam3;
+            } else {
+                return mParam2 + ", " + mParam3;
+            }
+        },
         formatURL: function (sURL) {
             if (sURL) {
                 return "https://".concat(

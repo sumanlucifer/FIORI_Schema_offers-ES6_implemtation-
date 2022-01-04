@@ -17,33 +17,18 @@
                         <Avatar  fallbackIcon="sap-icon://picture" src="{parts:['Painter/__metadata'],formatter:'.formatter.generateImageUrl'}"  displaySize="L" displayShape="Circle"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                        <layout:HorizontalLayout >
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>PainterName}:"/>
-                            <Text text="{path:'Painter/Name'}"/>
-                        </layout:HorizontalLayout>
-                        <layout:HorizontalLayout >
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>Mobile}:"/>
-                            <Text text="{Painter/Mobile}"/>
-                        </layout:HorizontalLayout>
-                        <layout:HorizontalLayout >
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>MembershipId}:"/>
-                            <Text text="{Painter/MembershipCard}"/>
-                        </layout:HorizontalLayout>
-                       
+                        <ObjectStatus title="{i18n>ContactNumber}" text="{Painter/Mobile}"/>
+                        <ObjectStatus title="{i18n>AgeGroup}" text="{path:'Painter/AgeGroup/AgeGroup',formatter:'.formatter.fmtAgeGrp'}"/>
+                        <ObjectStatus title="{i18n>Category}" text="{path:'Painter/Slab/Slab'}"/>
+                        <ObjectStatus title="{i18n>ActivationStatus}" text="{path:'Painter/ActivationStatus',formatter:'.formatter.fmtLowerCase' }"/>
+                        <ObjectStatus title="{i18n>Rating}" text="{path:'Painter/PainterRating' }"/>
+                        
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                        <layout:HorizontalLayout>
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>Zone}:"/>
-                            <Text text="{path:'Painter/ZoneId'}"/>
-                        </layout:HorizontalLayout>
-                        <layout:HorizontalLayout >
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>Division}:"/>
-                            <Text text="{path:'Painter/DivisionId'}"/>
-                        </layout:HorizontalLayout>
-                         <layout:HorizontalLayout >
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>Depot}:"/>
-                            <Text text="{path:'Painter/Depot/Depot'}"/>
-                        </layout:HorizontalLayout>
+                        <ObjectStatus title="{i18n>Address}" text="{parts:['Painter/PainterAddress/AddressLine1','Painter/PainterAddress/CityDetails/City','Painter/PainterAddress/StateDetails/State'], formatter:'.formatter.fmtAddress' }"/>
+                        <ObjectStatus title="{i18n>TotalPoints}" text="{path:'Painter/TotalPoints' }"/>
+                        <ObjectStatus title="{i18n>RedeemPoints}" text="{path:'Painter/RedeemPoints' }"/>
+                        <ObjectStatus title="{i18n>BalancePoints}" text="{path:'Painter/RewardPoints' }"/>
                     </layout:VerticalLayout>
                      <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">

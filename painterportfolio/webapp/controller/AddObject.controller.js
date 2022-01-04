@@ -697,8 +697,9 @@ sap.ui.define([
             oView.bindElement({
                 path: "/PainterPortfolioSet(" + iPortFolioId + ")",
                 parameters: {
-                    expand: "Painter/Depot",
-                    select: "Id,PortfolioCode,Painter/Id,Painter/Name,Painter/MembershipCard,Painter/ZoneId,Painter/Depot/Depot,Painter/DivisionId,DownloadApplicable"
+                    expand: "Painter/Depot,Painter/AgeGroup,Painter/Slab,Painter/PainterAddress/CityDetails,Painter/PainterAddress/StateDetails",
+                    select: "Id,PortfolioCode,Painter/Id,Painter/Name,Painter/Mobile,Painter/AgeGroup/AgeGroup,Painter/Slab/Slab,Painter/ActivationStatus,Painter/PainterRating,Painter/MembershipCard,Painter/ZoneId,Painter/Depot/Depot,Painter/DivisionId,DownloadApplicable,Painter/TotalPoints,Painter/RedeemPoints,Painter/RewardPoints,Painter/PainterAddress/AddressLine1," +
+                    "Painter/PainterAddress/CityDetails/City,Painter/PainterAddress/StateDetails/State"
                 },
                 events: {
                     dataRequested: function (oEvent) {
