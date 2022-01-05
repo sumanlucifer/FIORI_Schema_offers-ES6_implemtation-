@@ -6,6 +6,7 @@
                 <headerToolbar>
                     <Toolbar>
                             <Title text="{oModelControl>/ImagesCount}"/>
+                            <MessageStrip text="{i18n>Message18}" showIcon="true"></MessageStrip>
                             <ToolbarSpacer ></ToolbarSpacer>
                            <Button icon="sap-icon://add" text="{i18n>AddImage}" tooltip="{i18n>AddImage}" type="Emphasized" press="onPressAddNewImage('add')"/>
                     </Toolbar>

@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog title="{i18n>PortfolioImage}"  titleAlignment="Center" afterClose="onAfterAttachClose">
+    <Dialog contentHeight="500px" contentWidth="800px" title="{i18n>PortfolioImage}"  titleAlignment="Center" afterClose="onAfterAttachClose">
         <content>
             <Carousel class="sapUiContentPadding" loop="true">
                 <Image id="idViewImage" decorative="false" alt="No Image Found" ></Image>
