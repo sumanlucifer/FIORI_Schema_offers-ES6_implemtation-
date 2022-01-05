@@ -27,7 +27,7 @@
                         <ObjectStatus title="{i18n>AgeGroup}" text="{path:'Painter/AgeGroup/AgeGroup',formatter:'.formatter.fmtAgeGrp'}"/>
                         <ObjectStatus title="{i18n>Category}" text="{path:'Painter/Slab/Slab'}"/>
                         <ObjectStatus title="{i18n>ActivationStatus}" text="{path:'Painter/ActivationStatus',formatter:'.formatter.fmtLowerCase' }"/>
-                        <ObjectStatus title="{i18n>Rating}" text="{path:'Painter/PainterRating' }"/>
+                        <ObjectStatus title="{i18n>Rating}" text="{= ${Painter/PainterRating} !== null ? ${Painter/PainterRating} + '/' +  ${Painter/PainterMaxRating}: null }"/>
                         
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">

@@ -5,9 +5,10 @@
     <Table id="categoryTable" class="sapUiTinyMarginBegin" updateFinished="onImagesUpdaed"  width="98%"  growing="true" growingThreshold="10" items="{path:'oModelControl>/TableData1'}" growingScrollToLoad="false"  noDataText="{i18n>tableNoDataText}">
                 <headerToolbar>
                     <Toolbar>
-                            <Title text="{oModelControl>/ImagesCount}"/>
-                            <ToolbarSpacer ></ToolbarSpacer>
-                           <Button icon="sap-icon://add" text="{i18n>AddImage}" tooltip="{i18n>AddImage}" type="Emphasized" press="onPressAddNewImage('add')"/>
+                        <Title text="{oModelControl>/ImagesCount}"/>
+                        <MessageStrip text="{i18n>Message18}" showIcon="true"></MessageStrip>
+                        <ToolbarSpacer ></ToolbarSpacer>
+                        <Button icon="sap-icon://add" text="{i18n>AddImage}" tooltip="{i18n>AddImage}" type="Emphasized" press="onPressAddNewImage('add')"/>
                     </Toolbar>
                 </headerToolbar>
                 <columns>
