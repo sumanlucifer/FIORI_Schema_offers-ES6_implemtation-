@@ -200,13 +200,11 @@ sap.ui.define([
             }
             if (this._ViewImageDialog) {
                 this._ViewImageDialog.close();
-
             }
             if (this._RemarksDialog) {
-               
                 oModelContrl.setProperty("/Dialog/Remarks", "");
                 oModelContrl.setProperty("/Dialog/ReasonKey", "");
-                this._ViewImageDialog.close();
+                this._RemarksDialog.close();
             }
         },
         /*
