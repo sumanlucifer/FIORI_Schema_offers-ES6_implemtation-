@@ -85,8 +85,10 @@ sap.ui.define([
                     PortfolioTokenCode: ""
                 },
                 Dialog: {
-                    Remarks: ""
+                    Remarks: "",
+                    ReasonKey:""
                 },
+                ReasonData:[{Id:1,text:"Reason1"},{Id:2,text:"Reason2"}],
                 dataSource: "/" + this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
             };
             var oModelControl = new JSONModel(oDataControl)
@@ -194,7 +196,8 @@ sap.ui.define([
             }
             if (this._RemarksDialog) {
                 this._RemarksDialog.close();
-                oModelContrl.setProperty("/Dialog/Remarks", "")
+                oModelContrl.setProperty("/Dialog/Remarks", "");
+                oModelContrl.setProperty("/Dialog/ReasonKey", "")
             }
         },
         /*

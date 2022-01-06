@@ -5,8 +5,14 @@
         <content>
             <f:SimpleForm id="RemarkForm" layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
                 <f:content>
+                    <Label text="{i18n>Reason}"/>
+                    <ComboBox id="reasonCombobox" change="onReasonForReamarkChange" required="true" items="{path:'/PortfolioRejectionReasonSet'}" selectedKey="{path:'oModelControl>/Dialog/ReasonKey',type:'.customInt'}">
+                        <items>
+                            <core:Item text="{Discription}" key="{Id}"/>
+                        </items>
+                    </ComboBox>
                     <Label text="{i18n>Remark}" />
-                    <TextArea required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl>/Dialog/Remarks', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
+                    <TextArea enabled="{path:'oModelControl>/Dialog/ReasonKey',formatter:'.formatter.fmtRemarksEnable'}" required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl>/Dialog/Remarks', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
                 </f:content>
             </f:SimpleForm>
         </content>

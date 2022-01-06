@@ -9,14 +9,15 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
-    "./Validator"
-], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast, Validator) {
+    "./Validator",
+    "com/knpl/pragati/painterportfolio/model/customInt"
+], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast, Validator, customInt) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.painterportfolio.controller.AddObject", {
 
         formatter: formatter,
-
+        customInt: customInt,
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
@@ -298,6 +299,20 @@ sap.ui.define([
             })
 
         },
+        onReasonForReamarkChange: function (oEvent) {
+            var oSource = oEvent.getSource();
+            var sKey = oSource.getSelectedKey();
+            var oBject = oSource.getBindingContext("oModelControl").getObject();
+            var oView = this.getView();
+            if (sKey) {
+                if(oBject["Description"].trim().toLowerCase()==="other"){
+                    oView.getModel("oModelControl").setProperty("/Dialog/Remarks", "");
+                }else {
+                    oView.getModel("oModelControl").setProperty("/Dialog/Remarks", oBject["Description"]);
+                }
+               
+            }
+        },
         onApproveImage: function (oEvent) {
             var oView = this.getView();
             var oSource = oEvent.getSource();
@@ -426,7 +441,7 @@ sap.ui.define([
         },
         _UpdateBindings: function () {
             var promise = jQuery.Deferred();
-          
+
             this.getView().getElementBinding().refresh();
             promise.resolve()
             return promise;
@@ -699,7 +714,7 @@ sap.ui.define([
                 parameters: {
                     expand: "Painter/Depot,Painter/AgeGroup,Painter/Slab,Painter/PainterAddress/CityDetails,Painter/PainterAddress/StateDetails",
                     select: "Id,PortfolioCode,Painter/Id,Painter/Name,Painter/Mobile,Painter/AgeGroup/AgeGroup,Painter/Slab/Slab,Painter/ActivationStatus,Painter/PainterRating,Painter/MembershipCard,Painter/ZoneId,Painter/Depot/Depot,Painter/DivisionId,DownloadApplicable,Painter/TotalPoints,Painter/RedeemPoints,Painter/RewardPoints,Painter/PainterAddress/AddressLine1," +
-                    "Painter/PainterAddress/CityDetails/City,Painter/PainterAddress/StateDetails/State,Painter/PainterMaxRating"
+                        "Painter/PainterAddress/CityDetails/City,Painter/PainterAddress/StateDetails/State,Painter/PainterMaxRating"
                 },
                 events: {
                     dataRequested: function (oEvent) {

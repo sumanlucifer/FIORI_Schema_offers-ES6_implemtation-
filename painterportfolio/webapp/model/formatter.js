@@ -117,6 +117,16 @@ sap.ui.define([], function () {
                 sStatus += b;
             }
             return sStatus + " (Max: "+mParam2+")";
+        },
+        fmtRemarksEnable:function(mParam){
+            var sPath = "/PortfolioRejectionReasonSet(" + mParam + ")";
+            var oData = this.getView().getModel().getProperty(sPath);
+            if (oData !== undefined && oData !== null) {
+                if (oData["Description"].trim().toLowerCase() === "None") {
+                    return true;
+                }
+            }
+            return false
         }
     };
 
