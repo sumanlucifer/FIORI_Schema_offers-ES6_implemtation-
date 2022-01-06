@@ -86,9 +86,17 @@ sap.ui.define([
                 },
                 Dialog: {
                     Remarks: "",
-                    ReasonKey:""
+                    ReasonKey: ""
                 },
-                ReasonData:[{Id:1,text:"Reason1"},{Id:2,text:"Reason2"}],
+                DummyData: [{
+                    Id: 1,
+                    text: "Reason1",
+                    IsArchived: false
+                }, {
+                    Id: 2,
+                    text: "Reason2",
+                    IsArchived: false
+                }],
                 dataSource: "/" + this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
             };
             var oModelControl = new JSONModel(oDataControl)
@@ -195,9 +203,10 @@ sap.ui.define([
 
             }
             if (this._RemarksDialog) {
-                this._RemarksDialog.close();
+               
                 oModelContrl.setProperty("/Dialog/Remarks", "");
-                oModelContrl.setProperty("/Dialog/ReasonKey", "")
+                oModelContrl.setProperty("/Dialog/ReasonKey", "");
+                this._ViewImageDialog.close();
             }
         },
         /*

@@ -119,10 +119,10 @@ sap.ui.define([], function () {
             return sStatus + " (Max: "+mParam2+")";
         },
         fmtRemarksEnable:function(mParam){
-            var sPath = "/PortfolioRejectionReasonSet(" + mParam + ")";
+            var sPath = "/MasterPortfolioRejectionReasonSet(" + mParam + ")";
             var oData = this.getView().getModel().getProperty(sPath);
             if (oData !== undefined && oData !== null) {
-                if (oData["Description"].trim().toLowerCase() === "None") {
+                if (oData["Description"].trim().toLowerCase() === "other") {
                     return true;
                 }
             }

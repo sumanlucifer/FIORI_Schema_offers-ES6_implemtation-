@@ -292,7 +292,8 @@ sap.ui.define([
                     c3.then(function () {
                         othat._RemarksDialog.close();
                         othat._RemarksDialog.setBusy(false);
-                        oModelControl.setProperty("/Dialog/Remarks", "")
+                        oModelControl.setProperty("/Dialog/Remarks", "");
+                        oModelControl.setProperty("/Dialog/ReasonKey", "")
                         oModelControl.setProperty("/PageBusy", false);
                     })
                 })
@@ -302,7 +303,7 @@ sap.ui.define([
         onReasonForReamarkChange: function (oEvent) {
             var oSource = oEvent.getSource();
             var sKey = oSource.getSelectedKey();
-            var oBject = oSource.getBindingContext("oModelControl").getObject();
+            var oBject = oSource.getSelectedItem().getBindingContext().getObject();
             var oView = this.getView();
             if (sKey) {
                 if(oBject["Description"].trim().toLowerCase()==="other"){

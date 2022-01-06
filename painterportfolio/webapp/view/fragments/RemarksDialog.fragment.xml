@@ -6,9 +6,9 @@
             <f:SimpleForm id="RemarkForm" layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
                 <f:content>
                     <Label text="{i18n>Reason}"/>
-                    <ComboBox id="reasonCombobox" change="onReasonForReamarkChange" required="true" items="{path:'/PortfolioRejectionReasonSet'}" selectedKey="{path:'oModelControl>/Dialog/ReasonKey',type:'.customInt'}">
+                    <ComboBox id="reasonCombobox" change="onReasonForReamarkChange" required="true" items="{path:'/MasterPortfolioRejectionReasonSet',parameters:{select:'Id,Description'}}" selectedKey="{path:'oModelControl>/Dialog/ReasonKey',type:'.customInt'}">
                         <items>
-                            <core:Item text="{Discription}" key="{Id}"/>
+                            <core:Item text="{Description}" key="{Id}"/>
                         </items>
                     </ComboBox>
                     <Label text="{i18n>Remark}" />
