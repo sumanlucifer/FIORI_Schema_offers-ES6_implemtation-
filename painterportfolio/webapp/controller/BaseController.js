@@ -85,8 +85,18 @@ sap.ui.define([
                     PortfolioTokenCode: ""
                 },
                 Dialog: {
-                    Remarks: ""
+                    Remarks: "",
+                    ReasonKey: ""
                 },
+                DummyData: [{
+                    Id: 1,
+                    text: "Reason1",
+                    IsArchived: false
+                }, {
+                    Id: 2,
+                    text: "Reason2",
+                    IsArchived: false
+                }],
                 dataSource: "/" + this.getOwnerComponent(this).getManifestObject().getEntry("/sap.app").dataSources.mainService.uri
             };
             var oModelControl = new JSONModel(oDataControl)
@@ -190,11 +200,11 @@ sap.ui.define([
             }
             if (this._ViewImageDialog) {
                 this._ViewImageDialog.close();
-
             }
             if (this._RemarksDialog) {
+                oModelContrl.setProperty("/Dialog/Remarks", "");
+                oModelContrl.setProperty("/Dialog/ReasonKey", "");
                 this._RemarksDialog.close();
-                oModelContrl.setProperty("/Dialog/Remarks", "")
             }
         },
         /*

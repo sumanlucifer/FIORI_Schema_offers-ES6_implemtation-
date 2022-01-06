@@ -12,56 +12,56 @@
         <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
            
             <columns>
-                 <Column hAlign="Begin">
+                 <Column width="11%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "PortfolioCode", "leadingProperty": "PortfolioCode", "columnIndex": 0 ,"sortProperty": "PortfolioCode","filterProperty": "PortfolioCode"}'/>
                     </customData>
                     <Text text="{i18n>PortfolioCode}"/>
                 </Column>
-                <Column hAlign="Begin">
+                <Column width="10%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Name", "leadingProperty": "Painter/Name", "columnIndex": 1 ,"sortProperty": "Painter/Name","filterProperty": "Painter/Name"}'/>
                     </customData>
                     <Text text="{i18n>PainterName}"/>
                 </Column>
-                  <Column hAlign="Begin">
+                  <Column width="9%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/MembershipCard", "leadingProperty": "Painter/MembershipCard", "columnIndex": 2 ,"sortProperty": "Painter/MembershipCard","filterProperty": "Painter/MembershipCard"}'/>
                     </customData>
                     <Text text="{i18n>MembershipId}"/>
                 </Column>
-                  <Column hAlign="Begin">
+                  <Column width="9%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Mobile", "leadingProperty": "Painter/Mobile", "columnIndex": 3 ,"sortProperty": "Painter/Mobile","filterProperty": "Painter/Mobile"}'/>
                     </customData>
                     <Text text="{i18n>Mobile}"/>
                 </Column>
-                <Column hAlign="Begin">
+                <Column hAlign="Begin" width="6%">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/ZoneId", "leadingProperty": "Painter/ZoneId", "columnIndex": 4 ,"sortProperty": "Painter/ZoneId","filterProperty": "Painter/ZoneId"}'/>
                     </customData>
                     <Text text="{i18n>Zone}"/>
                 </Column>
-                <Column hAlign="Begin">
+                <Column hAlign="Begin" width="6%" >
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/DivisionId", "leadingProperty": "Painter/DivisionId", "columnIndex": 5 ,"sortProperty": "Painter/DivisionId","filterProperty": "Painter/DivisionId"}'/>
                     </customData>
                     <Text text="{i18n>Division}"/>
                 </Column>
-                  <Column hAlign="Begin">
+                  <Column hAlign="Begin" width="6%">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/DepotId", "leadingProperty": "Painter/DepotId", "columnIndex": 6 ,"sortProperty": "Painter/DepotId","filterProperty": "Painter/DepotId"}'/>
                     </customData>
                     <Text text="{i18n>Depot}"/>
                 </Column>
                 
-                <Column hAlign="Begin">
+                <Column width="8%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt", "columnIndex": 7 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
                     </customData>
                     <Text text="{i18n>CreatedAt}"/>
                 </Column>
-                <Column hAlign="Begin">
+                <Column width="8%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 8 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
                     </customData>
