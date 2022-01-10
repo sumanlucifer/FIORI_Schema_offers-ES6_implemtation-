@@ -67,13 +67,13 @@
                     </customData>
                     <Text text="{i18n>ApprovalStatus}"/>
                 </Column>
-                  <Column hAlign="Begin">
+                  <Column width="5%" hAlign="Begin" >
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Download"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Download", "columnIndex": 9}'/>
                     </customData>
                     <Text text="{i18n>Download}"/>
                 </Column>
-                 <Column hAlign="Begin">
+                 <Column width="5%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Actions"}'/>
                     </customData>
@@ -85,7 +85,7 @@
                 <ColumnListItem press="onListItemPress" type="Navigation">
                     <cells>
                       <Text text="{PortfolioCode}"/>
-                        <Text text="{Painter/Name}"/>
+                      <Text text="{Painter/Name}"/>
                           <Text text="{Painter/MembershipCard}"/>
                             <Text text="{Painter/Mobile}"/>
                             <Text text="{Painter/ZoneId}"/>

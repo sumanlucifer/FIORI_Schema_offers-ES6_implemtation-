@@ -303,9 +303,10 @@ sap.ui.define([
         onReasonForReamarkChange: function (oEvent) {
             var oSource = oEvent.getSource();
             var sKey = oSource.getSelectedKey();
-            var oBject = oSource.getSelectedItem().getBindingContext().getObject();
+          
             var oView = this.getView();
             if (sKey) {
+                var oBject = oSource.getSelectedItem().getBindingContext().getObject();
                 if(oBject["Description"].trim().toLowerCase()==="other"){
                     oView.getModel("oModelControl").setProperty("/Dialog/Remarks", "");
                 }else {

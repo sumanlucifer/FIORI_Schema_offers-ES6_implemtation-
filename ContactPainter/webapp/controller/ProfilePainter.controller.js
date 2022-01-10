@@ -990,11 +990,11 @@ sap.ui.define(
                             promise.resolve(Data);
                         },
                         error: function (a) {
+                          
                             var sMessage =
                                 "Unable to update a painter due to the server issues";
                             if (a.statusCode == 409) {
-                                sMessage =
-                                    "Mobile Number already exist, kindly enter a different mobile number.";
+                                sMessage = a["responseText"]
                             }
                             MessageBox.error(sMessage, {
                                 title: "Error Code: " + a.statusCode,
