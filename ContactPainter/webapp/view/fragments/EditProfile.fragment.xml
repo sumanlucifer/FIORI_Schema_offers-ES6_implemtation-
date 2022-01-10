@@ -50,7 +50,7 @@
                
                 <core:Title text="{i18n>LocationDetails}" />
                  <Label text="{i18n>PinCode}" />
-                <Input value="{path:'oModelView>/PainterAddress/PinCode',  type : 'sap.ui.model.type.String'  }" autocomplete="false" showSuggestion="true" suggestionItemSelected="onPinCodeSelect" suggest="onPinSuggest" suggestionItems="{path:'/MasterAreaPincodeSet', parameters:{expand:'State',select:'Pincode,StateId,CityId,State/State'} }">
+                <Input value="{path:'oModelView>/PainterAddress/PinCode',  type : 'sap.ui.model.type.String'  }" autocomplete="false" showSuggestion="true" suggestionItemSelected="onPinCodeSelect" suggest="onPinSuggest" suggestionItems="{path:'/MasterAreaPincodeSet', length:10, parameters:{expand:'State',select:'Pincode,StateId,CityId,State/State'} }">
                     <suggestionItems>
                         <core:ListItem text="{Pincode}" additionalText="{State/State}" />
                     </suggestionItems>
