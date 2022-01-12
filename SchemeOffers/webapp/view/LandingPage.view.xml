@@ -88,7 +88,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable,OfferCode' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
+            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails,OfferZone,OfferDivision,OfferDepot',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable,OfferCode,OfferZone,OfferDivision,OfferDepot' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
@@ -119,10 +119,15 @@
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
-
-                    <!-- <Column>
-                        <Text text="{i18n>Active}"/>
-                    </Column> -->
+                    <Column width="10%">
+                        <Text text="{i18n>Zone}"/>
+                    </Column>
+                     <Column width="10%" >
+                        <Text text="{i18n>Division}"/>
+                    </Column>
+                     <Column width="10%">
+                        <Text text="{i18n>Depot}"/>
+                    </Column>
                     <Column>
                         <Text text="{i18n>tolColActiveStatus}"/>
                     </Column>
@@ -137,16 +142,16 @@
                             <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
                             <Text text="{OfferCode}"/>
                             <Text text="{OfferType/OfferType}"/>
-                            <!-- <Text text="{RewardGiftId}"/> -->
                             <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy',UTC:false,strictParsing:true} }"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <!-- <ObjectStatus text="{path:'OfferStatus',formatter:'.fmtLowerCase'}" state="{= ${OfferStatus} === 'RESOLVED' || ${OfferStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }" /> -->
-                            <!-- <ObjectStatus text="{= ${IsActive} === true ? 'Yes' : 'No' }" state="{= ${IsActive} === true  ? 'Success' : 'Error' }" /> -->
+                            <Text text="{path:'OfferZone',formatter:'.formatter.fmtListZone'}" />
+                             <Text text="{path:'OfferDivision',formatter:'.formatter.fmtListDivision'}" />
+                              <Text text="{path:'OfferDepot',formatter:'.formatter.fmtListDepot'}" />
                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                             <HBox justifyContent="Center">
                                 <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
-                                <!-- <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button> -->
+                               
                             </HBox>
 
                         </cells>
