@@ -67,7 +67,7 @@
                     </customData>
                     <Text text="{i18n>ApprovalStatus}"/>
                 </Column>
-                  <Column width="5%" hAlign="Begin" >
+                  <Column width="8%" hAlign="Begin" >
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Download", "columnIndex": 9}'/>
                     </customData>
