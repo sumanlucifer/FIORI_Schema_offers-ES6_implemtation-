@@ -69,7 +69,7 @@
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                               <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Product" groupTitle="Filters" label="{i18n>Product}">
+                               <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Product" groupTitle="Filters" label="{i18n>formLabelProduct}">
                                 <fb:control>
                                     <Input value="{path:'oModelControl>/filterBar/ProdCode',formatter:'.formatter.fmtListProductName'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="oProdValueHelpRequest"/>
                                 </fb:control>

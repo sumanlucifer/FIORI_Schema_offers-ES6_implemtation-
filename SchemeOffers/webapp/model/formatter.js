@@ -159,7 +159,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return "NA";
         },
         fmtCheckRewardGift: function (m1, m2, m3) {
-            console.log(m1, m2, m3);
+          
             if (m1) {
                 return m1
             }
@@ -171,7 +171,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return "NA"
         },
         fmtListProductName:function(mParam){
-            console.log(1,mParam)
+        
             if(mParam){
                 var data = this.getView().getModel().getData("/MasterProductSet('"+mParam+"')");
                 return data["ProductName"]
