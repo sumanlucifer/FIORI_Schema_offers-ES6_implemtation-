@@ -170,6 +170,48 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA"
         },
+        fmtListZone:function(mParam){
+            var aArray1 = [];
+            var othat = this;
+          
+            if(mParam){
+                mParam.forEach(function(a){
+                    var data = othat.getView().getModel().getData("/"+a);
+                    aArray1.push(data["ZoneId"]);
+                })
+                if(aArray1.length>0){
+                    return aArray1.join(", ")
+                }
+            }
+        },
+        fmtListDivision:function(mParam){
+            var aArray1 = [];
+            var othat = this;
+          
+            if(mParam){
+                mParam.forEach(function(a){
+                    var data = othat.getView().getModel().getData("/"+a);
+                    aArray1.push(data["DivisionId"]);
+                })
+                if(aArray1.length>0){
+                    return aArray1.join(", ")
+                }
+            }
+        },
+        fmtListDepot:function(mParam){
+            var aArray1 = [];
+            var othat = this;
+          
+            if(mParam){
+                mParam.forEach(function(a){
+                    var data = othat.getView().getModel().getData("/"+a);
+                    aArray1.push(data["DepotId"]);
+                })
+                if(aArray1.length>0){
+                    return aArray1.join(", ")
+                }
+            }
+        },
         // List view workflow changes
         btnAddOffer: function (m1) {
             //m1 is the logged in user type
