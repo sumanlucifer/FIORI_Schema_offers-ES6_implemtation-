@@ -35,16 +35,6 @@
                                     <DatePicker placeholder="DD/MM/YYYY" value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="Active" label="{i18n>Active}" visibleInFilterBar="true">
-                                <fb:control>
-                                    <ComboBox placeholder="{i18n>placeHolder1}" id="cmbx" selectedKey="{oModelControl>/filterBar/Active}">
-                                        <core:Item text="Yes" key="true"/>
-                                        <core:Item text="No" key="false"/>
-
-                                    </ComboBox>
-
-                                </fb:control>
-                            </fb:FilterGroupItem> -->
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Status" label="{i18n>tblColStatus}" visibleInFilterBar="true">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>placeHolder1}" selectedKey="{oModelControl>/filterBar/Status}">
@@ -60,23 +50,28 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>formRegionLbl1}">
                                 <fb:control>
-                                    <ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange" selectedKey="{oModelControl>/filterBar/TrainingZone}">
+                                    <ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange" selectedKey="{oModelControl>/filterBar/Zone}">
                                         <core:Item key="{Id}" text="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>formRegionLbl2}">
                                 <fb:control>
-                                    <ComboBox enabled="{= ${oModelControl>/filterBar/TrainingZone}.length>1}" id="idDivision" selectionChange="onDivisionChange" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/TrainingDivision}">
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/Zone}.length>1}" id="idDivision" selectionChange="onDivisionChange" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/Division}">
                                         <core:Item key="{Id}" text="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>formRegionLbl3}">
                                 <fb:control>
-                                    <ComboBox enabled="{= ${oModelControl>/filterBar/TrainingDivision}.length>1}" id="idDepot" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/TrainingDepot}">
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/Division}.length>1}" id="idDepot" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDepotSet' }" selectedKey="{oModelControl>/filterBar/Depot}">
                                         <core:Item key="{Id}" text="{Depot} ( {Id} )"/>
                                     </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                               <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="Product" groupTitle="Filters" label="{i18n>formLabelProduct}">
+                                <fb:control>
+                                    <Input value="{path:'oModelControl>/filterBar/ProdCode',formatter:'.formatter.fmtListProductName'}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="oProdValueHelpRequest"/>
                                 </fb:control>
                             </fb:FilterGroupItem>
 
@@ -120,13 +115,13 @@
                         <Text text="{i18n>tblColCreatedBy}"/>
                     </Column>
                     <Column width="10%">
-                        <Text text="{i18n>Zone}"/>
+                        <Text text="{i18n>colZone}"/>
                     </Column>
                      <Column width="10%" >
-                        <Text text="{i18n>Division}"/>
+                        <Text text="{i18n>colDivision}"/>
                     </Column>
                      <Column width="10%">
-                        <Text text="{i18n>Depot}"/>
+                        <Text text="{i18n>colDepot}"/>
                     </Column>
                     <Column>
                         <Text text="{i18n>tolColActiveStatus}"/>
@@ -145,9 +140,9 @@
                             <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
                             <Text text="{path:'EndDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy',UTC:false,strictParsing:true} }"/>
                             <Text text="{CreatedByDetails/Name}"/>
-                            <Text text="{path:'OfferZone',formatter:'.formatter.fmtListZone'}" />
-                             <Text text="{path:'OfferDivision',formatter:'.formatter.fmtListDivision'}" />
-                              <Text text="{path:'OfferDepot',formatter:'.formatter.fmtListDepot'}" />
+                            <Text text="{path:'OfferZone',formatter:'.formatter.fmtListZone'}" wrapping="true" maxLines="2" tooltip="{path:'OfferZone',formatter:'.formatter.fmtListZone'}"/>
+                             <Text text="{path:'OfferDivision',formatter:'.formatter.fmtListDivision'}" wrapping="true" maxLines="2" tooltip="{path:'OfferDivision',formatter:'.formatter.fmtListDivision'}" />
+                              <Text text="{path:'OfferDepot',formatter:'.formatter.fmtListDepot'}"  wrapping="true" maxLines="2" tooltip="{path:'OfferDepot',formatter:'.formatter.fmtListDepot'}"  />
                             <ObjectStatus text="{path:'OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
                             <HBox justifyContent="Center">
                                 <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
