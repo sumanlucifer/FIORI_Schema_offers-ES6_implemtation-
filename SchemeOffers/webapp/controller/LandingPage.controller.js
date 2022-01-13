@@ -56,10 +56,11 @@ sap.ui.define(
                             Name: "",
                             OfferType: "",
                             Status: "",
-                            TrainingZone: "",
-                            TrainingDivision: "",
-                            TrainingDepot: "",
-                            Active: ""
+                            Zone: "",
+                            Division: "",
+                            Depot: "",
+                            Active: "",
+                            ProdCode:""
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -233,14 +234,14 @@ sap.ui.define(
                                         FilterOperator.GE,
                                         oViewFilter[prop]
                                     )
-                                    
+
                                 );
                             } else if (prop === "EndDate") {
                                 aFlaEmpty = false;
                                 var oDate = oViewFilter[prop].setDate(oViewFilter[prop].getDate() + 1);
                                 aCurrentFilterValues.push(
                                     new Filter("EndDate", FilterOperator.LT, oDate)
-                                   
+
                                 );
                             } else if (prop === "Active") {
                                 aFlaEmpty = false;
@@ -254,7 +255,13 @@ sap.ui.define(
                                     new Filter("OfferStatus", FilterOperator.EQ, oViewFilter[prop])
                                     //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
                                 );
-                            } else if (prop === "TrainingZone") {
+                            } else if (prop === "ProdCode") {
+                                aFlaEmpty = false;
+                                aCurrentFilterValues.push(
+                                    new Filter("OfferApplicableProduct/ProductCode", FilterOperator.EQ, oViewFilter[prop])
+                                    //new Filter(prop, FilterOperator.BT,oViewFilter[prop],oViewFilter[prop])
+                                );
+                            } else if (prop === "Zone") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -263,7 +270,7 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            } else if (prop === "TrainingDivision") {
+                            } else if (prop === "Division") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -272,7 +279,7 @@ sap.ui.define(
                                         oViewFilter[prop]
                                     )
                                 );
-                            } else if (prop === "TrainingDepot") {
+                            } else if (prop === "Depot") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -298,7 +305,7 @@ sap.ui.define(
                                                 value1: oViewFilter[prop].trim(),
                                                 caseSensitive: false
                                             }),
-                                              new Filter({
+                                            new Filter({
                                                 path: "OfferCode",
                                                 operator: "Contains",
                                                 value1: oViewFilter[prop].trim(),
@@ -471,10 +478,11 @@ sap.ui.define(
                         Name: "",
                         OfferType: "",
                         Status: "",
-                        TrainingZone: "",
-                        TrainingDivision: "",
-                        TrainingDepot: "",
-                        Active: ""
+                        Zone: "",
+                        Division: "",
+                        Depot: "",
+                        Active: "",
+                        ProdCode:""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
@@ -493,6 +501,49 @@ sap.ui.define(
                         oDialog.setSortDescending(true);
                         oDialog.setSelectedSortItem("CreatedAt");
                     }
+                },
+                oProdValueHelpRequest: function () {
+                    var oView = this.getView()
+                    var othat = this;
+                    if (!this._oDialog) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.ListViewProducts",
+                            controller: othat
+                        }).then(function (oDialog) {
+                            this._oDialog = oDialog;
+                            oView.addDependent(this._oDialog);
+                            this._oDialog.open();
+                        }.bind(this))
+                    }
+                },
+                _onDialogClose: function () {
+                    if (this._oDialog) {
+                        this._oDialog.destroy();
+                        delete this._oDialog;
+                    }
+                },
+                _handleListProdSearch:function(oEvent){
+                    var sValue = oEvent.getParameter("value").trim();
+                    if (sValue.length > 0) {
+                        var aFilter = new Filter({
+                            path: "ProductName",
+                            operator: "Contains",
+                            value1: sValue,
+                            caseSensitive: false,
+                        });
+                        this._oDialog
+                            .getBinding("items")
+                            .filter(aFilter, "Application");
+                    }
+                },
+                _handleListProdConfirm: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl")
+                    var object = oEvent.getParameter("selectedItem").getBindingContext().getObject();
+                    oModelControl.setProperty("/filterBar/ProdCode",object["Id"]);
+                    this._onDialogClose();
+                    
                 },
                 onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();

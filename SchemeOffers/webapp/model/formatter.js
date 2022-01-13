@@ -170,6 +170,13 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             }
             return "NA"
         },
+        fmtListProductName:function(mParam){
+            console.log(1,mParam)
+            if(mParam){
+                var data = this.getView().getModel().getData("/MasterProductSet('"+mParam+"')");
+                return data["ProductName"]
+            }
+        },
         fmtListZone:function(mParam){
             var aArray1 = [];
             var othat = this;
