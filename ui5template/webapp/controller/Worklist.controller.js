@@ -42,6 +42,7 @@ sap.ui.define(
                     var oDataControl = {
                         filterBar: {
                             StartDate: null,
+                            EndDate:null,
                             Status: "",
                             Search: "",
                         },
@@ -205,10 +206,9 @@ sap.ui.define(
                         .getProperty("/filterBar");
 
                     var aFlaEmpty = false;
-                    // init filters - is archived
+                    // init filters - is archived and complaint type id is 1
                     aCurrentFilterValues.push(
                         new Filter("IsArchived", FilterOperator.EQ, false));
-                    // init filters - ComplainType Id ne 1
                     aCurrentFilterValues.push(
                         new Filter("ComplaintTypeId", FilterOperator.NE, 1));
 
@@ -217,14 +217,16 @@ sap.ui.define(
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
                             if (prop === "StartDate") {
+                                 // converstions are made as the difference between utc and the server time
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter(
-                                        "CreatedAt",
-                                        FilterOperator.GE,
-                                        new Date(oViewFilter[prop])
-                                    )
-                                );
+                                    new Filter("CreatedAt", FilterOperator.GE, new Date(oViewFilter[prop])));
+                            }else if (prop === "EndDate") {
+                                // converstions are made as the difference between utc and the server time
+                                aFlaEmpty = false;
+                                var oDate = oViewFilter[prop].setDate(oViewFilter[prop].getDate() + 1);
+                                aCurrentFilterValues.push(
+                                    new Filter("CreatedAt", FilterOperator.LT, oDate));
                             } else if (prop === "Status") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
@@ -290,6 +292,19 @@ sap.ui.define(
                         Mode:"Display"
                     });
 
+                },
+                onPressDelete:function(oEvent){
+                    var oView = this.getView();
+                    var oBj = oEvent.getSource().getBindingContext().getObject();
+                    this._showMessageBox1("information","Message5",[oBj["ComplaintCode"]],
+                        this._sample1.bind(this,"first paramters","secondParameter")
+                   );
+                },
+                _sample1:function(mParam1,mParam2){
+                 
+                },
+                _sample2:function(){
+                    console.log("sample2")
                 },
                 onEditListItemPress: function (oEvent) {
                     var oBj = oEvent.getSource().getBindingContext().getObject();
