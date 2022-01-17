@@ -7,7 +7,7 @@
             </Carousel>
         </content>
         <endButton>
-            <Button text="{i18n>Close}" press="onDialogClose" />
+            <Button text="{i18n>Close}" press="onDialogClose" type="Ghost" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

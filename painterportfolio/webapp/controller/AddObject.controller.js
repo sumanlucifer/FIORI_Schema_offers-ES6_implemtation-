@@ -972,7 +972,7 @@ sap.ui.define([
             sPath = oModelControl.getProperty("/dataSource") + "PainterPortfolioSet(" + sPortfolioid + ")/$value?portfolioTokenCode=" + sTokenCode;
             sap.m.URLHelper.redirect(sPath, true);
         },
-        
+
         // apply crop change
         onFileUploaderChange: function (oEvent) {
             var oFileUploder = oEvent.getSource();
@@ -993,7 +993,7 @@ sap.ui.define([
             }
 
         },
-        _oPenImageEditor1: function (mImage) {
+        _oPenImageEditor1: function (mImage,oFileUploder) {
             var oView = this.getView();
             if (!this._ImageEditDialog) {
                 Fragment.load({
@@ -1008,6 +1008,7 @@ sap.ui.define([
                     oImageEditor.setSrc(
                         path
                     );
+                    oFileUploder.setValue(null);
                     this._ImageEditDialog.open();
                 }.bind(this))
             } else {
