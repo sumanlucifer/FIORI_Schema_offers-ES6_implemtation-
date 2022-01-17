@@ -200,8 +200,10 @@ sap.ui.define([
             }
 
             if (this._ViewImageDialog) {
-                this._ViewImageDialog.close();
-                return;
+                if (this._ViewImageDialog.isOpen()) {
+                    this._ViewImageDialog.close();
+                    return;
+                }
             }
 
             if (this._RemarksDialog) {
@@ -214,9 +216,12 @@ sap.ui.define([
             }
 
             if (this._ImageEditDialog) {
-                this._ImageEditDialog.close();
-                return;
+                if(this._ImageEditDialog.isOpen()){
+                    this._ImageEditDialog.close();
+                    return;
+                }
             }
+            
             if (this._QuickApproveDialog) {
                 this._QuickApproveDialog.close()
                 this._QuickApproveDialog.destroy();
