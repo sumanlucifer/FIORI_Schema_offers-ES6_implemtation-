@@ -972,6 +972,7 @@ sap.ui.define([
             sPath = oModelControl.getProperty("/dataSource") + "PainterPortfolioSet(" + sPortfolioid + ")/$value?portfolioTokenCode=" + sTokenCode;
             sap.m.URLHelper.redirect(sPath, true);
         },
+        
         // apply crop change
         onFileUploaderChange: function (oEvent) {
             var oFileUploder = oEvent.getSource();
@@ -1022,7 +1023,7 @@ sap.ui.define([
             oImageEditor.setCropAreaBySize(500, 500);
         },
         onImageEditorClose: function () {
-            console.log("on escape press");
+          
             this._ImageEditDialog.destroy();
             delete this._ImageEditDialog;
         },
@@ -1068,60 +1069,6 @@ sap.ui.define([
 
             })
 
-        },
-        _oPenImageEditor2: function (mImage, mFileUploader, oBject) {
-            if (!this._ImageEditDialog) {
-                var that = this;
-                var path = URL.createObjectURL(mImage);
-
-                this._oImageEditor = new ImageEditor({
-                    src: path,
-                    scaleCropArea: false,
-                    keepCropAspectRatio: false,
-                    cropAreaChanged: this.onCropAreaChanged.bind(this)
-                });
-
-                this._ImageEditDialog = new Dialog({
-                    title: '{i18n>CropImage}',
-                    contentWidth: "700px",
-                    contentHeight: "500px",
-                    verticalScrolling: false,
-                    content: [
-                        this._oImageEditor
-                    ],
-                    beginButton: new Button({
-                        text: '{i18n>ApplyCrop}',
-                        type: ButtonType.Emphasized,
-                        press: function () {
-
-                            that._oImageEditor.applyVisibleCrop();
-                            that._oImageEditor.setSize(500, 500)
-                            that._oImageEditor.getImageAsBlob().then(function (oFile) {
-
-                            })
-
-                            //this._ImageEditDialog.close();
-                        }.bind(this)
-                    }),
-                    endButton: new Button({
-                        text: '{i18n>Close}',
-                        press: function () {
-                            mFileUploader.setValue(null);
-                            this._ImageEditDialog.close();
-                            this._ImageEditDialog.destroy();
-                            delete this._ImageEditDialog;
-
-                        }.bind(this)
-                    }),
-                    afterOpen: function () {
-                        that._oImageEditor.zoomToFit();
-                        that._oImageEditor.setMode(ImageEditorMode.CropRectangle);
-                        that._oImageEditor.setCropAreaBySize(500, 500);
-                    }
-                });
-            }
-
-            this._ImageEditDialog.open();
         },
 
         onExit: function () {
