@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns="sap.m" 	xmlns:f="sap.f" 	xmlns:cards="sap.f.cards"   xmlns:core="sap.ui.core" 	xmlns:l="sap.ui.layout" >
+    <Dialog contentHeight="700px" contentWidth="800px" title="{i18n>Images}" titleAlignment="Center" >
+        <content>
+            	<Carousel 
+                  
+                    id="carousel"
+                    visible="{oModelControl>/CarouselVisible}"
+                	pages="{
+				path: '/PainterPortfolioImageSet' ,
+                events:{
+                    dataReceived:'.onDataReceived'
+                },
+                sorter:{path:'PortfolioCategoryId',descending:true},
+                parameters:{expand:'PortfolioCategory'}
+			        }">
+   
+                    <pages>
+                        	<f:Card>
+				<f:header>
+					<cards:Header
+						title="{PortfolioCategory/category}"
+						subtitle="{ApprovalStatus}"
+						iconSrc="sap-icon://picture"
+						iconDisplayShape="Square" />
+				</f:header>
+				<f:content>
+				<VBox
+			
+                width="100%"
+				justifyContent="Center">
+				<HBox  justifyContent="Center">
+					  <Image class="cssImageQuick"  src="{path:'__metadata',formatter:'.formatter.generateImageUrl'}" />
+				</HBox>
+				<HBox justifyContent="Center">
+				            <Button text="{i18n>Approve}" type="Accept" class="sapUiTinyMarginEnd" press="onApproveImage"/>
+                              <Button text="{i18n>Reject}" type="Reject" press="onRejectDialogOpen" />    
+				</HBox>
+			</VBox>
+				</f:content>
+			</f:Card>
+                 
+                    </pages>
+                </Carousel>
+                  <MessageStrip text="{i18n>Message21}" visible="{= !${oModelControl>/CarouselVisible} }" showIcon="true"></MessageStrip>
+             
+        </content>
+        <beginButton>
+          
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>Close}" type="Ghost" press="onDialogClose" />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

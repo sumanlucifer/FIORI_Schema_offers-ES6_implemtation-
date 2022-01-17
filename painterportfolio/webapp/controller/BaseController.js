@@ -200,21 +200,35 @@ sap.ui.define([
             }
 
             if (this._ViewImageDialog) {
-                this._ViewImageDialog.close();
-                return;
+                if (this._ViewImageDialog.isOpen()) {
+                    this._ViewImageDialog.close();
+                    return;
+                }
             }
 
             if (this._RemarksDialog) {
                 oModelContrl.setProperty("/Dialog/Remarks", "");
                 oModelContrl.setProperty("/Dialog/ReasonKey", "");
                 this._RemarksDialog.close();
+                this._RemarksDialog.destroy();
+                delete this._RemarksDialog;
                 return;
             }
 
             if (this._ImageEditDialog) {
-                this._ImageEditDialog.close();
+                if(this._ImageEditDialog.isOpen()){
+                    this._ImageEditDialog.close();
+                    return;
+                }
+            }
+            
+            if (this._QuickApproveDialog) {
+                this._QuickApproveDialog.close()
+                this._QuickApproveDialog.destroy();
+                delete this._QuickApproveDialog;
                 return;
             }
+
         },
         /*
          * Common function for showing warning dialogs
