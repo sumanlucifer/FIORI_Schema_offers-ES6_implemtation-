@@ -52,6 +52,15 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("worklist", {}, true);
             }
+            // var oHistory = History.getInstance();
+            // var sPreviousHash = oHistory.getPreviousHash();
+
+            // if (sPreviousHash !== undefined) {
+            //     window.history.go(-1);
+            // } else {
+            //     var oRouter = this.getOwnerComponent().getRouter();
+            //     oRouter.navTo("worklist", {}, true);
+            // }
         },
         _AddObjectControlModel: function (mParam1, mParam2) {
             /*
@@ -111,13 +120,14 @@ sap.ui.define([
                 this._sample1.bind(this, "first paramters", "secondParameter"));
             */
             var sMessage = this._geti18nText(pMessage, pMessageParam);
+            var sPtye = pType.trim().toLowerCase();
             var othat = this;
-            var sMessageType = ["success","informaiton","alert","error","warning"];
+            var sMessageType = ["success", "informaiton", "alert", "error", "warning"];
             // by default message that will be shown is information;
             var sType = "information";
-        
+
             if (pType.trim().toLowerCase() === "information") {
-              
+
                 MessageBox.information(sMessage, {
                     actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
                     onClose: function (sAction) {
