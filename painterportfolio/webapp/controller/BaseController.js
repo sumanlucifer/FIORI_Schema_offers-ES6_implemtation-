@@ -194,17 +194,26 @@ sap.ui.define([
             var oView = this.getView(),
                 oModelContrl = oView.getModel("oModelControl");
             if (this._pValueHelpDialog) {
-
                 this._pValueHelpDialog.destroy();
                 delete this._pValueHelpDialog;
+                return;
             }
+
             if (this._ViewImageDialog) {
                 this._ViewImageDialog.close();
+                return;
             }
+
             if (this._RemarksDialog) {
                 oModelContrl.setProperty("/Dialog/Remarks", "");
                 oModelContrl.setProperty("/Dialog/ReasonKey", "");
                 this._RemarksDialog.close();
+                return;
+            }
+
+            if (this._ImageEditDialog) {
+                this._ImageEditDialog.close();
+                return;
             }
         },
         /*

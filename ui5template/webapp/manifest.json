@@ -84,7 +84,7 @@
                 "settings": {
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Inline",
-                    "refreshAfterChange": true,
+                    "refreshAfterChange": false,
                     "defaultUpdateMethod": "Put",
                     "useBatch": false
                 }

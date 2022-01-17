@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:m="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:unified="sap.ui.unified"
+	xmlns="sap.suite.ui.commons.imageeditor"
+    xmlns:core="sap.ui.core">
+    <m:Dialog verticalScrolling="false" contentWidth="700px" contentHeight="500px" afterClose="onImageEditorClose" afterOpen="oDialogAfterOpen" busyIndicatorDelay="0" class="sapUiContentPadding" title="{i18n>ApplyCrop}" >
+        <m:content>
+         
+            <ImageEditor scaleCropArea="false" keepCropAspectRatio="false" id="ImageEditor" cropAreaChanged="onCropAreaChanged" loaded="onImageLoaded" >
+
+            </ImageEditor>
+               
+            
+          
+        </m:content>
+        <m:buttons>
+          
+            <m:Button text="{i18n>Close}"  press="onDialogClose" type="Ghost"  />
+             <m:Button text="{i18n>Save}" type="Emphasized" press="onPressApplyCrop" />
+        </m:buttons>
+    </m:Dialog>
+</core:FragmentDefinition>

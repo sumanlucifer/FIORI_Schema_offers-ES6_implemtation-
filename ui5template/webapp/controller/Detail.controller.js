@@ -283,7 +283,7 @@ sap.ui.define(
                                 resolve(data);
                             },
                             error: function (data) {
-                                MessageToast.show(othat.geti18nText("errorMessage2"));
+                                MessageToast.show(othat.geti18nText("Message2"));
                                 oModelControl.setProperty("/PageBusy", false);
                                 reject(data);
                             },

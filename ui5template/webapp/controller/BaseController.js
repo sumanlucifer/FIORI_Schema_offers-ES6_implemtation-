@@ -6,8 +6,9 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/ui/model/json/JSONModel",
     "../controller/Validator",
-    "sap/m/MessageToast"
-], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel, Validator, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (Controller, UIComponent, mobileLibrary, History, Fragment, JSONModel, Validator, MessageToast, MessageBox) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -51,6 +52,15 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("worklist", {}, true);
             }
+            // var oHistory = History.getInstance();
+            // var sPreviousHash = oHistory.getPreviousHash();
+
+            // if (sPreviousHash !== undefined) {
+            //     window.history.go(-1);
+            // } else {
+            //     var oRouter = this.getOwnerComponent().getRouter();
+            //     oRouter.navTo("worklist", {}, true);
+            // }
         },
         _AddObjectControlModel: function (mParam1, mParam2) {
             /*
@@ -63,7 +73,7 @@ sap.ui.define([
             var oView = this.getView();
             var oDataControl = {
                 PageBusy: true,
-                Pagetitle: mParam1 ==="Add" ? "Add Complaint Details":"Edit Complaint",
+                Pagetitle: mParam1 === "Add" ? "Add Complaint Details" : "Edit Complaint",
                 mode: mParam1,
                 ComplainId: mParam2,
                 bindProp: "PainterComplainsSet(" + mParam2 + ")",
@@ -92,13 +102,49 @@ sap.ui.define([
          * @public
          * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
          */
-        getResourceBundle: function (mParam, mParam2) {
+        _geti18nText: function (mParam, mParam2) {
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             return oModel.getText(mParam, mParam2);
         },
-        geti18nText: function (mParam, mParam2) {
+        _showMessageToast: function (mParam, mParam2) {
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            return oModel.getText(mParam, mParam2);
+            var sText = oModel.getText(mParam, mParam2);
+            MessageToast.show(sText, {
+                duration: 6000
+            })
+        },
+        _showMessageBox1: function (pType, pMessage, pMessageParam, pfn1, pfn2) {
+            // 
+            /*  you can call this below method like this
+                this._showMessageBox1("information", "i18nProper", ["i18nParamerter1if any"],
+                this._sample1.bind(this, "first paramters", "secondParameter"));
+            */
+            var sMessage = this._geti18nText(pMessage, pMessageParam);
+            var sPtye = pType.trim().toLowerCase();
+            var othat = this;
+            var sMessageType = ["success", "informaiton", "alert", "error", "warning"];
+            // by default message that will be shown is information;
+            var sType = "information";
+
+            if (pType.trim().toLowerCase() === "information") {
+
+                MessageBox.information(sMessage, {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            if (pfn1) {
+                                pfn1();
+                            }
+                        } else {
+                            if (pfn2) {
+                                pfn2();
+                            };
+                        }
+                    }
+                });
+                return
+            }
+
         },
         _RemoveEmptyValue: function (mParam) {
             var obj = Object.assign({}, mParam);

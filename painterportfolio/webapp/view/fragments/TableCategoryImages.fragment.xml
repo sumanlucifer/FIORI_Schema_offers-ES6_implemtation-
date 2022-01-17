@@ -43,7 +43,7 @@
                     <ColumnListItem>
                         <cells>
                             <VBox >
-                                	<u:FileUploader app:type="fileUploader" typeMissmatch="onFilteMisMatch" fileType="jpg,jpeg,png" maximumFileSize="5" fileSizeExceed="onFileSizeMismatch" placeholder="{i18n>Message5}" tooltip="{i18n>Message5}"  visible="{= ${oModelControl>editable} === true }"/>
+                                	<u:FileUploader change="onFileUploaderChange" app:type="fileUploader" typeMissmatch="onFilteMisMatch" fileType="jpg,jpeg,png" maximumFileSize="5" fileSizeExceed="onFileSizeMismatch" placeholder="{i18n>Message5}" tooltip="{i18n>Message5}"  visible="{= ${oModelControl>editable} === true }"/>
                                     <Link text="{i18n>ViewImage}" press="onViewImage"  visible="{= ${oModelControl>editable} !== true }"/>
                             </VBox>
                               <Text text="{ path:'oModelControl>CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
@@ -57,7 +57,7 @@
 
                              <HBox >
                                 <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddNewImage"></Button>
-                                <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveCategoryImage"></Button>
+                                <!-- <Button  visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }"  text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveCategoryImage"></Button> -->
                                 <Button   icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onDelteportFolioImage"></Button>
                                 <Button visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }" icon="sap-icon://sys-cancel" type="Transparent" tooltip="{i18n>Cancel}" press="onCancelImagesTable"></Button>
                                 <!-- Approval and Reject Button -->

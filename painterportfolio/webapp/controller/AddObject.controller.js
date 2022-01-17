@@ -10,9 +10,16 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "./Validator",
-    "com/knpl/pragati/painterportfolio/model/customInt"
-], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast, Validator, customInt) {
+    "com/knpl/pragati/painterportfolio/model/customInt",
+    "sap/suite/ui/commons/imageeditor/ImageEditor",
+    "sap/m/Button",
+    "sap/m/library",
+    "sap/suite/ui/commons/library",
+    "sap/m/Dialog"
+], function (BaseController, JSONModel, History, formatter, Filter, FilterOperator, ValueState, Fragment, MessageBox, MessageToast, Validator, customInt, ImageEditor, Button, MLibrary, SuiteLibrary, Dialog) {
     "use strict";
+    var ButtonType = MLibrary.ButtonType,
+        ImageEditorMode = SuiteLibrary.ImageEditorMode;
 
     return BaseController.extend("com.knpl.pragati.painterportfolio.controller.AddObject", {
 
@@ -303,16 +310,16 @@ sap.ui.define([
         onReasonForReamarkChange: function (oEvent) {
             var oSource = oEvent.getSource();
             var sKey = oSource.getSelectedKey();
-          
+
             var oView = this.getView();
             if (sKey) {
                 var oBject = oSource.getSelectedItem().getBindingContext().getObject();
-                if(oBject["Description"].trim().toLowerCase()==="other"){
+                if (oBject["Description"].trim().toLowerCase() === "other") {
                     oView.getModel("oModelControl").setProperty("/Dialog/Remarks", "");
-                }else {
+                } else {
                     oView.getModel("oModelControl").setProperty("/Dialog/Remarks", oBject["Description"]);
                 }
-               
+
             }
         },
         onApproveImage: function (oEvent) {
@@ -588,14 +595,25 @@ sap.ui.define([
             var sPainterId = oModelControl.getProperty("/PainterId");
             var oTableData = oModelControl.getProperty("/TableData1");
             if (oEvent !== "add") {
+                var bEditFlag = true
                 var oView = this.getView();
-
-                var oObject = oEvent
+                for (var prop of oTableData) {
+                    if (prop["editable"] == true) {
+                        bEditFlag = false;
+                        this._showMessageToast("Message20")
+                        break;
+                    }
+                }
+              
+                if(bEditFlag){
+                    var oObject = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
                     .getObject();
-                oObject["editable"] = true;
-                oModelControl.refresh();
+                     oObject["editable"] = true;
+                     oModelControl.refresh();
+                }
+               
                 return;
             } else {
                 var bFlag = true;
@@ -954,6 +972,106 @@ sap.ui.define([
             sPath = oModelControl.getProperty("/dataSource") + "PainterPortfolioSet(" + sPortfolioid + ")/$value?portfolioTokenCode=" + sTokenCode;
             sap.m.URLHelper.redirect(sPath, true);
         },
+
+        // apply crop change
+        onFileUploaderChange: function (oEvent) {
+            var oFileUploder = oEvent.getSource();
+            var oBject = oFileUploder.getBindingContext("oModelControl").getObject();
+
+            if (oEvent.getParameter("newValue")) {
+
+                this._oPenImageEditor1(oEvent.mParameters.files[0], oFileUploder, oBject);
+            }
+        },
+        onCropAreaChanged: function (oEvent) {
+            var oRiginCropArea = oEvent.getParameter("cropArea");
+            var oSource = oEvent.getSource();
+            if (oRiginCropArea["height"] < 500 || oRiginCropArea["width"] < 500) {
+                oSource.setCropAreaBySize(500, 500);
+                this._showMessageToast("Message19");
+                return;
+            }
+
+        },
+        _oPenImageEditor1: function (mImage,oFileUploder) {
+            var oView = this.getView();
+            if (!this._ImageEditDialog) {
+                Fragment.load({
+                    id: oView.getId(),
+                    controller: this,
+                    name: "com.knpl.pragati.painterportfolio.view.fragments.ImageEditor"
+                }).then(function (oDialog) {
+                    this._ImageEditDialog = oDialog;
+                    oView.addDependent(this._ImageEditDialog);
+                    var path = URL.createObjectURL(mImage);
+                    var oImageEditor = this.getView().byId("ImageEditor");
+                    oImageEditor.setSrc(
+                        path
+                    );
+                    oFileUploder.setValue(null);
+                    this._ImageEditDialog.open();
+                }.bind(this))
+            } else {
+                this._ImageEditDialog.open();
+            }
+
+
+        },
+        oDialogAfterOpen: function () {
+            var oImageEditor = this.getView().byId("ImageEditor");
+            oImageEditor.zoomToFit();
+            oImageEditor.setMode(ImageEditorMode.CropRectangle);
+            oImageEditor.setCropAreaBySize(500, 500);
+        },
+        onImageEditorClose: function () {
+          
+            this._ImageEditDialog.destroy();
+            delete this._ImageEditDialog;
+        },
+        onPressApplyCrop: function () {
+            var oView = this.getView();
+            var oImageEditor = this.byId("ImageEditor")
+            oImageEditor.applyVisibleCrop();
+            oImageEditor.setSize(500, 500);
+            var othat = this;
+            oImageEditor.getImageAsBlob().then(function (oFile) {
+                this._saveCroppedImage(oFile)
+            }.bind(this))
+        },
+        _saveCroppedImage: function (oFile) {
+            var oView = this.getView();
+            var oModelControl = oView.getModel("oModelControl");
+            var oTableData = oModelControl.getProperty("/TableData1");
+            var aOBject = oTableData.filter(function (mParam1) {
+                if (mParam1["editable"]) {
+                    return mParam1;
+                }
+            })
+           
+            var c1, c2, c2A, c3;
+            var othat = this;
+            this._ImageEditDialog.setBusy(true);
+            c1 = this._UploadNewImage(oFile, aOBject[0]);
+            c1.then(function () {
+                c2 = othat._GetSelectedCategoryData();
+                c2.then(function () {
+                    c2A = othat._getPortfolioCategoryData(oModelControl.getProperty("/PainterId"));
+                    c2A.then(function () {
+                        c3 = othat._UpdateBindings();
+                        c3.then(function () {
+                            othat._ImageEditDialog.setBusy(false);
+                            othat._ImageEditDialog.close();
+                            othat._showMessageToast("Meesage9");
+                        })
+
+                    })
+
+                })
+
+            })
+
+        },
+
         onExit: function () {
             console.log("exited the view");
         }
