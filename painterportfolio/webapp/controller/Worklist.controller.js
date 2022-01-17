@@ -10,6 +10,8 @@ sap.ui.define(
         "sap/ui/core/Fragment",
         "sap/ui/model/Sorter",
         "sap/ui/Device",
+        "com/knpl/pragati/painterportfolio/model/customInt",
+        "./Validator",
     ],
     function (
         BaseController,
@@ -21,13 +23,16 @@ sap.ui.define(
         MessageToast,
         Fragment,
         Sorter,
-        Device
+        Device,
+        customInt,
+        Validator
     ) {
         "use strict";
 
         return BaseController.extend(
             "com.knpl.pragati.painterportfolio.controller.Worklist", {
                 formatter: formatter,
+                customInt: customInt,
 
                 /* =========================================================== */
                 /* lifecycle methods                                           */
@@ -45,12 +50,18 @@ sap.ui.define(
                             Search: "",
                             StartDate: null,
                             EndDate: null,
-                            DownloadAppl:"",
-                            ZoneId:"",
-                            DivisionId:"",
-                            DepotId:""
+                            DownloadAppl: "",
+                            ZoneId: "",
+                            DivisionId: "",
+                            DepotId: ""
                         },
-                        PageBusy: true
+                        PageBusy: true,
+                        resourcePath: "com.knpl.pragati.painterportfolio",
+                        Dialog: {
+                            Remarks: "",
+                            ReasonKey: ""
+                        },
+                        CarouselVisible:true
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
@@ -251,7 +262,7 @@ sap.ui.define(
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("DownloadApplicable", FilterOperator.EQ, JSON.parse(oViewFilter[prop])));
-                            }else if (prop === "ZoneId") {
+                            } else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("Painter/ZoneId", FilterOperator.EQ, oViewFilter[prop]));
@@ -263,7 +274,7 @@ sap.ui.define(
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter("Painter/DepotId", FilterOperator.EQ, oViewFilter[prop]));
-                            }  else if (prop === "Search") {
+                            } else if (prop === "Search") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -322,10 +333,10 @@ sap.ui.define(
                         Search: "",
                         StartDate: null,
                         EndDate: null,
-                        DownloadAppl:"",
-                        ZoneId:"",
-                        DivisionId:"",
-                        DepotId:""
+                        DownloadAppl: "",
+                        ZoneId: "",
+                        DivisionId: "",
+                        DepotId: ""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
@@ -393,15 +404,198 @@ sap.ui.define(
 
                     function onYes() {
                         that.getView().getModel().remove(sPath, {
-                            success: function(){
+                            success: function () {
                                 MessageToast.show(that.geti18nText("Message3"));
                                 that.getView().byId("idWorkListTable1").rebindTable()
                             }
                         });
                     }
                     that.showWarning("MSG_CONFIRM_DELETE", onYes);
-                }
-            }
+                },
+                onQucikApproveOpen: function (oEvent) {
+                    var oView = this.getView();
+                    var sPainterId = oEvent.getSource().getBindingContext().getObject().Painter["__ref"].match(/\d{1,}/)[0];
+                    if (!this._QuickApproveDialog) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            controller: this,
+                            name: "com.knpl.pragati.painterportfolio.view.fragments.QuickApproveDialog"
+                        }).then(function (oDialog) {
+                            this._QuickApproveDialog = oDialog;
+                            oView.addDependent(this._QuickApproveDialog);
+                            this._BeforeQuickViewOpen(sPainterId);
+                        }.bind(this))
+                    } else {
+                        this._BeforeQuickViewOpen(sPainterId);
+                    }
+
+                },
+
+                _BeforeQuickViewOpen: function (sPainterId) {
+                    var oView = this.getView();
+                    var oList = oView.byId("carousel");
+                    var oFilter = new Filter({
+                        filters: [new Filter("PainterId", FilterOperator.EQ, sPainterId), new Filter("ApprovalStatus", FilterOperator.EQ, "PENDING")],
+                        and: true
+                    })
+                    oList.getBinding("pages").filter(oFilter);
+                    
+                    this._QuickApproveDialog.open();
+                },
+                onDataReceived:function(oEvent){
+                    var oData = oEvent.getParameter("data");
+                    if(oData["__count"]){
+                        if(parseInt(oData["__count"]) > 0 ){
+                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible",true)
+                        }else{
+                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible",false)
+                        }
+                    }
+                   
+                },
+                onApproveImage: function (oEvent) {
+                    var oView = this.getView();
+                    var oSource = oEvent.getSource();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var othat = this;
+                    var oBj = oSource.getBindingContext().getObject();
+                    var oPayload = {};
+                    oPayload["ApprovalStatus"] = "APPROVED";
+                    oPayload["Remark"] = "Approved";
+
+                    MessageBox.information(this.geti18nText("Message13"), {
+                        actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                        onClose: function (sAction) {
+                            if (sAction === "YES") {
+                                this._ChangePortImageStatusApproved(oPayload, oBj["Id"]);
+
+                            }
+                        }.bind(this)
+                    });
+
+
+                },
+                _ChangePortImageStatusApproved: function (oPayload, sId) {
+                    var c1, c2, c3;
+                    var oView = this.getView();
+                    var othat = this;
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/PageBusy", true);
+                    c1 = othat._SendReqForImageStatus(oPayload, sId);
+                    c1.then(function () {
+                        c3 = othat._UpdateBindingsCarousel();
+                        c3.then(function () {
+                            if (othat._RemarksDialog) {
+                                oModelControl.setProperty("/Dialog/Remarks", "");
+                                oModelControl.setProperty("/Dialog/ReasonKey", "");
+                                othat._RemarksDialog.close();
+                                othat._RemarksDialog.destroy();
+                                delete othat._RemarksDialog;
+                            }
+                            oModelControl.setProperty("/PageBusy", false);
+                        })
+
+
+                    })
+
+                },
+                _UpdateBindingsCarousel: function () {
+                    var promise = jQuery.Deferred();
+
+                    this.byId("carousel").getBinding("pages").refresh();
+                    promise.resolve()
+                    return promise;
+                },
+                onReasonForReamarkChange: function (oEvent) {
+                    var oSource = oEvent.getSource();
+                    var sKey = oSource.getSelectedKey();
+
+                    var oView = this.getView();
+                    if (sKey) {
+                        var oBject = oSource.getSelectedItem().getBindingContext().getObject();
+                        if (oBject["Description"].trim().toLowerCase() === "other") {
+                            oView.getModel("oModelControl").setProperty("/Dialog/Remarks", "");
+                        } else {
+                            oView.getModel("oModelControl").setProperty("/Dialog/Remarks", oBject["Description"]);
+                        }
+
+                    }
+                },
+                onRejectDialogOpen: function (oEvent) {
+                    var oView = this.getView();
+                    var oSource = oEvent.getSource();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var othat = this;
+                    var oBj = oSource.getBindingContext().getObject();
+                    var sStatus = oEvent.getSource().data("status");
+
+                    if (!this._RemarksDialog) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            controller: this,
+                            name: oModelControl.getProperty("/resourcePath") + ".view.fragments.RemarksDialog"
+                        }).then(function (oDialog) {
+                            this._RemarksDialog = oDialog;
+                            oView.addDependent(this._RemarksDialog);
+                            this._RemarksDialog.data("Id", oBj["Id"]);
+
+                            this._RemarksDialog.open();
+
+                        }.bind(this))
+                    } else {
+                        this._RemarksDialog.data("Id", oBj["Id"]);
+
+                        this._RemarksDialog.open();
+                    }
+                },
+                onApproveReject: function () {
+                    /*
+                     * Author: manik saluja
+                     * Date: 02-Dec-2021
+                     * Language:  JS
+                     * Purpose: This method trigerres when the user clicks on the save in the remarks dialog that pops up when we want to reject a portfolio. 
+                     */
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl")
+                    var oValidator = new Validator();
+                    var oForm = oView.byId("RemarkForm");
+                    var bValidate = oValidator.validate(oForm)
+                    if (!bValidate) {
+                        this._showMessageToast("Message16");
+                        return;
+                    } else {
+                        var oData = this._RemarksDialog.data();
+                        var oPayLoad = {
+                            ApprovalStatus: "REJECTED",
+                            Remark: oModelControl.getProperty("/Dialog/Remarks")
+                        };
+
+                        this._ChangePortImageStatusApproved(oPayLoad, oData["Id"]);
+                    }
+
+
+
+                },
+                _SendReqForImageStatus: function (oPayload, sId) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var oDataModel = oView.getModel();
+                    var sPath = "/PainterPortfolioImageSet(" + sId + ")/ApprovalStatus";
+                    return new Promise((resolve, reject) => {
+                        oDataModel.update(sPath, oPayload, {
+                            success: function () {
+                                resolve()
+                            },
+                            error: function () {
+                                reject();
+                            }
+                        })
+                    })
+        
+                },
+
+
+            },
         );
     }
 );

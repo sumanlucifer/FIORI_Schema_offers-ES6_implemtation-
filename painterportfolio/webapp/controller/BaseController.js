@@ -208,6 +208,8 @@ sap.ui.define([
                 oModelContrl.setProperty("/Dialog/Remarks", "");
                 oModelContrl.setProperty("/Dialog/ReasonKey", "");
                 this._RemarksDialog.close();
+                this._RemarksDialog.destroy();
+                delete this._RemarksDialog;
                 return;
             }
 
@@ -215,6 +217,13 @@ sap.ui.define([
                 this._ImageEditDialog.close();
                 return;
             }
+            if (this._QuickApproveDialog) {
+                this._QuickApproveDialog.close()
+                this._QuickApproveDialog.destroy();
+                delete this._QuickApproveDialog;
+                return;
+            }
+
         },
         /*
          * Common function for showing warning dialogs
