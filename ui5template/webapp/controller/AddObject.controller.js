@@ -78,7 +78,7 @@ sap.ui.define([
                 Remark: "",
                 ComplaintTypeId: "",
                 "ComplaintSubtypeId": 8,
-                "PainterId": 25,
+                "PainterId": "",
             }
             var oModel1 = new JSONModel(oDataView);
             oView.setModel(oModel1, "oModelView");
@@ -147,13 +147,11 @@ sap.ui.define([
             return new Promise((resolve, reject) => {
                 oDataModel.create("/PainterComplainsSet", oPayLoad, {
                     success: function (data) {
-                        MessageToast.show(othat.geti18nText("Message1"));
-                        oModelControl.setProperty("/ComplainId", data["Id"]);
+                        othat._showMessageToast("Message2")
                         resolve(data);
                     },
                     error: function (data) {
-                        MessageToast.show(othat.geti18nText("errorMessage2"));
-                        oModelControl.setProperty("/PageBusy", false);
+                        othat._showMessageToast("Message4")
                         reject(data);
                     },
                 });

@@ -10,6 +10,9 @@ sap.ui.define([], function () {
          * @returns {string} sValue with 2 digits rounded
          */
         fmtLowerCase: function (mParam) {
+            if(!mParam){
+                return 
+            }
             var sStatus = "";
 
             if (mParam.split("_").length > 1) {
@@ -32,7 +35,22 @@ sap.ui.define([], function () {
                 return "NA"
             }
             return mParam1;
-        }
+        },
+        fmtGenerateImageUrl: function (mMetadata) {
+            // mMetadata (string) is required from the odata responce "__metadata"
+            if (mMetadata) {
+                if (mMetadata.media_src) {
+                    return "https://".concat(
+                        location.host,
+                        "/KNPL_PAINTER_API",
+                        new URL(mMetadata.media_src).pathname
+                    );
+                }
+            }
+
+            return "";
+
+        },
     };
 
 });

@@ -6,10 +6,10 @@ sap.ui.define(
         "sap/ui/model/Filter",
         "sap/ui/model/FilterOperator",
         "sap/m/MessageBox",
-        "sap/m/MessageToast",
         "sap/ui/core/Fragment",
         "sap/ui/model/Sorter",
         "sap/ui/Device",
+        "sap/m/MessageToast"
     ],
     function (
         BaseController,
@@ -18,10 +18,10 @@ sap.ui.define(
         Filter,
         FilterOperator,
         MessageBox,
-        MessageToast,
         Fragment,
         Sorter,
-        Device
+        Device,
+        MessageToast
     ) {
         "use strict";
 
@@ -297,15 +297,14 @@ sap.ui.define(
                     var oView = this.getView();
                     var oBj = oEvent.getSource().getBindingContext().getObject();
                     this._showMessageBox1("information","Message5",[oBj["ComplaintCode"]],
-                        this._sample1.bind(this,"first paramters","secondParameter")
+                        this._DeleteComplaints.bind(this,"first paramters","secondParameter")
                    );
                 },
-                _sample1:function(mParam1,mParam2){
-                 
+                _DeleteComplaints:function(mParam1,mParam2){
+                    // after deleting the entity make sure that we are calling the refresh just on the table and not on thw whole model
+                   MessageToast.show("Message5")
                 },
-                _sample2:function(){
-                    console.log("sample2")
-                },
+              
                 onEditListItemPress: function (oEvent) {
                     var oBj = oEvent.getSource().getBindingContext().getObject();
                     var oRouter = this.getOwnerComponent().getRouter();

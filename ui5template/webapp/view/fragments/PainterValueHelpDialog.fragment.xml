@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+        resizable="false"
+        contentWidth="30%"
+		id="selectDialog"
+		title="Painters"
+        growing="true"
+        growingThreshold="15"
+		items="{path:'/PainterSet',sorter:{path:'Name'}, 
+        filters: [ {path:'RegistrationStatus',operator:'NotContains',value1:'DEREGISTERED' },
+                   {path:'ActivationStatus',operator:'NotContains',value1:'DEACTIVATED' },
+                   {path:'IsArchived',operator:'EQ',value1:false}   
+                ]}"
+		search=".onPainterValueHelpSearch"
+		confirm=".onPainterValueHelpClose"
+		cancel=".onPainterValueHelpClose">
+		<StandardListItem 
+			title="{Name}"
+			description="Mob: {Mobile}" />
+	</SelectDialog>
+</core:FragmentDefinition>
