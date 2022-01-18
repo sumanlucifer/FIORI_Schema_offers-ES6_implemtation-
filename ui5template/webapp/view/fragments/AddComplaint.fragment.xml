@@ -9,6 +9,20 @@
                         <core:Item text="{ComplaintType}" key="{Id}" />
                     </items>
                 </ComboBox>
+                 <Label text="{i18n>PrimaryMobileNo}" />
+                <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onPainterValueHelpRequest" value="{path:'oModelControl>/AddFields/PainterMobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <Label text="{i18n>PainterName}" />
+                <Text  text="{oModelControl>/AddFields/PainterName}" />
+                <Label text="{i18n>MembershipId}" />
+                <Text text="{oModelControl>/AddFields/PainterMembershipId}" />
+                <!-- Zone Division Depot Info -->
+                <Label text="{i18n>Zone}" />
+                <Text text="{oModelControl>/AddFields/PainterZone}" />
+                <Label text="{i18n>Division}" />
+                <Text text="{oModelControl>/AddFields/PainterDivision}" />
+                <Label text="{i18n>Depot}" />
+                <Text text="{oModelControl>/AddFields/PainterDepot}" />
+
                 <core:Title text="{i18n>RemarkDetails}" />
                 <Label text="{i18n>Remark}" />
                <Input  maxLength="300" width="100%"

@@ -1,5 +1,21 @@
 /* Enter your custom styles here */
+.carousel .sapMCrslPrev{
+    height:7% !important;
+    width:7% !important;
+}
+.carousel .sapMCrslNext{
+    height:7% !important;
+    width:7% !important;
+}
 
+.carouselCard.sapFCard .sapFCardHeader .sapFCardHeaderWrapper {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    width: 40% !important;
+    margin-left: 37% !important;
+    margin-right: auto !important;
+}
 .cssImageQuick {
     max-width: 500px !important;
 }
