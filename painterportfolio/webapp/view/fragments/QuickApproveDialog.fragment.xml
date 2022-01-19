@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" 	xmlns:f="sap.f" 	xmlns:cards="sap.f.cards"   xmlns:core="sap.ui.core" 	xmlns:l="sap.ui.layout" >
-    <Dialog contentHeight="700px" contentWidth="800px" title="{i18n>PainterPortImages}" titleAlignment="Center" >
+    <Dialog afterClose="onDialogClose" contentHeight="700px" contentWidth="800px" title="{i18n>PainterPortImages}" titleAlignment="Center" >
         <content>
             	<Carousel 
                     class="carousel"
@@ -10,7 +10,7 @@
                 events:{
                     dataReceived:'.onDataReceived'
                 },
-                sorter:{path:'PortfolioCategoryId',descending:true},
+                sorter:{path:'PortfolioCategory/category',descending:false},
                 parameters:{expand:'PortfolioCategory'}
 			        }">
    
@@ -32,8 +32,8 @@
 					  <Image class="cssImageQuick"  src="{path:'__metadata',formatter:'.formatter.generateImageUrl'}" />
 				</HBox>
 				<HBox justifyContent="Center">
-				            <Button text="{i18n>Approve}" tooltip="{i18n>Approve}" type="Accept" class="sapUiTinyMarginEnd" press="onApproveImage"/>
-                              <Button text="{i18n>Reject}" type="Reject" tooltip="{i18n>Reject}" press="onRejectDialogOpen" />    
+				    <Button text="{i18n>Approve}" tooltip="{i18n>Approve}" type="Accept" class="sapUiTinyMarginEnd" press="onApproveImage"/>
+                    <Button text="{i18n>Reject}" type="Reject" tooltip="{i18n>Reject}" press="onRejectDialogOpen" />    
 				</HBox>
 			</VBox>
 				</f:content>
@@ -48,7 +48,7 @@
           
         </beginButton>
         <endButton>
-            <Button text="{i18n>Close}" type="Ghost" press="onDialogClose" />
+            <Button text="{i18n>Close}" type="Ghost" press="onQucikApprovalClose" />
         </endButton>
     </Dialog>
 

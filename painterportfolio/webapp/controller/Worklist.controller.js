@@ -61,7 +61,7 @@ sap.ui.define(
                             Remarks: "",
                             ReasonKey: ""
                         },
-                        CarouselVisible:true
+                        CarouselVisible: true
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
@@ -439,19 +439,19 @@ sap.ui.define(
                         and: true
                     })
                     oList.getBinding("pages").filter(oFilter);
-                    
+                    //oList.getBinding("pages").sorter(new Sorter("PortfolioCategory/category"));
                     this._QuickApproveDialog.open();
                 },
-                onDataReceived:function(oEvent){
+                onDataReceived: function (oEvent) {
                     var oData = oEvent.getParameter("data");
-                    if(oData["__count"]){
-                        if(parseInt(oData["__count"]) > 0 ){
-                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible",true)
-                        }else{
-                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible",false)
+                    if (oData["__count"]) {
+                        if (parseInt(oData["__count"]) > 0) {
+                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible", true)
+                        } else {
+                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible", false)
                         }
                     }
-                   
+
                 },
                 onApproveImage: function (oEvent) {
                     var oView = this.getView();
@@ -591,7 +591,26 @@ sap.ui.define(
                             }
                         })
                     })
-        
+
+                },
+                onQucikApprovalClose: function () {
+                    this.getView().byId("idWorkListTable1").rebindTable();
+                    if (this.byId("carousel").getBinding("pages").getLength() > 0) {
+                        var sMessage = this.geti18nText("Message22");
+                        MessageBox.information(sMessage, {
+                            actions: [sap.m.MessageBox.Action.CANCEL, sap.m.MessageBox.Action.OK],
+                            emphasizedAction: MessageBox.Action.OK,
+                            onClose: function (sAction) {
+                                if (sAction === "CANCEL") {
+                                    this._QuickApproveDialog.close();
+                                } 
+                            }.bind(this)
+                        });
+                    } else {
+                        this._QuickApproveDialog.close();
+                    }
+
+
                 },
 
 
