@@ -594,7 +594,7 @@ sap.ui.define(
 
                 },
                 onQucikApprovalClose: function () {
-                    this.getView().byId("idWorkListTable1").rebindTable();
+                    
                     if (this.byId("carousel").getBinding("pages").getLength() > 0) {
                         var sMessage = this.geti18nText("Message22");
                         MessageBox.information(sMessage, {
@@ -609,6 +609,7 @@ sap.ui.define(
                     } else {
                         this._QuickApproveDialog.close();
                     }
+                    this.getView().byId("idWorkListTable1").rebindTable();
 
 
                 },
