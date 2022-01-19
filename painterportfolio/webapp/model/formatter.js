@@ -99,9 +99,9 @@ sap.ui.define([], function () {
             }
             return mParam1;
         },
-        fmtIcontabBartitle:function(mParam,mParam2){
+        fmtIcontabBartitle: function (mParam, mParam2) {
             var sStatus = "";
-        
+
 
             if (mParam.split("_").length > 1) {
                 var mArray = mParam.split("_");
@@ -116,9 +116,9 @@ sap.ui.define([], function () {
 
                 sStatus += b;
             }
-            return sStatus + " (Max: "+mParam2+")";
+            return sStatus + " (Max: " + mParam2 + ")";
         },
-        fmtRemarksEnable:function(mParam){
+        fmtRemarksEnable: function (mParam) {
             var sPath = "/MasterPortfolioRejectionReasonSet(" + mParam + ")";
             var oData = this.getView().getModel().getProperty(sPath);
             if (oData !== undefined && oData !== null) {
@@ -127,6 +127,18 @@ sap.ui.define([], function () {
                 }
             }
             return false
+        },
+        fmtCheckUploadCount: function (mParam1, mParam2) {
+            /*
+                mparam1 > approval status
+                mParam2 > upload count
+            */
+            if (mParam1 === "APPROVED") {
+                if (mParam2 === 0) {
+                    return false;
+                }
+            }
+            return true;
         }
     };
 
