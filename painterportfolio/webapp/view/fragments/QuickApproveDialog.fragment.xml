@@ -32,8 +32,8 @@
 					  <Image class="cssImageQuick"  src="{path:'__metadata',formatter:'.formatter.generateImageUrl'}" />
 				</HBox>
 				<HBox justifyContent="Center">
-				            <Button text="{i18n>Approve}" type="Accept" class="sapUiTinyMarginEnd" press="onApproveImage"/>
-                              <Button text="{i18n>Reject}" type="Reject" press="onRejectDialogOpen" />    
+				            <Button text="{i18n>Approve}" tooltip="{i18n>Approve}" type="Accept" class="sapUiTinyMarginEnd" press="onApproveImage"/>
+                              <Button text="{i18n>Reject}" type="Reject" tooltip="{i18n>Reject}" press="onRejectDialogOpen" />    
 				</HBox>
 			</VBox>
 				</f:content>
