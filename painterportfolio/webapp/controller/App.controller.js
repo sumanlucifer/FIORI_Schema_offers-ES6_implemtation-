@@ -1,12 +1,14 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/model/json/JSONModel"
-], function (BaseController, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "../service/FioriSessionService"
+], function (BaseController, JSONModel,FioriSessionService) {
     "use strict";
 
     return BaseController.extend("com.knpl.pragati.painterportfolio.controller.App", {
 
         onInit: function () {
+            FioriSessionService.sessionKeepAlive();
             var oViewModel,
                 fnSetAppNotBusy,
                 iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
