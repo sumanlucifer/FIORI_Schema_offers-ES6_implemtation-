@@ -603,13 +603,15 @@ sap.ui.define(
                             onClose: function (sAction) {
                                 if (sAction === "CANCEL") {
                                     this._QuickApproveDialog.close();
+                                    this.getView().byId("idWorkListTable1").rebindTable();
                                 } 
                             }.bind(this)
                         });
                     } else {
                         this._QuickApproveDialog.close();
+                        this.getView().byId("idWorkListTable1").rebindTable();
                     }
-                    this.getView().byId("idWorkListTable1").rebindTable();
+                    
 
 
                 },
