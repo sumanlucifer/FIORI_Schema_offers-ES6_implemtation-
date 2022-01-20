@@ -140,14 +140,15 @@ sap.ui.define([], function () {
             }
             return true;
         },
-        fmtCheckToolTipEdit:function (mParam1, mParam2) {
+        fmtCheckToolTipEdit: function (mParam1, mParam2) {
             /*
                 mparam1 > approval status
                 mParam2 > upload count
             */
+
             if (mParam1 === "APPROVED") {
                 if (mParam2 === 0) {
-                    return "Edit not possible for image as the max limit reached for upload for the current image.";
+                    return "Edit not possible for image as the max limit reached for upload.";
                 }
             }
             return "Edit";
