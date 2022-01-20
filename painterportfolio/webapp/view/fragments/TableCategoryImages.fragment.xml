@@ -56,7 +56,7 @@
                           
 
                              <HBox >
-                                <Button visible="{= ${oModelControl>editable} !== true }" enabled="{parts:['oModelControl>ApprovalStatus','oModelControl>UploadImageCount'], formatter:'.formatter.fmtCheckUploadCount'}" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddNewImage"></Button>
+                                <Button visible="{= ${oModelControl>editable} !== true }" tooltip="{parts:['oModelControl>ApprovalStatus','oModelControl>UploadImageCount'], formatter:'.formatter.fmtCheckToolTipEdit'}" enabled="{parts:['oModelControl>ApprovalStatus','oModelControl>UploadImageCount'], formatter:'.formatter.fmtCheckUploadCount'}" icon="sap-icon://edit" type="Transparent" press="onPressAddNewImage"></Button>
                                 <!-- <Button  visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }"  text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveCategoryImage"></Button> -->
                                 <Button   icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onDelteportFolioImage"></Button>
                                 <Button visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }" icon="sap-icon://sys-cancel" type="Transparent" tooltip="{i18n>Cancel}" press="onCancelImagesTable"></Button>
