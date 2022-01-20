@@ -96,7 +96,7 @@
                        <ObjectStatus text="{path:'ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
                         <Button visible="{= ${DownloadApplicable} === true }" icon="sap-icon://download" press="onDownloadMainTable" type="Ghost" tooltip="{i18n>Download}"/>
                         <HBox >
-                              <Button icon="sap-icon://approvals" press="onQucikApproveOpen" type="Ghost"/>
+                              <Button icon="sap-icon://approvals" tooltip="{i18n>Approvals}" press="onQucikApproveOpen" type="Ghost"/>
                             <Button icon="sap-icon://delete" press="onDeleteSiteImage" type="Transparent" tooltip="{i18n>Delete}"/>
                         </HBox>
                     </cells>
