@@ -61,7 +61,8 @@ sap.ui.define(
                             Remarks: "",
                             ReasonKey: ""
                         },
-                        CarouselVisible: true
+                        CarouselVisible: true,
+                        CarouselImgCount:null
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
@@ -414,7 +415,9 @@ sap.ui.define(
                 },
                 onQucikApproveOpen: function (oEvent) {
                     var oView = this.getView();
+                    var oModelControl = this.getModel("oModelControl");
                     var sPainterId = oEvent.getSource().getBindingContext().getObject().Painter["__ref"].match(/\d{1,}/)[0];
+                    oModelControl.setProperty("/CarouselImgCount", "");
                     if (!this._QuickApproveDialog) {
                         Fragment.load({
                             id: oView.getId(),
@@ -442,16 +445,27 @@ sap.ui.define(
                     //oList.getBinding("pages").sorter(new Sorter("PortfolioCategory/category"));
                     this._QuickApproveDialog.open();
                 },
+                onDataRequested:function(oEvent){
+                   // this._QuickApproveDialog.setBusy(true);
+                },
                 onDataReceived: function (oEvent) {
                     var oData = oEvent.getParameter("data");
+                    var oModelControl = this.getModel("oModelControl");
+                    var sCount =  oModelControl.getProperty("/CarouselImgCount");
+                   
                     if (oData["__count"]) {
                         if (parseInt(oData["__count"]) > 0) {
-                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible", true)
-                        } else {
-                            this.getView().getModel("oModelControl").setProperty("/CarouselVisible", false)
-                        }
-                    }
+                            oModelControl.setProperty("/CarouselVisible", true);
 
+                        } else {
+                            oModelControl.setProperty("/CarouselVisible", false);
+                        }
+                        if(!sCount){
+                            oModelControl.setProperty("/CarouselImgCount",oData["__count"]);
+                        }
+                        
+                    }
+                    //this._QuickApproveDialog.setBusy(false);
                 },
                 onApproveImage: function (oEvent) {
                     var oView = this.getView();
@@ -481,6 +495,7 @@ sap.ui.define(
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/PageBusy", true);
+                 
                     c1 = othat._SendReqForImageStatus(oPayload, sId);
                     c1.then(function () {
                         c3 = othat._UpdateBindingsCarousel();
@@ -489,6 +504,7 @@ sap.ui.define(
                                 oModelControl.setProperty("/Dialog/Remarks", "");
                                 oModelControl.setProperty("/Dialog/ReasonKey", "");
                                 othat._RemarksDialog.close();
+                                othat._RemarksDialog.setBusy(false);
                                 othat._RemarksDialog.destroy();
                                 delete othat._RemarksDialog;
                             }
@@ -564,12 +580,13 @@ sap.ui.define(
                         this._showMessageToast("Message16");
                         return;
                     } else {
+                        this._RemarksDialog.setBusy(true)
                         var oData = this._RemarksDialog.data();
                         var oPayLoad = {
                             ApprovalStatus: "REJECTED",
                             Remark: oModelControl.getProperty("/Dialog/Remarks")
                         };
-
+                        
                         this._ChangePortImageStatusApproved(oPayLoad, oData["Id"]);
                     }
 
@@ -593,25 +610,31 @@ sap.ui.define(
                     })
 
                 },
+                onEscapeHandlerQuickDialog: function (mParam1, mParam2) {
+                    //console.log(mParam1,mParam2,"escape handler")
+                },
+
                 onQucikApprovalClose: function () {
-                    
-                    if (this.byId("carousel").getBinding("pages").getLength() > 0) {
-                        var sMessage = this.geti18nText("Message22");
-                        MessageBox.information(sMessage, {
-                            actions: [sap.m.MessageBox.Action.CANCEL, sap.m.MessageBox.Action.OK],
-                            emphasizedAction: MessageBox.Action.OK,
-                            onClose: function (sAction) {
-                                if (sAction === "CANCEL") {
-                                    this._QuickApproveDialog.close();
-                                    this.getView().byId("idWorkListTable1").rebindTable();
-                                } 
-                            }.bind(this)
-                        });
-                    } else {
-                        this._QuickApproveDialog.close();
-                        this.getView().byId("idWorkListTable1").rebindTable();
+                    var oModelControl = this.getModel("oModelControl");
+                    var sCount = parseInt(oModelControl.getProperty("/CarouselImgCount"));
+                    var iCurrentLength = this.byId("carousel").getBinding("pages").getLength()
+                    if (iCurrentLength > 0) {
+                        if (sCount > iCurrentLength) {
+                            var sMessage = this.geti18nText("Message22");
+                            MessageBox.information(sMessage, {
+                                actions: [sap.m.MessageBox.Action.OK],
+                                emphasizedAction: MessageBox.Action.OK,
+                                onClose: function (sAction) {
+                                   
+                                }.bind(this)
+                            });
+                            return;
+                        }
+
                     }
-                    
+                    this._QuickApproveDialog.close();
+                    this.getView().byId("idWorkListTable1").rebindTable();
+
 
 
                 },
