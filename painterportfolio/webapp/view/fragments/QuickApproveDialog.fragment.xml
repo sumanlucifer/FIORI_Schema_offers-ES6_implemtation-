@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" 	xmlns:f="sap.f" 	xmlns:cards="sap.f.cards"   xmlns:core="sap.ui.core" 	xmlns:l="sap.ui.layout" >
-    <Dialog escapeHandler=".onEscapeHandlerQuickDialog" afterClose="onDialogClose" contentHeight="700px" contentWidth="800px" title="{i18n>PainterPortImages}" titleAlignment="Center" >
+    <Dialog busyIndicatorDelay="0" busy="{oModelControl>/PageBusy}" escapeHandler=".onEscapeHandlerQuickDialog" afterClose="onDialogClose" contentHeight="700px" contentWidth="800px" title="{i18n>PainterPortImages}" titleAlignment="Center" >
         <content>
             	<Carousel 
                     class="carousel"
@@ -8,7 +8,8 @@
                 	pages="{
                         path: '/PainterPortfolioImageSet' ,
                         events:{
-                            dataReceived:'.onDataReceived'
+                            dataReceived:'.onDataReceived',
+                            dataRequested:'.onDataRequested'
                         },
                         sorter:{path:'PortfolioCategory/category',descending:false},
                         parameters:{expand:'PortfolioCategory'}

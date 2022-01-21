@@ -445,6 +445,9 @@ sap.ui.define(
                     //oList.getBinding("pages").sorter(new Sorter("PortfolioCategory/category"));
                     this._QuickApproveDialog.open();
                 },
+                onDataRequested:function(oEvent){
+                   // this._QuickApproveDialog.setBusy(true);
+                },
                 onDataReceived: function (oEvent) {
                     var oData = oEvent.getParameter("data");
                     var oModelControl = this.getModel("oModelControl");
@@ -462,7 +465,7 @@ sap.ui.define(
                         }
                         
                     }
-
+                    //this._QuickApproveDialog.setBusy(false);
                 },
                 onApproveImage: function (oEvent) {
                     var oView = this.getView();
@@ -492,6 +495,7 @@ sap.ui.define(
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/PageBusy", true);
+                 
                     c1 = othat._SendReqForImageStatus(oPayload, sId);
                     c1.then(function () {
                         c3 = othat._UpdateBindingsCarousel();
@@ -500,6 +504,7 @@ sap.ui.define(
                                 oModelControl.setProperty("/Dialog/Remarks", "");
                                 oModelControl.setProperty("/Dialog/ReasonKey", "");
                                 othat._RemarksDialog.close();
+                                othat._RemarksDialog.setBusy(false);
                                 othat._RemarksDialog.destroy();
                                 delete othat._RemarksDialog;
                             }
@@ -575,12 +580,13 @@ sap.ui.define(
                         this._showMessageToast("Message16");
                         return;
                     } else {
+                        this._RemarksDialog.setBusy(true)
                         var oData = this._RemarksDialog.data();
                         var oPayLoad = {
                             ApprovalStatus: "REJECTED",
                             Remark: oModelControl.getProperty("/Dialog/Remarks")
                         };
-
+                        
                         this._ChangePortImageStatusApproved(oPayLoad, oData["Id"]);
                     }
 
