@@ -12,7 +12,7 @@
                         </items>
                     </ComboBox>
                     <Label text="{i18n>Remark}" />
-                    <TextArea enabled="{path:'oModelControl>/Dialog/ReasonKey',formatter:'.formatter.fmtRemarksEnable'}" required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl>/Dialog/Remarks', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
+                    <TextArea required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl>/Dialog/Remarks', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
                 </f:content>
             </f:SimpleForm>
         </content>

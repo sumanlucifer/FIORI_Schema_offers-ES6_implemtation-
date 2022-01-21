@@ -1,17 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m" 	xmlns:f="sap.f" 	xmlns:cards="sap.f.cards"   xmlns:core="sap.ui.core" 	xmlns:l="sap.ui.layout" >
-    <Dialog afterClose="onDialogClose" contentHeight="700px" contentWidth="800px" title="{i18n>PainterPortImages}" titleAlignment="Center" >
+    <Dialog escapeHandler=".onEscapeHandlerQuickDialog" afterClose="onDialogClose" contentHeight="700px" contentWidth="800px" title="{i18n>PainterPortImages}" titleAlignment="Center" >
         <content>
             	<Carousel 
                     class="carousel"
                     id="carousel"
                     visible="{oModelControl>/CarouselVisible}"
                 	pages="{
-				path: '/PainterPortfolioImageSet' ,
-                events:{
-                    dataReceived:'.onDataReceived'
-                },
-                sorter:{path:'PortfolioCategory/category',descending:false},
-                parameters:{expand:'PortfolioCategory'}
+                        path: '/PainterPortfolioImageSet' ,
+                        events:{
+                            dataReceived:'.onDataReceived'
+                        },
+                        sorter:{path:'PortfolioCategory/category',descending:false},
+                        parameters:{expand:'PortfolioCategory'}
 			        }">
    
                     <pages>
