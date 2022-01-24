@@ -51,6 +51,18 @@ sap.ui.define([], function () {
             return "";
 
         },
+        fmtStatusColorChange: function (mParam) {
+            if (mParam === "APPROVED") {
+                return "Success";
+            }
+            if (mParam === "PUBLISHED") {
+                return "Success";
+            }
+            if (mParam === "PENDING") {
+                return "Warning";
+            }
+            return "Error";
+        },
     };
 
 });

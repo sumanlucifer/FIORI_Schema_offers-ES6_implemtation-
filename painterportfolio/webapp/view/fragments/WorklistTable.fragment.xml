@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PainterPortfolios}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" requestAtLeastFields="Id,Painter/Id,DownloadApplicable,PortfolioTokenCode" >
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>PainterPortfolios}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterPortfolioSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="false" requestAtLeastFields="Id,Painter/Id,DownloadApplicable,PortfolioTokenCode" >
         <smartTable:customToolbar>
 			<OverflowToolbar>
                         <ToolbarSpacer />
@@ -9,7 +9,7 @@
                     </OverflowToolbar>
 		</smartTable:customToolbar>
 
-        <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
+        <Table  growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
            
             <columns>
                  <Column width="11%" hAlign="Begin">
@@ -24,7 +24,7 @@
                     </customData>
                     <Text text="{i18n>PainterName}"/>
                 </Column>
-                  <Column width="9%" hAlign="Begin">
+                  <Column width="11%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Painter/MembershipCard", "leadingProperty": "Painter/MembershipCard", "columnIndex": 2 ,"sortProperty": "Painter/MembershipCard","filterProperty": "Painter/MembershipCard"}'/>
                     </customData>
@@ -61,13 +61,13 @@
                     </customData>
                     <Text text="{i18n>CreatedAt}"/>
                 </Column>
-                <Column width="8%" hAlign="Begin">
+                <Column width="9%" hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 8 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
                     </customData>
                     <Text text="{i18n>ApprovalStatus}"/>
                 </Column>
-                  <Column width="8%" hAlign="Begin" >
+                  <Column width="7%" hAlign="Begin" >
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Download", "columnIndex": 9}'/>
                     </customData>
