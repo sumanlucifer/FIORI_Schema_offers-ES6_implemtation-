@@ -3,7 +3,7 @@
     xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:core="sap.ui.core">
     <smartTable:SmartTable id="smrtCallback" editable="false" beforeRebindTable="onBeforeRebindCallbackRequest" entitySet="PainterRequestSet" tableType="ResponsiveTable" showRowCount="false" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="true" enableAutoBinding="false" placeToolbarInTable="true" persistencyKey="PendingSmartTableKey" ignoredFields="AdminDetails/Name" ignoreFromPersonalisation="RequestTypeId,IsSelected,CreatedBy,UpdatedAt,UpdatedBy,IsArchived">
-        <Table growing="true" growingThreshold="10">
+        <Table growing="true" growingThreshold="10"  noDataText="{i18n>tableNoDataText}" >
             <columns>
                 <Column >
                     <customData>
