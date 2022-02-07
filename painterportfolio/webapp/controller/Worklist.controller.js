@@ -228,10 +228,14 @@ sap.ui.define(
                     // init filters - is archived
                     aCurrentFilterValues.push(
                         new Filter("IsArchived", FilterOperator.EQ, false));
-                    // init filters - ComplainType Id ne 1
-                    // aCurrentFilterValues.push(
-                    //     new Filter("ComplaintTypeId", FilterOperator.NE, 1));
 
+                    if(!oViewFilter["Status"]){
+                        aCurrentFilterValues.push(
+                            new Filter("ApprovalStatus", FilterOperator.NotContains, "NONE"));
+                    }
+                    console.log(oViewFilter)
+                  
+                   
 
                     // filter bar filters
                     for (let prop in oViewFilter) {
