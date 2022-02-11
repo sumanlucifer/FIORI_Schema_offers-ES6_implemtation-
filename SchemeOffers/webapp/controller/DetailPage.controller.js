@@ -131,6 +131,7 @@ sap.ui.define(
                                 Division: ""
                             }
                         },
+                        PainterOfferCount: "0"
                     };
                     var oModel = new JSONModel(oData);
                     this.getView().setModel(oModel, "oModelControl3");
@@ -147,13 +148,14 @@ sap.ui.define(
                     }
 
                 },
-                _LoadPainterDataV2:function(){
+                _LoadPainterDataV2: function () {
+
                     var oView = this.getView();
                     var oControlModel = oView.getModel("oModelControl3");
                     var iOfferId = oControlModel.getProperty("/OfferId")
                     var oTable = oView.byId("idPainterTable")
                     oTable.bindItems({
-                        path: "/GetOfferEligibleAndQualifiedPainter",
+                        path: "/OfferEligibleAndQualifiedPainterSet",
                         template: oView.byId("idPainterTableTemplate"),
                         templateShareable: true,
                         parameters: {
@@ -161,7 +163,22 @@ sap.ui.define(
                                 OfferId: "" + iOfferId + ""
                             }
                         }
-                    })                    
+                    })
+                },
+                onPainterTableUpdate: function (oEvent) {
+                    var sTitle,
+                        oTable = oEvent.getSource(),
+                        iTotalItems = oEvent.getParameter("total");
+                    if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                        sTitle = this.getResourceBundle().getText("OfferReportCount", [
+                            iTotalItems,
+                        ]);
+                    } else {
+                        sTitle = this.getResourceBundle().getText("OfferReportCount", [0]);
+                    }
+                    this.getView()
+                        .getModel("oModelControl3")
+                        .setProperty("/PainterOfferCount", sTitle);
                 },
                 _LoadPainterData: function (mSkip, mTop) {
 
@@ -2048,6 +2065,7 @@ sap.ui.define(
                     var oCtrl2Model = oView.getModel("oModelControl3");
 
                     if (sKey == "1") {
+                        this._LoadPainterDataV2();
                         //this._LoadPainterData(0, 16);
                         //oView.byId("idPainterTable").getModel().refresh();
                     } else if (sKey == "2") {
@@ -2055,7 +2073,7 @@ sap.ui.define(
                     } else if (sKey == "3") {
                         oView.byId("OfferHistory").rebindTable();
                     } else if (sKey == "4") {
-                        oCtrl2Model.setProperty("/PageBusy",true)
+                        oCtrl2Model.setProperty("/PageBusy", true)
                         var sMode = oCtrl2Model.getProperty("/mode");
                         var oData = null;
                         if (sMode === "display") {
@@ -2499,7 +2517,7 @@ sap.ui.define(
                         this.oWorkflowModel.loadData(sUrl);
                     } else {
                         this.oWorkflowModel.setData([]);
-                        oModelCtrl.setProperty("/PageBusy",false)
+                        oModelCtrl.setProperty("/PageBusy", false)
                     }
                     promise.resolve();
                     return promise;
@@ -2521,7 +2539,7 @@ sap.ui.define(
                     aWfData = aWfData.filter((ele) => taskSet.has(ele.type));
                     //console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
-                    oModelCtrl.setProperty("/PageBusy",false)
+                    oModelCtrl.setProperty("/PageBusy", false)
 
                 },
                 onPainterListDownload: function () {
