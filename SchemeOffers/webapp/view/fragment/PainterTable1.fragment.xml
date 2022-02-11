@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <Table updateFinished="onUpdatePainterTable" id="idPainterTable" growing="true" growingThreshold="4" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+   <Table id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar >
                 <ToolbarSpacer />
@@ -9,6 +9,7 @@
 
             </Toolbar>
         </headerToolbar>
+
         <columns>
 
             <Column>
