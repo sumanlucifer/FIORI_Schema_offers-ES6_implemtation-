@@ -147,6 +147,22 @@ sap.ui.define(
                     }
 
                 },
+                _LoadPainterDataV2:function(){
+                    var oView = this.getView();
+                    var oControlModel = oView.getModel("oModelControl3");
+                    var iOfferId = oControlModel.getProperty("/OfferId")
+                    var oTable = oView.byId("idPainterTable")
+                    oTable.bindItems({
+                        path: "/GetOfferEligibleAndQualifiedPainter",
+                        template: oView.byId("idPainterTableTemplate"),
+                        templateShareable: true,
+                        parameters: {
+                            custom: {
+                                OfferId: "" + iOfferId + ""
+                            }
+                        }
+                    })                    
+                },
                 _LoadPainterData: function (mSkip, mTop) {
 
                     var oView = this.getView();
@@ -2032,7 +2048,7 @@ sap.ui.define(
                     var oCtrl2Model = oView.getModel("oModelControl3");
 
                     if (sKey == "1") {
-                        this._LoadPainterData(0, 16);
+                        //this._LoadPainterData(0, 16);
                         //oView.byId("idPainterTable").getModel().refresh();
                     } else if (sKey == "2") {
                         //oView.byId("PainteTable2").rebindTable();

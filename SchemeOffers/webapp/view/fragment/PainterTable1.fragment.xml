@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core">
-    <Table items="{oModelControl3>/oData/Painters}" updateFinished="onUpdate2" updateStarted="onPainterUpdatedStart" id="idPainterTable" growing="true" growingThreshold="15" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+    <Table updateFinished="onUpdatePainterTable" id="idPainterTable" growing="true" growingThreshold="4" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
         <headerToolbar>
             <Toolbar >
                 <ToolbarSpacer />
@@ -9,7 +9,6 @@
 
             </Toolbar>
         </headerToolbar>
-
         <columns>
 
             <Column>
@@ -27,15 +26,9 @@
             <Column width="10%">
                 <Text text="{i18n>formRegionLbl3}" />
             </Column>
-            <!-- <Column>
-                <Text text="{i18n>DepotCode}" />
-            </Column> -->
             <Column>
                 <Text text="{i18n>Dealer}" />
             </Column>
-            <!-- <Column>
-                <Text text="{i18n>DealerCode}" />
-            </Column> -->
             <Column>
                 <Text text="{i18n>Achievement}" />
             </Column>
@@ -63,30 +56,28 @@
             </Column>
 
         </columns>
-        <items >
-            <ColumnListItem id="idPainterTableTemplate">
+        <dependents>
+             <ColumnListItem id="idPainterTableTemplate">
                 <cells>
-                    <Text text="{oModelControl3>Name}" />
-                    <Text text="{oModelControl3>Mobile}" />
-                    <Text text="{oModelControl3>ZoneId}" />
-                    <Text text="{oModelControl3>DivisionId}" />
-                    <Text text="{oModelControl3>Depot}"/>
-                    <!-- <Text text="{oModelControl3>DepotId}"/> -->
-                    <Text text="{oModelControl3>DealerName}"/>
-                    <!-- <Text text="{oModelControl3>DealerId}"/> -->
-                    <Text text="{oModelControl3>ProgressValue}"/>
-                    <Text text="{oModelControl3>ProgressMax}"/>
-                   
-                    <Text text="{= ${oModelControl3>MaxSlabValue} - ${oModelControl3>ProgressValue} }"/>
-                    <Text text="{oModelControl3>RedemeptionIndex} / {oModelControl3>RedemptionMax}"/>
-                    <Text text="{parts:['oModelControl3>RedemptionStatus','oModelControl3>RedemptionAllowed'],formatter:'.formatter.chkEligibleForGift'}"/>
-                    <Text text="{parts:['oModelControl3>RedemptionStatus','oModelControl3>RedemptionType','oModelControl3>RedeemedRewardPoints','oModelControl3>RedeemedRewardCash','oModelControl3>RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
-                    <Text text="{oModelControl3>RedeemedRewardBonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }" />
-                     <Text text="{oModelControl3>Remark}"/>
+                    <Text text="{Name}" />
+                    <Text text="{Mobile}" />
+                    <Text text="{ZoneId}" />
+                    <Text text="{DivisionId}" />
+                    <Text text="{Depot}"/>
+                    <Text text="{DealerName}"/>
+                    <Text text="{ProgressValue}"/>
+                    <Text text="{ProgressMax}"/>
+                    <Text text="{= ${MaxSlabValue} - ${ProgressValue} }"/>
+                    <Text text="{RedemeptionIndex} / {RedemptionMax}"/>
+                    <Text text="{parts:['RedemptionStatus','RedemptionAllowed'],formatter:'.formatter.chkEligibleForGift'}"/>
+                    <Text text="{parts:['RedemptionStatus','RedemptionType','RedeemedRewardPoints','RedeemedRewardCash','RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
+                    <Text text="{RedeemedRewardBonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }" />
+                     <Text text="{Remark}"/>
 
                 </cells>
             </ColumnListItem>
-        </items>
+        </dependents>
+
     </Table>
 
 </core:FragmentDefinition>
