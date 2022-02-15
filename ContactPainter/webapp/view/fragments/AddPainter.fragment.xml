@@ -141,6 +141,10 @@
                         <core:Item text="{Potential}" key="{Id}" />
                     </items>
                 </ComboBox>
+                <Label text="{i18n>Experience}"/>
+                 <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/Combo1}"  items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
+                                <core:Item text="{Expertise}" key="{Id}"/>
+                    </MultiComboBox>
                 <core:Title text="{i18n>BusinessDetails}" />
                 <Label text="{i18n>BusinessCategory}" />
                 <ComboBox items="{path:'/MasterBusinessCategorySet'}" selectedKey="{path:'oModelView>/PainterDetails/BusinessCategoryId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">

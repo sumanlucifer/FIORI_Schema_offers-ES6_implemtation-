@@ -183,7 +183,10 @@ sap.ui.define(
                         }, {
                             Name: "Cheque",
                             Id: 1
-                        }]
+                        }],
+                        MultiCombo:{
+                            Combo1:[]
+                        }
                     };
                     var oContrModel = new JSONModel(oControlData);
 
@@ -408,6 +411,12 @@ sap.ui.define(
                     } else {
                         oKycPayload = null;
                     }
+                    // adding data for experience
+                    var aExpPayload =  oModelCtrl.getProperty("/MultiCombo/Combo1").map(function (elem) {
+                       return {ExperienceId:elem}
+                    });
+                   
+
                     // settting the username of the painter same as the mobile number
                     //oPainterData["Username"] = oPainterData["Mobile"];
 
