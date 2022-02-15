@@ -224,5 +224,17 @@ sap.ui.define([
             const dayMonthYear = dt.format(jsonDateString) // returns: "01/08/2020"
             return dayMonthYear;
         },
+        fmtExperience:function(mParam1){
+           if(mParam1){
+               var aArray = [];
+               var oData;
+                for(var x of mParam1){
+                    oData = this.getView().getModel().getData("/" + x);
+                    aArray.push(oData["ExpertiseId"]);
+                }
+               return aArray
+           }
+           return []
+        }
     };
 });

@@ -32,7 +32,7 @@ sap.ui.define([
 
         },
 
-        
+
 
         addContentDensityClass: function () {
             return this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
@@ -74,7 +74,11 @@ sap.ui.define([
         presentBusyDialog: function () {
             BusyIndicator.show();
         },
-
+        _SetBlankPromise: function (mParam1) {
+            var promise = jQuery.Deferred();
+            promise.resolve(mParam1);
+            return promise;
+        },
         dismissBusyDialog: function () {
             BusyIndicator.hide();
         },
@@ -90,8 +94,8 @@ sap.ui.define([
             });
         },
 
-        showMessageToast:function(remarkText){
-             
+        showMessageToast: function (remarkText) {
+
             MessageToast.show(this.getResourceBundle().getText(remarkText));
 
         },
@@ -141,17 +145,17 @@ sap.ui.define([
         },
         // assets change
         onAssetChange: function (oEvent) {
-             var oView = this.getView();
+            var oView = this.getView();
             var oModel = oView.getModel("oModelView");
             var oObject = oEvent
                 .getSource()
                 .getBindingContext("oModelView")
                 .getObject();
-            
+
             if (oObject["VehicleTypeId"] === 5) {
                 oObject["VehicleName"] = "None";
             }
-            if(oObject["VehicleTypeId"] !== 5 && oObject["VehicleName"] == "None" ){
+            if (oObject["VehicleTypeId"] !== 5 && oObject["VehicleName"] == "None") {
                 oObject["VehicleName"] = "";
             }
 

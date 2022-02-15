@@ -413,7 +413,7 @@ sap.ui.define(
                     }
                     // adding data for experience
                     var aExpPayload =  oModelCtrl.getProperty("/MultiCombo/Combo1").map(function (elem) {
-                       return {ExperienceId:elem}
+                       return {ExpertiseId:parseInt(elem)}
                     });
                    
 
@@ -430,10 +430,11 @@ sap.ui.define(
                             Vehicles: oPayloadDevice,
                             PainterBankDetails: oBankingPayload,
                             PainterKycDetails: oKycPayload,
+                            PainterExpertise:aExpPayload
                         },
                         oPainterData
                     );
-                    //console.log(oPayload);
+                    console.log(oPayload);
                     var c1, c2, c3, c4;
                     var oData = this.getView().getModel();
                     var othat = this;

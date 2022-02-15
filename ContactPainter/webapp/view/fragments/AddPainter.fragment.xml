@@ -141,7 +141,7 @@
                         <core:Item text="{Potential}" key="{Id}" />
                     </items>
                 </ComboBox>
-                <Label text="{i18n>Experience}"/>
+                <Label text="{i18n>Expertise}"/>
                  <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/Combo1}"  items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
                                 <core:Item text="{Expertise}" key="{Id}"/>
                     </MultiComboBox>
