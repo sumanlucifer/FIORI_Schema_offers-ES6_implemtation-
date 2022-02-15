@@ -150,7 +150,7 @@
 
             </f:content>
         </f:SimpleForm>
-        <Table id="idFamilyDetils" width="auto" items="{path: 'oModelView>/PainterFamily', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table id="idFamilyDetils" width="auto" items="{path: 'oModelView>/PainterFamily', templateShareable: false,filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>FamilyDetails}" />

@@ -1351,6 +1351,7 @@ sap.ui.define(
                             Mobile: "",
                             Name: "",
                             editable: true,
+                            IsArchived:false
                         });
                         oView.getModel("oModelControl").setProperty("/EditTb1FDL", true);
                         oModel.refresh();
@@ -1442,9 +1443,18 @@ sap.ui.define(
                         .getPath()
                         .split("/");
                     var aFamilyDetails = oModel.getProperty("/PainterFamily");
-                    aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    var oObject = oEvent
+                    .getSource()
+                    .getBindingContext("oModelView")
+                    .getObject();
+                    if(oObject.hasOwnProperty("Id")){
+                        oObject["IsArchived"]= true;
+                    }else {
+                        aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    }
+                   
                     this._setFDLTbleFlag();
-                    oModel.refresh();
+                    oModel.refresh(true);
                 },
                 _setFDLTbleFlag() {
                     var oView = this.getView();
