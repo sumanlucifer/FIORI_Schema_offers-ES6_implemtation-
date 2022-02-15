@@ -73,9 +73,8 @@
                 <Label text="{i18n>AnnualPaidPotential}" />
                 <Text text="{PainterSegmentation/PotentialDetails/Potential}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>Expertise}"/>
-                <MultiComboBox editable="false" selectedKeys="{path:'PainterExpertise/',formatter:'.formatter.fmtExperience'}" items="{path:'/MasterExpertiseSet' }">
+                <MultiComboBox editable="false" selectedKeys="{path:'PainterExpertise/',formatter:'.formatter.fmtExperience'}" items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false} }">
                     <core:Item text="{Expertise}" key="{Id}"/>
-                    
                  </MultiComboBox>
                 <core:Title text="{i18n>BusinessDetails}" />
                 <Label text="{i18n>BusinessCategory}" />
