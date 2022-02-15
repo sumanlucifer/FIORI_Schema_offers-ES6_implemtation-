@@ -233,7 +233,7 @@ sap.ui.define(
                         aCurrentFilterValues.push(
                             new Filter("ApprovalStatus", FilterOperator.NotContains, "NONE"));
                     }
-                    console.log(oViewFilter)
+                    //console.log(oViewFilter)
                   
                    
 
