@@ -3247,6 +3247,7 @@ sap.ui.define(
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
+                    this._handleProdValueHelpClose();
                 },
                 onProdTokenUpdate: function (oEvent) {
                     if (oEvent.getParameter("type") === "removed") {
@@ -3338,6 +3339,7 @@ sap.ui.define(
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
+                    this._handleProdValueHelpClose();
                 },
                 _handleProdValueHelpClose: function () {
 
