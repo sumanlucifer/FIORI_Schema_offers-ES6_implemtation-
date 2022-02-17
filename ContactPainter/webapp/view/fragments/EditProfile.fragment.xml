@@ -11,7 +11,11 @@
                 <ObjectStatus state="None" text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" />
                 <Label text="{i18n>PreferredLanguage}" />
                 <ObjectStatus state="None" text="{Preference/Language/Language}" />
-               
+                <Label text="{i18n>Expertise}"/>
+                 <MultiComboBox editable="true" selectedKeys="{oModelControl>/MultiCombo/Combo1}" items="{path:'/MasterExpertiseSet' }">
+                    <!-- <core:Item text="{Expertise}" key="{Id}"/> -->
+                    <core:Item text="{Expertise}" key="{Id}"/>
+                 </MultiComboBox>
                  <Label text="{i18n>PrimaryMobileNo}" />
                 <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" required="true" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelView>/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }" />
                 <Label text="{i18n>SecondryMobileNo}" />
@@ -129,11 +133,7 @@
                         <core:Item text="{Potential}" key="{Id}" />
                     </items>
                 </ComboBox>
-                  <Label text="{i18n>Expertise}"/>
-                 <MultiComboBox editable="true" selectedKeys="{oModelControl>/MultiCombo/Combo1}" items="{path:'/MasterExpertiseSet' }">
-                    <!-- <core:Item text="{Expertise}" key="{Id}"/> -->
-                    <core:Item text="{Expertise}" key="{Id}"/>
-                 </MultiComboBox>
+                 
                 <core:Title text="{i18n>BusinessDetails}" />
                 <Label text="{i18n>BusinessCategory}" />
                 <ComboBox items="{path:'/MasterBusinessCategorySet'}" selectedKey="{path:'oModelView>/BusinessCategoryId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
