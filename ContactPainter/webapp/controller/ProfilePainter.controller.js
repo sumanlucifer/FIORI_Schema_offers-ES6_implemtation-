@@ -96,8 +96,8 @@ sap.ui.define(
                     );
                     var oView = this.getView();
                     var sExpandParam =
-                        "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails,"
-                        +"PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterExpertise";
+                        "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
+                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterExpertise";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/PainterSet(" + oProp + ")",
@@ -172,7 +172,7 @@ sap.ui.define(
                             })
                         })
                     })
-                   
+
                     // this._loadEditProfile("Display");
                     // this._loadEditBanking("Display");
                     // this._loadEditKyc("Display"); 
@@ -217,7 +217,7 @@ sap.ui.define(
                         }
                     }
                     oModelControl2.setProperty("/MultiCombo/Combo1", aCombo1);
-                   
+
                     promise.resolve();
                     return promise;
                 },
@@ -459,8 +459,8 @@ sap.ui.define(
                             DOJ: "",
                             ConfrmAccNum: "",
                         },
-                        MultiCombo:{
-                            Combo1:[]
+                        MultiCombo: {
+                            Combo1: []
                         }
                     };
                     var oControlModel = new JSONModel(oDataCtrl);
@@ -468,7 +468,7 @@ sap.ui.define(
                     var oDataValue = oView.getModel().getObject("/" + sPath, {
                         expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers,PainterExpertise",
                     });
-                
+
                     // setting the value property for the date this will help in resolving the date validation
                     // at the time of calling the validation function
                     var oDate = oDataValue["JoiningDate"];
@@ -532,10 +532,14 @@ sap.ui.define(
                         oSecTokens
                     );
                     // setting up multicombo data
-                    var aExpertise = oDataValue["PainterExpertise"].map(function(elem){
-                        return elem["ExpertiseId"]
+                    var aExpertise = oDataValue["PainterExpertise"].map(function (elem) {
+                        if (!elem["IsArchived"]) {
+                            return elem["ExpertiseId"]
+                        }
+
                     })
-                   oControlModel.setProperty("/MultiCombo/Combo1",aExpertise);
+                    console.log(aExpertise);
+                    oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
 
                     // setting up kyc data
                     //var oKycData = oDataValue["PainterBankDetails"];
@@ -919,11 +923,13 @@ sap.ui.define(
                         }
                     }
                     // MutlciaExpertisecombo data 
-                    var aExpertise =  oCtrlModel.getProperty("/MultiCombo/Combo1").map(function (elem) {
-                        return {ExpertiseId:parseInt(elem)}
-                     });
-                     oPayload["PainterExpertise"]=aExpertise;
-                    
+                    var aExpertise = oCtrlModel.getProperty("/MultiCombo/Combo1").map(function (elem) {
+                        return {
+                            ExpertiseId: parseInt(elem)
+                        }
+                    });
+                    oPayload["PainterExpertise"] = aExpertise;
+
                     /*Aditya changes start*/
                     for (var e in oPayload["PainterBankDetails"]) {
                         if (oPayload["PainterBankDetails"][e] === "") {
@@ -1351,7 +1357,7 @@ sap.ui.define(
                             Mobile: "",
                             Name: "",
                             editable: true,
-                            IsArchived:false
+                            IsArchived: false
                         });
                         oView.getModel("oModelControl").setProperty("/EditTb1FDL", true);
                         oModel.refresh();
@@ -1444,15 +1450,15 @@ sap.ui.define(
                         .split("/");
                     var aFamilyDetails = oModel.getProperty("/PainterFamily");
                     var oObject = oEvent
-                    .getSource()
-                    .getBindingContext("oModelView")
-                    .getObject();
-                    if(oObject.hasOwnProperty("Id")){
-                        oObject["IsArchived"]= true;
-                    }else {
+                        .getSource()
+                        .getBindingContext("oModelView")
+                        .getObject();
+                    if (oObject.hasOwnProperty("Id")) {
+                        oObject["IsArchived"] = true;
+                    } else {
                         aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
                     }
-                   
+
                     this._setFDLTbleFlag();
                     oModel.refresh(true);
                 },
@@ -1508,7 +1514,7 @@ sap.ui.define(
                             VehicleTypeId: "",
                             VehicleName: "",
                             editable: true,
-                            IsArchived:false
+                            IsArchived: false
                         });
                         oModelControl.setProperty("/EditTb2AST", true);
                         oModel.refresh();
@@ -1565,13 +1571,13 @@ sap.ui.define(
                         .getPath()
                         .split("/");
                     var oObject = oEvent.getSource().getBindingContext("oModelView").getObject();
-                    if(oObject.hasOwnProperty("Id")){
+                    if (oObject.hasOwnProperty("Id")) {
                         oObject["IsArchived"] = true;
-                    }else {
+                    } else {
                         var aFamilyDetails = oModel.getProperty("/Vehicles");
                         aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
                     }
-                  
+
                     this._setASTTbleFlag();
                     oModel.refresh(true);
                 },
