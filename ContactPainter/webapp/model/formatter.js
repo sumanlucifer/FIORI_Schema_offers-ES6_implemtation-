@@ -29,7 +29,7 @@ sap.ui.define([
             }
         },
         fmtCheckNull: function (mParam) {
-            if(!mParam){
+            if (!mParam) {
                 return "NA"
             }
             return mParam
@@ -210,9 +210,9 @@ sap.ui.define([
                 return "In Progress"
             }
         },
-        fmtCheckSettlemnetPoints:function(mParam1,mParam2){
-            if(mParam2 === "REDEEMED"){
-                return "-"+mParam1
+        fmtCheckSettlemnetPoints: function (mParam1, mParam2) {
+            if (mParam2 === "REDEEMED") {
+                return "-" + mParam1
             }
             return mParam1;
         },
@@ -224,17 +224,20 @@ sap.ui.define([
             const dayMonthYear = dt.format(jsonDateString) // returns: "01/08/2020"
             return dayMonthYear;
         },
-        fmtExperience:function(mParam1){
-           if(mParam1){
-               var aArray = [];
-               var oData;
-                for(var x of mParam1){
+        fmtExperience: function (mParam1) {
+            if (mParam1) {
+                var aArray = [];
+                var oData;
+                for (var x of mParam1) {
                     oData = this.getView().getModel().getData("/" + x);
-                    aArray.push(oData["ExpertiseId"]);
+                    if (!oData["IsArchived"]) {
+                        aArray.push(oData["ExpertiseId"]);
+                    }
+
                 }
-               return aArray
-           }
-           return []
+                return aArray
+            }
+            return []
         }
     };
 });

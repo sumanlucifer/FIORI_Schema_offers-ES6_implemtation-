@@ -203,7 +203,7 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelView>/Vehicles',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
+        <Table class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelView>/Vehicles',filters:[{path:'IsArchived',operator:'EQ',value1:false}],  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>AssetDetails}" />

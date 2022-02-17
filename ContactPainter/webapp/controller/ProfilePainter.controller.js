@@ -1508,6 +1508,7 @@ sap.ui.define(
                             VehicleTypeId: "",
                             VehicleName: "",
                             editable: true,
+                            IsArchived:false
                         });
                         oModelControl.setProperty("/EditTb2AST", true);
                         oModel.refresh();
@@ -1563,10 +1564,16 @@ sap.ui.define(
                         .getBindingContext("oModelView")
                         .getPath()
                         .split("/");
-                    var aFamilyDetails = oModel.getProperty("/Vehicles");
-                    aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    var oObject = oEvent.getSource().getBindingContext("oModelView").getObject();
+                    if(oObject.hasOwnProperty("Id")){
+                        oObject["IsArchived"] = true;
+                    }else {
+                        var aFamilyDetails = oModel.getProperty("/Vehicles");
+                        aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    }
+                  
                     this._setASTTbleFlag();
-                    oModel.refresh();
+                    oModel.refresh(true);
                 },
                 _setASTTbleFlag: function () {
                     var oView = this.getView();
