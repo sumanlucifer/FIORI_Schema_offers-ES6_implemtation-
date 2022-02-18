@@ -33,6 +33,10 @@
                         <core:Item text="{Language}" key="{Id}" />
                     </items>
                 </ComboBox>
+                   <Label text="{i18n>Expertise}"/>
+                 <MultiComboBox required="true" selectedKeys="{path:'oModelControl>/MultiCombo/Combo1', type :'com.knpl.pragati.ContactPainter.model.customMulti'}"  items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
+                                <core:Item text="{Expertise}" key="{Id}"/>
+                    </MultiComboBox>
                 <Label text="{i18n>ReferralCode}"/>
                 <Input value="{path:'oModelView>/PainterDetails/RegistrationReferralCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[A-Z0-9]+$'} }" />
                 <core:Title text="{i18n>PersonalDetails}" />
@@ -141,6 +145,7 @@
                         <core:Item text="{Potential}" key="{Id}" />
                     </items>
                 </ComboBox>
+             
                 <core:Title text="{i18n>BusinessDetails}" />
                 <Label text="{i18n>BusinessCategory}" />
                 <ComboBox items="{path:'/MasterBusinessCategorySet'}" selectedKey="{path:'oModelView>/PainterDetails/BusinessCategoryId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">

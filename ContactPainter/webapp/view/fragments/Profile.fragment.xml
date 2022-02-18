@@ -19,7 +19,10 @@
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>PreferredLanguage}" />
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                
+                 <Label text="{i18n>Expertise}"/>
+                <MultiComboBox editable="false" selectedKeys="{path:'PainterExpertise/',formatter:'.formatter.fmtExperience'}" items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
+                    <core:Item text="{Expertise}" key="{Id}"/>
+                 </MultiComboBox>
 
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
@@ -72,6 +75,7 @@
                 <Text text="{PainterSegmentation/SitePerMonthDetails/SitePerMonth}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>AnnualPaidPotential}" />
                 <Text text="{PainterSegmentation/PotentialDetails/Potential}" visible="{= ${oModelView>/profileEdit} !== true }" />
+               
                 <core:Title text="{i18n>BusinessDetails}" />
                 <Label text="{i18n>BusinessCategory}" />
                 <Text text="{BusinessCategory/BusinessCategory}" />

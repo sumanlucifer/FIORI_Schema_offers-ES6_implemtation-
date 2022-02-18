@@ -30,6 +30,7 @@ sap.ui.define(
         "sap/ui/core/Core",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
+        "../model/customMulti",
         "../model/formatter",
         "sap/m/Title",
     ],
@@ -67,6 +68,7 @@ sap.ui.define(
         Core,
         customInt1,
         customInt2,
+        customMulti,
         formatter,
         Title
     ) {
@@ -96,7 +98,8 @@ sap.ui.define(
                     );
                     var oView = this.getView();
                     var sExpandParam =
-                        "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails ,PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails";
+                        "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
+                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterExpertise";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/PainterSet(" + oProp + ")",
@@ -144,24 +147,34 @@ sap.ui.define(
                         AdditionalReqDlg: {},
                         ////////////deepanjali added/////////////////
                         AdditionalReqDlg_Remark: "",
-                        ReferralMessage: ""
+                        ReferralMessage: "",
+                        MultiCombo: {
+                            Combo1: []
+                        }
                     };
                     var oView = this.getView();
                     var oModel = new JSONModel(oData);
                     oView.setModel(oModel, "oModelControl2");
-                    var c1, c2, c3, c4;
+                    var c1a, c1b, c1, c2, c3, c4;
                     var othat = this;
-                    c1 = othat._loadEditProfile("Display");
-                    c1.then(function () {
-                        c2 = othat._loadEditBanking("Display");
-                        c2.then(function () {
-                            c3 = othat._loadEditKyc("Display");
-                            c3.then(function () {
-                                c4 = othat._toggleButtonsAndView(false);
-                                oModel.setProperty("/ProfilePageBuzy", false);
+                    var c1a = othat._SetBlankPromise();
+                    c1a.then(function (oData) {
+                        c1b = othat._SetBlankPromise(oData);
+                        c1b.then(function () {
+                            c1 = othat._loadEditProfile("Display");
+                            c1.then(function () {
+                                c2 = othat._loadEditBanking("Display");
+                                c2.then(function () {
+                                    c3 = othat._loadEditKyc("Display");
+                                    c3.then(function () {
+                                        c4 = othat._toggleButtonsAndView(false);
+                                        oModel.setProperty("/ProfilePageBuzy", false);
+                                    })
+                                })
                             })
                         })
                     })
+
                     // this._loadEditProfile("Display");
                     // this._loadEditBanking("Display");
                     // this._loadEditKyc("Display"); 
@@ -169,6 +182,46 @@ sap.ui.define(
                     //rebind Loyalty table
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
+                },
+                _LoadPainterJsonData: function (oEvent) {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oModelControl2 = oView.getModel("oModelControl2");
+                    var sPath = oModelControl2.getProperty("/bindProp");
+                    var othat = this;
+                    var exPand =
+                        "PainterFamily";
+                    return new Promise((resolve, reject) => {
+                        oView.getModel().read("/" + sPath, {
+                            urlParameters: {
+                                $expand: exPand,
+                            },
+                            success: function (data) {
+                                resolve(data);
+                            },
+                            error: function () {
+                                reject();
+                            },
+                        });
+                    });
+
+                },
+                _SetMutliComboDisplayData: function (oData) {
+                    var promise = jQuery.Deferred();
+                    var oView = this.getView();
+                    var oModelControl2 = oView.getModel("oModelControl2");
+                    var aCombo1 = [];
+
+                    if (oData["PainterFamily"]["results"].length > 0) {
+                        for (var x of oData["PainterFamily"]["results"]) {
+                            aCombo1.push(x["RelationshipId"]);
+                        }
+                    }
+                    oModelControl2.setProperty("/MultiCombo/Combo1", aCombo1);
+
+                    promise.resolve();
+                    return promise;
                 },
                 onSectionChange: function (oEvent) {
                     var oView = this.getView();
@@ -408,12 +461,16 @@ sap.ui.define(
                             DOJ: "",
                             ConfrmAccNum: "",
                         },
+                        MultiCombo: {
+                            Combo1: []
+                        }
                     };
                     var oControlModel = new JSONModel(oDataCtrl);
                     oView.setModel(oControlModel, "oModelControl");
                     var oDataValue = oView.getModel().getObject("/" + sPath, {
-                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers",
+                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers,PainterExpertise",
                     });
+
                     // setting the value property for the date this will help in resolving the date validation
                     // at the time of calling the validation function
                     var oDate = oDataValue["JoiningDate"];
@@ -455,7 +512,7 @@ sap.ui.define(
                             .getBinding("items")
                             .filter(new Filter("Zone", FilterOperator.EQ, sZoneId));
                     }
-                    var sDivisionId = oDataValue["DivisionId"];
+                    var sDivisionId = ["DivisionId"];
                     if (sDivisionId !== null) {
                         oView
                             .byId("idDepot")
@@ -476,6 +533,15 @@ sap.ui.define(
                         "/PainterAddDet/SecondryDealer",
                         oSecTokens
                     );
+                    // setting up multicombo data
+                    var aExpertise = oDataValue["PainterExpertise"].map(function (elem) {
+                        if (!elem["IsArchived"]) {
+                            return elem["ExpertiseId"]
+                        }
+
+                    })
+                    oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
+
                     // setting up kyc data
                     //var oKycData = oDataValue["PainterBankDetails"];
                     if (oDataValue.hasOwnProperty("PainterKycDetails")) {
@@ -705,6 +771,15 @@ sap.ui.define(
                         })
                     }
                 },
+                _CheckExpertise:function(){
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var aExp = oModelControl.getProperty("/MultiCombo/Combo1");
+                    if(aExp.length===0){
+                        return false;
+                    }
+                    return true
+                },
                 onPressSave: function () {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
@@ -719,6 +794,7 @@ sap.ui.define(
                     var sBankId = oModelControl.getProperty("/EditBank");
                     var addBankDoc = oModelControl.getProperty("/AddBankDoc");
                     var addKycDoc = oModelControl.getProperty("/AddKycDoc");
+                    var fValidationExp = this._CheckExpertise();
                     if (addBankDoc) {
                         this.eValidateBank = this._CheckTheBank(); //Aditya chnages
                     }
@@ -748,11 +824,15 @@ sap.ui.define(
                             "Kindly input all the mandatory(*) fields to continue."
                         );
                     }
+                    if(!fValidationExp){
+                        this._showMessageToast("Messgae5");
+                    }
+
                     if (addBankDoc && addKycDoc) {
                         if (this.eValidateBank == false && this.eValidateKyc == false) {
                             MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
                         }
-                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc) {
+                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc && fValidationExp) {
                             this._postDataToSave();
                         }
                     } else
@@ -763,17 +843,17 @@ sap.ui.define(
                             MessageToast.show("Kindly upload the image of the selected Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
                         }
                         if (addBankDoc) {
-                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank) {
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && fValidationExp) {
                                 this._postDataToSave();
                             }
                         } else
                         if (addKycDoc) {
-                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateKyc) {
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateKyc && fValidationExp) {
                                 this._postDataToSave();
                             }
                         }
                     } else if (!addBankDoc && !addKycDoc) {
-                        if (bValidation && dTbleFamily && eTbleAssets && cValidation) {
+                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && fValidationExp) {
                             this._postDataToSave();
                         }
                     }
@@ -857,6 +937,14 @@ sap.ui.define(
                             oPayload["PainterAddress"][d] = null;
                         }
                     }
+                    // MutlciaExpertisecombo data 
+                    var aExpertise = oCtrlModel.getProperty("/MultiCombo/Combo1").map(function (elem) {
+                        return {
+                            ExpertiseId: parseInt(elem)
+                        }
+                    });
+                    oPayload["PainterExpertise"] = aExpertise;
+
                     /*Aditya changes start*/
                     for (var e in oPayload["PainterBankDetails"]) {
                         if (oPayload["PainterBankDetails"][e] === "") {
@@ -990,7 +1078,7 @@ sap.ui.define(
                             promise.resolve(Data);
                         },
                         error: function (a) {
-                          
+
                             var sMessage =
                                 "Unable to update a painter due to the server issues";
                             if (a.statusCode == 409) {
@@ -1102,6 +1190,9 @@ sap.ui.define(
                     var aFieldGroup = sap.ui.getCore().byFieldGroupId("PMobile");
                     var oModelView = this.getView().getModel("oModelView");
                     for (var i of aFieldGroup) {
+                        if(!i["mProperties"].hasOwnProperty("value")){
+                            continue;
+                        }
                         if (oSource.getValue().trim() === "") {
                             break;
                         }
@@ -1284,6 +1375,7 @@ sap.ui.define(
                             Mobile: "",
                             Name: "",
                             editable: true,
+                            IsArchived: false
                         });
                         oView.getModel("oModelControl").setProperty("/EditTb1FDL", true);
                         oModel.refresh();
@@ -1375,9 +1467,18 @@ sap.ui.define(
                         .getPath()
                         .split("/");
                     var aFamilyDetails = oModel.getProperty("/PainterFamily");
-                    aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    var oObject = oEvent
+                        .getSource()
+                        .getBindingContext("oModelView")
+                        .getObject();
+                    if (oObject.hasOwnProperty("Id")) {
+                        oObject["IsArchived"] = true;
+                    } else {
+                        aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    }
+
                     this._setFDLTbleFlag();
-                    oModel.refresh();
+                    oModel.refresh(true);
                 },
                 _setFDLTbleFlag() {
                     var oView = this.getView();
@@ -1431,6 +1532,7 @@ sap.ui.define(
                             VehicleTypeId: "",
                             VehicleName: "",
                             editable: true,
+                            IsArchived: false
                         });
                         oModelControl.setProperty("/EditTb2AST", true);
                         oModel.refresh();
@@ -1486,10 +1588,16 @@ sap.ui.define(
                         .getBindingContext("oModelView")
                         .getPath()
                         .split("/");
-                    var aFamilyDetails = oModel.getProperty("/Vehicles");
-                    aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    var oObject = oEvent.getSource().getBindingContext("oModelView").getObject();
+                    if (oObject.hasOwnProperty("Id")) {
+                        oObject["IsArchived"] = true;
+                    } else {
+                        var aFamilyDetails = oModel.getProperty("/Vehicles");
+                        aFamilyDetails.splice(parseInt(sPath[sPath.length - 1]), 1);
+                    }
+
                     this._setASTTbleFlag();
-                    oModel.refresh();
+                    oModel.refresh(true);
                 },
                 _setASTTbleFlag: function () {
                     var oView = this.getView();
@@ -3374,7 +3482,7 @@ sap.ui.define(
                     );
                     oBindingParams.filters.push(oFilter1);
                     oBindingParams.filters.push(oFilter2);
-                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
                 onBeforeRebindTrainingTable: function (oEvent) {
                     // Live Training
@@ -3392,7 +3500,7 @@ sap.ui.define(
                     );
                     oBindingParams.filters.push(oFilter1);
                     oBindingParams.filters.push(oFilter2);
-                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
                 onViewQuestionaire: function (oEvent) {
                     var object = oEvent.getSource().getBindingContext().getObject();
@@ -3487,7 +3595,7 @@ sap.ui.define(
                     oBindingParams.parameters["expand"] = "LearningDetails";
                     var oFilter = new Filter("PainterId", FilterOperator.EQ, oPainterId);
                     oBindingParams.filters.push(oFilter);
-                    oBindingParams.sorter.push(new Sorter("CreatedAt",true));
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
                 onViewQuestionaireLearning: function (oEvent) {
                     var object = oEvent.getSource().getBindingContext().getObject();

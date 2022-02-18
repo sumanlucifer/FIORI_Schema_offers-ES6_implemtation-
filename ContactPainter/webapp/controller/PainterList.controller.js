@@ -344,14 +344,18 @@ sap.ui.define(
                         path: "CreatedAt",
                         descending: true
                     }));
+
                     //deleted table
                     var oTable = this.byId("idDelPainterTable");
                     var oBinding = oTable.getBinding("items");
-                    oBinding.filter([]);
-                    oBinding.sort(new Sorter({
-                        path: "CreatedAt",
-                        descending: true
-                    }));
+                    if(oBinding){
+                        oBinding.filter([]);
+                        oBinding.sort(new Sorter({
+                            path: "CreatedAt",
+                            descending: true
+                        }));
+                    }
+                   
 
                     this._fiterBarSort();
                 },
@@ -397,7 +401,7 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                    this._dealerReset();
+                   // this._dealerReset();
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();

@@ -24,6 +24,7 @@ sap.ui.define(
         "../model/formatter",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
+        "../model/customMulti"
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -52,7 +53,8 @@ sap.ui.define(
         Token,
         formatter,
         custDatatype1,
-        custDatatype2
+        custDatatype2,
+        customMulti
     ) {
         "use strict";
 
@@ -183,7 +185,10 @@ sap.ui.define(
                         }, {
                             Name: "Cheque",
                             Id: 1
-                        }]
+                        }],
+                        MultiCombo:{
+                            Combo1:[]
+                        }
                     };
                     var oContrModel = new JSONModel(oControlData);
 
@@ -279,6 +284,7 @@ sap.ui.define(
                     var dTbleAssets = !oModel.getProperty("/EditTb2AST");
                     var eValidation = this._CheckTheKyc();
                     var eValidateBank = this._CheckTheBank();
+                    var fValidationExp = this._CheckExpertise();
 
                     if (cTbleFamily == false) {
                         MessageToast.show(
@@ -306,11 +312,23 @@ sap.ui.define(
                         MessageToast.show(eValidateBank[1]);
                         return;
                     }
-                    if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0]) {
+                    if(!fValidationExp){
+                        this._showMessageToast("Messgae5");
+                    }
+                    if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0] && fValidationExp) {
                         this._postDataToSave();
                     }
+                   
                 },
-
+                _CheckExpertise:function(){
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var aExp = oModelControl.getProperty("/MultiCombo/Combo1");
+                    if(aExp.length===0){
+                        return false;
+                    }
+                    return true
+                },
                 _postDataToSave: function () {
                     var oView = this.getView();
                     oView.setBusy(true);
@@ -408,6 +426,12 @@ sap.ui.define(
                     } else {
                         oKycPayload = null;
                     }
+                    // adding data for experience
+                    var aExpPayload =  oModelCtrl.getProperty("/MultiCombo/Combo1").map(function (elem) {
+                       return {ExpertiseId:parseInt(elem)}
+                    });
+                   
+
                     // settting the username of the painter same as the mobile number
                     //oPainterData["Username"] = oPainterData["Mobile"];
 
@@ -421,10 +445,11 @@ sap.ui.define(
                             Vehicles: oPayloadDevice,
                             PainterBankDetails: oBankingPayload,
                             PainterKycDetails: oKycPayload,
+                            PainterExpertise:aExpPayload
                         },
                         oPainterData
                     );
-                    //console.log(oPayload);
+                    console.log(oPayload);
                     var c1, c2, c3, c4;
                     var oData = this.getView().getModel();
                     var othat = this;
@@ -869,6 +894,9 @@ sap.ui.define(
 
                     var oModelView = this.getView().getModel("oModelView");
                     for (var i of aFieldGroup) {
+                        if(!i["mProperties"].hasOwnProperty("value")){
+                            continue;
+                        }
                         if (oSource.getValue().trim() === "") {
                             break;
                         }
