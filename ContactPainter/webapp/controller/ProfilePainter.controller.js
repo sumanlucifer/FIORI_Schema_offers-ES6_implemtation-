@@ -534,12 +534,8 @@ sap.ui.define(
                         oSecTokens
                     );
                     // setting up multicombo data
-                    var aExpertise = oDataValue["PainterExpertise"].map(function (elem) {
-                        if (!elem["IsArchived"]) {
-                            return elem["ExpertiseId"]
-                        }
-
-                    })
+                    var aExpertise = oDataValue["PainterExpertise"].filter(item1 => item1["IsArchived"]=== false).map(elem => elem["ExpertiseId"]);
+                    console.log(aExpertise);
                     oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
 
                     // setting up kyc data
@@ -946,9 +942,9 @@ sap.ui.define(
                     for (var x of aExpertise){
                         iExpIndex = oPayload["PainterExpertise"].findIndex(item => parseInt(item.ExpertiseId) === parseInt(x) )
                         if(iExpIndex >= 0){
-                            oPayload["PainterExpertise"][iExpIndex]["IsArchived"] = false
+                            oPayload["PainterExpertise"][iExpIndex]["IsArchived"] = false;
                         }else {
-                            oPayload["PainterExpertise"].push({ExpertiseId:parseInt(x)})
+                            oPayload["PainterExpertise"].push({ExpertiseId:parseInt(x)});
                         }
                     }
                    
@@ -1010,6 +1006,7 @@ sap.ui.define(
                     var c1, c2, c3, c4;
                     var oData = this.getView().getModel();
                     //var othat = this;
+                    console.log(oPayload)
                     c1 = this._UpdateData(oPayload, sPath);
                     c1.then(
                         function (oData) {
