@@ -30,6 +30,7 @@ sap.ui.define(
         "sap/ui/core/Core",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
+        "../model/customMulti",
         "../model/formatter",
         "sap/m/Title",
     ],
@@ -67,6 +68,7 @@ sap.ui.define(
         Core,
         customInt1,
         customInt2,
+        customMulti,
         formatter,
         Title
     ) {
@@ -538,7 +540,6 @@ sap.ui.define(
                         }
 
                     })
-                    console.log(aExpertise);
                     oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
 
                     // setting up kyc data
