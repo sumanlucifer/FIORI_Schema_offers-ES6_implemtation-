@@ -282,6 +282,7 @@ sap.ui.define(
                     var dTbleAssets = !oModel.getProperty("/EditTb2AST");
                     var eValidation = this._CheckTheKyc();
                     var eValidateBank = this._CheckTheBank();
+                    var fValidationExp = this._CheckExpertise();
 
                     if (cTbleFamily == false) {
                         MessageToast.show(
@@ -309,11 +310,23 @@ sap.ui.define(
                         MessageToast.show(eValidateBank[1]);
                         return;
                     }
-                    if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0]) {
+                    if(!fValidationExp){
+                        this._showMessageToast("Messgae5");
+                    }
+                    if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0] && fValidationExp) {
                         this._postDataToSave();
                     }
+                   
                 },
-
+                _CheckExpertise:function(){
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var aExp = oModelControl.getProperty("/MultiCombo/Combo1");
+                    if(aExp.length===0){
+                        return false;
+                    }
+                    return true
+                },
                 _postDataToSave: function () {
                     var oView = this.getView();
                     oView.setBusy(true);

@@ -79,6 +79,13 @@ sap.ui.define([
             promise.resolve(mParam1);
             return promise;
         },
+        _showMessageToast: function (mParam, mParam2) {
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            var sText = oModel.getText(mParam, mParam2);
+            MessageToast.show(sText, {
+                duration: 6000
+            })
+        },
         dismissBusyDialog: function () {
             BusyIndicator.hide();
         },

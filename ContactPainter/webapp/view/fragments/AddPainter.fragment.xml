@@ -34,7 +34,7 @@
                     </items>
                 </ComboBox>
                    <Label text="{i18n>Expertise}"/>
-                 <MultiComboBox selectedKeys="{oModelControl>/MultiCombo/Combo1}"  items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
+                 <MultiComboBox required="true" selectedKeys="{oModelControl>/MultiCombo/Combo1}"  items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}">
                                 <core:Item text="{Expertise}" key="{Id}"/>
                     </MultiComboBox>
                 <Label text="{i18n>ReferralCode}"/>

@@ -12,7 +12,7 @@
                 <Label text="{i18n>PreferredLanguage}" />
                 <ObjectStatus state="None" text="{Preference/Language/Language}" />
                 <Label text="{i18n>Expertise}"/>
-                 <MultiComboBox editable="true" selectedKeys="{oModelControl>/MultiCombo/Combo1}" items="{path:'/MasterExpertiseSet' }">
+                 <MultiComboBox required="true" editable="true" selectedKeys="{oModelControl>/MultiCombo/Combo1}" items="{path:'/MasterExpertiseSet' }">
                     <!-- <core:Item text="{Expertise}" key="{Id}"/> -->
                     <core:Item text="{Expertise}" key="{Id}"/>
                  </MultiComboBox>

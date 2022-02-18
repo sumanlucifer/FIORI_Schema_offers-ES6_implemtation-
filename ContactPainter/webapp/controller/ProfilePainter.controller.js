@@ -770,6 +770,15 @@ sap.ui.define(
                         })
                     }
                 },
+                _CheckExpertise:function(){
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var aExp = oModelControl.getProperty("/MultiCombo/Combo1");
+                    if(aExp.length===0){
+                        return false;
+                    }
+                    return true
+                },
                 onPressSave: function () {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
@@ -784,6 +793,7 @@ sap.ui.define(
                     var sBankId = oModelControl.getProperty("/EditBank");
                     var addBankDoc = oModelControl.getProperty("/AddBankDoc");
                     var addKycDoc = oModelControl.getProperty("/AddKycDoc");
+                    var fValidationExp = this._CheckExpertise();
                     if (addBankDoc) {
                         this.eValidateBank = this._CheckTheBank(); //Aditya chnages
                     }
@@ -813,11 +823,15 @@ sap.ui.define(
                             "Kindly input all the mandatory(*) fields to continue."
                         );
                     }
+                    if(!fValidationExp){
+                        this._showMessageToast("Messgae5");
+                    }
+
                     if (addBankDoc && addKycDoc) {
                         if (this.eValidateBank == false && this.eValidateKyc == false) {
                             MessageToast.show("Kindly upload the image of the selected Bank and Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
                         }
-                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc) {
+                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && this.eValidateKyc && fValidationExp) {
                             this._postDataToSave();
                         }
                     } else
@@ -828,17 +842,17 @@ sap.ui.define(
                             MessageToast.show("Kindly upload the image of the selected Kyc Details.In case of Aadhar and Voter Id kindly upload front and back images.");
                         }
                         if (addBankDoc) {
-                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank) {
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateBank && fValidationExp) {
                                 this._postDataToSave();
                             }
                         } else
                         if (addKycDoc) {
-                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateKyc) {
+                            if (bValidation && dTbleFamily && eTbleAssets && cValidation && this.eValidateKyc && fValidationExp) {
                                 this._postDataToSave();
                             }
                         }
                     } else if (!addBankDoc && !addKycDoc) {
-                        if (bValidation && dTbleFamily && eTbleAssets && cValidation) {
+                        if (bValidation && dTbleFamily && eTbleAssets && cValidation && fValidationExp) {
                             this._postDataToSave();
                         }
                     }
