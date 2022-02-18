@@ -24,6 +24,7 @@ sap.ui.define(
         "../model/formatter",
         "com/knpl/pragati/ContactPainter/model/customInt",
         "com/knpl/pragati/ContactPainter/model/cmbxDtype2",
+        "../model/customMulti"
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -52,7 +53,8 @@ sap.ui.define(
         Token,
         formatter,
         custDatatype1,
-        custDatatype2
+        custDatatype2,
+        customMulti
     ) {
         "use strict";
 
