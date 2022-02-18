@@ -2932,6 +2932,7 @@ sap.ui.define(
                     oCtrlModel2.setProperty("/iCtbar", true);
                     var c1, c2, c3, c4;
                     var othat = this;
+                    oCtrlModel2.setProperty("/ProfilePageBuzy", true);
                     c1 = othat._loadEditProfile("Display");
                     c1.then(function () {
                         c2 = othat._loadEditBanking("Display");
@@ -2942,7 +2943,11 @@ sap.ui.define(
                             })
                         })
                     })
-                    oView.getModel().refresh(true);
+                    setTimeout(function() {
+                        oView.getModel().refresh(true);
+                        oCtrlModel2.setProperty("/ProfilePageBuzy", false);
+                     }, 5000);
+                    
                 },
                 _toggleButtonsAndView: function (bEdit) {
                     var oView = this.getView();
