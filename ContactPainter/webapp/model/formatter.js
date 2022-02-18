@@ -225,6 +225,7 @@ sap.ui.define([
             return dayMonthYear;
         },
         fmtExperience: function (mParam1) {
+            console.log("formatter trigerred");
             if (mParam1) {
                 var aArray = [];
                 var oData;
