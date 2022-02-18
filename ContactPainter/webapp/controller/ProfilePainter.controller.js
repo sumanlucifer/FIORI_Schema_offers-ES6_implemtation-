@@ -1189,6 +1189,9 @@ sap.ui.define(
                     var aFieldGroup = sap.ui.getCore().byFieldGroupId("PMobile");
                     var oModelView = this.getView().getModel("oModelView");
                     for (var i of aFieldGroup) {
+                        if(!i["mProperties"].hasOwnProperty("value")){
+                            continue;
+                        }
                         if (oSource.getValue().trim() === "") {
                             break;
                         }
