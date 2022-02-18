@@ -938,13 +938,20 @@ sap.ui.define(
                         }
                     }
                     // MutlciaExpertisecombo data 
-                    var aExpertise = oCtrlModel.getProperty("/MultiCombo/Combo1").map(function (elem) {
-                        return {
-                            ExpertiseId: parseInt(elem)
-                        }
+                    var aExpertise = oCtrlModel.getProperty("/MultiCombo/Combo1")
+                    oPayload["PainterExpertise"].forEach(element => {
+                         element["IsArchived"]=true
                     });
-                    oPayload["PainterExpertise"] = aExpertise;
-
+                    var iExpIndex=-1
+                    for (var x of aExpertise){
+                        iExpIndex = oPayload["PainterExpertise"].findIndex(item => parseInt(item.ExpertiseId) === parseInt(x) )
+                        if(iExpIndex >= 0){
+                            oPayload["PainterExpertise"][iExpIndex]["IsArchived"] = false
+                        }else {
+                            oPayload["PainterExpertise"].push({ExpertiseId:parseInt(x)})
+                        }
+                    }
+                   
                     /*Aditya changes start*/
                     for (var e in oPayload["PainterBankDetails"]) {
                         if (oPayload["PainterBankDetails"][e] === "") {
@@ -956,6 +963,7 @@ sap.ui.define(
                             oPayload["PainterKycDetails"][f] = null;
                         }
                     }
+
                     var editBank = oCtrlModel.getProperty("/EditBank");
                     var editField = oCtrlModel.getProperty("/EditField");
                     var addBankDoc = oCtrlModel.getProperty("/AddBankDoc");
