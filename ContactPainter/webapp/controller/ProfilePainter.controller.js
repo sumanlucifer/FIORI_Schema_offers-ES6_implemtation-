@@ -2946,7 +2946,7 @@ sap.ui.define(
                     setTimeout(function() {
                         oView.getModel().refresh(true);
                         oCtrlModel2.setProperty("/ProfilePageBuzy", false);
-                     }, 5000);
+                     }, 3000);
                     
                 },
                 _toggleButtonsAndView: function (bEdit) {
