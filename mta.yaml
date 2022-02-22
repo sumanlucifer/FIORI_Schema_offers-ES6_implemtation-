@@ -1,34 +1,34 @@
 _schema-version: "3.2"
 ID: knpl-influencer-web
-version: 1.0.0
+version: 3.1.1
 modules:
-- name: knpl-influencer-web-approuter-uat
+- name: knpl-influencer-web-approuter-pre-prod
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
   properties:
-    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-uat.${default-domain}
+    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-pre-prod.${default-domain}
   requires:
-  - name: uaa_knpl-influencer-web-uat
-  - name: knpl-influencer-web_html_repo_runtime-uat
-  - name: destination-knpl-pragati-uat
+  - name: uaa_knpl-influencer-web-pre-prod
+  - name: knpl-influencer-web_html_repo_runtime-pre-prod
+  - name: destination-knpl-pragati-pre-prod
   - name: wm_workflow
-  - name: portal_resources_knpl-influencer-web-uat
+  - name: portal_resources_knpl-influencer-web-pre-prod
     group: destinations
     properties:
       forwardAuthToken: true
       timeout: 180000
       name: KNPL_PAINTER_API
-      url: https://uat-knpl-pragati-api.cfapps.ap10.hana.ondemand.com/
+      url: https://stage-knpl-pragati-api.cfapps.ap11.hana.ondemand.com/
   parameters:
     disk-quota: 256M
     memory: 256M
     routes:
-    - route: knpl-painter-dev-knpl-influencer-web-approuter-uat.${default-domain}
-- name: knpl-influencer-web_ui_deployer-uat
+    - route: knpl-painter-dev-knpl-influencer-web-approuter-pre-prod.${default-domain}
+- name: knpl-influencer-web_ui_deployer-pre-prod
   type: com.sap.application.content
   path: .
   requires:
-  - name: knpl-influencer-web_html_repo_host-uat
+  - name: knpl-influencer-web_html_repo_host-pre-prod
     parameters:
       content-target: true
   build-parameters:
@@ -91,16 +91,16 @@ modules:
       name: SchemeOffers
       target-path: resources/
     - artifacts:
-      - groupnotifications-content.zip
-      name: groupnotifications
-      target-path: resources/
-    - artifacts:
       - condonation-content.zip
       name: condonation
       target-path: resources/
     - artifacts:
       - redeempoints-content.zip
       name: redeempoints
+      target-path: resources/
+    - artifacts:
+      - groupnotifications-content.zip
+      name: groupnotifications
       target-path: resources/
     - artifacts:
       - reports-content.zip
@@ -130,20 +130,20 @@ modules:
   type: com.sap.application.content
   path: launchpad
   requires:
-  - name: portal_resources_knpl-influencer-web-uat
+  - name: portal_resources_knpl-influencer-web-pre-prod
     parameters:
       content-target: true
       service-key:
         config:
           content-endpoint: developer
         name: content-deploy-key
-  - name: knpl-influencer-web_html_repo_host-uat
-  - name: uaa_knpl-influencer-web-uat
+  - name: knpl-influencer-web_html_repo_host-pre-prod
+  - name: uaa_knpl-influencer-web-pre-prod
   parameters:
     config:
-      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-uat.${default-domain}
+      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-pre-prod.${default-domain}
   deployed-after:
-  - knpl-influencer-web_ui_deployer-uat
+  - knpl-influencer-web_ui_deployer-pre-prod
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
@@ -240,14 +240,6 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-- name: groupnotifications
-  type: html5
-  path: groupnotifications
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
 - name: condonation
   type: html5
   path: condonation
@@ -259,6 +251,14 @@ modules:
 - name: redeempoints
   type: html5
   path: redeempoints
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: groupnotifications
+  type: html5
+  path: groupnotifications
   build-parameters:
     builder: custom
     commands:
@@ -281,19 +281,19 @@ modules:
     - npm run build
     supported-platforms: []
 resources:
-- name: uaa_knpl-influencer-web-uat
+- name: uaa_knpl-influencer-web-pre-prod
   type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
-    service-name: uat-knpl-pragati-uaa
+    service-name: knpl-pragati-uaa
     service-plan: application
-- name: knpl-influencer-web_html_repo_runtime-uat
+- name: knpl-influencer-web_html_repo_runtime-pre-prod
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
-- name: destination-knpl-pragati-uat
+- name: destination-knpl-pragati-pre-prod
   type: org.cloudfoundry.existing-service
   parameters:
     config:
@@ -310,15 +310,15 @@ resources:
       version: 1.0.0
     service: destination
     service-plan: lite
-    service-name: uat-destination-knpl-pragati
-- name: knpl-influencer-web_html_repo_host-uat
+    service-name: destination-knpl-pragati
+- name: knpl-influencer-web_html_repo_host-pre-prod
   type: org.cloudfoundry.managed-service
   parameters:
     config:
       sizeLimit: 10
     service: html5-apps-repo
     service-plan: app-host
-- name: portal_resources_knpl-influencer-web-uat
+- name: portal_resources_knpl-influencer-web-pre-prod
   type: org.cloudfoundry.managed-service
   parameters:
     service: portal
