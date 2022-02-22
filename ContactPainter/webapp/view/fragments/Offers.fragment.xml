@@ -68,7 +68,7 @@
                             <Text text="{parts:['RedemptionStatus','PainterOfferRedemption'],formatter:'.formatter.fmtOfferGiftRedeemed'}" />
                         </HBox>
                         <Text text="{Remark}" />
-                        <Text text="{parts:['PainterOfferRedemption'],formatter:'.formatter.fmtCheckBonusPoints'}" />
+                        <Text text="{path:'TotalBonusPoints',formatter:'.formatter.fmtCheckNull'}" />
                     </cells>
                 </ColumnListItem>
             </dependents>
