@@ -535,7 +535,7 @@ sap.ui.define(
                     );
                     // setting up multicombo data
                     var aExpertise = oDataValue["PainterExpertise"].filter(item1 => item1["IsArchived"]=== false).map(elem => elem["ExpertiseId"]);
-                    console.log(aExpertise);
+                  
                     oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
 
                     // setting up kyc data
@@ -1006,7 +1006,7 @@ sap.ui.define(
                     var c1, c2, c3, c4;
                     var oData = this.getView().getModel();
                     //var othat = this;
-                    console.log(oPayload)
+                    //console.log(oPayload)
                     c1 = this._UpdateData(oPayload, sPath);
                     c1.then(
                         function (oData) {
