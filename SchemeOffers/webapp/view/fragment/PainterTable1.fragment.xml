@@ -44,14 +44,14 @@
             <Column width="8%">
                 <Text text="{i18n>MUltiplesAllowed}" />
             </Column>
-            <Column>
+            <Column  >
                 <Text text="{i18n>EligibleForRwards}" />
             </Column>
             <Column>
                 <Text text="{i18n>RedeemedRewards}" />
             </Column>
-            <Column>
-                <Text text="{i18n>BonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }"/>
+            <Column visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }">
+                <Text text="{i18n>BonusPoints}" />
             </Column>
             <Column>
                 <Text text="{i18n>Remark}" />
@@ -73,7 +73,7 @@
                     <Text text="{RedemeptionIndex} / {RedemptionMax}"/>
                     <Text text="{parts:['RedemptionStatus','RedemptionAllowed'],formatter:'.formatter.chkEligibleForGift'}"/>
                     <Text text="{parts:['RedemptionStatus','RedemptionType','RedeemedRewardPoints','RedeemedRewardCash','RewardGift'],formatter:'.formatter.checkPainterReward'}"/>
-                    <Text text="{RedeemedRewardBonusPoints}" visible="{= ${OfferTypeId}===3 || ${OfferTypeId}===4 }" />
+                    <Text text="{RedeemedRewardBonusPoints}"  />
                      <Text text="{Remark}"/>
 
                 </cells>
