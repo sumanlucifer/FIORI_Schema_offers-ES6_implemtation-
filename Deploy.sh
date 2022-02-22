@@ -15,7 +15,7 @@ case $1 in
     ;;
 
   *)
-   echo "Ileagal selected space. Please send D for DEV or U for UAT as argument"
+   echo "Ileagal selected space. Please send D for DEV or U for UAT or P for PREPRD as argument"
    exit 1
     ;;  
 esac
