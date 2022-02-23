@@ -148,7 +148,7 @@ sap.ui.define([], function () {
 
             if (mParam1 === "APPROVED") {
                 if (mParam2 === 0) {
-                    return "You can update the size image twice within 30 days from date of first approval.";
+                    return "You can update the site image twice within 30 days from date of first approval.";
                 }
             }
             return "Edit";
