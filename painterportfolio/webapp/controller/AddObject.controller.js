@@ -591,7 +591,7 @@ sap.ui.define([
             }
 
 
-            var sMaxImages = sObject["MAXIMAGES"];
+            var sMaxImages = sObject["MaxImages"];
             var sPainterId = oModelControl.getProperty("/PainterId");
             var oTableData = oModelControl.getProperty("/TableData1");
             if (oEvent !== "add") {
