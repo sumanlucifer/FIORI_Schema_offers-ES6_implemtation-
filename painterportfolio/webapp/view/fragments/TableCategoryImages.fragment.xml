@@ -47,9 +47,9 @@
                                     <Link text="{i18n>ViewImage}" press="onViewImage"  visible="{= ${oModelControl>editable} !== true }"/>
                             </VBox>
                               <Text text="{ path:'oModelControl>CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
-                                 <Text text="{ path:'oModelControl>CreatorName' }" />
+                                 <Text text="{ parts:['oModelControl>CreatedBy','oModelControl>CreatedByDetails'] ,formatter:'.formatter.fmtCheckCreatedName'}" />
                                  <Text text="{ path:'oModelControl>UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" /> 
-                                 <Text text="{ path:'oModelControl>UpdatedByName' }" />
+                                   <Text text="{ parts:['oModelControl>UpdatedBy','oModelControl>UpdatedByDetails'] ,formatter:'.formatter.fmtCheckCreatedName'}" />
                               <Text text="{ path:'oModelControl>Remark',formatter:'.formatter.fmtCheckNull'}" />
                            
                             <ObjectStatus text="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtLowerCase'}" state="{path:'oModelControl>ApprovalStatus',formatter:'.formatter.fmtCheckStatusColor'}" />
@@ -57,12 +57,12 @@
 
                              <HBox >
                                 <Button visible="{= ${oModelControl>editable} !== true }" tooltip="{parts:['oModelControl>ApprovalStatus','oModelControl>UploadImageCount'], formatter:'.formatter.fmtCheckToolTipEdit'}" enabled="{parts:['oModelControl>ApprovalStatus','oModelControl>UploadImageCount'], formatter:'.formatter.fmtCheckUploadCount'}" icon="sap-icon://edit" type="Transparent" press="onPressAddNewImage"></Button>
-                                <!-- <Button  visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }"  text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onSaveCategoryImage"></Button> -->
+                               
                                 <Button   icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onDelteportFolioImage"></Button>
                                 <Button visible="{= !isNaN(${oModelControl>Id}) &amp;&amp; ${oModelControl>editable} === true   }" icon="sap-icon://sys-cancel" type="Transparent" tooltip="{i18n>Cancel}" press="onCancelImagesTable"></Button>
                                 <!-- Approval and Reject Button -->
-                                  <Button app:status="APPROVED" visible="{ parts:['oModelControl>editable','oModelControl>ApprovalStatus'],formatter:'.formatter.fmtBtnApproveImage'  }"  type="Accept" text="{i18n>Approve}" tooltip="{i18n>Approve}" press="onApproveImage" class="sapUiTinyMarginEnd"></Button>
-                                  <Button  app:status="REJECTED"  visible="{ parts:['oModelControl>editable','oModelControl>ApprovalStatus'],formatter:'.formatter.fmtBtnRejectImage'  }" type="Reject" text="{i18n>Reject}" tooltip="{i18n>Reject}" press="onStatusChanged"></Button>
+                                <Button app:status="APPROVED" visible="{ parts:['oModelControl>editable','oModelControl>ApprovalStatus'],formatter:'.formatter.fmtBtnApproveImage'  }"  type="Accept" text="{i18n>Approve}" tooltip="{i18n>Approve}" press="onApproveImage" class="sapUiTinyMarginEnd"></Button>
+                                <Button  app:status="REJECTED"  visible="{ parts:['oModelControl>editable','oModelControl>ApprovalStatus'],formatter:'.formatter.fmtBtnRejectImage'  }" type="Reject" text="{i18n>Reject}" tooltip="{i18n>Reject}" press="onStatusChanged"></Button>
                             </HBox>
                         </cells>
                     </ColumnListItem>
