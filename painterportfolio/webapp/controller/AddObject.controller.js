@@ -664,6 +664,9 @@ sap.ui.define([
             var sPainterId = oModelControl.getProperty("/PainterId");
             return new Promise((resolve, reject) => {
                 oDataModel.read("/PainterPortfolioImageSet", {
+                    urlParameters:{
+                        $expand:"CreatedByDetails,UpdatedByDetails"
+                    },
                     filters: [new Filter("PortfolioCategoryId", FilterOperator.EQ, sKey), new Filter("PainterId", FilterOperator.EQ, sPainterId)],
                     success: function (oData) {
                         oModelControl.setProperty("/TableData1", oData["results"]);

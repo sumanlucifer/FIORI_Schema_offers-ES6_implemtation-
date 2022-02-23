@@ -140,6 +140,21 @@ sap.ui.define([], function () {
             }
             return true;
         },
+        fmtCheckCreatedName: function (mParam1, mParam2) {
+            /*
+                mParam1 > cratedbyId or UpdatedbyId
+                mParam2 > Expansion CraetedByName/UpdatedByName
+            */
+
+            if (mParam1 === 0) {
+                return "Mobile User"; 
+            }
+            if (mParam2) {
+                return mParam2["Name"];
+            }
+
+            return mParam1;
+        },
         fmtCheckToolTipEdit: function (mParam1, mParam2) {
             /*
                 mparam1 > approval status
@@ -153,6 +168,7 @@ sap.ui.define([], function () {
             }
             return "Edit";
         },
+
     };
 
 });
