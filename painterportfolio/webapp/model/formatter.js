@@ -146,11 +146,12 @@ sap.ui.define([], function () {
                 mParam2 > Expansion CraetedByName/UpdatedByName
             */
 
-            if (mParam1 === 0) {
-                return "Mobile User"; 
-            }
+           
             if (mParam2) {
                 return mParam2["Name"];
+            }
+            if (mParam1 === 0) {
+                return "Mobile User"; 
             }
 
             return mParam1;
