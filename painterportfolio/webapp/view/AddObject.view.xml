@@ -54,7 +54,7 @@
             <layout:VerticalLayout width="100%" >
                 <IconTabBar  select="onIcnTbarChange" items="{path:'oModelControl>/PortfolioCategory' }" selectedKey="{oModelControl>/IconTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
                 <items>
-                    <IconTabFilter  text="{oModelControl>category} ({oModelControl>TOTAL_IMAGES}/{oModelControl>MAXIMAGES})" key="{oModelControl>Id}" >
+                    <IconTabFilter  text="{oModelControl>category} ({oModelControl>TotalImages}/{oModelControl>MaxImages})" key="{oModelControl>Id}" >
                       
                     </IconTabFilter>
                 </items>
