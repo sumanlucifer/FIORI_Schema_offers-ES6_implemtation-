@@ -65,14 +65,14 @@
                         <Title text="{worklistView>/worklistTableTitle}"/>
                         <ToolbarSpacer/>
                            <Button press="onRefreshButton"  type="Ghost" icon="sap-icon://refresh" />
-                              <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>GenerateReports}" type="Ghost" text="{i18n>GenerateReports}" buttonMode="Regular" useDefaultActionOnly="false">
+                              <!-- <MenuButton icon="sap-icon://excel-attachment" tooltip="{i18n>GenerateReports}" type="Ghost" text="{i18n>GenerateReports}" buttonMode="Regular" useDefaultActionOnly="false">
                             <menu>
                                 <Menu itemSelected="onMenuAction" items="{path:'/MasterReportTypeSet'}">
                                     <MenuItem text="{Value}" icon="sap-icon://save" />
                                   
                                 </Menu>
                             </menu>
-		                </MenuButton>
+		                </MenuButton> -->
 
                         <!-- <Button icon="sap-icon://sort" type="Transparent" press="handleSortButtonPressed"></Button> -->
                     </Toolbar>
