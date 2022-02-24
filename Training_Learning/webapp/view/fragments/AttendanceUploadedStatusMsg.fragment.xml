@@ -40,7 +40,7 @@
     </VBox>
     <buttons>
 		<Button text="{i18n>btnClose}" press="closeAttendanceStatusDialog"/>
-        <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onDataExport"/>
+        <!-- <Button text="{i18n>btnDownloadCSV}" icon="sap-icon://download" press="onDataExport"/> -->
 	</buttons>
 </Dialog>
 </core:FragmentDefinition>
