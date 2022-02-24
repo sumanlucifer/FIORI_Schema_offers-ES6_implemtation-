@@ -2011,13 +2011,13 @@ sap.ui.define(
                     oModelControl2.setProperty("/busy", true);
                     var sBankAccNo = oView.byId("NewAccountNumber").getValue().trim();
                     var sIfscCode = oView.byId("NewIfscCode").getValue().trim();
-
+                    var sPainterId = oModelControl2.getProperty("/PainterId");
                     var oData = oView.getModel();
                     oData.read("/PainterBankDetailsSet", {
                         urlParameters: {
                             $select: "AccountNumber,IfscCode"
                         },
-                        filters: [new Filter("AccountNumber", FilterOperator.EQ, sBankAccNo), new Filter({
+                        filters: [new Filter("PainterId", FilterOperator.NE, sPainterId),new Filter("AccountNumber", FilterOperator.EQ, sBankAccNo), new Filter({
                             path: "IfscCode",
                             operator: FilterOperator.EQ,
                             value1: sIfscCode,
@@ -2026,7 +2026,7 @@ sap.ui.define(
                         success: function (oData) {
 
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message1", [sIfscCode]);
+                                var sMessage1 = this.geti18nText("Message1", [sBankAccNo,sIfscCode]);
                                 oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                                 MessageToast.show(sMessage1, {
                                     duration: 6000
@@ -2085,13 +2085,14 @@ sap.ui.define(
                     var sGovtTypeId = oModelView.getProperty("/PainterKycDetails/KycTypeId");
                     var sGovtIdNo = oModelView.getProperty("/PainterKycDetails/GovtId");
                     var sCmBxId = mParam1 === "kycNull" ? "idKycEditCombo" : "idKycEditComboNotNull";
+                    var sPainterId = oModelControl.getProperty("/PainterId")
                     var sKycTypeName = oView.byId(sCmBxId).getSelectedItem().getBindingContext().getObject()["KycType"];
                     var oData = oView.getModel();
                     oData.read("/PainterKycDetailsSet", {
                         urlParameters: {
                             $select: "KycTypeId,GovtId"
                         },
-                        filters: [new Filter("KycTypeId", FilterOperator.EQ, sGovtTypeId), new Filter({
+                        filters: [new Filter("PainterId", FilterOperator.NE, sPainterId),new Filter("KycTypeId", FilterOperator.EQ, sGovtTypeId), new Filter({
                             path: "GovtId",
                             operator: FilterOperator.EQ,
                             value1: sGovtIdNo,
@@ -2099,7 +2100,7 @@ sap.ui.define(
                         })],
                         success: function (oData) {
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message3", [sKycTypeName]);
+                                var sMessage1 = this.geti18nText("Message3", [sGovtIdNo,sKycTypeName]);
                                 oModelView.setProperty("/PainterKycDetails/GovtId", "");
                                 MessageToast.show(sMessage1, {
                                     duration: 6000

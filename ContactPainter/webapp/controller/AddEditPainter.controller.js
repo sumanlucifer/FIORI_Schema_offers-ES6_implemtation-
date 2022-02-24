@@ -965,7 +965,7 @@ sap.ui.define(
                         success: function (oData) {
 
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message1", [sIfscCode]);
+                                var sMessage1 = this.geti18nText("Message1", [sBankAccNo,sIfscCode]);
                                 oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                                 oModelView.setProperty("/PainterAddDet/ConfrmAccNum", "");
                                 MessageToast.show(sMessage1, {
@@ -1501,7 +1501,7 @@ sap.ui.define(
                         })],
                         success: function (oData) {
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message3", [sKycTypeName]);
+                                var sMessage1 = this.geti18nText("Message3", [sGovtIdNo,sKycTypeName]);
                                 oModelView.setProperty("/PainterKycDetails/GovtId", "");
                                 MessageToast.show(sMessage1, {
                                     duration: 6000
