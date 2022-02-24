@@ -1801,6 +1801,7 @@ sap.ui.define(
                     oModelCtrl.setProperty("/AddBankDoc", true);
                     var oModelView = this.getView().getModel("oModelView");
                     this.docType = oModelView.getProperty("PainterBankDetails/DocumentType");
+                    this._setUploadCollectionMethodBank();
                 },
                 onEditCancelBankingFields: function () {
                     var oModelCtrl = this.getView().getModel("oModelControl");
