@@ -2,33 +2,33 @@ _schema-version: "3.2"
 ID: knpl-influencer-web
 version: 3.1.1
 modules:
-- name: knpl-influencer-web-approuter-pre-prod
+- name: knpl-influencer-web-approuter-prod
   type: approuter.nodejs
   path: knpl-influencer-web-approuter
   properties:
-    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-pre-prod.${default-domain}
+    TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-prod.${default-domain}
   requires:
-  - name: uaa_knpl-influencer-web-pre-prod
-  - name: knpl-influencer-web_html_repo_runtime-pre-prod
-  - name: destination-knpl-pragati-pre-prod
+  - name: uaa_knpl-influencer-web-prod
+  - name: knpl-influencer-web_html_repo_runtime-prod
+  - name: destination-knpl-pragati-prod
   - name: wm_workflow
-  - name: portal_resources_knpl-influencer-web-pre-prod
+  - name: portal_resources_knpl-influencer-web-prod
     group: destinations
     properties:
       forwardAuthToken: true
       timeout: 180000
       name: KNPL_PAINTER_API
-      url: https://stage-knpl-pragati-api.cfapps.ap11.hana.ondemand.com/
+      url: https://knpl-pragati-api.cfapps.ap11.hana.ondemand.com
   parameters:
     disk-quota: 256M
     memory: 256M
     routes:
-    - route: knpl-painter-dev-knpl-influencer-web-approuter-pre-prod.${default-domain}
-- name: knpl-influencer-web_ui_deployer-pre-prod
+    - route: knpl-painter-dev-knpl-influencer-web-approuter-prod.${default-domain}
+- name: knpl-influencer-web_ui_deployer-prod
   type: com.sap.application.content
   path: .
   requires:
-  - name: knpl-influencer-web_html_repo_host-pre-prod
+  - name: knpl-influencer-web_html_repo_host-prod
     parameters:
       content-target: true
   build-parameters:
@@ -95,12 +95,12 @@ modules:
       name: condonation
       target-path: resources/
     - artifacts:
-      - redeempoints-content.zip
-      name: redeempoints
-      target-path: resources/
-    - artifacts:
       - groupnotifications-content.zip
       name: groupnotifications
+      target-path: resources/
+    - artifacts:
+      - redeempoints-content.zip
+      name: redeempoints
       target-path: resources/
     - artifacts:
       - reports-content.zip
@@ -130,20 +130,20 @@ modules:
   type: com.sap.application.content
   path: launchpad
   requires:
-  - name: portal_resources_knpl-influencer-web-pre-prod
+  - name: portal_resources_knpl-influencer-web-prod
     parameters:
       content-target: true
       service-key:
         config:
           content-endpoint: developer
         name: content-deploy-key
-  - name: knpl-influencer-web_html_repo_host-pre-prod
-  - name: uaa_knpl-influencer-web-pre-prod
+  - name: knpl-influencer-web_html_repo_host-prod
+  - name: uaa_knpl-influencer-web-prod
   parameters:
     config:
-      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-pre-prod.${default-domain}
+      TENANT_HOST_PATTERN: ^(.*)-knpl-influencer-web-approuter-prod.${default-domain}
   deployed-after:
-  - knpl-influencer-web_ui_deployer-pre-prod
+  - knpl-influencer-web_ui_deployer-prod
 - name: Manage_FAQ
   type: html5
   path: Manage_FAQ
@@ -281,19 +281,19 @@ modules:
     - npm run build
     supported-platforms: []
 resources:
-- name: uaa_knpl-influencer-web-pre-prod
+- name: uaa_knpl-influencer-web-prod
   type: org.cloudfoundry.existing-service
   parameters:
     path: ./xs-security.json
     service: xsuaa
     service-name: knpl-pragati-uaa
     service-plan: application
-- name: knpl-influencer-web_html_repo_runtime-pre-prod
+- name: knpl-influencer-web_html_repo_runtime-prod
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
-- name: destination-knpl-pragati-pre-prod
+- name: destination-knpl-pragati-prod
   type: org.cloudfoundry.existing-service
   parameters:
     config:
@@ -311,14 +311,14 @@ resources:
     service: destination
     service-plan: lite
     service-name: destination-knpl-pragati
-- name: knpl-influencer-web_html_repo_host-pre-prod
+- name: knpl-influencer-web_html_repo_host-prod
   type: org.cloudfoundry.managed-service
   parameters:
     config:
       sizeLimit: 10
     service: html5-apps-repo
     service-plan: app-host
-- name: portal_resources_knpl-influencer-web-pre-prod
+- name: portal_resources_knpl-influencer-web-prod
   type: org.cloudfoundry.managed-service
   parameters:
     service: portal
