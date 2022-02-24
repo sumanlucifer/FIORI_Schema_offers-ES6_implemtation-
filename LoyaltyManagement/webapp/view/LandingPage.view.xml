@@ -197,7 +197,7 @@
 			<OverflowToolbar design="Transparent">
 				<ToolbarSpacer/>
 				
-				<Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports1" />
+				<!-- <Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports1" /> -->
 				
 			</OverflowToolbar>
 		</smartTable:customToolbar>
@@ -265,7 +265,7 @@
 			<OverflowToolbar design="Transparent">
 				<ToolbarSpacer/>
 				
-				<Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports2" />
+				<!-- <Button type="Emphasized" icon="sap-icon://download" text="{i18n>btnDownloadCSV}" press=".downLoadReports2" /> -->
 				
 			</OverflowToolbar>
 		</smartTable:customToolbar>
