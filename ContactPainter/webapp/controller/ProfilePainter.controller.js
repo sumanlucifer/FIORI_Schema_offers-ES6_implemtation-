@@ -504,7 +504,7 @@ sap.ui.define(
                         );
                         oBindingCity.filter(aFilterCity);
                     }
-                    //setting up the filtering data for the Depot, Divisio
+                    //setting up the filtering data for the Division
                     var sZoneId = oDataValue["ZoneId"];
                     if (sZoneId !== null) {
                         oView
@@ -512,7 +512,8 @@ sap.ui.define(
                             .getBinding("items")
                             .filter(new Filter("Zone", FilterOperator.EQ, sZoneId));
                     }
-                    var sDivisionId = ["DivisionId"];
+                     //setting up the filtering data for the Depot
+                    var sDivisionId = oDataValue["DivisionId"];
                     if (sDivisionId !== null) {
                         oView
                             .byId("idDepot")
@@ -520,6 +521,7 @@ sap.ui.define(
                             .filter(new Filter("Division", FilterOperator.EQ, sDivisionId));
                     }
                     var sDepotId = oDataValue["DepotId"];
+                    // setting data for primary dealer
                     if (oDataValue["DealerId"]) {
                         oView.byId("idMinpPDealers").addToken(
                             new Token({
@@ -528,12 +530,13 @@ sap.ui.define(
                             })
                         );
                     }
+                    // setting data for secondry dealers
                     var oSecTokens = oDataValue["Dealers"];
                     oControlModel.setProperty(
                         "/PainterAddDet/SecondryDealer",
                         oSecTokens
                     );
-                    // setting up multicombo data
+                    // setting up multicombo data for expertise
                     var aExpertise = oDataValue["PainterExpertise"].filter(item1 => item1["IsArchived"]=== false).map(elem => elem["ExpertiseId"]);
                   
                     oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
