@@ -76,7 +76,8 @@ sap.ui.define([
                     ZoneId: "",
                     DivisionId: "",
                     Depot: "",
-                    PDealer: ""
+                    PDealer: "",
+                    SecDealers:[]
                 },
                 Remark: "",
                 Source: "CONDONATION",
@@ -277,8 +278,8 @@ sap.ui.define([
 
             oData.read(sPath, {
                 urlParameters: {
-                    $expand: 'Depot,PrimaryDealerDetails',
-                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,Depot/Depot,PrimaryDealerDetails/DealerName'
+                    $expand: 'Depot,PrimaryDealerDetails,Dealers',
+                    $select: 'Id,MembershipCard,Mobile,ZoneId,Name,DivisionId,Depot/Depot,PrimaryDealerDetails/DealerName,Dealers/DealerName'
                 },
                 success: function (obj) {
                  oView.getModel("oModelControl").setProperty("/bBusy", false);
@@ -298,6 +299,9 @@ sap.ui.define([
                     }
                     if (obj["PrimaryDealerDetails"]) {
                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
+                    }
+                    if (obj["Dealers"]) {
+                        oViewModel.setProperty("/AddFields/SecDealers", obj["Dealers"]["results"]);
                     }
                 },
                 error: function () {
