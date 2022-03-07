@@ -182,31 +182,7 @@ sap.ui.define(
                 },
                 _LoadPainterData: function (mSkip, mTop) {
 
-                    var oView = this.getView();
-                    var oDataModel = oView.getModel();
-                    var oControlModel = oView.getModel("oModelControl3");
-                    var iOfferId = oControlModel.getProperty("/OfferId")
-                    var oDataPainter = oControlModel.getProperty("/oData/Painters");
-                    if (mSkip == 0) {
-                        oDataPainter = [];
-                    }
-                    oDataModel.read("/GetOfferEligibleAndQualifiedPainter", {
-                        urlParameters: {
-                            OfferId: "" + iOfferId + "",
-                            Offset: "" + mSkip + "",
-                            Limit: "" + mTop + ""
-                        },
-                        success: function (data) {
-                            //console.log(data);
-                            if (data.hasOwnProperty("results")) {
-                                if (data["results"].length > 0) {
-                                    var aNewArray = oDataPainter.concat(data["results"]);
-                                    oControlModel.setProperty("/oData/Painters", aNewArray);
-                                }
-                            }
-                        },
-                        error: function () {}
-                    })
+                    return true;
                 },
                 _initData: function (oProp) {
                     var oData = {
@@ -2201,7 +2177,7 @@ sap.ui.define(
                             } else {
                                 MessageToast.show("Offer Successfully Redeemed.");
                             }
-                            othat._LoadPainterData(0, 16);
+                            //othat._LoadPainterData(0, 16);
                             oModelControl.setProperty("/PageBusy", false);
                             oModelControl.setProperty("/Buttons/Redeem", true);
                             othat.handleCancelPress();
