@@ -1,9 +1,9 @@
 #Check whether target space is passed or not
-SPACE="PREPRD"
+SPACE="PRD"
 VER=mta_archives/knpl-influencer-web_3.1.1.mtar
 
 #Login to CF space
-cf login -a https://api.cf.ap11.hana.ondemand.com -u ankit.pundhir@extentia.com -p Admin@2022 -o "Kansai Nerolac Paints Ltd_knpl-painter-preprd" -s "${SPACE}"
+cf login -a https://api.cf.ap11.hana.ondemand.com -u ankit.pundhir@extentia.com -p Admin@2022 -o "Kansai Nerolac Paints Ltd_knpl-painter-prd" -s "${SPACE}"
 
 echo "Building Project"
 mbt build -s '/home/user/projects/knpl-influencer-web'
