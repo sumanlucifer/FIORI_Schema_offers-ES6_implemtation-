@@ -239,6 +239,20 @@ sap.ui.define([
                 return aArray
             }
             return []
-        }
+        },
+        fmtZones:function(m1,m2){
+            // first check would be if the user is lead or not
+            // m1 existing id 
+            // m2 check array of zones.
+            
+            
+            for (var x in m2){
+                if(m2[x]["Id"] == m1){
+                    return true;
+                }
+            }
+            return false;
+
+        },
     };
 });

@@ -57,9 +57,9 @@ sap.ui.define(
                             PreferredLanguage: "",
                             SourceRegistration: "",
                             BankDetailsStatus: "",
-                            /*Aditya changes*/
                             KycStatus: "" /*Aditya changes*/
                         },
+                        ZoneList:[{Id:"NORT"},{Id:"WEST"}],
 
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);

@@ -73,7 +73,7 @@ sap.ui.define(
                     var oView = this.getView();
 
                     var sExpandParam =
-                        "Painter/Depot,Painter/PrimaryDealerDetails,PainterComplainProducts";
+                        "Painter/Depot,Painter/PrimaryDealerDetails,PainterComplainProducts,Painter/Dealers";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({
