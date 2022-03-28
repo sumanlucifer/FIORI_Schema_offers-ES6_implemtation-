@@ -1939,6 +1939,24 @@ sap.ui.define(
                     oTable.splice(sPathArray[sPathArray.length - 1], 1);
                     oModel.refresh();
                 },
+                onRemovedCondition3: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sPath = oEvent
+                        .getSource()
+                        .getBindingContext("oModelControl")
+                        .getPath();
+                    var sTablepath = sPath.replace(/[0-9]$/g, '');
+                    var sPathArray = sPath.split("/");
+                    var oTable = oModel.getProperty(sTablepath);
+                    oTable.splice(sPathArray[sPathArray.length - 1], 1);
+                    //console.log(oTable);
+                    for(var x in oTable){
+                        //console.log(x)
+                        oTable[x]["RedemptionCycle"] = parseInt(x) + 1
+                    }
+                    oModel.refresh();
+                },
                 onPressAddCondition2: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
@@ -2040,18 +2058,18 @@ sap.ui.define(
                         //     bFlag = false;
                         //     return;
                         // }
-                        // if (oRewardDtl.length > 0 && oRewardDtl.length <= sLength) {
-                        //     for (var prop of oRewardDtl) {
-                        //         if (prop["editable"] == true) {
-                        //             bFlag = false;
-                        //             MessageToast.show(
-                        //                 "Save or delete the existing data in the table before adding a new data"
-                        //             );
-                        //             return;
-                        //             break;
-                        //         }
-                        //     }
-                        // }
+                        if (oRewardDtl.length > 0) {
+                            for (var prop of oRewardDtl) {
+                                if (prop["editable"] == true) {
+                                    bFlag = false;
+                                    MessageToast.show(
+                                        "Save or delete the existing data in the table before adding a new data"
+                                    );
+                                    return;
+                                    break;
+                                }
+                            }
+                        }
                         if (bFlag == true) {
                             oRewardDtl.push({
                                 Percentage: "",
@@ -2061,6 +2079,7 @@ sap.ui.define(
                         }
                         oModel.refresh();
                     }
+
                 },
                 onPressSaveCondition3: function (oEvent) {
                     var oView = this.getView();
@@ -2640,7 +2659,7 @@ sap.ui.define(
                             }
                         }
                     }
-                    aCurrentFilterValues.push(
+-                    aCurrentFilterValues.push(
                         new Filter({
                             path: "IsArchived",
                             operator: FilterOperator.EQ,

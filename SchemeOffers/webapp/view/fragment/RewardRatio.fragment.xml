@@ -337,7 +337,7 @@
                                 <HBox>
                                     <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressAddCondition3"></Button>
                                     <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCondition3"></Button>
-                                    <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCondition"></Button>
+                                   <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCondition3"></Button>
                                 </HBox>
                             </cells>
                         </ColumnListItem>
