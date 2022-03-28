@@ -1759,7 +1759,6 @@ sap.ui.define(
                 onKycView: function (oEvent) {
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
-                    console.log("kyc pressed");
                     var oModel = oView.getModel("oModelControl");
                     var sSource1 = oModel.getProperty("/KycImage/Image1");
                     var sSource2 = oModel.getProperty("/KycImage/Image2");
@@ -1789,7 +1788,7 @@ sap.ui.define(
                 },
                 /*Aditya changes start*/
                 onBankView: function (oEvent) {
-                    console.log("item pressed")
+                 
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
                     var sSource = oView.getModel("oModelControl").getProperty("/BankImage/Image1")
