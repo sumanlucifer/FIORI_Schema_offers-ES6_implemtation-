@@ -512,7 +512,7 @@ sap.ui.define(
                             .getBinding("items")
                             .filter(new Filter("Zone", FilterOperator.EQ, sZoneId));
                     }
-                     //setting up the filtering data for the Depot
+                    //setting up the filtering data for the Depot
                     var sDivisionId = oDataValue["DivisionId"];
                     if (sDivisionId !== null) {
                         oView
@@ -537,8 +537,8 @@ sap.ui.define(
                         oSecTokens
                     );
                     // setting up multicombo data for expertise
-                    var aExpertise = oDataValue["PainterExpertise"].filter(item1 => item1["IsArchived"]=== false).map(elem => elem["ExpertiseId"]);
-                  
+                    var aExpertise = oDataValue["PainterExpertise"].filter(item1 => item1["IsArchived"] === false).map(elem => elem["ExpertiseId"]);
+
                     oControlModel.setProperty("/MultiCombo/Combo1", aExpertise);
 
                     // setting up kyc data
@@ -770,11 +770,11 @@ sap.ui.define(
                         })
                     }
                 },
-                _CheckExpertise:function(){
+                _CheckExpertise: function () {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var aExp = oModelControl.getProperty("/MultiCombo/Combo1");
-                    if(aExp.length===0){
+                    if (aExp.length === 0) {
                         return false;
                     }
                     return true
@@ -823,7 +823,7 @@ sap.ui.define(
                             "Kindly input all the mandatory(*) fields to continue."
                         );
                     }
-                    if(!fValidationExp){
+                    if (!fValidationExp) {
                         this._showMessageToast("Messgae5");
                     }
 
@@ -939,18 +939,20 @@ sap.ui.define(
                     // MutlciaExpertisecombo data 
                     var aExpertise = oCtrlModel.getProperty("/MultiCombo/Combo1")
                     oPayload["PainterExpertise"].forEach(element => {
-                         element["IsArchived"]=true
+                        element["IsArchived"] = true
                     });
-                    var iExpIndex=-1
-                    for (var x of aExpertise){
-                        iExpIndex = oPayload["PainterExpertise"].findIndex(item => parseInt(item.ExpertiseId) === parseInt(x) )
-                        if(iExpIndex >= 0){
+                    var iExpIndex = -1
+                    for (var x of aExpertise) {
+                        iExpIndex = oPayload["PainterExpertise"].findIndex(item => parseInt(item.ExpertiseId) === parseInt(x))
+                        if (iExpIndex >= 0) {
                             oPayload["PainterExpertise"][iExpIndex]["IsArchived"] = false;
-                        }else {
-                            oPayload["PainterExpertise"].push({ExpertiseId:parseInt(x)});
+                        } else {
+                            oPayload["PainterExpertise"].push({
+                                ExpertiseId: parseInt(x)
+                            });
                         }
                     }
-                   
+
                     /*Aditya changes start*/
                     for (var e in oPayload["PainterBankDetails"]) {
                         if (oPayload["PainterBankDetails"][e] === "") {
@@ -1198,7 +1200,7 @@ sap.ui.define(
                     var aFieldGroup = sap.ui.getCore().byFieldGroupId("PMobile");
                     var oModelView = this.getView().getModel("oModelView");
                     for (var i of aFieldGroup) {
-                        if(!i["mProperties"].hasOwnProperty("value")){
+                        if (!i["mProperties"].hasOwnProperty("value")) {
                             continue;
                         }
                         if (oSource.getValue().trim() === "") {
@@ -1757,41 +1759,57 @@ sap.ui.define(
                 onKycView: function (oEvent) {
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
-                    if (!this._pKycDialog) {
-                        Fragment.load({
-                            name: "com.knpl.pragati.ContactPainter.view.fragments.KycDialog",
-                            controller: this,
-                        }).then(
-                            function (oDialog) {
-                                this._pKycDialog = oDialog;
-                                oView.addDependent(this._pKycDialog);
-                                this._pKycDialog.open();
-                            }.bind(this)
-                        );
+                    console.log("kyc pressed");
+                    var oModel = oView.getModel("oModelControl");
+                    var sSource1 = oModel.getProperty("/KycImage/Image1");
+                    var sSource2 = oModel.getProperty("/KycImage/Image2");
+                    var oModelView = oView.getModel("oModelView").getData();
+                    if(oModelView["PainterKycDetails"]["KycTypeId"] === 2){
+                        sap.m.URLHelper.redirect(sSource1, true);
                     } else {
-                        oView.addDependent(this._pKycDialog);
-                        this._pKycDialog.open();
+                        sap.m.URLHelper.redirect(sSource1, true);
+                        sap.m.URLHelper.redirect(sSource2, true);
                     }
+
+                    // if (!this._pKycDialog) {
+                    //     Fragment.load({
+                    //         name: "com.knpl.pragati.ContactPainter.view.fragments.KycDialog",
+                    //         controller: this,
+                    //     }).then(
+                    //         function (oDialog) {
+                    //             this._pKycDialog = oDialog;
+                    //             oView.addDependent(this._pKycDialog);
+                    //             this._pKycDialog.open();
+                    //         }.bind(this)
+                    //     );
+                    // } else {
+                    //     oView.addDependent(this._pKycDialog);
+                    //     this._pKycDialog.open();
+                    // }
                 },
                 /*Aditya changes start*/
                 onBankView: function (oEvent) {
+                    console.log("item pressed")
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
-                    if (!this._pBankDialog) {
-                        Fragment.load({
-                            name: "com.knpl.pragati.ContactPainter.view.fragments.BankDialog",
-                            controller: this,
-                        }).then(
-                            function (oDialog) {
-                                this._pBankDialog = oDialog;
-                                oView.addDependent(this._pBankDialog);
-                                this._pBankDialog.open();
-                            }.bind(this)
-                        );
-                    } else {
-                        oView.addDependent(this._pBankDialog);
-                        this._pBankDialog.open();
-                    }
+                    var sSource = oView.getModel("oModelControl").getProperty("/BankImage/Image1")
+                    sap.m.URLHelper.redirect(sSource, true);
+
+                    // if (!this._pBankDialog) {
+                    //     Fragment.load({
+                    //         name: "com.knpl.pragati.ContactPainter.view.fragments.BankDialog",
+                    //         controller: this,
+                    //     }).then(
+                    //         function (oDialog) {
+                    //             this._pBankDialog = oDialog;
+                    //             oView.addDependent(this._pBankDialog);
+                    //             this._pBankDialog.open();
+                    //         }.bind(this)
+                    //     );
+                    // } else {
+                    //     oView.addDependent(this._pBankDialog);
+                    //     this._pBankDialog.open();
+                    // }
                 },
                 onEditBankingFields: function () {
                     var oModelCtrl = this.getView().getModel("oModelControl");
@@ -2021,7 +2039,7 @@ sap.ui.define(
                         urlParameters: {
                             $select: "AccountNumber,IfscCode"
                         },
-                        filters: [new Filter("PainterId", FilterOperator.NE, sPainterId),new Filter("AccountNumber", FilterOperator.EQ, sBankAccNo), new Filter({
+                        filters: [new Filter("PainterId", FilterOperator.NE, sPainterId), new Filter("AccountNumber", FilterOperator.EQ, sBankAccNo), new Filter({
                             path: "IfscCode",
                             operator: FilterOperator.EQ,
                             value1: sIfscCode,
@@ -2030,7 +2048,7 @@ sap.ui.define(
                         success: function (oData) {
 
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message1", [sBankAccNo,sIfscCode]);
+                                var sMessage1 = this.geti18nText("Message1", [sBankAccNo, sIfscCode]);
                                 oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                                 MessageToast.show(sMessage1, {
                                     duration: 6000
@@ -2096,7 +2114,7 @@ sap.ui.define(
                         urlParameters: {
                             $select: "KycTypeId,GovtId"
                         },
-                        filters: [new Filter("PainterId", FilterOperator.NE, sPainterId),new Filter("KycTypeId", FilterOperator.EQ, sGovtTypeId), new Filter({
+                        filters: [new Filter("PainterId", FilterOperator.NE, sPainterId), new Filter("KycTypeId", FilterOperator.EQ, sGovtTypeId), new Filter({
                             path: "GovtId",
                             operator: FilterOperator.EQ,
                             value1: sGovtIdNo,
@@ -2104,7 +2122,7 @@ sap.ui.define(
                         })],
                         success: function (oData) {
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message3", [sGovtIdNo,sKycTypeName]);
+                                var sMessage1 = this.geti18nText("Message3", [sGovtIdNo, sKycTypeName]);
                                 oModelView.setProperty("/PainterKycDetails/GovtId", "");
                                 MessageToast.show(sMessage1, {
                                     duration: 6000
@@ -2948,11 +2966,11 @@ sap.ui.define(
                             })
                         })
                     })
-                    setTimeout(function() {
+                    setTimeout(function () {
                         oView.getModel().refresh(true);
                         oCtrlModel2.setProperty("/ProfilePageBuzy", false);
-                     }, 3000);
-                    
+                    }, 3000);
+
                 },
                 _toggleButtonsAndView: function (bEdit) {
                     var oView = this.getView();
