@@ -225,7 +225,7 @@ sap.ui.define([
             return dayMonthYear;
         },
         fmtExperience: function (mParam1) {
-           
+
             if (mParam1) {
                 var aArray = [];
                 var oData;
@@ -239,6 +239,18 @@ sap.ui.define([
                 return aArray
             }
             return []
+        },
+        fmtEnableAccess1: function (mParam1) {
+            // method used to give approve reject kyc and bank details buttons only to specific users. 
+            // mParam1 > user email id
+            var aAllowedUsers = ["nppaocor031@nerolac.com", "nppaocor032@nerolac.com", "nppaocor004@nerolac.com", "nppaocor028@nerolac.com", "opsnpp@nerolac.com"]
+            if (mParam1) {
+                var sEmail = mParam1.toLowerCase().trim();
+                if (aAllowedUsers.indexOf(sEmail) >= 0) {
+                    return true;
+                }
+            }
+            return false;
         }
     };
 });

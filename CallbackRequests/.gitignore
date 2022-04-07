@@ -10,3 +10,5 @@ knpl-influencer-web/redeempoints/.env2
 knpl-influencer-web/MDM/.env1
 # auto generated wildcard
 knpl-influencer-web/portfolio/.env1
+# auto generated wildcard
+knpl-influencer-web/ContactPainter/.env4

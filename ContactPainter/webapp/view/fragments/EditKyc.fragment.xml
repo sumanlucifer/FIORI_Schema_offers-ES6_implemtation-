@@ -54,9 +54,9 @@
             <!--Aditya changes start-->
 			<Toolbar visible="{= ${PainterKycDetails} !== null}">
 				<ToolbarSpacer/>
-                <Button text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-				<Button text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-    <Button text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}"/>
+                <Button enabled="{path:'userInfo>/email',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+				<Button enabled="{path:'userInfo>/email',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+    <Button enabled="{path:'userInfo>/email',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}"/>
 			</Toolbar>
 		<!--Aditya changes end-->
     </VBox>

@@ -13,6 +13,7 @@ sap.ui.define(
         return BaseController.extend(
             "com.knpl.pragati.ContactPainter.controller.App", {
                 onInit: function () {
+                    this.getUserInfo();
                     FioriSessionService.sessionKeepAlive();
                     var oViewModel,
                         fnSetAppNotBusy,
@@ -45,6 +46,42 @@ sap.ui.define(
                         oViewModel.setProperty("/busy", false);
                     });
                 },
+                getUserInfo: function () {
+                    const url = this.getBaseURL() + "/user-api/currentUser";
+                    var oModel = new JSONModel();
+                    var mock = {
+                        firstname: "Dummy",
+                        lastname: "User",
+                        email: "dummy.user@com",
+                        name: "dummy.user@com",
+                        displayName: "Dummy User (dummy.user@com)"
+                    };
+                    console.log(url)
+                    oModel.loadData(url);
+                    oModel.dataLoaded()
+                        .then(() => {
+                            //check if data has been loaded
+                            //for local testing, set mock data
+                            console.log(oModel.getData())
+                            if (!oModel.getData().email) {
+                                oModel.setData(mock);
+                            }
+                          
+                            this.getOwnerComponent().setModel(oModel, "userInfo");
+                        })
+                        .catch(() => {
+                            oModel.setData(mock);
+                            this.getOwnerComponent().setModel(oModel, "userInfo");
+                        });
+                },
+
+                getBaseURL: function () {
+                    var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
+                    var appPath = appId.replaceAll(".", "/");
+                    var appModulePath = jQuery.sap.getModulePath(appPath);
+                    return appModulePath;
+                },
+
             }
         );
     }
