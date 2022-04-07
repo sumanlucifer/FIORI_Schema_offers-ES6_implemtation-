@@ -62,7 +62,7 @@ sap.ui.define(
                         .then(() => {
                             //check if data has been loaded
                             //for local testing, set mock data
-                            console.log(oModel.getData())
+                            //console.log(oModel.getData())
                             if (!oModel.getData().email) {
                                 oModel.setData(mock);
                             }
