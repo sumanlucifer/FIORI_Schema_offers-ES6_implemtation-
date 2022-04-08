@@ -244,7 +244,7 @@ sap.ui.define([
             // method used to give approve reject kyc and bank details buttons only to specific users. 
             // mParam1 > user email id
             //shatakshi users has been given access for the purpose of QA.
-            var aAllowedUsers = ["nppaocor031@nerolac.com", "nppaocor032@nerolac.com", "nppaocor004@nerolac.com", "nppaocor028@nerolac.com", "opsnpp@nerolac.com","shatakshi.upadhyay@extentia.com"]
+            var aAllowedUsers = ["nppaocor031@nerolac.com", "nppaocor032@nerolac.com", "nppaocor004@nerolac.com", "nppaocor028@nerolac.com", "opsnpp@nerolac.com","nppaocor001@nerolac.com","shatakshi.upadhyay@extentia.com"]
             if (mParam1) {
                 var sEmail = mParam1.toLowerCase().trim();
                 if (aAllowedUsers.indexOf(sEmail) >= 0) {
