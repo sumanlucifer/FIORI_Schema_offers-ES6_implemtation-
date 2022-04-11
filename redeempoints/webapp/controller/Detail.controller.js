@@ -145,7 +145,7 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
 
-                    var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails";
+                    var exPand = "PainterDetails/PainterBankDetails,PainterDetails/PainterKycDetails,PainterDetails/Depot,MasterSlabBankRedemptionDetails,CreatedByDetails,UpdatedByDetails";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({

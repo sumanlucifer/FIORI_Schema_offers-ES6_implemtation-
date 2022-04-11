@@ -24,6 +24,14 @@
             <Text text="{PainterDetails/DivisionId}" />
             <Label text="{i18n>Depot}" />
             <Text text="{PainterDetails/Depot/Depot}" />
+             <Label text="{i18n>CreatedBy}" />
+  <Text text="{CreatedByDetails/Name} -  {CreatedByDetails/Email}" />
+ <Label text="{i18n>CreatedAt}" />
+ <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+ <Label text="{i18n>LastUpdatedBy}" />
+ <Text text="{UpdatedByDetails/Name} -  {UpdatedByDetails/Email}" />
+ <Label text="{i18n>LastUpdatedAt}" />
+ <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
 
             <core:Title text="" />
             <Label text="{i18n>Balpts}" />
