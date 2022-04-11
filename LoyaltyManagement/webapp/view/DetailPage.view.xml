@@ -163,6 +163,30 @@
                                         <Text class="sapUiTinyMarginTop"  text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY',UTC:true}}"/>
                                     </form:fields>
                                 </form:FormElement>
+                                    <form:FormElement label="{i18n>CreatedBy}">
+                                    <form:fields>
+                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                        <Text class="sapUiTinyMarginTop" text="{CreatedByDetails/Name} -  {CreatedByDetails/Email}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                    <form:FormElement label="{i18n>CreatedAt}">
+                                    <form:fields>
+                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                        <Text class="sapUiTinyMarginTop"  text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a',UTC:true}}"/>
+                                    </form:fields>
+                                </form:FormElement>
+                                    <form:FormElement label="{i18n>LastUpdatedBy}">
+                                    <form:fields>
+                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                        <Text class="sapUiTinyMarginTop" text="{UpdatedByDetails/Name} -  {UpdatedByDetails/Email}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                    <form:FormElement label="{i18n>LastUpdatedAt}">
+                                    <form:fields>
+                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                        <Text class="sapUiTinyMarginTop"  text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a',UTC:true}}"/>
+                                    </form:fields>
+                                </form:FormElement>
                             </form:formElements>
                         </form:FormContainer>
                         <form:FormContainer title="">
