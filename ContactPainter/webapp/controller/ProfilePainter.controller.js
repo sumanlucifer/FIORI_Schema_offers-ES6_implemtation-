@@ -468,7 +468,7 @@ sap.ui.define(
                     var oControlModel = new JSONModel(oDataCtrl);
                     oView.setModel(oControlModel, "oModelControl");
                     var oDataValue = oView.getModel().getObject("/" + sPath, {
-                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers,PainterExpertise,CreatedByDetails,UpdatedByDetails",
+                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers,PainterExpertise",
                     });
 
                     // setting the value property for the date this will help in resolving the date validation
