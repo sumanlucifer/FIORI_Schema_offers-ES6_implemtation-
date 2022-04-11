@@ -331,7 +331,7 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
                     var sExpandParam =
-                        "ComplaintType,Painter,Painter/Depot,ComplaintSubtype,PainterComplainsHistory";
+                        "ComplaintType,Painter,Painter/Depot,ComplaintSubtype,PainterComplainsHistory,CreatedByDetails,UpdatedByDetails";
                     var othat = this;
                     if (oProp.trim() !== "") {
                         oView.bindElement({
