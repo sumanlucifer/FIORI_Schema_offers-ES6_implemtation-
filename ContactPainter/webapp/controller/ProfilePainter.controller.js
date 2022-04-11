@@ -99,7 +99,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var sExpandParam =
                         "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
-                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterExpertise";
+                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterExpertise,CreatedByDetails,UpdatedByDetails";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/PainterSet(" + oProp + ")",
@@ -468,7 +468,7 @@ sap.ui.define(
                     var oControlModel = new JSONModel(oDataCtrl);
                     oView.setModel(oControlModel, "oModelControl");
                     var oDataValue = oView.getModel().getObject("/" + sPath, {
-                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers,PainterExpertise",
+                        expand: "AgeGroup,Preference,PainterContact,PainterAddress,PainterSegmentation,PainterFamily,PainterBankDetails,PainterKycDetails,Vehicles,Dealers,PainterExpertise,CreatedByDetails,UpdatedByDetails",
                     });
 
                     // setting the value property for the date this will help in resolving the date validation

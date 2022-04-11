@@ -19,11 +19,18 @@
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>PreferredLanguage}" />
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                 <Label text="{i18n>Expertise}"/>
+                <Label text="{i18n>CreatedBy}" />
+                <Text text="{CreatedByDetails/Name} -  {CreatedByDetails/Email}" />
+                <Label text="{i18n>CreatedAt}" />
+                <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                 <Label text="{i18n>LastUpdatedBy}" />
+                <Text text="{UpdatedByDetails/Name} -  {UpdatedByDetails/Email}" />
+                <Label text="{i18n>LastUpdatedAt}" />
+                <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                <Label text="{i18n>Expertise}"/>
                 <MultiComboBox editable="false" selectedKeys="{path:'PainterExpertise/',formatter:'.formatter.fmtExperience'}" items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
                     <core:Item text="{Expertise}" key="{Id}"/>
                  </MultiComboBox>
-
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
