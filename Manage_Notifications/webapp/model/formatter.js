@@ -32,7 +32,16 @@ sap.ui.define([], function () {
 			var oNow = new Date(sValue);
 			return oDateFormat.format(oNow); //string in the same format as "Thu, Jan 29, 2017"
 			
-		}
+		},
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return ""
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
+        }
 
 	};
 

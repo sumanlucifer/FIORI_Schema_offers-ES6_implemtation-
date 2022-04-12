@@ -154,7 +154,7 @@ sap.ui.define([
 				// this._bindView("/" + sObjectPath); Redirection
 				this.getModel().read(sObjectPath, {
 					urlParameters: {
-						"$expand": "Redirection,Receivers,Receivers/Painter,Receivers/Role"
+						"$expand": "Redirection,Receivers,Receivers/Painter,Receivers/Role,CreatedByDetails,UpdatedByDetails"
 					},
 					// success: this._setView.bind(this)
 					success: function (data) {
