@@ -44,6 +44,15 @@ sap.ui.define([
                 return 'Inactive';
             }
 
+        },
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return " "
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
         }
 
     };

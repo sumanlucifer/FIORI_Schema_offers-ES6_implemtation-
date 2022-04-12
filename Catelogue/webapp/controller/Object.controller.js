@@ -154,7 +154,7 @@ sap.ui.define([
             this.getView().bindElement({
                 path: sObjectPath,
                 parameters: {
-                    expand: "CreatedByDetails,ProductDetails,ProductCategory,ProductClassification,ProductRange,ProductCompetitors,MediaList",
+                    expand: "CreatedByDetails,UpdatedByDetails,ProductDetails,ProductCategory,ProductClassification,ProductRange,ProductCompetitors,MediaList",
                     // select: "Title,CreatedAt,Status,CreatedByDetails/Name"
                 },
                 events: {

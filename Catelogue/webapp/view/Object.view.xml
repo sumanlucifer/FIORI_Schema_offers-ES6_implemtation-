@@ -57,14 +57,26 @@
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                            
-                            <ObjectIdentifier title="{i18n>creationDate}" text="{path: 'CreatedAt',formatter:'.formatter.dateFormatter2'}"/>
+                            <ObjectIdentifier title="{i18n>creationDate}" text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
                              
                         </items>
                     </FlexBox>
 
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                           <ObjectIdentifier title="{i18n>createdBy}" text="{path:'CreatedByDetails/Name'}"/>
+                           <ObjectIdentifier title="{i18n>createdBy}" text="{CreatedByDetails/Name}"/>
+                            
+                        </items>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                            <ObjectIdentifier title="{i18n>creationDate}" text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                            
+                        </items>
+                    </FlexBox>
+                    <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
+                        <items>
+                           <ObjectIdentifier title="{i18n>createdBy}" text="{UpdatedByDetails/Name}"/>
                             
                         </items>
                     </FlexBox>
