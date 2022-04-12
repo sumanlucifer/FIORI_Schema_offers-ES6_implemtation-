@@ -4,7 +4,9 @@ sap.ui.define(
         "sap/ui/model/json/JSONModel",
         "sap/m/MessageBox",
         "sap/m/MessageToast",
-        "sap/ui/core/Fragment"
+        "sap/ui/core/Fragment",
+        "../model/formatter"
+
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -14,14 +16,15 @@ sap.ui.define(
         JSONModel,
         MessageBox,
         MessageToast,
-        Fragment
+        Fragment,
+        formatter
     ) {
         "use strict";
 
         return BaseController.extend(
             "com.knpl.pragati.condonation.controller.Detail",
             {
-
+                formatter:formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.getRoute("Detail").attachMatched(this._onRouteMatched, this);
