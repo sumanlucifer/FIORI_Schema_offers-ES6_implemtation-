@@ -27,15 +27,19 @@
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreationDate}"/>
-                            <Text text="{path:'CreatedAt',formatter:'.formatter.fmtDate2'}"/>
+                           <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
                             <Text text="{CreatedByDetails/Name}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
-                            <Label class="sapUiTinyMarginEnd" text="{i18n>OfferCode}:"/>
-                            <Text text="{OfferCode}"/>
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>LastUpdatedAt}:"/>
+                           <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        </layout:HorizontalLayout>
+                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>LastUpdatedBy}:"/>
+                             <Text text="{UpdatedByDetails/Name}"/>
                         </layout:HorizontalLayout>
                         <!-- <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerOfferPoint}"/>
@@ -43,6 +47,10 @@
                         </layout:HorizontalLayout> -->
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiLargeMarginEnd">
+                      <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                            <Label class="sapUiTinyMarginEnd" text="{i18n>OfferCode}:"/>
+                            <Text text="{OfferCode}"/>
+                        </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerStartDate}"/>
                             <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}"/>
