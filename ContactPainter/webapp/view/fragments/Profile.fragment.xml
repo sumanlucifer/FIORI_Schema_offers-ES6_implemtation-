@@ -57,7 +57,7 @@
                 <Text text="{PainterAddress/Town}" />
                 <!--Permanent Address -->
                 <Label text="{i18n>AddressMessage1}"/>
-                <Text text="{= ${IsSamePrAddress} === true ? 'Yes':'No'}" />
+                <Text text="{= ${PainterAddress/IsSamePrAddress}===true?'Yes':'No'}" />
                 <Label text="{1i8nPermanent} {i18n>PinCode}" />
                 <Text text="{PainterAddress/PrPinCode}" />
                 <Label text="{1i8nPermanent} {i18n>State}" />
