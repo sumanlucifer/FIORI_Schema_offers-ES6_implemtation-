@@ -110,7 +110,7 @@ sap.ui.define([
                 // this._bindView("/" + sObjectPath, sObjectId);
                 this.getModel().read(sObjectPath, {
                     urlParameters: {
-                        "$expand": "NotificationGroupZone,NotificationGroupDivision,NotificationGroupDepot,NotificationGroupPainterType,NotificationGroupPainterArcheType"
+                        "$expand": "NotificationGroupZone,NotificationGroupDivision,NotificationGroupDepot,NotificationGroupPainterType,NotificationGroupPainterArcheType,CreatedByDetails,UpdatedByDetails"
                     },
                     success: this._setView.bind(this)
                 });
@@ -240,6 +240,7 @@ sap.ui.define([
             oViewModel.setProperty("/TargetDetails/NotificationGroupDepot", []);
             oViewModel.setProperty("/TargetDetails/NotificationGroupPainterType", []);
             oViewModel.setProperty("/TargetDetails/NotificationGroupPainterArcheType", []);
+          
 
         },
 
