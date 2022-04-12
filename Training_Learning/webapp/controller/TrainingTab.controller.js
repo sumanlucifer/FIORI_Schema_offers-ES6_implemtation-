@@ -116,9 +116,9 @@ sap.ui.define(
                 var sPath = "/" + oProp;
                 var params;
                 if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
-                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire/TrainingQuestionnaireLocalized,TrainingQuestionnaire/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized ";
+                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire/TrainingQuestionnaireLocalized,TrainingQuestionnaire/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized,UpdatedByDetails,Creator";
                 } else {
-                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire/LearningQuestionnaireLocalized,LearningQuestionnaire/LearningQuestionnaireOptions/LearningQuestionnaireOptionsLocalized";
+                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire/LearningQuestionnaireLocalized,LearningQuestionnaire/LearningQuestionnaireOptions/LearningQuestionnaireOptionsLocalized,UpdatedByDetails,Creator";
                 }
                 oViewModel.setProperty("/sPath", sPath);
                 that.getModel().read(sPath, {
@@ -2226,6 +2226,7 @@ sap.ui.define(
             },
 
             _UploadImageforVideo: function (sPath, oImage, oEvent) {
+                console.log("method triferred")
                 var that = this;
                 if (oImage.Image) {
                     var url = "/KNPL_PAINTER_API/api/v2/odata.svc" + sPath + "/$value";

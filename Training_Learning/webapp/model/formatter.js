@@ -82,6 +82,15 @@ sap.ui.define([], function () {
                 return "NA";
             }
             return "Not Submitted";
+        },
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return "Mobile User"
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
         }
 
     };
