@@ -2,9 +2,11 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     'sap/ui/core/BusyIndicator',
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
 
-], function (Controller, BusyIndicator, MessageToast, MessageBox) {
+], function (Controller, BusyIndicator, MessageToast, MessageBox,Filter,FilterOperator) {
     "use strict";
 
     return Controller.extend("com.knpl.pragati.ContactPainter.controller.BaseController", {
@@ -164,6 +166,34 @@ sap.ui.define([
             }
             if (oObject["VehicleTypeId"] !== 5 && oObject["VehicleName"] == "None") {
                 oObject["VehicleName"] = "";
+            }
+
+
+        },
+        onCheckboxAddr: function (oEvent) {
+            var oView = this.getView();
+            var oModel = oView.getModel("oModelView");
+            var sParam = oEvent.getParameter("selected");
+            oModel.setProperty("/PainterAddress/IsSamePrAddress", sParam);
+            if (sParam === false) {
+                oModel.setProperty("/PainterAddress/PrPinCode", "");
+                oModel.setProperty("/PainterAddress/PrStateId", "");
+                oModel.setProperty("/PainterAddress/PrCityId", "");
+                oModel.setProperty("/PainterAddress/PrAddressLine1", "");
+                oModel.setProperty("/PainterAddress/PrTown", "");
+            }else if (sParam===true){
+                oModel.setProperty("/PainterAddress/PrPinCode",oModel.getProperty("/PainterAddress/PinCode"));
+                oModel.setProperty("/PainterAddress/PrStateId", oModel.getProperty("/PainterAddress/StateId"));
+                var oCity = oView.byId("cmbCity2");
+                oCity.clearSelection();
+                var oBindingCity = oCity.getBinding("items");
+                var aFilter = [(new Filter("StateId", FilterOperator.EQ,  oModel.getProperty("/PainterAddress/StateId")))];
+                if(oModel.getProperty("/PainterAddress/StateId")){
+                    oBindingCity.filter(aFilter);
+                }
+                oModel.setProperty("/PainterAddress/PrCityId", oModel.getProperty("/PainterAddress/CityId"));
+                oModel.setProperty("/PainterAddress/PrAddressLine1", oModel.getProperty("/PainterAddress/AddressLine1"));
+                oModel.setProperty("/PainterAddress/PrTown", oModel.getProperty("/PainterAddress/Town"));
             }
 
 

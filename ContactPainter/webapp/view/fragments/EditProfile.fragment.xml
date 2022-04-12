@@ -85,6 +85,32 @@
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
                 <Label text="{i18n>HomeTown}" />
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/Town', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
+                  <!-- Permanent Address -->
+                 <Label text=""/>
+                <CheckBox text="{i18n>AddressMessage1}" selected="{oModelView>/PainterAddress/IsSamePrAddress}" select="onCheckboxAddr" />
+                <Label text="{i18n>Permanent} {i18n>PinCode}" />
+                <Input  value="{path:'oModelView>/PainterAddress/PrPinCode',  type : 'sap.ui.model.type.String'  }" autocomplete="false" showSuggestion="true" suggestionItemSelected="onPinCodeSelect2" suggest="onPinSuggest" suggestionItems="{path:'/MasterAreaPincodeSet', length:10, parameters:{expand:'State',select:'Pincode,StateId,CityId,State/State'} }">
+                    <suggestionItems>
+                        <core:ListItem text="{Pincode}" additionalText="{State/State}" />
+                    </suggestionItems>
+                </Input>
+                <Label text="{i18n>Permanent} {i18n>State}" />
+                <ComboBox  id="cmBxState2" items="{path:'/MasterStateSet',sorter:{path:'State'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectionChange="onStateChange2" required="true" selectedKey="{path:'oModelView>/PainterAddress/PrStateId', type : 'com.knpl.pragati.ContactPainter.model.customInt'  }">
+                    <items>
+                        <core:Item text="{State}" key="{Id}" />
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Permanent} {i18n>City}" required="true" />
+                <ComboBox  valueStateText="Kindly select the city according to state." editable="{= ${oModelView>/PainterAddress/PrStateId} !== '' }" items="{path:'/MasterCitySet',sorter:{path:'City'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterAddress/PrCityId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }" id="cmbCity2" required="true">
+                    <items>
+                        <core:Item text="{City}" key="{Id}" />
+                    </items>
+                </ComboBox>
+                <Label text="{i18n>Permanent} {i18n>Area}" />
+                <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/PrAddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
+                 <Label text="{i18n>Permanent} {i18n>HomeTown}" />
+                <Input   required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/PrTown', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
+                <!-- Permanent Address End-->
                <Label text="{i18n>Zone}" />
                 <ComboBox selectionChange="onZoneChange" items="{/MasterZoneSet}" selectedKey="{path:'oModelView>/ZoneId',type:'sap.ui.model.type.String' }">
                     <core:Item text="{Id}" key="{Id}" />
