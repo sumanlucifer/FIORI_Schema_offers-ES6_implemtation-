@@ -55,6 +55,18 @@
                 <Text width="60%" maxLines="5" wrapping="true" text="{PainterAddress/AddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>HomeTown}" />
                 <Text text="{PainterAddress/Town}" />
+                <!--Permanent Address -->
+                <Label text="{1i8nPermanent} {i18n>PinCode}" />
+                <Text text="{PainterAddress/PrPinCode}" />
+                <Label text="{1i8nPermanent} {i18n>State}" />
+                <Text text="{PainterAddress/PrStateDetails/State}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{1i8nPermanent} {i18n>City}" />
+                <Text text="{PainterAddress/PrCityDetails/City}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{1i8nPermanent} {i18n>Area}" />
+                <Text width="60%" maxLines="5" wrapping="true" text="{PainterAddress/PrAddressLine1}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <Label text="{1i8nPermanent} {i18n>HomeTown}" />
+                <Text text="{PainterAddress/PrTown}" />
+                  <!--Permanent Address End -->
                 <Label text="{i18n>Zone}" />
                 <Text text="{ZoneId}" />
                 <Label text="{i18n>Division}" />
