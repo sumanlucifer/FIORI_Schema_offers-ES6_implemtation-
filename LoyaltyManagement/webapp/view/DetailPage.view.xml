@@ -166,7 +166,7 @@
                                     <form:FormElement label="{i18n>CreatedBy}">
                                     <form:fields>
                                         <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
-                                        <Text class="sapUiTinyMarginTop" text="{CreatedByDetails/Name} -  {CreatedByDetails/Email}" />
+                                         <Text text="{path:'CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" /> 
                                     </form:fields>
                                 </form:FormElement>
                                     <form:FormElement label="{i18n>CreatedAt}">
@@ -178,7 +178,7 @@
                                     <form:FormElement label="{i18n>LastUpdatedBy}">
                                     <form:fields>
                                         <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
-                                        <Text class="sapUiTinyMarginTop" text="{UpdatedByDetails/Name} -  {UpdatedByDetails/Email}" />
+                                     <Text text="{path:'UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />                
                                     </form:fields>
                                 </form:FormElement>
                                     <form:FormElement label="{i18n>LastUpdatedAt}">

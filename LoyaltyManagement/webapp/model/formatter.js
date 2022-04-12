@@ -99,6 +99,15 @@ sap.ui.define([
             }
            
         },
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return "Mobile User"
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
+        },
         accuralType: function (mParam){
                     var sStatus = "";
                     if (mParam) {
