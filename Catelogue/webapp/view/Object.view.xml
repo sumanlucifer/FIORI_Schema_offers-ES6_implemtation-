@@ -57,14 +57,14 @@
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
                            
-                            <ObjectIdentifier title="{i18n>creationDate}" text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                            <ObjectIdentifier title="{i18n>CreatedAt}" text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
                              
                         </items>
                     </FlexBox>
 
                     <FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" justifyContent="SpaceAround" direction="Column" wrap="Wrap" renderType="Bare">
                         <items>
-                           <ObjectIdentifier title="{i18n>createdBy}" text="{CreatedByDetails/Name} - {CreatedByDetails/Email}"/>
+                           <ObjectIdentifier title="{i18n>CreatedBy}" text="{CreatedByDetails/Name} - {CreatedByDetails/Email}"/>
                             
                         </items>
                     </FlexBox>
