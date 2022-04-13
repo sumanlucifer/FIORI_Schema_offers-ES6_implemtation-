@@ -47,6 +47,7 @@
                     <m:ObjectStatus title="{i18n>Category}" text="{path:'Slab/Slab'}"/>
                     <m:ObjectStatus title="{i18n>ActivationStatus}" text="{path:'ActivationStatus', formatter:'.sActivationStatus' }"/>
                     <ObjectStatus title="{i18n>Rating}" text="{= ${PainterRating} !== null ? ${PainterRating} + '/' +  ${PainterMaxRating}: null }"/>
+                     <ObjectStatus title="{i18n>MobileAppInstalled}" text="{= ${IsAppInstalled} === true ? 'Yes' : 'No' }"/>
 
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
@@ -185,6 +186,7 @@
         <uxap:footer>
             <Bar visible="{= ${IsArchived} === false}">
                 <contentRight>
+                    <Button text="{i18n>UpdateName}" type="Emphasized" press="onUpdatedName"/>
                     <Button id="edit"  tooltip="{i18n>Edit}" text="{i18n>Edit}" type="Emphasized" enabled="true" press="handleEditPress"/>
                     <Button id="cancel" tooltip="{i18n>Cancel}" text="{i18n>Cancel}" type="Ghost" visible="false" press="handleCancelPress"/>
                     <Button id="save" tooltip="{i18n>Save}" text="{i18n>Save}" type="Emphasized" visible="false" press="handleSavePress"/>
