@@ -78,7 +78,7 @@ sap.ui.define(
                         oEvent.getParameter("arguments").mode
                     );
                     var oView = this.getView();
-                    var sExpandParam = "OfferType,CreatedByDetails";
+                    var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/OfferSet(" + oProp + ")",

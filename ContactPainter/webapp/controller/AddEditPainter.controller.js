@@ -142,11 +142,16 @@ sap.ui.define(
                         },
                         PainterAddress: {
                             AddressLine1: "",
-                            // AddressLine2: "",
                             CityId: "",
                             StateId: "",
                             PinCode: "",
                             Town: "",
+                            PrAddressLine1: "",
+                            PrCityId: "",
+                            PrStateId: "",
+                            PrPinCode: "",
+                            PrTown: "",
+                            IsSamePrAddress: false
                         },
                         PainterSegmentation: {
                             TeamSizeId: "",
@@ -186,8 +191,8 @@ sap.ui.define(
                             Name: "Cheque",
                             Id: 1
                         }],
-                        MultiCombo:{
-                            Combo1:[]
+                        MultiCombo: {
+                            Combo1: []
                         }
                     };
                     var oContrModel = new JSONModel(oControlData);
@@ -312,19 +317,19 @@ sap.ui.define(
                         MessageToast.show(eValidateBank[1]);
                         return;
                     }
-                    if(!fValidationExp){
+                    if (!fValidationExp) {
                         this._showMessageToast("Messgae5");
                     }
                     if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0] && fValidationExp) {
                         this._postDataToSave();
                     }
-                   
+
                 },
-                _CheckExpertise:function(){
+                _CheckExpertise: function () {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
                     var aExp = oModelControl.getProperty("/MultiCombo/Combo1");
-                    if(aExp.length===0){
+                    if (aExp.length === 0) {
                         return false;
                     }
                     return true
@@ -427,10 +432,12 @@ sap.ui.define(
                         oKycPayload = null;
                     }
                     // adding data for experience
-                    var aExpPayload =  oModelCtrl.getProperty("/MultiCombo/Combo1").map(function (elem) {
-                       return {ExpertiseId:parseInt(elem)}
+                    var aExpPayload = oModelCtrl.getProperty("/MultiCombo/Combo1").map(function (elem) {
+                        return {
+                            ExpertiseId: parseInt(elem)
+                        }
                     });
-                   
+
 
                     // settting the username of the painter same as the mobile number
                     //oPainterData["Username"] = oPainterData["Mobile"];
@@ -445,7 +452,7 @@ sap.ui.define(
                             Vehicles: oPayloadDevice,
                             PainterBankDetails: oBankingPayload,
                             PainterKycDetails: oKycPayload,
-                            PainterExpertise:aExpPayload
+                            PainterExpertise: aExpPayload
                         },
                         oPainterData
                     );
@@ -894,7 +901,7 @@ sap.ui.define(
 
                     var oModelView = this.getView().getModel("oModelView");
                     for (var i of aFieldGroup) {
-                        if(!i["mProperties"].hasOwnProperty("value")){
+                        if (!i["mProperties"].hasOwnProperty("value")) {
                             continue;
                         }
                         if (oSource.getValue().trim() === "") {
@@ -965,7 +972,7 @@ sap.ui.define(
                         success: function (oData) {
 
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message1", [sBankAccNo,sIfscCode]);
+                                var sMessage1 = this.geti18nText("Message1", [sBankAccNo, sIfscCode]);
                                 oModelView.setProperty("/PainterBankDetails/AccountNumber", "");
                                 oModelView.setProperty("/PainterAddDet/ConfrmAccNum", "");
                                 MessageToast.show(sMessage1, {
@@ -1057,6 +1064,21 @@ sap.ui.define(
                         oBindingCity.filter(aFilter);
                     }
                 },
+                onStateChange2: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oCity = oView.byId("cmbCity2"),
+                        oBindingCity,
+                        aFilter = [],
+                        oView = this.getView();
+                    if (sKey !== null) {
+                        oCity.clearSelection();
+                        oCity.setValue("");
+                        oBindingCity = oCity.getBinding("items");
+                        aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+                        oBindingCity.filter(aFilter);
+                    }
+                },
                 onPinSuggest: function (oEvent) {
                     var sTerm = oEvent.getParameter("suggestValue");
                     var aFilters = [];
@@ -1068,6 +1090,7 @@ sap.ui.define(
 
                     oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
                 },
+               
                 onPinCodeSelect: function (oEvent) {
                     // console.log("suggestion item selected");
                     var oView = this.getView();
@@ -1080,6 +1103,24 @@ sap.ui.define(
                     var iCity = oObject["CityId"];
                     var oCity = oView.byId("cmbCity");
                     var oState = oView.byId("cmBxState");
+                    oCity
+                        .getBinding("items")
+                        .filter(new Filter("StateId", FilterOperator.EQ, iStateId));
+                    oState.setSelectedKey(iStateId);
+                    oCity.setSelectedKey(iCity);
+                },
+                onPinCodeSelect2: function (oEvent) {
+                    // console.log("suggestion item selected");
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oObject = oEvent
+                        .getParameter("selectedItem")
+                        .getBindingContext()
+                        .getObject();
+                    var iStateId = oObject["StateId"];
+                    var iCity = oObject["CityId"];
+                    var oCity = oView.byId("cmbCity2");
+                    var oState = oView.byId("cmBxState2");
                     oCity
                         .getBinding("items")
                         .filter(new Filter("StateId", FilterOperator.EQ, iStateId));
@@ -1501,7 +1542,7 @@ sap.ui.define(
                         })],
                         success: function (oData) {
                             if (oData["results"].length > 0) {
-                                var sMessage1 = this.geti18nText("Message3", [sGovtIdNo,sKycTypeName]);
+                                var sMessage1 = this.geti18nText("Message3", [sGovtIdNo, sKycTypeName]);
                                 oModelView.setProperty("/PainterKycDetails/GovtId", "");
                                 MessageToast.show(sMessage1, {
                                     duration: 6000

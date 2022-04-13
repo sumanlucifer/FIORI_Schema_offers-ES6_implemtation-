@@ -98,7 +98,7 @@ sap.ui.define(
                     );
                     var oView = this.getView();
                     var sExpandParam =
-                        "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/StateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
+                        "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/PrCityDetails,PainterAddress/StateDetails,PainterAddress/PrStateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
                         "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,PainterBankDetails/CreatedByDetails,PainterBankDetails/UpdatedByDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterKycDetails/CreatedByDetails,PainterKycDetails/UpdatedByDetails,PainterExpertise,CreatedByDetails,UpdatedByDetails";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
@@ -503,6 +503,17 @@ sap.ui.define(
                             new Filter("StateId", FilterOperator.EQ, sStateKey)
                         );
                         oBindingCity.filter(aFilterCity);
+                    }
+                    // filtering data for the permanent address fields
+                    var oCity2 = oView.byId("cmbCity2"),
+                        sStateKey2 = oDataValue["PainterAddress"]["PrStateId"] || "",
+                        aFilterCity2 = [],
+                        oBindingCity2 = oCity2.getBinding("items");
+                    if (sStateKey2 !== "") {
+                        aFilterCity2.push(
+                            new Filter("StateId", FilterOperator.EQ, sStateKey2)
+                        );
+                        oBindingCity2.filter(aFilterCity2);
                     }
                     //setting up the filtering data for the Division
                     var sZoneId = oDataValue["ZoneId"];
@@ -1256,6 +1267,23 @@ sap.ui.define(
                     oState.setSelectedKey(iStateId);
                     oCity.setSelectedKey(iCity);
                 },
+                onPinCodeSelect2: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelView = oView.getModel("oModelView");
+                    var oObject = oEvent
+                        .getParameter("selectedItem")
+                        .getBindingContext()
+                        .getObject();
+                    var iStateId = oObject["StateId"];
+                    var iCity = oObject["CityId"];
+                    var oCity = oView.byId("cmbCity2");
+                    var oState = oView.byId("cmBxState2");
+                    oCity
+                        .getBinding("items")
+                        .filter(new Filter("StateId", FilterOperator.EQ, iStateId));
+                    oState.setSelectedKey(iStateId);
+                    oCity.setSelectedKey(iCity);
+                },
                 onLinkPrimryChange: function (oEvent) {
                     var oSource = oEvent.getSource();
                     var sSkey = oSource.getSelectedKey();
@@ -1304,6 +1332,21 @@ sap.ui.define(
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
                     var oCity = oView.byId("cmbCity"),
+                        oBindingCity,
+                        aFilter = [],
+                        oView = this.getView();
+                    if (sKey !== "") {
+                        oCity.clearSelection();
+                        oCity.setValue("");
+                        oBindingCity = oCity.getBinding("items");
+                        aFilter.push(new Filter("StateId", FilterOperator.EQ, sKey));
+                        oBindingCity.filter(aFilter);
+                    }
+                },
+                onStateChange2: function (oEvent) {
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    var oView = this.getView();
+                    var oCity = oView.byId("cmbCity2"),
                         oBindingCity,
                         aFilter = [],
                         oView = this.getView();
@@ -1763,7 +1806,7 @@ sap.ui.define(
                     var sSource1 = oModel.getProperty("/KycImage/Image1");
                     var sSource2 = oModel.getProperty("/KycImage/Image2");
                     var oModelView = oView.getModel("oModelView").getData();
-                    if(oModelView["PainterKycDetails"]["KycTypeId"] === 2){
+                    if (oModelView["PainterKycDetails"]["KycTypeId"] === 2) {
                         sap.m.URLHelper.redirect(sSource1, true);
                     } else {
                         sap.m.URLHelper.redirect(sSource1, true);
@@ -1788,7 +1831,7 @@ sap.ui.define(
                 },
                 /*Aditya changes start*/
                 onBankView: function (oEvent) {
-                 
+
                     var oButton = oEvent.getSource();
                     var oView = this.getView();
                     var sSource = oView.getModel("oModelControl").getProperty("/BankImage/Image1")

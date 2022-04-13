@@ -163,6 +163,15 @@ sap.ui.define([], function () {
 
             var oNow = new Date(localDate);
             return oDateFormat.format(oNow); 
+        },
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return "Mobile User"
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
         }
 
 

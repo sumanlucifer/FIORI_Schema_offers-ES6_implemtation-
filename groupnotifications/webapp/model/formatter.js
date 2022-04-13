@@ -14,7 +14,16 @@ sap.ui.define([], function () {
 				return "";
 			}
 			return parseFloat(sValue).toFixed(2);
-		}
+		},
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return ""
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
+        }
 
 	};
 

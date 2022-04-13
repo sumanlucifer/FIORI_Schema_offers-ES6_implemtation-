@@ -111,26 +111,26 @@ sap.ui.define([
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
-                            var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                            return "Gift - " + giftData.RewardGiftName;
-                        } else
-                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
-                            var cash = "Cash - Rs. " + pointData["RewardCash"];
-                            return cash;
-                        } else if (pointData.RedemptionType === "MULTI_REWARDS") {
-                            var aString = [];
-                            if (pointData["RewardPoints"]) {
-                                aString.push("Points - " + pointData["RewardPoints"]);
-                            }
-                            if (pointData["GiftRedemptionId"]) {
-                                aString.push("Gift - " + pointData["RewardGiftName"]);
-                            }
-                            if (pointData["RewardCash"]) {
-                                aString.push("Cash - Rs." + pointData["RewardCash"]);
-                            }
-                            return aString.join(", ")
-                        }
+                            if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
+                                var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
+                                return "Gift - " + giftData.RewardGiftName;
+                            } else
+                                if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
+                                    var cash = "Cash - Rs. " + pointData["RewardCash"];
+                                    return cash;
+                                } else if (pointData.RedemptionType === "MULTI_REWARDS") {
+                                    var aString = [];
+                                    if (pointData["RewardPoints"]) {
+                                        aString.push("Points - " + pointData["RewardPoints"]);
+                                    }
+                                    if (pointData["GiftRedemptionId"]) {
+                                        aString.push("Gift - " + pointData["RewardGiftName"]);
+                                    }
+                                    if (pointData["RewardCash"]) {
+                                        aString.push("Cash - Rs." + pointData["RewardCash"]);
+                                    }
+                                    return aString.join(", ")
+                                }
                     }
                 }
             }
@@ -244,7 +244,7 @@ sap.ui.define([
             // method used to give approve reject kyc and bank details buttons only to specific users. 
             // mParam1 > user email id
             //shatakshi users has been given access for the purpose of QA.
-            var aAllowedUsers = ["nppaocor031@nerolac.com", "nppaocor032@nerolac.com", "nppaocor004@nerolac.com", "nppaocor028@nerolac.com", "opsnpp@nerolac.com","nppaocor001@nerolac.com","shatakshi.upadhyay@extentia.com"]
+            var aAllowedUsers = ["nppaocor031@nerolac.com", "nppaocor032@nerolac.com", "nppaocor004@nerolac.com", "nppaocor028@nerolac.com", "opsnpp@nerolac.com", "nppaocor001@nerolac.com", "shatakshi.upadhyay@extentia.com"]
             if (mParam1) {
                 var sEmail = mParam1.toLowerCase().trim();
                 if (aAllowedUsers.indexOf(sEmail) >= 0) {
@@ -252,6 +252,15 @@ sap.ui.define([
                 }
             }
             return false;
+        },
+        fmtDisplayUpdatedDetails: function (mParam1) {
+            // mParam1 > createdbydetails/updatedby details
+            if (!mParam1) {
+                return "Mobile User"
+            }
+            if (mParam1) {
+                return mParam1["Name"] + " - " + mParam1["Email"];
+            }
         }
     };
 });
