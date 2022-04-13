@@ -13,12 +13,16 @@
                 <VBox items="{path:'PainterContact/',templateShareable: false}">
                     <Text text="{Mobile}" />
                 </VBox>
-                    <Label text="{i18n>PainterType}" />
+                <Label text="{i18n>PainterType}" />
                 <Text text="{PainterType/PainterType}" />
                 <Label text="{i18n>AgeGroup}" />
                 <Text text="{path:'AgeGroup/AgeGroup',formatter:'.fmtAgeGrp'}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>PreferredLanguage}" />
                 <Text text="{Preference/Language/Language}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                 <Label text="{i18n>Expertise}"/>
+                <MultiComboBox editable="false" selectedKeys="{path:'PainterExpertise/',formatter:'.formatter.fmtExperience'}" items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
+                    <core:Item text="{Expertise}" key="{Id}"/>
+                 </MultiComboBox>
                 <Label text="{i18n>CreatedBy}" />
                 <Text text="{path:'CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
                 <Label text="{i18n>CreatedAt}" />
@@ -27,10 +31,6 @@
                   <Text text="{path:'UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
                 <Label text="{i18n>LastUpdatedAt}" />
                 <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                <Label text="{i18n>Expertise}"/>
-                <MultiComboBox editable="false" selectedKeys="{path:'PainterExpertise/',formatter:'.formatter.fmtExperience'}" items="{path:'/MasterExpertiseSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
-                    <core:Item text="{Expertise}" key="{Id}"/>
-                 </MultiComboBox>
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
                 <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
