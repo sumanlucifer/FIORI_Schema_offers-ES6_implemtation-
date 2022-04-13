@@ -13,8 +13,8 @@
                 <VBox items="{path:'PainterContact/',templateShareable: false}">
                     <Text text="{Mobile}" />
                 </VBox>
-                <Label text="{i18n>IsAppInstalled}" />
-                <Text text="{path:'IsAppInstalled',formatter:'.formatter.fmtCheckNull'}"/>
+                <!-- <Label text="{i18n>IsAppInstalled}" />
+                <Text text="{path:'IsAppInstalled',formatter:'.formatter.fmtCheckNull'}"/> -->
                 <Label text="{i18n>PainterType}" />
                 <Text text="{PainterType/PainterType}" />
                 <Label text="{i18n>AgeGroup}" />

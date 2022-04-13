@@ -47,6 +47,7 @@
                     <m:ObjectStatus title="{i18n>Category}" text="{path:'Slab/Slab'}"/>
                     <m:ObjectStatus title="{i18n>ActivationStatus}" text="{path:'ActivationStatus', formatter:'.sActivationStatus' }"/>
                     <ObjectStatus title="{i18n>Rating}" text="{= ${PainterRating} !== null ? ${PainterRating} + '/' +  ${PainterMaxRating}: null }"/>
+                     <ObjectStatus title="{i18n>MobileAppInstalled}" text="{= ${IsAppInstalled} === true ? 'Yes' : 'No' }"/>
 
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" width="35%">
