@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog   binding="{oModelControl2>/PainterUpdate}" class="sapUiContentPadding" title="{i18n>UpdateName}" titleAlignment="Center" >
+        <content>
+            <form:SimpleForm	columnsL="1" layout="ResponsiveGridLayout"	columnsM="1"	editable="true"  >
+                <Label text="{i18n>CurrentName}" />
+                <Text text="{oModelControl2>Field1}" />
+                <Label text="{i18n>NewName}" />
+                <Input value="{oModelControl2>FieldInput1}" />
+                
+            </form:SimpleForm>
+            <!-- <ObjectStatus  state="{= ${oModelControl2>Status} ? 'Success'  : 'Error'   }" text= "{oModelControl2>Message}" /> -->
+        </content>
+        <beginButton>
+            <Button type="Ghost" text="Close" press="onPainterDetailsDialog1Close" />
+        </beginButton>
+        <endButton>
+              <Button text="{i18n>SendRForApproval}" type="Emphasized" press="onUpdateName" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

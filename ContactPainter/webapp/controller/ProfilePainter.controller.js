@@ -150,6 +150,10 @@ sap.ui.define(
                         ReferralMessage: "",
                         MultiCombo: {
                             Combo1: []
+                        },
+                        PainterUpdate:{
+                            Field1:"Test",
+                            FieldInput1:""
                         }
                     };
                     var oView = this.getView();
@@ -2816,6 +2820,33 @@ sap.ui.define(
                 },
                 onTokenDlgClose: function () {
                     this.oQRCodeDtlsDialog.close();
+                },
+                onUpdatedName:function(oEvent){
+                  var  oView = this.getView();
+                  var oModelControl = oView.getModel("oModelControl2");
+                  var object = oView.getElementBinding().getBoundContext().getObject();
+                  oModelControl.setProperty("/PainterUpdate/Field1",object["Name"])
+                    var othat = this;
+                    if (!this._upDatePainterDetailsDialog) {
+                        Fragment.load({
+                            type: "XML",
+                            controller: othat,
+                            name: "com.knpl.pragati.ContactPainter.view.fragments.UpdatePainterName"
+                        }).then(function (oDialog) {
+                            othat._upDatePainterDetailsDialog = oDialog;
+                            othat.getView().addDependent(oDialog);
+                            oDialog.open();
+                        }.bind(othat));
+                    } else {
+                        this._upDatePainterDetailsDialog.open();
+                    }
+                },
+                onPainterDetailsDialog1Close:function(){
+                    this._upDatePainterDetailsDialog.close();
+                },
+                onUpdateName:function(){
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
                 },
                 onApplyLoyalyPoints: function () {
                     this.oQRCodeDtlsDialog.setBusy(true);

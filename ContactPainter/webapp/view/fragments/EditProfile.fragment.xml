@@ -12,13 +12,13 @@
                 <Label text="{i18n>PreferredLanguage}" />
                 <ObjectStatus state="None" text="{Preference/Language/Language}" />
                 <!-- <Label text="{i18n>CreatedBy}" />
-  <Text text="{oModelView>/CreatedByDetails/Name} -  {CreatedByDetails/Email}" />
- <Label text="{i18n>CreatedAt}" />
- <Text text="{path:'oModelView>/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
- <Label text="{i18n>LastUpdatedBy}" />
- <Text text="{oModelView>/UpdatedByDetails/Name} -  {oModelView>/UpdatedByDetails/Email}" />
- <Label text="{i18n>LastUpdatedAt}" />
- <Text text="{path:'oModelView>/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/> -->
+                    <Text text="{oModelView>/CreatedByDetails/Name} -  {CreatedByDetails/Email}" />
+                    <Label text="{i18n>CreatedAt}" />
+                    <Text text="{path:'oModelView>/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                    <Label text="{i18n>LastUpdatedBy}" />
+                    <Text text="{oModelView>/UpdatedByDetails/Name} -  {oModelView>/UpdatedByDetails/Email}" />
+                    <Label text="{i18n>LastUpdatedAt}" />
+                    <Text text="{path:'oModelView>/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/> -->
                 <Label text="{i18n>PainterType}" />
                 <ComboBox editable="false" items="{/MasterPainterTypeSet}" selectedKey="{path:'oModelView>/PainterTypeId',type:'com.knpl.pragati.ContactPainter.model.cmbxDtype2' }">
                     <core:Item text="{PainterType}" key="{Id}" />
@@ -42,7 +42,7 @@
                  </MultiComboBox>
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
-                <Input valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }" />
+                <Input editable="false" valueStateText="Kindly enter a valid name.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }" />
                 <Label text="{i18n>EmailId}" />
                 <Input required="false" value="{ path : 'oModelView>/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }" />
                 <Label text="{i18n>MaritalStatus}" />
