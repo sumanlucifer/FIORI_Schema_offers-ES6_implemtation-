@@ -83,7 +83,7 @@
                 </ComboBox>
                 <Label text="{i18n>Area}" />
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/AddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
-                <Label text="{i18n>HomeTown}" />
+                <Label text="{i18n>Town}" />
                 <Input required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/Town', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
                   <!-- Permanent Address -->
                 <Label text=""/>
@@ -108,7 +108,7 @@
                 </ComboBox>
                 <Label text="{i18n>Permanent} {i18n>Area}" />
                 <Input editable="{= ${oModelView>/PainterAddress/IsSamePrAddress} === false}" required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/PrAddressLine1', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
-                 <Label text="{i18n>Permanent} {i18n>HomeTown}" />
+                 <Label text="{i18n>Permanent} {i18n>Town}" />
                 <Input  editable="{= ${oModelView>/PainterAddress/IsSamePrAddress} === false}" required="false" maxLength="60" value="{path : 'oModelView>/PainterAddress/PrTown', type : 'sap.ui.model.type.String', constraints : {search :'^[a-zA-Z0-9]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*([A-Za-z]+[!@#$&amp;().+,-/;/:/\/\'/&quot; ]*)*'}}" />
                 <!-- Permanent Address End-->
                <Label text="{i18n>Zone}" />
