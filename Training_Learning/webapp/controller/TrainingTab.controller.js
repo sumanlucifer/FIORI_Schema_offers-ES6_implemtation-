@@ -116,9 +116,9 @@ sap.ui.define(
                 var sPath = "/" + oProp;
                 var params;
                 if (trainingType === 'ONLINE' || trainingType === 'OFFLINE') {
-                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire/TrainingQuestionnaireLocalized,TrainingQuestionnaire/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized,UpdatedByDetails,Creator";
+                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, TrainingQuestionnaire/TrainingQuestionnaireLocalized,TrainingQuestionnaire/TrainingQuestionnaireOptions/TrainingQuestionnaireOptionsLocalized,UpdatedByDetails";
                 } else {
-                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire/LearningQuestionnaireLocalized,LearningQuestionnaire/LearningQuestionnaireOptions/LearningQuestionnaireOptionsLocalized,UpdatedByDetails,Creator";
+                    params = "Creator, TrainingZone, TrainingDivision, TrainingDepot, TrainingPainters/PainterDetails, TrainingPainterTypeDetails, TrainingPainterArcheTypeDetails, TrainingType, TrainingSubTypeDetails, LearningQuestionnaire/LearningQuestionnaireLocalized,LearningQuestionnaire/LearningQuestionnaireOptions/LearningQuestionnaireOptionsLocalized,UpdatedByDetails";
                 }
                 oViewModel.setProperty("/sPath", sPath);
                 that.getModel().read(sPath, {
