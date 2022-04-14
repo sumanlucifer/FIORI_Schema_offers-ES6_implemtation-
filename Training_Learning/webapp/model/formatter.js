@@ -91,6 +91,16 @@ sap.ui.define([], function () {
             if (mParam1) {
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
+        },
+        fmtDisplayUpdatedDetails2: function (mParam1,mParam2) {
+            // mParam1 > createor name
+            // mparam2 > creator email
+            if (!mParam1) {
+                return "SYSTEM"
+            }
+            if (mParam1) {
+                return mParam1 + "-" + mParam2;
+            }
         }
 
     };

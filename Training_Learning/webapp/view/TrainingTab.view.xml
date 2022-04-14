@@ -33,10 +33,11 @@
                     <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:ObjectStatus title="{i18n>CreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name}.concat(' - ',${oModelView>/TrainingDetails/Creator/Email}) }"/>
-                    <m:ObjectStatus title="{i18n>CreatedAt}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                    <m:ObjectStatus title="{i18n>CreatedBy}" text="{parts:['oModelView>/TrainingDetails/Creator/Name', 'oModelView>/TrainingDetails/Creator/Email'], formatter:'.formatter.fmtDisplayUpdatedDetails2'}"/>
+                    <!-- <m:ObjectStatus title="{i18n>CreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name}.concat(' - ',${oModelView>/TrainingDetails/Creator/Email}) }"/> -->
+                    <m:ObjectStatus title="{i18n>CreatedAt}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy h:mm a'}}"/>
                      <m:ObjectStatus title="{i18n>UpdatedBy}" text="{path:'oModelView>/TrainingDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}"/>
-                    <m:ObjectStatus title="{i18n>UpdatedAt}" text="{path: 'oModelView>/TrainingDetails/UpdatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                    <m:ObjectStatus title="{i18n>UpdatedAt}" text="{path: 'oModelView>/TrainingDetails/UpdatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy h: mm a'}}"/>
               
                 </layout:VerticalLayout>
             </m:FlexBox>
