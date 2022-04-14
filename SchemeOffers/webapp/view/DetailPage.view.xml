@@ -31,7 +31,7 @@
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerCreatedBy}"/>
-                            <Text text="{CreatedByDetails/Name}"/>
+                            <Text text="{CreatedByDetails/Name} - {CreatedByDetails/Email}"/>
                         </layout:HorizontalLayout>
                         <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>LastUpdatedAt}:"/>
@@ -39,7 +39,7 @@
                         </layout:HorizontalLayout>
                          <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>LastUpdatedBy}:"/>
-                             <Text text="{UpdatedByDetails/Name}"/>
+                             <Text text="{UpdatedByDetails/Name} - {UpdatedByDetails/Email}"/>
                         </layout:HorizontalLayout>
                         <!-- <layout:HorizontalLayout class="sapUiTinyMarginTop sapUiTinyMarginBottom">
                             <Label class="sapUiTinyMarginEnd" text="{i18n>headerOfferPoint}"/>

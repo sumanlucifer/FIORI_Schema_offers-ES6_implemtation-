@@ -36,13 +36,13 @@
                     <Button id="imageBtn" icon="sap-icon://attachment-photo" visible="{= ${appView>/trainingType} !== 'OFFLINE'}" press="onImageView" text="View Image" class="sapUiTinyMargin increaseFont"/>
                 </VBox>
 
-                 <Label text="{i18n>CreatedBy}" />
+                 <!-- <Label text="{i18n>CreatedBy}" />
                 <Text text="{path:'oModelView>/TrainingDetails/Creator',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
                 <Label text="{i18n>CreatedAt}" />
                 <Text text="{path:'oModelView>/TrainingDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                  <Label text="{i18n>LastUpdatedBy}" />
                   <Text text="{path:'oModelView>/TrainingDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
-                <Label text="{i18n>LastUpdatedAt}" />
+                <Label text="{i18n>LastUpdatedAt}" /> -->
                 <Text text="{path:'oModelView>/TrainingDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                 <Label text="{i18n>Expertise}"/>
 

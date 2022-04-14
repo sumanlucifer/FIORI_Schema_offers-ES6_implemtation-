@@ -27,13 +27,17 @@
                 <m:Avatar fallbackIcon="sap-icon://picture" displaySize="L" src="{ parts : [{path : 'appView>/__metadata'}, { path : 'oModelView>/ProfilePic' } ] , formatter : '.formatter.giveImage' }" class="sapUiTinyMarginBegin"/>
 
                 <m:FlexBox class="sapUiSmallMarginBeginEnd" alignItems="Start" direction="Column" wrap="Wrap" renderType="Bare">
-                    <m:ObjectStatus title="{i18n>colCreationDate}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                 
                     <m:ObjectStatus title="{i18n>colStartDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewStartDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                    <m:ObjectStatus title="{i18n>colEndDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewEndDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
                     <m:ObjectStatus title="{i18n>colRewardPoints}" text="{oModelView>/TrainingDetails/RewardPoints}" visible="{= ${appView>/trainingType} !== 'OFFLINE'}"/>
                 </m:FlexBox>
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:ObjectStatus title="{i18n>colCreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name} }"/>
-                    <m:ObjectStatus title="{i18n>colEndDateTime}" text="{path: 'oModelView>/TrainingDetails/ViewEndDate', formatOptions: { pattern: 'dd/MM/yyyy hh:mm a'}}" visible="{= ${appView>/trainingType} === 'ONLINE'}"/>
+                    <m:ObjectStatus title="{i18n>CreatedBy}" text="{= ${oModelView>/TrainingDetails/Creator/Name}=== null ? 'SYSTEM' : ${oModelView>/TrainingDetails/Creator/Name}.concat(' - ',${oModelView>/TrainingDetails/Creator/Email}) }"/>
+                    <m:ObjectStatus title="{i18n>CreatedAt}" text="{path: 'oModelView>/TrainingDetails/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+                     <m:ObjectStatus title="{i18n>UpdatedBy}" text="{path:'oModelView>/TrainingDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}"/>
+                    <m:ObjectStatus title="{i18n>UpdatedAt}" text="{path: 'oModelView>/TrainingDetails/UpdatedAt', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy'}}"/>
+              
                 </layout:VerticalLayout>
             </m:FlexBox>
         </uxap:headerContent>
