@@ -56,6 +56,7 @@
                     <items>
                           <Text text="{PainterNameChangeRequest/RequestedName}" />
                           <ObjectAttribute title="{i18n>Status}" text="{PainterNameChangeRequest/Status}" ></ObjectAttribute>
+                            <ObjectAttribute title="{i18n>Remark}" text="{PainterNameChangeRequest/Remark}" visible="{= ${PainterNameChangeRequest/Status}==='REJECTED'}" ></ObjectAttribute>
                           <HBox>
                             <Button text="{i18n>Approve}" class="sapUiTinyMarginEnd" type="Ghost" press="onApproveNameChange('APPROVED')" visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}" />
                             <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Ghost" press="onRemarksDialogOpen"  visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}"  />
