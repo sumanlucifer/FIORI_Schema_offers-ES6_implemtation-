@@ -38,7 +38,7 @@
                 <VBox width="100%">
                     <items>
                          <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                          <Link text="{i18n>SendReqForUpdateName}" visible="{= ${PainterNameChangeRequest}===null &amp;&amp; ${oModelControl2>/NameChange/Edit} === false &amp;&amp; ${LoginInfo>/UserTypeId} === 1 }" press="onNameChangePress" />
+                          <Link text="{i18n>SendReqForUpdateName}" visible="{= ${PainterNameChangeRequest}===null &amp;&amp; ${oModelControl2>/NameChange/Edit} === false &amp;&amp; ${LoginInfo>/UserTypeId} === 2 }" press="onNameChangePress" />
                     </items>
                 </VBox>
                 <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true &amp;&amp;  ${PainterNameChangeRequest}===null }"/>
