@@ -283,8 +283,8 @@ sap.ui.define(
                     var sId = object["PainterNameChangeRequest"]["__ref"]
 
                     var sPath = "/" + sId + "/Status";
-                    console.log(oPayloadInput)
-                    //this._sendNameChangeReqPayload(sPath, oPayloadInput);
+                    this.onDialogCloseNew();
+                    this._sendNameChangeReqPayload(sPath, oPayloadInput);
                 },
                 onEscalateNameChange: function (mParam) {
                     var oView = this.getView();
