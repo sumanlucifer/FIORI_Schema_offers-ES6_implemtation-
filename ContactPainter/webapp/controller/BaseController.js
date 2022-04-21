@@ -251,7 +251,19 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             return oModel.getText(mParam, mParam2);
         },
+        onDialogCloseNew: function () {
+            var oView = this.getView(),
+                oModelContrl = oView.getModel("oModelControl2");
+      
 
+            if (this._RemarksDialog1) {
+              
+                this._RemarksDialog1.close();
+                this._RemarksDialog1.destroy();
+                delete this._RemarksDialog1;
+                return;
+            }
+        },
         /**
          * Adds a history entry in the FLP page history
          * @public

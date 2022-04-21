@@ -270,12 +270,15 @@ sap.ui.define([
             }
             return false
         },
-        fmtNameEscalate: function (mParam1, mParam2, mParam3) {
+        fmtNameEscalate: function (mParam1, mParam2, mParam3,mParam4) {
            
             if (mParam1 === "PENDING") {
                 if (mParam2 === "TL") {
                     if (mParam3 === 3) {
-                        return true;
+                        if(mParam4 === false){
+                            return true;
+                        }
+                        
                     }
                 }
             }

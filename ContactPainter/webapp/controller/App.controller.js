@@ -83,7 +83,7 @@ sap.ui.define(
                     return appModulePath;
                 },
                 fnLoadLoginData:function() {
-                    console.log("method trigerred")
+                   
                     var oLoginModel = this.getView().getModel("LoginInfo");
                     var oViewModel = this.getView().getModel("appView");
                     this.getOwnerComponent().getModel()
