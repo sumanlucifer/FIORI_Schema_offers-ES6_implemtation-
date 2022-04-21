@@ -18,7 +18,11 @@ sap.ui.define([
         getRouter: function () {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
-
+        _dummyPromise:function(oParam1){
+            var promise = $.Deferred();
+            promise.resolve(oParam1);
+            return promise;
+        },
         sActivationStatus: function (sStatus) {
 
             switch (sStatus) {

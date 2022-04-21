@@ -35,7 +35,34 @@
                 <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                 <core:Title text="{i18n>PersonalDetails}" />
                 <Label text="{i18n>FullName}" />
-                <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <VBox width="100%">
+                    <items>
+                         <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                          <Link text="{i18n>SendReqForUpdateName}" visible="{= ${PainterNameChangeRequest}===null &amp;&amp; ${oModelControl2>/NameChange/Edit} === false &amp;&amp; ${LoginInfo>/UserTypeId} === 1 }" press="onNameChangePress" />
+                    </items>
+                </VBox>
+                <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true &amp;&amp;  ${PainterNameChangeRequest}===null }"/>
+                <VBox width="100%"  visible="{= ${oModelControl2>/NameChange/Edit} === true &amp;&amp;  ${PainterNameChangeRequest}===null  }">
+                    <items>
+                          <Input placeholder="{i18n>Enter} {i18n>UpdateName}" value="{oModelControl2>/NameChange/RequestedName}" />
+                          <HBox>
+                            <Button text="{i18n>SendForApproval}" type="Ghost" press=".onSendApprovalNameChange" />
+                            <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressNameChange" />
+                          </HBox>
+                    </items>
+                </VBox>
+                <Label text="{i18n>UpdateName}" visible="{= ${PainterNameChangeRequest}!==null }"/>
+                <VBox width="100%"  visible="{= ${PainterNameChangeRequest}!==null  }">
+                    <items>
+                          <Text text="{PainterNameChangeRequest/RequestedName}" />
+                          <ObjectAttribute title="{i18n>Status}" text="{PainterNameChangeRequest/Status}" ></ObjectAttribute>
+                          <HBox>
+                            <Button text="{i18n>Approve}" type="Ghost" press="onApproveNameChange('APPROVE')" visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}" />
+                            <Button text="{i18n>Reject}" type="Ghost" press="onApproveNameChange('REJECT')"  visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}"  />
+                              <Button text="{i18n>Escalate}" type="Ghost" press="onEscalateNameChange" visible="{parts:['PainterNameChangeRequest/Status','PainterNameChangeRequest/AssigneUserType','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameEscalate'}" />
+                          </HBox>
+                    </items>
+                </VBox>
                 <Label required="false" text="{i18n>EmailId}" />
                 <Text text="{Email}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>MaritalStatus}" />

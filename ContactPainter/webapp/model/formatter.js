@@ -111,26 +111,26 @@ sap.ui.define([
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                            if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
-                                var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                                return "Gift - " + giftData.RewardGiftName;
-                            } else
-                                if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
-                                    var cash = "Cash - Rs. " + pointData["RewardCash"];
-                                    return cash;
-                                } else if (pointData.RedemptionType === "MULTI_REWARDS") {
-                                    var aString = [];
-                                    if (pointData["RewardPoints"]) {
-                                        aString.push("Points - " + pointData["RewardPoints"]);
-                                    }
-                                    if (pointData["GiftRedemptionId"]) {
-                                        aString.push("Gift - " + pointData["RewardGiftName"]);
-                                    }
-                                    if (pointData["RewardCash"]) {
-                                        aString.push("Cash - Rs." + pointData["RewardCash"]);
-                                    }
-                                    return aString.join(", ")
-                                }
+                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
+                            var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
+                            return "Gift - " + giftData.RewardGiftName;
+                        } else
+                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
+                            var cash = "Cash - Rs. " + pointData["RewardCash"];
+                            return cash;
+                        } else if (pointData.RedemptionType === "MULTI_REWARDS") {
+                            var aString = [];
+                            if (pointData["RewardPoints"]) {
+                                aString.push("Points - " + pointData["RewardPoints"]);
+                            }
+                            if (pointData["GiftRedemptionId"]) {
+                                aString.push("Gift - " + pointData["RewardGiftName"]);
+                            }
+                            if (pointData["RewardCash"]) {
+                                aString.push("Cash - Rs." + pointData["RewardCash"]);
+                            }
+                            return aString.join(", ")
+                        }
                     }
                 }
             }
@@ -261,6 +261,26 @@ sap.ui.define([
             if (mParam1) {
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
+        },
+        fmtNameApprove: function (mParam1, mParam2) {
+            if (mParam1 === "PENDING") {
+                if (mParam2 === 3 || mParam2 === 4 || mParam2 === 1) {
+                    return true;
+                }
+            }
+            return false
+        },
+        fmtNameEscalate: function (mParam1, mParam2, mParam3) {
+           
+            if (mParam1 === "PENDING") {
+                if (mParam2 === "TL") {
+                    if (mParam3 === 3) {
+                        return true;
+                    }
+                }
+            }
+
+            return false
         }
     };
 });

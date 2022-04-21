@@ -88,13 +88,50 @@ sap.ui.define(
                         prop: param1,
                     });
                 },
-
+                _CheckLoginData: function () {
+                    var promise = jQuery.Deferred();
+                    var oData = this.getView().getModel();
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    var oLoginData = oLoginModel.getData()
+                    if (Object.keys(oLoginData).length === 0) {
+                        return new Promise((resolve, reject) => {
+                            oData.callFunction("/GetLoggedInAdmin", {
+                                method: "GET",
+                                urlParameters: {
+                                    $expand: "UserType",
+                                },
+                                success: function (data) {
+                                    if (data.hasOwnProperty("results")) {
+                                        if (data["results"].length > 0) {
+                                            oLoginModel.setData(data["results"][0]);
+                                        }
+                                    }
+                                    resolve();
+                                },
+                            });
+                        })
+                    } else {
+                        promise.resolve();
+                        return promise;
+                    }
+                },
                 _onRouteMatched: function (oEvent) {
                     this.getView().getModel().resetChanges();
-                    this._initData();
-                    this._addSearchFieldAssociationToFB();
+                    // this._initData();
+                    // this._addSearchFieldAssociationToFB();
+                    // this._CheckLoginData();
+                    var othat = this;
+                    var c1,c2,c3,c4,c5;
+                    c1=othat._initData();
+                    c1.then(function(){
+                        c2=othat._addSearchFieldAssociationToFB();
+                        c2.then(function(){
+                            c3=othat._dummyPromise();
+                        })
+                    })
                 },
                 _initData: function () {
+                    var promise = $.Deferred();
                     var oViewModel = new JSONModel({
                         pageTitle: "Painters (0)",
                         tableNoDataText: this.getResourceBundle().getText(
@@ -107,6 +144,8 @@ sap.ui.define(
                     });
                     this.setModel(oViewModel, "oModelView");
                     this.getView().getModel().refresh();
+                    promise.resolve();
+                    return promise;
                     //this._fiterBarSort();
                     //this._FilterInit();
                 },
@@ -438,6 +477,7 @@ sap.ui.define(
                     oSearchField.suggest();
                 },
                 _addSearchFieldAssociationToFB: function () {
+                    var promise = $.Deferred();
                     let oFilterBar = this.getView().byId("filterbar");
                     let oSearchField = oFilterBar.getBasicSearch();
                     var oBasicSearch;
@@ -454,7 +494,8 @@ sap.ui.define(
                     }
 
                     oFilterBar.setBasicSearch(oBasicSearch);
-
+                    promise.resolve();
+                    return promise;
                     //   oBasicSearch.attachBrowserEvent(
                     //     "keyup",
                     //     function (e) {

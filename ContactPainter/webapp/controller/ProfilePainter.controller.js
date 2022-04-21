@@ -99,7 +99,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var sExpandParam =
                         "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/PrCityDetails,PainterAddress/StateDetails,PainterAddress/PrStateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
-                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,PainterBankDetails/CreatedByDetails,PainterBankDetails/UpdatedByDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterKycDetails/CreatedByDetails,PainterKycDetails/UpdatedByDetails,PainterExpertise,CreatedByDetails,UpdatedByDetails";
+                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,PainterBankDetails/CreatedByDetails,PainterBankDetails/UpdatedByDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterKycDetails/CreatedByDetails,PainterKycDetails/UpdatedByDetails,PainterExpertise,CreatedByDetails,UpdatedByDetails,PainterNameChangeRequest";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/PainterSet(" + oProp + ")",
@@ -151,9 +151,13 @@ sap.ui.define(
                         MultiCombo: {
                             Combo1: []
                         },
-                        PainterUpdate:{
-                            Field1:"Test",
-                            FieldInput1:""
+                        PainterUpdate: {
+                            Field1: "Test",
+                            FieldInput1: ""
+                        },
+                        NameChange: {
+                            Edit: false,
+                            RequestedName: "adsfasdfadsfasdf"
                         }
                     };
                     var oView = this.getView();
@@ -186,6 +190,95 @@ sap.ui.define(
                     //rebind Loyalty table
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
+                },
+                onNameChangePress: function () {
+                    this.getView().getModel("oModelControl2").setProperty("/NameChange/Edit", true);
+                },
+                onCancelPressNameChange: function () {
+                    var oModel = this.getView().getModel("oModelControl2")
+                    oModel.setProperty("/NameChange/Edit", false);
+                    oModel.setProperty("/NameChange/RequestedName", "");
+                },
+                onSendApprovalNameChange: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var oPayloadInput = {
+                        PainterId: parseInt(oModelControl.getProperty("/PainterId")),
+                        RequestedName: oModelControl.getProperty("/NameChange/RequestedName"),
+                        AssigneUserType: "AGENT",
+                        Status: "PENDING",
+                        IsWorkFlowApplicable: true
+                    };
+                    console.log(oPayloadInput)
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    var c1, c2;
+                    var othat = this;
+
+
+                    oModel.create("/PainterNameChangeRequestSet", oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        }
+                    })
+
+
+
+                },
+                onApproveNameChange: function (mParam) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var oPayloadInput = {
+                        Status: mParam
+                    };
+                    var object = oView.getElementBinding().getBoundContext().getObject();
+                    var sId =object["PainterNameChangeRequest"]["__ref"]
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    var c1, c2;
+                    var othat = this;
+                    var sPath = "/"+sId+"/Status";
+                    oModel.update(sPath, oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        }
+                    })
+
+                },
+                onEscalateNameChange: function (mParam) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var oPayloadInput = {
+                        InitiateForceTat: true
+                    };
+                    var object = oView.getElementBinding().getBoundContext().getObject();
+                    var sId =object["PainterNameChangeRequest"]["__ref"]
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    var c1, c2;
+                    var othat = this;
+                    var sPath = "/"+sId+"/Status";
+                    oModel.update(sPath, oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        }
+                    })
+
                 },
                 _LoadPainterJsonData: function (oEvent) {
                     var promise = jQuery.Deferred();
@@ -2821,11 +2914,11 @@ sap.ui.define(
                 onTokenDlgClose: function () {
                     this.oQRCodeDtlsDialog.close();
                 },
-                onUpdatedName:function(oEvent){
-                  var  oView = this.getView();
-                  var oModelControl = oView.getModel("oModelControl2");
-                  var object = oView.getElementBinding().getBoundContext().getObject();
-                  oModelControl.setProperty("/PainterUpdate/Field1",object["Name"])
+                onUpdatedName: function (oEvent) {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var object = oView.getElementBinding().getBoundContext().getObject();
+                    oModelControl.setProperty("/PainterUpdate/Field1", object["Name"])
                     var othat = this;
                     if (!this._upDatePainterDetailsDialog) {
                         Fragment.load({
@@ -2841,10 +2934,10 @@ sap.ui.define(
                         this._upDatePainterDetailsDialog.open();
                     }
                 },
-                onPainterDetailsDialog1Close:function(){
+                onPainterDetailsDialog1Close: function () {
                     this._upDatePainterDetailsDialog.close();
                 },
-                onUpdateName:function(){
+                onUpdateName: function () {
                     var oView = this.getView();
                     var oModel = oView.getModel();
                 },
