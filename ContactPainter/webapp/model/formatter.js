@@ -264,7 +264,7 @@ sap.ui.define([
         },
         fmtNameApprove: function (mParam1, mParam2) {
             if (mParam1 === "PENDING") {
-                if (mParam2 === 3 || mParam2 === 4 || mParam2 === 1) {
+                if (mParam2 === 3 || mParam2 === 4) {
                     return true;
                 }
             }
