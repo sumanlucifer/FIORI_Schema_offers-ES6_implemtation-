@@ -32,8 +32,8 @@
                             <ObjectAttribute title="{i18n>Remark}" text="{PainterMobileNumberChangeRequest/Remark}" visible="{= ${PainterMobileNumberChangeRequest/Status}==='REJECTED'}" ></ObjectAttribute>
                           <HBox>
                             <Button text="{i18n>Approve}" class="sapUiTinyMarginEnd" type="Ghost" press="onApproveMobileChange('APPROVED')" visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}" />
-                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Ghost" press="onRemarksDialogOpen"  visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}"  />
-                              <Button text="{i18n>Escalate}" type="Ghost" press="onEscalateNameChange" visible="{parts:['PainterMobileNumberChangeRequest/Status','PainterMobileNumberChangeRequest/AssigneUserType','LoginInfo>/UserTypeId','PainterMobileNumberChangeRequest/InitiateForceTat'],formatter:'.formatter.fmtMobileEscalateBtn'}" />
+                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Ghost" press="onRemarksDialogOpen('MOBILE')"  visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}"  />
+                              <Button text="{i18n>Escalate}" type="Ghost" press="onEscalateMobileChange" visible="{parts:['PainterMobileNumberChangeRequest/Status','PainterMobileNumberChangeRequest/AssigneUserType','LoginInfo>/UserTypeId','PainterMobileNumberChangeRequest/InitiateForceTat'],formatter:'.formatter.fmtMobileEscalateBtn'}" />
                           </HBox>
                     </items>
                 </VBox>

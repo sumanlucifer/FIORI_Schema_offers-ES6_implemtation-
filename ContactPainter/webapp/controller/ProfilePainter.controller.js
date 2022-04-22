@@ -165,8 +165,8 @@ sap.ui.define(
                             RequestedField: "",
                             RejectRemark: ""
                         },
-                        RejectRemark1:"",
-                        resourcePath:"com.knpl.pragati.ContactPainter"
+                        RejectRemark1: "",
+                        resourcePath: "com.knpl.pragati.ContactPainter"
                     };
                     var oView = this.getView();
                     var oModel = new JSONModel(oData);
@@ -202,7 +202,7 @@ sap.ui.define(
                 onNameChangePress: function () {
                     this.getView().getModel("oModelControl2").setProperty("/NameChange/Edit", true);
                 },
-                onMobileChangePress:function(){
+                onMobileChangePress: function () {
                     this.getView().getModel("oModelControl2").setProperty("/MobileChangeWorkflow/Edit", true);
                 },
                 onCancelPressNameChange: function () {
@@ -246,7 +246,7 @@ sap.ui.define(
 
 
                 },
-            
+
                 onApproveNameChange: function (mParam) {
                     var oView = this.getView();
                     var oModel = oView.getModel();
@@ -264,12 +264,13 @@ sap.ui.define(
 
 
                 },
-             
-                onRemarksDialogOpen:function(oEvent){
+
+                onRemarksDialogOpen: function (mParam) {
                     var oView = this.getView();
-                    var oSource = oEvent.getSource();
+
                     var oModelControl = oView.getModel("oModelControl2");
                     var othat = this;
+                    var sType = mParam
                     oModelControl.setProperty("/RejectRemark1", "");
                     if (!this._RemarksDialog1) {
                         Fragment.load({
@@ -279,10 +280,12 @@ sap.ui.define(
                         }).then(function (oDialog) {
                             this._RemarksDialog1 = oDialog;
                             oView.addDependent(this._RemarksDialog1);
+                            this._RemarksDialog1.data("Type", sType)
                             this._RemarksDialog1.open();
-        
+
                         }.bind(this))
                     } else {
+                        this._RemarksDialog1.data("Type", sType)
                         this._RemarksDialog1.open();
                     }
                 },
@@ -292,14 +295,25 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl2");
                     var oPayloadInput = {
                         Status: "REJECTED",
-                        Remark: oModelControl.getProperty("/NameChange/RejectRemark"),
+                        Remark: oModelControl.getProperty("/RejectRemark1"),
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
-                    var sId = object["PainterNameChangeRequest"]["__ref"]
-
-                    var sPath = "/" + sId + "/Status";
+                    var sType = this._RemarksDialog1.data()["Type"];
                     this.onDialogCloseNew();
-                    this._sendNameChangeReqPayload(sPath, oPayloadInput);
+                    if (sType === "Name") {
+                        var sId = object["PainterNameChangeRequest"]["__ref"];
+                        var sPath = "/" + sId + "/Status";
+                        this._sendNameChangeReqPayload(sPath, oPayloadInput);
+                    } else if (sType === "Mobile") {
+                        var sId = object["PainterMobileNumberChangeRequest"]["__ref"];
+                        var sPath = "/" + sId + "/Status";
+                        this._sendMobileChangeReqPayload(sPath, oPayloadInput);
+                    }
+                    
+
+                  
+                   
+                    
                 },
                 onEscalateNameChange: function (mParam) {
                     var oView = this.getView();
@@ -312,6 +326,19 @@ sap.ui.define(
                     var sId = object["PainterNameChangeRequest"]["__ref"]
                     var sPath = "/" + sId + "/Status";
                     this._showMessageBox1("confirm", "Message8", null, this._sendNameChangeReqPayload.bind(this, sPath, oPayloadInput));
+
+                },
+                onEscalateMobileChange: function (mParam) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var oPayloadInput = {
+                        InitiateForceTat: true
+                    };
+                    var object = oView.getElementBinding().getBoundContext().getObject();
+                    var sId = object["PainterMobileNumberChangeRequest"]["__ref"]
+                    var sPath = "/" + sId + "/Status";
+                    this._sendMobileChangeReqPayload("confirm", "Message8", null, this._sendNameChangeReqPayload.bind(this, sPath, oPayloadInput));
 
                 },
                 _sendNameChangeReqPayload: function (sPath, oPayloadInput) {
