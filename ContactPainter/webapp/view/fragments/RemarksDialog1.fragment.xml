@@ -6,7 +6,7 @@
             <f:SimpleForm id="RemarkForm" layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
                 <f:content>
                     <Label text="{i18n>Remark}" />
-                    <TextArea required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl2>/NameChange/RejectRemark', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
+                    <TextArea required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl2>/RejectRemark1', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
                 </f:content>
             </f:SimpleForm>
         </content>

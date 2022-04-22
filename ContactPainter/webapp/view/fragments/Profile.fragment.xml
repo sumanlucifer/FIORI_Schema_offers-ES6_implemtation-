@@ -8,7 +8,35 @@
                 <Label required="false" text="{i18n>DateOfJoining}" />
                 <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label required="false" text="{i18n>PrimaryMobileNo}" />
-                <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <VBox>
+                    <items>
+                            <Text text="{Mobile}"/>
+                           <Link text="{i18n>SendReqForUpdateMobile}" visible="{parts:['PainterMobileNumberChangeRequest', 'oModelControl2>/MobileChangeWorkflow/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprMobChangeReq'}" press="onMobileChangePress" />
+                    </items>
+                </VBox>
+                 <Label text="{i18n>UpdateMobile}" visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true &amp;&amp;  ${PainterMobileNumberChangeRequest}===null }"/>
+                <VBox width="100%"  visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true &amp;&amp;  ${PainterMobileNumberChangeRequest}===null }">
+                    <items>
+                          <Input type="Number" placeholder="{i18n>Enter} {i18n>UpdateMobile}" value="{oModelControl2>/MobileChangeWorkflow/RequestedField}" />
+                          <HBox>
+                            <Button text="{i18n>SendForApproval}" class="sapUiTinyMarginEnd" type="Ghost" press=".onSendApprovalMobileChange" />
+                            <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressNameChange" />
+                          </HBox>
+                    </items>
+                </VBox>
+                 <Label text="{i18n>UpdateMobile}" visible="{= ${PainterMobileNumberChangeRequest}!==null }"/>
+                <VBox width="100%"  visible="{= ${PainterMobileNumberChangeRequest}!==null  }">
+                    <items>
+                          <Text text="{PainterMobileNumberChangeRequest/RequestedMobileNumber}" />
+                          <ObjectAttribute title="{i18n>Status}" text="{PainterMobileNumberChangeRequest/Status}" ></ObjectAttribute>
+                            <ObjectAttribute title="{i18n>Remark}" text="{PainterMobileNumberChangeRequest/Remark}" visible="{= ${PainterMobileNumberChangeRequest/Status}==='REJECTED'}" ></ObjectAttribute>
+                          <HBox>
+                            <Button text="{i18n>Approve}" class="sapUiTinyMarginEnd" type="Ghost" press="onApproveMobileChange('APPROVED')" visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}" />
+                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Ghost" press="onRemarksDialogOpen"  visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}"  />
+                              <Button text="{i18n>Escalate}" type="Ghost" press="onEscalateNameChange" visible="{parts:['PainterMobileNumberChangeRequest/Status','PainterMobileNumberChangeRequest/AssigneUserType','LoginInfo>/UserTypeId','PainterMobileNumberChangeRequest/InitiateForceTat'],formatter:'.formatter.fmtMobileEscalateBtn'}" />
+                          </HBox>
+                    </items>
+                </VBox>
                 <Label text="{i18n>SecondryMobileNo}" />
                 <VBox items="{path:'PainterContact/',templateShareable: false}">
                     <Text text="{Mobile}" />
@@ -38,7 +66,7 @@
                 <VBox width="100%">
                     <items>
                          <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
-                          <Link text="{i18n>SendReqForUpdateName}" visible="{= ${PainterNameChangeRequest}===null &amp;&amp; ${oModelControl2>/NameChange/Edit} === false &amp;&amp; ${LoginInfo>/UserTypeId} === 2 }" press="onNameChangePress" />
+                          <Link text="{i18n>SendReqForUpdateName}" visible="{parts:['PainterNameChangeRequest', 'oModelControl2>/NameChange/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprNameChangeReq'}" press="onNameChangePress" />
                     </items>
                 </VBox>
                 <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true &amp;&amp;  ${PainterNameChangeRequest}===null }"/>

@@ -99,7 +99,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var sExpandParam =
                         "AgeGroup,Depot,PainterType,Slab,MaritalStatus,Religion,BusinessCategory,BusinessGroup,ArcheType,Preference/Language,PainterContact,PrimaryDealerDetails,PainterAddress/CityDetails,PainterAddress/PrCityDetails,PainterAddress/StateDetails,PainterAddress/PrStateDetails,PainterSegmentation/TeamSizeDetails,PainterSegmentation/PainterExperienceDetails,PainterSegmentation/SitePerMonthDetails,PainterSegmentation/PotentialDetails," +
-                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,PainterBankDetails/CreatedByDetails,PainterBankDetails/UpdatedByDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterKycDetails/CreatedByDetails,PainterKycDetails/UpdatedByDetails,PainterExpertise,CreatedByDetails,UpdatedByDetails,PainterNameChangeRequest";
+                        "PainterFamily/RelationshipDetails,PainterBankDetails/AccountTypeDetails,PainterBankDetails/BankNameDetails,PainterBankDetails/CreatedByDetails,PainterBankDetails/UpdatedByDetails,Vehicles/VehicleTypeDetails,Dealers,Preference/SecurityQuestion,PainterKycDetails/KycTypeDetails,PainterKycDetails/CreatedByDetails,PainterKycDetails/UpdatedByDetails,PainterExpertise,CreatedByDetails,UpdatedByDetails,PainterNameChangeRequest,PainterMobileNumberChangeRequest";
                     if (oProp.trim() !== "") {
                         oView.bindElement({
                             path: "/PainterSet(" + oProp + ")",
@@ -160,6 +160,12 @@ sap.ui.define(
                             RequestedName: "",
                             RejectRemark: ""
                         },
+                        MobileChangeWorkflow: {
+                            Edit: false,
+                            RequestedField: "",
+                            RejectRemark: ""
+                        },
+                        RejectRemark1:"",
                         resourcePath:"com.knpl.pragati.ContactPainter"
                     };
                     var oView = this.getView();
@@ -196,10 +202,18 @@ sap.ui.define(
                 onNameChangePress: function () {
                     this.getView().getModel("oModelControl2").setProperty("/NameChange/Edit", true);
                 },
+                onMobileChangePress:function(){
+                    this.getView().getModel("oModelControl2").setProperty("/MobileChangeWorkflow/Edit", true);
+                },
                 onCancelPressNameChange: function () {
                     var oModel = this.getView().getModel("oModelControl2")
                     oModel.setProperty("/NameChange/Edit", false);
                     oModel.setProperty("/NameChange/RequestedName", "");
+                },
+                onCancelPressMobileChange: function () {
+                    var oModel = this.getView().getModel("oModelControl2")
+                    oModel.setProperty("/MobileChangeWorkflow/Edit", false);
+                    oModel.setProperty("/MobileChangeWorkflow/RequestedField", "");
                 },
                 onSendApprovalNameChange: function (oEvent) {
                     var oView = this.getView();
@@ -250,12 +264,13 @@ sap.ui.define(
 
 
                 },
+             
                 onRemarksDialogOpen:function(oEvent){
                     var oView = this.getView();
                     var oSource = oEvent.getSource();
                     var oModelControl = oView.getModel("oModelControl2");
                     var othat = this;
-                    oModelControl.setProperty("/NameChange/RejectRemark", "");
+                    oModelControl.setProperty("/RejectRemark1", "");
                     if (!this._RemarksDialog1) {
                         Fragment.load({
                             id: oView.getId(),
@@ -316,6 +331,65 @@ sap.ui.define(
                         }
                     })
 
+                },
+                _sendMobileChangeReqPayload: function (sPath, oPayloadInput) {
+                    var othat = this;
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    oModel.update(sPath, oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        }
+                    })
+
+                },
+                onSendApprovalMobileChange: function (oEvent) {
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var oPayloadInput = {
+                        PainterId: parseInt(oModelControl.getProperty("/PainterId")),
+                        RequestedMobileNumber: oModelControl.getProperty("/MobileChangeWorkflow/RequestedField"),
+                        AssigneUserType: "AGENT",
+                        Status: "PENDING",
+                        IsWorkFlowApplicable: true
+                    };
+                    console.log(oPayloadInput)
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    var c1, c2;
+                    var othat = this;
+
+
+                    oModel.create("/PainterMobileNumberChangeRequestSet", oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        }
+                    })
+
+
+
+                },
+                onApproveMobileChange: function (mParam) {
+                    var oView = this.getView();
+                    var oPayloadInput = {
+                        Status: mParam
+                    };
+                    var object = oView.getElementBinding().getBoundContext().getObject();
+                    var sId = object["PainterMobileNumberChangeRequest"]["__ref"]
+                    var sPath = "/" + sId + "/Status";
+                    this._showMessageBox1("confirm", "Message7", null, this._sendMobileChangeReqPayload.bind(this, sPath, oPayloadInput));
                 },
                 _LoadPainterJsonData: function (oEvent) {
                     var promise = jQuery.Deferred();

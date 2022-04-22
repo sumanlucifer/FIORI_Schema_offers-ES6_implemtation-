@@ -253,6 +253,7 @@ sap.ui.define([
             }
             return false;
         },
+
         fmtDisplayUpdatedDetails: function (mParam1) {
             // mParam1 > createdbydetails/updatedby details
             if (!mParam1) {
@@ -262,6 +263,28 @@ sap.ui.define([
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
         },
+        fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6) {
+            // mParam1 PainterNameChangeRequest
+            // mParam2 'oModelControl2>/NameChange/Edit
+            //mParam3 LoginInfo>/UserTypeId
+            // mParam4 PainterBankDetails/Status
+            // mParam5 PainterBankDetails/Status
+            // mParam6 MembershipID
+            if (mParam1 === null) {
+                if (mParam2 === false) {
+                    if (mParam3 === 2) {
+                        if (mParam4 !== "APPROVED") {
+                            if (mParam5 !== "APPROVED") {
+                                if (mParam6) {
+                                    return true
+                                }
+                            }
+                        }
+                    }                    
+                }
+            }
+            return false;
+        },
         fmtNameApprove: function (mParam1, mParam2) {
             if (mParam1 === "PENDING") {
                 if (mParam2 === 3 || mParam2 === 4) {
@@ -270,20 +293,66 @@ sap.ui.define([
             }
             return false
         },
-        fmtNameEscalate: function (mParam1, mParam2, mParam3,mParam4) {
-           
+        fmtNameEscalate: function (mParam1, mParam2, mParam3, mParam4) {
+
             if (mParam1 === "PENDING") {
                 if (mParam2 === "TL") {
                     if (mParam3 === 3) {
-                        if(mParam4 === false){
+                        if (mParam4 === false) {
                             return true;
                         }
-                        
+
                     }
                 }
             }
 
             return false
-        }
+        },
+        fmtSendApprMobChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6) {
+            // mParam1 PainterNameChangeRequest
+            // mParam2 'oModelControl2>/NameChange/Edit
+            //mParam3 LoginInfo>/UserTypeId
+            // mParam4 PainterBankDetails/Status
+            // mParam5 PainterBankDetails/Status
+            // mParam6 MembershipID
+            //console.log(mParam1, mParam2, mParam3, mParam4, mParam5, mParam6)
+            if (mParam1 === null) {
+                if (mParam2 === false) {
+                    if (mParam3 === 2) {
+                        if (mParam4 !== "APPROVED") {
+                            if (mParam5 !== "APPROVED") {
+                                if (mParam6) {
+                                    return true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        },
+        fmtMobileChangeApproveBtn: function (mParam1, mParam2) {
+            if (mParam1 === "PENDING") {
+                if (mParam2 === 3 || mParam2 === 4) {
+                    return true;
+                }
+            }
+            return false
+        },
+        fmtMobileEscalateBtn: function (mParam1, mParam2, mParam3, mParam4) {
+
+            if (mParam1 === "PENDING") {
+                if (mParam2 === "TL") {
+                    if (mParam3 === 3) {
+                        if (mParam4 === false) {
+                            return true;
+                        }
+
+                    }
+                }
+            }
+
+            return false
+        },
     };
 });
