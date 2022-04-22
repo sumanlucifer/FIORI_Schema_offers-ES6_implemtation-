@@ -20,7 +20,7 @@
                           <Input type="Number" placeholder="{i18n>Enter} {i18n>UpdateMobile}" value="{oModelControl2>/MobileChangeWorkflow/RequestedField}" />
                           <HBox>
                             <Button text="{i18n>SendForApproval}" class="sapUiTinyMarginEnd" type="Ghost" press=".onSendApprovalMobileChange" />
-                            <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressNameChange" />
+                            <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressMobileChange" />
                           </HBox>
                     </items>
                 </VBox>
