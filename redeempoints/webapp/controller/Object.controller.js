@@ -22,10 +22,10 @@ sap.ui.define([
         /* lifecycle methods                                           */
         /* =========================================================== */
 
-		/**
-		 * Called when the worklist controller is instantiated.
-		 * @public
-		 */
+        /**
+         * Called when the worklist controller is instantiated.
+         * @public
+         */
         onInit: function () {
             // Model used to manipulate control states. The chosen values make sure,
             // detail page is busy indication immediately so there is no break in
@@ -62,7 +62,38 @@ sap.ui.define([
                 bVerify: false,
                 bPayloadSent: false,
                 noSlabText: "",
-                aQuantity: [{ value: "1", key: 1 }, { value: "2", key: 2 }, { value: "3", key: 3 }, { value: "4", key: 4 }, { value: "5", key: 5 }, { value: "6", key: 6 }, { value: "7", key: 7 }, { value: "8", key: 8 }, { value: "9", key: 9 }, { value: "10", key: 10 }],
+                bPrimaryDealer:false,
+                aQuantity: [{
+                    value: "1",
+                    key: 1
+                }, {
+                    value: "2",
+                    key: 2
+                }, {
+                    value: "3",
+                    key: 3
+                }, {
+                    value: "4",
+                    key: 4
+                }, {
+                    value: "5",
+                    key: 5
+                }, {
+                    value: "6",
+                    key: 6
+                }, {
+                    value: "7",
+                    key: 7
+                }, {
+                    value: "8",
+                    key: 8
+                }, {
+                    value: "9",
+                    key: 9
+                }, {
+                    value: "10",
+                    key: 10
+                }],
                 aFileds: {
                     MembershipId: "",
                     PainterName: ""
@@ -82,7 +113,7 @@ sap.ui.define([
                     DivisionId: "",
                     Depot: "",
                     PDealer: "",
-                    Otp: "",//integer
+                    Otp: "", //integer
                     bnkStatus: "",
                     kycStatus: "",
                     BalPoints: ""
@@ -173,8 +204,7 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bPayloadSent", false);
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     MessageBox.error(
-                        "Unable to create Redemption request due to the server issues",
-                        {
+                        "Unable to create Redemption request due to the server issues", {
                             title: "Error Code: " + a.statusCode,
                         }
                     );
@@ -232,8 +262,7 @@ sap.ui.define([
             if (!this._pValueHelpDialog) {
                 this._pValueHelpDialog = Fragment.load({
                     id: oView.getId(),
-                    name:
-                        "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialog",
+                    name: "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialog",
                     controller: this,
                 }).then(function (oDialog) {
                     oView.addDependent(oDialog);
@@ -314,7 +343,7 @@ sap.ui.define([
                         oViewModel.setProperty("/AddFields/PDealer", obj["PrimaryDealerDetails"]["DealerName"]);
                     }
                     if (obj["PainterKycDetails"]) {
-                        
+
                         oViewModel.setProperty("/AddFields/kycStatus", obj["PainterKycDetails"]["Status"]);
 
                     } else {
@@ -322,7 +351,7 @@ sap.ui.define([
                         oView.getModel("oModelControl").setProperty("/bDoc", true);
                     }
                     if (obj["PainterBankDetails"]) {
-                        
+
                         oViewModel.setProperty("/AddFields/bnkStatus", obj["PainterBankDetails"]["Status"]);
 
                     } else {
@@ -333,6 +362,13 @@ sap.ui.define([
                         //oView.getModel("oModelControl").setProperty("/bEnable", false);
                         oView.getModel("oModelControl").setProperty("/noSlabText", "Minimum 5000 points required for redemption.");
                     }
+                    if (!obj["DealerId"]) {
+                        //oView.getModel("oModelControl").setProperty("/bEnable", false);
+                        oView.getModel("oModelControl").setProperty("/bPrimaryDealer", true);
+                        console.log("Primary dealer made true");
+                    } else {
+                        oView.getModel("oModelControl").setProperty("/bPrimaryDealer", false);
+                    }
                     // if (obj["PainterBankDetails"]["Status"] != "APPROVED" || obj["PainterKycDetails"]["Status"] != "APPROVED") {
                     //     oView.getModel("oModelControl").setProperty("/bEnable", false);
                     // }
@@ -341,20 +377,23 @@ sap.ui.define([
                             oView.getModel("oModelControl").setProperty("/bEnable", false);
                             oView.getModel("oModelControl").setProperty("/bDoc", true);
                         }
-                        
+
                     }
                     if (obj["PainterKycDetails"]) {
                         if (obj["PainterKycDetails"]["Status"] !== "APPROVED") {
                             oView.getModel("oModelControl").setProperty("/bEnable", false);
                             oView.getModel("oModelControl").setProperty("/bDoc", true);
                         }
-                        
+
                     }
-                    if(obj["PainterBankDetails"] && obj["PainterKycDetails"] ){
+                    if (obj["PainterBankDetails"] && obj["PainterKycDetails"]) {
                         if (obj["PainterBankDetails"]["Status"] === "APPROVED" && obj["PainterKycDetails"]["Status"] === "APPROVED") {
                             oView.getModel("oModelControl").setProperty("/bEnable", true);
                             oView.getModel("oModelControl").setProperty("/bDoc", false);
                         }
+                    }
+                    if (!obj["DealerId"]) {
+                        oView.getModel("oModelControl").setProperty("/bEnable", false);
                     }
                 }.bind(this),
                 error: function () {
@@ -376,12 +415,12 @@ sap.ui.define([
         /* =========================================================== */
 
 
-		/**
-		 * Event handler  for navigating back.
-		 * It there is a history entry we go one step back in the browser history
-		 * If not, it will replace the current entry of the browser history with the worklist route.
-		 * @public
-		 */
+        /**
+         * Event handler  for navigating back.
+         * It there is a history entry we go one step back in the browser history
+         * If not, it will replace the current entry of the browser history with the worklist route.
+         * @public
+         */
 
 
 
@@ -389,12 +428,12 @@ sap.ui.define([
         /* internal methods                                            */
         /* =========================================================== */
 
-		/**
-		 * Binds the view to the object path.
-		 * @function
-		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
-		 * @private
-		 */
+        /**
+         * Binds the view to the object path.
+         * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
+         * @private
+         */
 
 
 
@@ -417,12 +456,12 @@ sap.ui.define([
 
         },
 
-		/**
-		 * Binds the view to the object path.
-		 * @function
-		 * @param {string} sObjectPath path to the object to be bound
-		 * @private
-		 */
+        /**
+         * Binds the view to the object path.
+         * @function
+         * @param {string} sObjectPath path to the object to be bound
+         * @private
+         */
         _bindView: function (sObjectPath) {
             var oViewModel = this.getModel("objectView"),
                 oDataModel = this.getModel();
@@ -502,21 +541,21 @@ sap.ui.define([
 
             oModel.callFunction(
                 "/SendMobileOTP", {
-                method: "GET",
-                urlParameters: {
-                    Mobile: mobile,
-                    type:'redeem'
-                },
-                success: function (oData, response) {
-                    btnOtp.setVisible(false);
-                    oModelControl.setProperty("/bVerify", true);
-                    MessageToast.show("OTP sent successfully.");
+                    method: "GET",
+                    urlParameters: {
+                        Mobile: mobile,
+                        type: 'redeem'
+                    },
+                    success: function (oData, response) {
+                        btnOtp.setVisible(false);
+                        oModelControl.setProperty("/bVerify", true);
+                        MessageToast.show("OTP sent successfully.");
 
-                },
-                error: function (oError) {
+                    },
+                    error: function (oError) {
 
-                }
-            });
+                    }
+                });
 
         },
         onVerifyOtp: function () {
@@ -528,35 +567,33 @@ sap.ui.define([
             var btnOtp = this.getView().byId("btnOTP");
             oModel.callFunction(
                 "/VerifyMobileOTPAdmin", {
-                method: "GET",
-                urlParameters: {
-                    Mobile: mobile,
-                    MobileOTP: otp
-                },
-                success: function (oData, response) {
-                    var data = oData.results[0];
-                    if (data["ErrorCode"] == null) {
-                        MessageToast.show("OTP verification successful");
-                        oModelControl.setProperty("/isValidOTP", true);
-                        oModelControl.setProperty("/bVerify", false);
-                        btnOtp.setVisible(false);
-                    }
-                    else if (data["ErrorCode"] == 410) {
-                        MessageToast.show("Provided OTP is already Expired.");
-                    }
-                    else if (data["ErrorCode"] == 417) {
-                        MessageToast.show("Please enter valid OTP.")
-                    }
-                    //  var jModel = new sap.ui.model.json.JSONModel();
-                    //  var myData = {};
-                    //  myData.Fare = oData;
-                    //  jModel.setData(myData);
-                    //  oContext.getView().setModel(jModel, "fareModel");
-                },
-                error: function (oError) {
+                    method: "GET",
+                    urlParameters: {
+                        Mobile: mobile,
+                        MobileOTP: otp
+                    },
+                    success: function (oData, response) {
+                        var data = oData.results[0];
+                        if (data["ErrorCode"] == null) {
+                            MessageToast.show("OTP verification successful");
+                            oModelControl.setProperty("/isValidOTP", true);
+                            oModelControl.setProperty("/bVerify", false);
+                            btnOtp.setVisible(false);
+                        } else if (data["ErrorCode"] == 410) {
+                            MessageToast.show("Provided OTP is already Expired.");
+                        } else if (data["ErrorCode"] == 417) {
+                            MessageToast.show("Please enter valid OTP.")
+                        }
+                        //  var jModel = new sap.ui.model.json.JSONModel();
+                        //  var myData = {};
+                        //  myData.Fare = oData;
+                        //  jModel.setData(myData);
+                        //  oContext.getView().setModel(jModel, "fareModel");
+                    },
+                    error: function (oError) {
 
-                }
-            });
+                    }
+                });
 
         },
         onValueHelpSlabs: function (oEvent) {
@@ -566,8 +603,7 @@ sap.ui.define([
             if (!this._sValueHelpDialog) {
                 this._sValueHelpDialog = Fragment.load({
                     id: oView.getId(),
-                    name:
-                        "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialogSlabs",
+                    name: "com.knpl.pragati.redeempoints.view.subview.ValueHelpDialogSlabs",
                     controller: this,
                 }).then(function (oDialog) {
                     oView.addDependent(oDialog);
@@ -623,28 +659,28 @@ sap.ui.define([
             var slabs = [];
             oModel.callFunction(
                 "/GetLoyaltyPointsRedemptionSlabs", {
-                method: "GET",
-                urlParameters: {
-                    PainterId: Id
-                },
-                success: function (oData, response) {
-                    var data = oData.results;
-                    //oModelCtrl.setProperty("/Slabs",data);
+                    method: "GET",
+                    urlParameters: {
+                        PainterId: Id
+                    },
+                    success: function (oData, response) {
+                        var data = oData.results;
+                        //oModelCtrl.setProperty("/Slabs",data);
 
-                    data.forEach(function (ele) {
-                        if (ele.IsRedemptionAllowed == true) {
-                            slabs.push(ele);
-                        }
-                    });
-                    oModelCtrl.setProperty("/Slabs", slabs);
-                    oModelCtrl.setProperty("/isValidOTP", false);
-                    btnOtp.setVisible(true);
+                        data.forEach(function (ele) {
+                            if (ele.IsRedemptionAllowed == true) {
+                                slabs.push(ele);
+                            }
+                        });
+                        oModelCtrl.setProperty("/Slabs", slabs);
+                        oModelCtrl.setProperty("/isValidOTP", false);
+                        btnOtp.setVisible(true);
 
-                },
-                error: function (oError) {
+                    },
+                    error: function (oError) {
 
-                }
-            });
+                    }
+                });
         }
         /*Aditya chnages end*/
 
