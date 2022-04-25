@@ -22,9 +22,8 @@ sap.ui.define(
         "use strict";
 
         return BaseController.extend(
-            "com.knpl.pragati.condonation.controller.Detail",
-            {
-                formatter:formatter,
+            "com.knpl.pragati.condonation.controller.Detail", {
+                formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.getRoute("Detail").attachMatched(this._onRouteMatched, this);
@@ -49,7 +48,9 @@ sap.ui.define(
                         ProbingSteps: "",
                         ComplainCode: "",
                         ComplainId: oProp,
-                        bBusy: false
+                        bBusy: false,
+                        RejectRemark1: "",
+                        resourcePath:"com.knpl.pragati.condonation"
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);
@@ -86,10 +87,10 @@ sap.ui.define(
                             },
                             events: {
                                 dataRequested: function (oEvent) {
-                                  //  oView.setBusy(true);
+                                    //  oView.setBusy(true);
                                 },
                                 dataReceived: function (oEvent) {
-                                  //  oView.setBusy(false);
+                                    //  oView.setBusy(false);
                                 },
                             },
                         });
@@ -107,18 +108,18 @@ sap.ui.define(
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
                             $expand: exPand,
-                            $select:'PainterComplainProducts'
+                            $select: 'PainterComplainProducts'
                         },
                         success: function (data) {
                             var oViewModel = new JSONModel(data);
                             oView.getModel("oModelControl").setProperty("/bBusy", false);
                             oView.setModel(oViewModel, "oModelView");
-                          
+
                         },
                         error: function () {
                             oView.getModel("oModelControl").setProperty("/bBusy", false);
 
-                         },
+                        },
                     });
                     promise.resolve();
                     return promise;
@@ -262,7 +263,7 @@ sap.ui.define(
                                 }
                             }
                         },
-                        error: function () { },
+                        error: function () {},
                     });
                 },
                 onViewAttachment: function (oEvent) {
@@ -270,8 +271,7 @@ sap.ui.define(
                     var oView = this.getView();
                     if (!this._pKycDialog) {
                         Fragment.load({
-                            name:
-                                "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
+                            name: "com.knpl.pragati.Complaints.view.fragments.AttachmentDialog",
                             controller: this,
                         }).then(
                             function (oDialog) {
@@ -385,7 +385,84 @@ sap.ui.define(
                 },
                 handleCancelPress: function () {
                     this.onNavBack();
-                }
+                },
+                onPressApprove: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sId = oModel.getProperty("/bindProp")
+                    var oPayloadInput = {
+                        Status: "APPROVED"
+                    };
+
+                    var sPath = "/" + sId + "/Status";
+                    this._showMessageBox1("confirm", "Message7", null, this._sendChangeReqPayload.bind(this, sPath, oPayloadInput));
+                },
+                onRemarksDialogOpen: function (mParam) {
+                    var oView = this.getView();
+
+                    var oModelControl = oView.getModel("oModelControl");
+                    var othat = this;
+                    var sType = mParam
+                    oModelControl.setProperty("/RejectRemark1", "");
+                    if (!this._RemarksDialog1) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            controller: this,
+                            name: oModelControl.getProperty("/resourcePath") + ".view.subview.RemarksDialog1"
+                        }).then(function (oDialog) {
+                            this._RemarksDialog1 = oDialog;
+                            oView.addDependent(this._RemarksDialog1);
+                            
+                            this._RemarksDialog1.open();
+
+                        }.bind(this))
+                    } else {
+                      
+                        this._RemarksDialog1.open();
+                    }
+                },
+                onRejectRequest: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl");
+                    var sId = oModelControl.getProperty("/bindProp");
+                    var sPath = "/" + sId + "/Status";
+                    var oPayloadInput = {
+                        Status: "REJECTED",
+                        Remark: oModelControl.getProperty("/RejectRemark1"),
+                    };
+                    this.onDialogCloseNew();
+                    this._sendChangeReqPayload(sPath, oPayloadInput);
+                },
+                onPressEscalate: function () {
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var sId = oModel.getProperty("/bindProp")
+                    var oPayloadInput = {
+                        InitiateForceTat: true
+                    };
+                    var sPath = "/" + sId + "/Status";
+                    this._showMessageBox1("confirm", "Message8", null, this._sendChangeReqPayload.bind(this, sPath, oPayloadInput));
+                },
+                _sendChangeReqPayload: function (sPath, oPayloadInput) {
+                    var othat = this;
+                    var oView = this.getView();
+                    var oModel = oView.getModel();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    oModelControl.setProperty("/bBusy", true);
+                    oModel.update(sPath, oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/bBusy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/bBusy", false)
+                        }
+                    })
+
+                },
+
             }
 
         );

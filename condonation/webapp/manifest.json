@@ -89,6 +89,9 @@
                     "defaultUpdateMethod": "Put",
                     "useBatch": false
                 }
+            },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
             }
         },
         "services": {
