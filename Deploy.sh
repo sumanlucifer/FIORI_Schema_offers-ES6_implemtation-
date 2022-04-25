@@ -17,7 +17,7 @@ case $1 in
 esac
 
 #Login to CF space
-cf login -a https://api.cf.ap10.hana.ondemand.com -u ankit.pundhir@extentia.com -p Admin@2022 -o "Kansai Nerolac Paints Ltd_knpl-painter-dev" -s "${SPACE}"
+cf login -a https://api.cf.ap10.hana.ondemand.com -u ankit.pundhir@extentia.com -p Admin2022 -o "Kansai Nerolac Paints Ltd_knpl-painter-dev" -s "${SPACE}"
 
 echo "Building Project"
 mbt build -s '/home/user/projects/knpl-influencer-web'
