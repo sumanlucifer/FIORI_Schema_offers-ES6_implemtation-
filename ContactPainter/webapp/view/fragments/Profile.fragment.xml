@@ -10,7 +10,11 @@
                 <Label required="false" text="{i18n>PrimaryMobileNo}" />
                 <VBox>
                     <items>
-                            <Text text="{Mobile}"/>
+                            <HBox width="100%" alignContent="Center"><items>
+                             <Text text="{Mobile}" class="sapUiTinyMarginEnd" />
+                            <core:Icon src="sap-icon://message-information" press="onIconMobileHistoryPress"  visible="{= ${PainterMobileNumberChangeRequest} !== null  }"/>
+                          </items></HBox>
+                           
                            <Link text="{i18n>SendReqForUpdateMobile}" visible="{parts:['PainterMobileNumberChangeRequest', 'oModelControl2>/MobileChangeWorkflow/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprMobChangeReq'}" press="onMobileChangePress" />
                     </items>
                 </VBox>
@@ -65,7 +69,10 @@
                 <Label text="{i18n>FullName}" />
                 <VBox width="100%">
                     <items>
-                         <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                          <HBox width="100%" alignContent="Center"><items>
+                            <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"  class="sapUiTinyMarginEnd"/>
+                            <core:Icon src="sap-icon://message-information" press="onIconNameHistoryPress"/>
+                          </items></HBox>
                           <Link text="{i18n>SendReqForUpdateName}" visible="{parts:['PainterNameChangeRequest', 'oModelControl2>/NameChange/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprNameChangeReq'}" press="onNameChangePress" />
                     </items>
                 </VBox>

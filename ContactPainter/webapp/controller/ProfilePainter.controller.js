@@ -78,6 +78,9 @@ sap.ui.define(
                 formatter: formatter,
                 onInit: function () {
                     var oRouter = this.getOwnerComponent().getRouter(this);
+                    this.oWorkflowModel = new JSONModel();
+                    this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
+                    this.getView().setModel(this.oWorkflowModel, "wfmodel");
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
                             oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -199,11 +202,147 @@ sap.ui.define(
                     this._initFilerForTables();
                     oView.byId("ObjectPageLayout").setSelectedSection(oView.byId("profile"));
                 },
+
                 onNameChangePress: function () {
                     this.getView().getModel("oModelControl2").setProperty("/NameChange/Edit", true);
                 },
                 onMobileChangePress: function () {
                     this.getView().getModel("oModelControl2").setProperty("/MobileChangeWorkflow/Edit", true);
+                },
+                onIconNameHistoryPress: function () {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    if (!this._NameChangeHistoryDialog) {
+                        Fragment.load({
+                            controller: this,
+                            name: oModelControl.getProperty("/resourcePath") + ".view.fragments.DialogHistoryNameChange",
+                            id: oView.getId()
+                        }).then(function (oControl) {
+                            this._NameChangeHistoryDialog = oControl;
+                            oView.addDependent(this._NameChangeHistoryDialog);
+                            this._NameChangeHistoryDialog.open();
+                            this._getWorkflowData("Name");
+
+                        }.bind(this))
+                    } else {
+                        this._NameChangeHistoryDialog.open();
+                    }
+                },
+                onIconMobileHistoryPress: function () {
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    if (!this._MobileChangeHistoryDialog) {
+                        Fragment.load({
+                            controller: this,
+                            name: oModelControl.getProperty("/resourcePath") + ".view.fragments.DialogHistoryMobileChange",
+                            id: oView.getId()
+                        }).then(function (oControl) {
+                            this._MobileChangeHistoryDialog = oControl;
+                            oView.addDependent(this._MobileChangeHistoryDialog);
+                            this._MobileChangeHistoryDialog.open();
+                            this._getWorkflowData("Mobile");
+
+                        }.bind(this))
+                    } else {
+                        this._MobileChangeHistoryDialog.open();
+                    }
+                },
+                
+                _getWorkflowData:function(mParam1){
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl2");
+                    var object = oView.getElementBinding().getBoundContext().getObject();
+                
+                    if(mParam1 === "Name"){
+                        var sId = object["PainterNameChangeRequest"]["__ref"];
+                        var sData = this.getView().getModel().getData("/" + sId);
+                        this._getExecLogData1("123")
+                    }else if(mParam1==="Mobile") {
+                        var sId = object["PainterMobileNumberChangeRequest"]["__ref"];
+                        var sData = this.getView().getModel().getData("/" + sId);
+                        this._getExecLogData1("453")
+                    }
+                },
+                _getExecLogData1: function (mParam1) {
+                    var promise = jQuery.Deferred();
+                    //for Test case scenerios delete as needed
+                    var oView = this.getView();
+                    
+                    var sWorkFlowInstanceId = mParam1;
+                   
+                    var oModelControl = oView.getModel("oModelControl2");
+                    oModelControl.setProperty("/ProfilePageBuzy", true);
+                    console.log(mParam1)
+                    if (sWorkFlowInstanceId) {
+                        var sUrl =
+                            "/comknplpragatiContactPainter/bpmworkflowruntime/v1/workflow-instances/" +
+                            sWorkFlowInstanceId +
+                            "/execution-logs";
+                        this.oWorkflowModel.loadData(sUrl);
+                        oModelControl.setProperty("/ProfilePageBuzy", false);
+                    } else {
+                        this.oWorkflowModel.setData([]);
+                        oModelControl.setProperty("/ProfilePageBuzy", false);
+                    }
+                    promise.resolve();
+                    return promise;
+                },
+                _setWfData: function () {
+                    //TODO: format subject FORCETAT
+                    var oView = this.getView();
+                    
+
+                    var aWfData = this.oWorkflowModel.getData(),
+                        taskSet = new Set([
+                            "WORKFLOW_STARTED",
+                            "WORKFLOW_COMPLETED",
+                            "WORKFLOW_CANCELED",
+                            "USERTASK_CREATED",
+                            "USERTASK_COMPLETED",
+                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
+                        ]);
+
+                        console.log(aWfData);
+                    aWfData = aWfData.filter(ele => taskSet.has(ele.type));
+                    
+                    this.oWorkflowModel.setData(aWfData);
+                   
+                },
+                onBeforeNameChangeHistory: function (oEvent) {
+                    console.log("method trigerred");
+                    var oView = this.getView();
+                    var sComplainCode = oView
+                        .getModel("oModelControl2")
+                        .getProperty("/PainterId");
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    var oFilter = new Filter(
+                        "PainterId",
+                        FilterOperator.EQ,
+                        sComplainCode,
+                    );
+
+                    //oBindingParams.filters.push(oFilter);
+                    oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+
+                },
+                onBeforeMobileChangeHistory: function (oEvent) {
+                    console.log("method trigerred");
+                    var oView = this.getView();
+                    var sComplainCode = oView
+                        .getModel("oModelControl2")
+                        .getProperty("/PainterId");
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    var oFilter = new Filter(
+                        "PainterId",
+                        FilterOperator.EQ,
+                        sComplainCode,
+                    );
+
+                    //oBindingParams.filters.push(oFilter);
+                    oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+
                 },
                 onCancelPressNameChange: function () {
                     var oModel = this.getView().getModel("oModelControl2")
@@ -309,11 +448,11 @@ sap.ui.define(
                         var sPath = "/" + sId + "/Status";
                         this._sendMobileChangeReqPayload(sPath, oPayloadInput);
                     }
-                    
 
-                  
-                   
-                    
+
+
+
+
                 },
                 onEscalateNameChange: function (mParam) {
                     var oView = this.getView();

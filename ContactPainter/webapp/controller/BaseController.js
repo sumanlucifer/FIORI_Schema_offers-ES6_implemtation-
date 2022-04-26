@@ -255,12 +255,25 @@ sap.ui.define([
             var oView = this.getView(),
                 oModelContrl = oView.getModel("oModelControl2");
       
-
+            console.log("Dialog Close");
             if (this._RemarksDialog1) {
               
                 this._RemarksDialog1.close();
                 this._RemarksDialog1.destroy();
                 delete this._RemarksDialog1;
+                return;
+            }
+
+            if (this._NameChangeHistoryDialog) {
+                this._NameChangeHistoryDialog.close();
+                this._NameChangeHistoryDialog.destroy();
+                delete this._NameChangeHistoryDialog;
+                return;
+            }
+            if (this._MobileChangeHistoryDialog) {
+                this._MobileChangeHistoryDialog.close();
+                this._MobileChangeHistoryDialog.destroy();
+                delete this._MobileChangeHistoryDialog;
                 return;
             }
         },
