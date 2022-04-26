@@ -391,10 +391,10 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var sId = oModel.getProperty("/bindProp")
                     var oPayloadInput = {
-                        Status: "APPROVED"
+                        ApprovalStatus: "APPROVED"
                     };
 
-                    var sPath = "/" + sId + "/Status";
+                    var sPath = "/" + sId + "/ApprovalStatus";
                     this._showMessageBox1("confirm", "Message7", null, this._sendChangeReqPayload.bind(this, sPath, oPayloadInput));
                 },
                 onRemarksDialogOpen: function (mParam) {
@@ -428,7 +428,7 @@ sap.ui.define(
                     var sId = oModelControl.getProperty("/bindProp");
                     var sPath = "/" + sId + "/Status";
                     var oPayloadInput = {
-                        Status: "REJECTED",
+                        ApprovalStatus: "REJECTED",
                         Remark: oModelControl.getProperty("/RejectRemark1"),
                     };
                     this.onDialogCloseNew();
@@ -441,25 +441,27 @@ sap.ui.define(
                     var oPayloadInput = {
                         InitiateForceTat: true
                     };
-                    var sPath = "/" + sId + "/Status";
+                    var sPath = "/" + sId + "/ApprovalStatus";
                     this._showMessageBox1("confirm", "Message8", null, this._sendChangeReqPayload.bind(this, sPath, oPayloadInput));
                 },
                 _sendChangeReqPayload: function (sPath, oPayloadInput) {
                     var othat = this;
                     var oView = this.getView();
                     var oModel = oView.getModel();
-                    var oModelControl = oView.getModel("oModelControl2");
-                    oModelControl.setProperty("/bBusy", true);
-                    oModel.update(sPath, oPayloadInput, {
-                        success: function () {
-                            this._showMessageToast("Message6");
-                            this.getView().getModel().refresh(true);
-                            oModelControl.setProperty("/bBusy", false);
-                        }.bind(othat),
-                        error: function () {
-                            oModelControl.setProperty("/bBusy", false)
-                        }
-                    })
+                    var oModelControl = oView.getModel("oModelControl");
+                    //oModelControl.setProperty("/bBusy", true);
+                    
+                    console.log(sPath,oPayloadInput);
+                    // oModel.update(sPath, oPayloadInput, {
+                    //     success: function () {
+                    //         this._showMessageToast("Message6");
+                    //         this.getView().getModel().refresh(true);
+                    //         oModelControl.setProperty("/bBusy", false);
+                    //     }.bind(othat),
+                    //     error: function () {
+                    //         oModelControl.setProperty("/bBusy", false)
+                    //     }
+                    // })
 
                 },
 

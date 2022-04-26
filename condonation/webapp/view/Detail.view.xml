@@ -58,7 +58,8 @@
             <Toolbar>
                 <ToolbarSpacer/>
                    <Button width="7%" text="{i18n>Approve}" type="Accept" press="onPressApprove" visible="{parts:['ApprovalStatus','LoginInfo>/UserTypeId'], formatter:'.formatter.fmtBtnApprove'}" />
-                 <Button width="7%" text="{i18n>Reject}" type="Reject"  press="onPressReject" visible="{parts:['ApprovalStatus','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtBtnApprove'}" />
+                       
+                 <Button width="7%" text="{i18n>Reject}" type="Reject"  press="onRemarksDialogOpen" visible="{parts:['ApprovalStatus','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtBtnApprove'}" /> 
                    <Button width="7%" text="{i18n>Escalate}" type="Reject"  press="onPressEscalate" visible="{parts:['ApprovalStatus','AssigneUserType','LoginInfo>/UserTypeId','InitiateForceTat'], formatter:'.formatter.fmtEscalateBtn'}" /> 
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="onNavBack"/>
             </Toolbar>
