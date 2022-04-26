@@ -324,7 +324,7 @@ sap.ui.define(
                         sComplainCode,
                     );
 
-                    //oBindingParams.filters.push(oFilter);
+                    oBindingParams.filters.push(oFilter);
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
 
                 },
@@ -342,7 +342,7 @@ sap.ui.define(
                         sComplainCode,
                     );
 
-                    //oBindingParams.filters.push(oFilter);
+                    oBindingParams.filters.push(oFilter);
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
 
                 },
