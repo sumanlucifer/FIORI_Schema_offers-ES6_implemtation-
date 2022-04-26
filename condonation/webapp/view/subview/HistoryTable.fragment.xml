@@ -23,7 +23,7 @@
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintCode", "leadingProperty": "ComplaintCode", "columnIndex": 0 ,"sortProperty": "ComplaintCode","filterProperty": "ComplaintCode"}'/>
                     </customData>
-                    <Text text="{i18n>ComplaintId}"/>
+                    <Text text="{i18n>CondonationId}"/>
                 </Column>
                  <Column hAlign="Begin">
                     <customData>
@@ -66,7 +66,7 @@
                     </HBox>
                         	
                        <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
-                         <Text text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"/>
+                         <Text text="{path:'ComplaintStatus',formatter:'.formatter.fmtStatus'}"/>
                            <Text text="{Remark}"/>
                             <Text text="{UpdatedByName}"/>
 

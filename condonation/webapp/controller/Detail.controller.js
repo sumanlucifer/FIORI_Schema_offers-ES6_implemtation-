@@ -8,7 +8,7 @@ sap.ui.define(
         "../model/formatter",
         "sap/ui/model/Filter",
         "sap/ui/model/FilterOperator",
-
+        "sap/ui/model/Sorter",
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -21,7 +21,8 @@ sap.ui.define(
         Fragment,
         formatter,
         Filter,
-        FilterOperator
+        FilterOperator,
+        Sorter
     ) {
         "use strict";
 
