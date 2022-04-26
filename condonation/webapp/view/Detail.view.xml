@@ -43,15 +43,25 @@
             </f:DynamicPageHeader>
         </f:header> -->
         <f:content>
-            <IconTabBar expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <IconTabBar expandable="false" expanded="true" id="iconTabBar"  class="sapUiResponsiveContentPadding"  select="onIcnTabChange" selectedKey="{oModelControl>/IcnTabKey}" >
                 <items>
-                    <IconTabFilter  text="{i18n>Overview}" >
+                    <IconTabFilter  text="{i18n>Overview}"  key="0">
                         <VBox id="oVbxSmtTbl" width="100%">
                           </VBox>
                         </IconTabFilter>
                         
+                    
+                        <IconTabFilter  text="{i18n>History}" key="1" >
+                                <core:Fragment fragmentName="com.knpl.pragati.condonation.view.subview.HistoryTable" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter  text="Execution Log" key="2" >
+                            <VBox height="100%" width="100%">
+                                    <core:Fragment fragmentName="com.knpl.pragati.condonation.view.subview.ExecutionLog" type="XML"/>
+                            </VBox>
+                        </IconTabFilter>
                     </items>
                 </IconTabBar>
+                 
          
         </f:content>
         <f:footer>

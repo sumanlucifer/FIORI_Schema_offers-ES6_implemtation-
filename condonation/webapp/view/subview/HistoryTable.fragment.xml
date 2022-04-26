@@ -1,0 +1,79 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                            id="smartHistory"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebindHistoryTable"                    
+                            entitySet="PainterComplainsHistorySet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="HistoryPersistenceKey"
+                            requestAtLeastFields="ComplaintId"
+                             initialNoDataText="{i18n>tableNoDataText}"
+                            ignoreFromPersonalisation="Id,SkuCode,TokenCode,RewardPoints,RewardGiftId,ResolutionOthers,ResolutionId,PainterId,IsArchived,IsSelected,CreatedAt,CreatedBy,ComplaintTypeId,ComplaintSubtypeId,AssigneUserType,EscalatedAt,InitiateForceTat,EscalationType,InitiateForceTat,UpdatedBy,ComplaintDescription">
+
+        <Table growing="true" growingThreshold="15" growingScrollToLoad="false">
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintCode", "leadingProperty": "ComplaintCode", "columnIndex": 0 ,"sortProperty": "ComplaintCode","filterProperty": "ComplaintCode"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintId}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedAt", "leadingProperty": "UpdatedAt", "columnIndex": 1 ,"sortProperty": "UpdatedAt","filterProperty": "UpdatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>UpdatedAt}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintStatus", "leadingProperty": "ComplaintStatus", "columnIndex": 2 ,"sortProperty": "ComplaintStatus","filterProperty": "ComplaintStatus"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintStatus}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Remark", "leadingProperty": "Remark", "columnIndex": 3 ,"sortProperty": "Remark","filterProperty": "Remark"}'/>
+                    </customData>
+                    <Text text="{i18n>Remark}"/>
+                </Column>
+                  <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedByName", "leadingProperty": "UpdatedByName", "columnIndex": 4 ,"sortProperty": "UpdatedByName","filterProperty": "UpdatedByName"}'/>
+                    </customData>
+                    <Text text="{i18n>UpdatedBy}"/>
+                </Column>
+               
+                
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                    <HBox>
+                        <!-- <Text text="{oModelControl>/ComplainCode}"/> -->
+                        <ObjectAttribute
+		
+			text="{ComplaintCode}"
+				active="{= ${oModelControl>/ComplainCode}!== ${ComplaintCode} }"
+				press="onPressHistoryCompliantCode" />
+                    </HBox>
+                        	
+                       <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                         <Text text="{path:'ComplaintStatus',formatter:'.fmtStatus'}"/>
+                           <Text text="{Remark}"/>
+                            <Text text="{UpdatedByName}"/>
+
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

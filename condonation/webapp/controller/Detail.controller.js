@@ -5,7 +5,9 @@ sap.ui.define(
         "sap/m/MessageBox",
         "sap/m/MessageToast",
         "sap/ui/core/Fragment",
-        "../model/formatter"
+        "../model/formatter",
+        "sap/ui/model/Filter",
+        "sap/ui/model/FilterOperator",
 
     ],
     /**
@@ -17,7 +19,9 @@ sap.ui.define(
         MessageBox,
         MessageToast,
         Fragment,
-        formatter
+        formatter,
+        Filter,
+        FilterOperator
     ) {
         "use strict";
 
@@ -25,6 +29,9 @@ sap.ui.define(
             "com.knpl.pragati.condonation.controller.Detail", {
                 formatter: formatter,
                 onInit: function () {
+                    this.oWorkflowModel = new JSONModel();
+                    this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
+                    this.getView().setModel(this.oWorkflowModel, "wfmodel");
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.getRoute("Detail").attachMatched(this._onRouteMatched, this);
                 },
@@ -50,7 +57,7 @@ sap.ui.define(
                         ComplainId: oProp,
                         bBusy: false,
                         RejectRemark1: "",
-                        resourcePath:"com.knpl.pragati.condonation"
+                        resourcePath: "com.knpl.pragati.condonation"
                     };
                     var oDataModel;
                     var oModel = new JSONModel(oData);
@@ -189,6 +196,75 @@ sap.ui.define(
                         oModelView.getProperty("/ComplaintCode")
                     );
                     //oView.byId("smartHistory").rebindTable();
+                },
+                onIcnTabChange: function (oEvent) {
+                    var oView = this.getView();
+                    var sKey = oEvent.getSource().getSelectedKey();
+                    console.log(sKey);
+                    //oHistoryTable.rebindTable();
+                    if (sKey === "0") {
+
+                    } else if (sKey === "1") {
+                        var oTable = oView.byId("smartHistory");
+                        oTable.rebindTable();
+                    } else if (sKey === "2") {
+                        this._getExecLogData()
+                    }
+                },
+                onBeforeRebindHistoryTable: function (oEvent) {
+                    var oView = this.getView();
+                    var sComplainCode = oView
+                        .getModel("oModelControl")
+                        .getProperty("/ComplainId");
+
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    var oFilter = new Filter(
+                        "ComplaintCode",
+                        FilterOperator.EQ,
+                        sComplainCode,
+                    );
+
+                    oBindingParams.filters.push(oFilter);
+                    oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+                },
+                _getExecLogData: function () {
+                    var promise = jQuery.Deferred();
+                    //for Test case scenerios delete as needed
+                    var oView = this.getView();
+                    var oData = oView.getModel("oModelView").getData();
+                    var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
+                    var oModelControl = oView.getModel("oModelControl");
+                    oModelControl.setProperty("/bBusy", true)
+                    if (sWorkFlowInstanceId) {
+                        var sUrl =
+                            "/comknplpragaticondonation/bpmworkflowruntime/v1/workflow-instances/" +
+                            sWorkFlowInstanceId +
+                            "/execution-logs";
+                        this.oWorkflowModel.loadData(sUrl);
+                    } else {
+                        this.oWorkflowModel.setData([]);
+                        oModelControl.setProperty("/bBusy", false);
+                    }
+                    promise.resolve();
+                    return promise;
+                },
+                _setWfData: function () {
+                    //TODO: format subject FORCETAT
+                    var oView = this.getView();
+                    var oModelControl = oView.getModel("oModelControl");
+                    
+                    var aWfData = this.oWorkflowModel.getData(),
+                        taskSet = new Set([
+                            "WORKFLOW_STARTED",
+                            "WORKFLOW_COMPLETED",
+                            "WORKFLOW_CANCELED",
+                            "USERTASK_CREATED",
+                            "USERTASK_COMPLETED",
+                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
+                        ]);
+                    aWfData = aWfData.filter(ele => taskSet.has(ele.type));
+                    this.oWorkflowModel.setData(aWfData);
+                    oModelControl.setProperty("/bBusy",false)
                 },
                 _CheckImage: function (oProp) {
                     var oView = this.getView();
@@ -412,12 +488,12 @@ sap.ui.define(
                         }).then(function (oDialog) {
                             this._RemarksDialog1 = oDialog;
                             oView.addDependent(this._RemarksDialog1);
-                            
+
                             this._RemarksDialog1.open();
 
                         }.bind(this))
                     } else {
-                      
+
                         this._RemarksDialog1.open();
                     }
                 },
@@ -449,19 +525,19 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl");
-                    //oModelControl.setProperty("/bBusy", true);
-                    
-                    console.log(sPath,oPayloadInput);
-                    // oModel.update(sPath, oPayloadInput, {
-                    //     success: function () {
-                    //         this._showMessageToast("Message6");
-                    //         this.getView().getModel().refresh(true);
-                    //         oModelControl.setProperty("/bBusy", false);
-                    //     }.bind(othat),
-                    //     error: function () {
-                    //         oModelControl.setProperty("/bBusy", false)
-                    //     }
-                    // })
+                    oModelControl.setProperty("/bBusy", true);
+
+                    console.log(sPath, oPayloadInput);
+                    oModel.update(sPath, oPayloadInput, {
+                        success: function () {
+                            this._showMessageToast("Message6");
+                            this.getView().getModel().refresh(true);
+                            oModelControl.setProperty("/bBusy", false);
+                        }.bind(othat),
+                        error: function () {
+                            oModelControl.setProperty("/bBusy", false)
+                        }
+                    })
 
                 },
 
