@@ -255,7 +255,7 @@ sap.ui.define(
                     //TODO: format subject FORCETAT
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
-                    
+
                     var aWfData = this.oWorkflowModel.getData(),
                         taskSet = new Set([
                             "WORKFLOW_STARTED",
@@ -265,9 +265,12 @@ sap.ui.define(
                             "USERTASK_COMPLETED",
                             "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
                         ]);
+
+                        console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
+                    
                     this.oWorkflowModel.setData(aWfData);
-                    oModelControl.setProperty("/bBusy",false)
+                    oModelControl.setProperty("/bBusy", false)
                 },
                 _CheckImage: function (oProp) {
                     var oView = this.getView();
