@@ -80,7 +80,7 @@ sap.ui.define(
                     var oRouter = this.getOwnerComponent().getRouter(this);
                     this.oWorkflowModel = new JSONModel();
                     this.oWorkflowModel.attachRequestCompleted(this._setWfData, this);
-                    this.getView().setModel(this.oWorkflowModel, "wfmodel");
+                    this.getView().setModel(this.oWorkflowModel, "wfmodel1");
                     sap.ui.getCore().attachValidationError(function (oEvent) {
                         if (oEvent.getParameter("element").getRequired()) {
                             oEvent.getParameter("element").setValueState(ValueState.Error);
@@ -260,7 +260,8 @@ sap.ui.define(
                     }else if(mParam1==="Mobile") {
                         var sId = object["PainterMobileNumberChangeRequest"]["__ref"];
                         var sData = this.getView().getModel().getData("/" + sId);
-                        this._getExecLogData1("453")
+                        console.log(sData["WorkflowInstanceId"]);
+                        this._getExecLogData1(sData["WorkflowInstanceId"])
                     }
                 },
                 _getExecLogData1: function (mParam1) {
@@ -278,6 +279,7 @@ sap.ui.define(
                             "/comknplpragatiContactPainter/bpmworkflowruntime/v1/workflow-instances/" +
                             sWorkFlowInstanceId +
                             "/execution-logs";
+                            console.log(sUrl)
                         this.oWorkflowModel.loadData(sUrl);
                         oModelControl.setProperty("/ProfilePageBuzy", false);
                     } else {
@@ -477,7 +479,8 @@ sap.ui.define(
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterMobileNumberChangeRequest"]["__ref"]
                     var sPath = "/" + sId + "/Status";
-                    this._sendMobileChangeReqPayload("confirm", "Message8", null, this._sendNameChangeReqPayload.bind(this, sPath, oPayloadInput));
+                    
+                    this._showMessageBox1("confirm", "Message8", null, this._sendMobileChangeReqPayload.bind(this, sPath, oPayloadInput));
 
                 },
                 _sendNameChangeReqPayload: function (sPath, oPayloadInput) {
@@ -504,6 +507,7 @@ sap.ui.define(
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
                     oModelControl.setProperty("/ProfilePageBuzy", true);
+                    console.log(sPath,oPayloadInput)
                     oModel.update(sPath, oPayloadInput, {
                         success: function () {
                             this._showMessageToast("Message6");

@@ -103,11 +103,11 @@
 			content="{wfmodel1>/}">
 		<commons:content>
            <!-- formatter required datetime, title icon -->
-			<commons:TimelineItem	dateTime="{ path :'wfmodel>timestamp', formatter :'.formatter.ExecutionLogDateTime' }"
-					title="{ parts :['wfmodel>subject' , 'wfmodel>type' ], formatter : '.formatter.ExecutionLogTitle'}"
-					text="{ path : 'wfmodel>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
-                    filterValue="{wfmodel>type}"
-					icon="{path : 'wfmodel>type' , formatter : '.formatter.formatLogIcon'}">
+			<commons:TimelineItem	dateTime="{ path :'wfmodel1>timestamp', formatter :'.formatter.ExecutionLogDateTime' }"
+					title="{ parts :['wfmodel1>subject' , 'wfmodel1>type' ], formatter : '.formatter.ExecutionLogTitle'}"
+					text="{ path : 'wfmodel1>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
+                    filterValue="{wfmodel1>type}"
+					icon="{path : 'wfmodel1>type' , formatter : '.formatter.formatLogIcon'}">
 			</commons:TimelineItem>
 		</commons:content>
 	</commons:Timeline>

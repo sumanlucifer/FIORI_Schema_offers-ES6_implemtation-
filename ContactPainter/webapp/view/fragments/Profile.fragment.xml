@@ -141,7 +141,7 @@
                 <Label text="{i18n>Depot}" />
                 <Text text="{Depot/Depot}" />
                 <Label text="{i18n>LinkPrimaryDealer}" />
-                <Text id="profPDlr" text="{PrimaryDealerDetails/DealerName} - {PrimaryDealerDetails/Id}" />
+                <Text text="{PrimaryDealerDetails/DealerName} - {PrimaryDealerDetails/Id}" />
                 <Label text="{i18n>LinkSecondryDealer}" />
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
                 <!-- <Label text="{i18n>AddressLine2}" />
