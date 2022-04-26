@@ -14,13 +14,6 @@
       "cacheControl": "no-cache"
     },
     {
-      "source": "^(.*)$",
-      "target": "$1",
-      "service": "html5-apps-repo-rt",
-      "authenticationType": "xsuaa",
-      "cacheControl": "no-cache"
-    },
-    {
 		"source": "^/bpmworkflowruntime/(.*)$",
 		"target": "/$1",
 		"service": "com.sap.bpm.workflow",
@@ -28,5 +21,13 @@
         "authenticationType": "xsuaa",
         "cacheControl" : "no-cache"
 	},
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa",
+      "cacheControl": "no-cache"
+    }
+   
   ]
 }
