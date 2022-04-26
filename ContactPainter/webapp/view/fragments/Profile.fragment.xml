@@ -71,7 +71,7 @@
                     <items>
                           <HBox width="100%" alignContent="Center"><items>
                             <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"  class="sapUiTinyMarginEnd"/>
-                            <core:Icon src="sap-icon://message-information" press="onIconNameHistoryPress"/>
+                            <core:Icon src="sap-icon://message-information" press="onIconNameHistoryPress" visible="{= ${PainterNameChangeRequest} !== null  }"/>
                           </items></HBox>
                           <Link text="{i18n>SendReqForUpdateName}" visible="{parts:['PainterNameChangeRequest', 'oModelControl2>/NameChange/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprNameChangeReq'}" press="onNameChangePress" />
                     </items>
