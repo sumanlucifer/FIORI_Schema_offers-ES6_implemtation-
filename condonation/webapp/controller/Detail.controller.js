@@ -243,6 +243,7 @@ sap.ui.define(
                             sWorkFlowInstanceId +
                             "/execution-logs";
                         this.oWorkflowModel.loadData(sUrl);
+                        oModelControl.setProperty("/bBusy", false);
                     } else {
                         this.oWorkflowModel.setData([]);
                         oModelControl.setProperty("/bBusy", false);
