@@ -116,7 +116,7 @@ sap.ui.define(
                     oView.getModel().read("/" + oProp, {
                         urlParameters: {
                             $expand: exPand,
-                            $select: 'PainterComplainProducts'
+                            //$select: 'PainterComplainProducts,'
                         },
                         success: function (data) {
                             var oViewModel = new JSONModel(data);
@@ -234,6 +234,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oData = oView.getModel("oModelView").getData();
                     var sWorkFlowInstanceId = oData["WorkflowInstanceId"];
+                    console.log(oData);
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/bBusy", true)
                     if (sWorkFlowInstanceId) {
@@ -503,7 +504,7 @@ sap.ui.define(
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl");
                     var sId = oModelControl.getProperty("/bindProp");
-                    var sPath = "/" + sId + "/Status";
+                    var sPath = "/" + sId + "/ApprovalStatus";
                     var oPayloadInput = {
                         ApprovalStatus: "REJECTED",
                         Remark: oModelControl.getProperty("/RejectRemark1"),
