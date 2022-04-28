@@ -214,9 +214,8 @@ sap.ui.define(
                 },
                 onBeforeRebindHistoryTable: function (oEvent) {
                     var oView = this.getView();
-                    var sComplainCode = oView
-                        .getModel("oModelControl")
-                        .getProperty("/ComplainId");
+                    var oViewData = oView.getElementBinding().getBoundContext().getObject();
+                    var sComplainCode = oViewData["ComplaintCode"]
 
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     var oFilter = new Filter(
