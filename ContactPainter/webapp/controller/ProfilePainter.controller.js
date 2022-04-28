@@ -318,6 +318,7 @@ sap.ui.define(
                         .getProperty("/PainterId");
 
                     var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "UpdatedByDetails";
                     var oFilter = new Filter(
                         "PainterId",
                         FilterOperator.EQ,
@@ -336,6 +337,7 @@ sap.ui.define(
                         .getProperty("/PainterId");
 
                     var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "UpdatedByDetails";
                     var oFilter = new Filter(
                         "PainterId",
                         FilterOperator.EQ,
