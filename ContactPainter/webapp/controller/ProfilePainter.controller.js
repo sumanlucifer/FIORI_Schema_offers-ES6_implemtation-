@@ -366,7 +366,7 @@ sap.ui.define(
                     let pattern1 = /^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$/g;
                     let result1 = pattern1.test(sName);
                     if(sName.length < 0 || result1 !== true ){
-                        this._showMessageToast("Message10")
+                        this._showMessageToast("Message9")
                         return false;
                     }
                     var oPayloadInput = {
@@ -533,6 +533,13 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
+                    var sMobile = oModelControl.getProperty("/MobileChangeWorkflow/RequestedField");
+                    let pattern1 = /^[0-9]{10}$/g;
+                    let result1 = pattern1.test(sMobile);
+                    if(result1 !== true ){
+                        this._showMessageToast("Message10");
+                        return false;
+                    }
                     var oPayloadInput = {
                         PainterId: parseInt(oModelControl.getProperty("/PainterId")),
                         RequestedMobileNumber: oModelControl.getProperty("/MobileChangeWorkflow/RequestedField"),
