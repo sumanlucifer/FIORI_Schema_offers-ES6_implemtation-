@@ -48,8 +48,7 @@
                 <VBox items="{path:'PainterContact/',templateShareable: false}">
                     <Text text="{Mobile}" />
                 </VBox>
-                <!-- <Label text="{i18n>IsAppInstalled}" />
-                <Text text="{path:'IsAppInstalled',formatter:'.formatter.fmtCheckNull'}"/> -->
+
                 <Label text="{i18n>PainterType}" />
                 <Text text="{PainterType/PainterType}" />
                 <Label text="{i18n>AgeGroup}" />
@@ -151,9 +150,7 @@
                 <Text text="{PrimaryDealerDetails/DealerName} - {PrimaryDealerDetails/Id}" />
                 <Label text="{i18n>LinkSecondryDealer}" />
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
-                <!-- <Label text="{i18n>AddressLine2}" />
-                <Text text="{PainterAddress/AddressLine2}"/>-->
-
+              
                 <core:Title text="{i18n>SecurityQuestions}" />
                 <Label text="{i18n>Question}" />
                 <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }" />
