@@ -247,17 +247,17 @@ sap.ui.define(
                         this._MobileChangeHistoryDialog.open();
                     }
                 },
-                
-                _getWorkflowData:function(mParam1){
+
+                _getWorkflowData: function (mParam1) {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl2");
                     var object = oView.getElementBinding().getBoundContext().getObject();
-                
-                    if(mParam1 === "Name"){
+
+                    if (mParam1 === "Name") {
                         var sId = object["PainterNameChangeRequest"]["__ref"];
                         var sData = this.getView().getModel().getData("/" + sId);
                         this._getExecLogData1("123")
-                    }else if(mParam1==="Mobile") {
+                    } else if (mParam1 === "Mobile") {
                         var sId = object["PainterMobileNumberChangeRequest"]["__ref"];
                         var sData = this.getView().getModel().getData("/" + sId);
                         console.log(sData["WorkflowInstanceId"]);
@@ -268,9 +268,9 @@ sap.ui.define(
                     var promise = jQuery.Deferred();
                     //for Test case scenerios delete as needed
                     var oView = this.getView();
-                    
+
                     var sWorkFlowInstanceId = mParam1;
-                   
+
                     var oModelControl = oView.getModel("oModelControl2");
                     oModelControl.setProperty("/ProfilePageBuzy", true);
                     console.log(mParam1)
@@ -279,7 +279,7 @@ sap.ui.define(
                             "/comknplpragatiContactPainter/bpmworkflowruntime/v1/workflow-instances/" +
                             sWorkFlowInstanceId +
                             "/execution-logs";
-                            console.log(sUrl)
+                        console.log(sUrl)
                         this.oWorkflowModel.loadData(sUrl);
                         oModelControl.setProperty("/ProfilePageBuzy", false);
                     } else {
@@ -292,7 +292,7 @@ sap.ui.define(
                 _setWfData: function () {
                     //TODO: format subject FORCETAT
                     var oView = this.getView();
-                    
+
 
                     var aWfData = this.oWorkflowModel.getData(),
                         taskSet = new Set([
@@ -304,11 +304,11 @@ sap.ui.define(
                             "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
                         ]);
 
-                        console.log(aWfData);
+                    console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
-                    
+
                     this.oWorkflowModel.setData(aWfData);
-                   
+
                 },
                 onBeforeNameChangeHistory: function (oEvent) {
                     console.log("method trigerred");
@@ -362,6 +362,13 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
+                    var sName = oModelControl.getProperty("/NameChange/RequestedName");
+                    let pattern1 = /^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$/g;
+                    let result1 = pattern1.test(sName);
+                    if(sName.length < 0 || result1 !== true ){
+                        this._showMessageToast("Message10")
+                        return false;
+                    }
                     var oPayloadInput = {
                         PainterId: parseInt(oModelControl.getProperty("/PainterId")),
                         RequestedName: oModelControl.getProperty("/NameChange/RequestedName"),
@@ -481,7 +488,7 @@ sap.ui.define(
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterMobileNumberChangeRequest"]["__ref"]
                     var sPath = "/" + sId + "/Status";
-                    
+
                     this._showMessageBox1("confirm", "Message8", null, this._sendMobileChangeReqPayload.bind(this, sPath, oPayloadInput));
 
                 },
@@ -509,7 +516,7 @@ sap.ui.define(
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
                     oModelControl.setProperty("/ProfilePageBuzy", true);
-                    console.log(sPath,oPayloadInput)
+                    console.log(sPath, oPayloadInput)
                     oModel.update(sPath, oPayloadInput, {
                         success: function () {
                             this._showMessageToast("Message6");
