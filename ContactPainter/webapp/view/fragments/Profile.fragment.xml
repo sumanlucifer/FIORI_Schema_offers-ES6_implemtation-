@@ -100,7 +100,7 @@
                             <ObjectAttribute title="{i18n>Remark}" text="{PainterNameChangeRequest/Remark}" visible="{= ${PainterNameChangeRequest/Status}==='REJECTED'}" ></ObjectAttribute>
                           <HBox>
                             <Button text="{i18n>Approve}" class="sapUiTinyMarginEnd" type="Accept" press="onApproveNameChange('APPROVED')" visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}" />
-                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Reject" press="onRemarksDialogOpen"  visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}"  />
+                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Reject" press="onRemarksDialogOpen('NAME')"  visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}"  />
                               <Button text="{i18n>Escalate}" type="Critical" press="onEscalateNameChange" visible="{parts:['PainterNameChangeRequest/Status','PainterNameChangeRequest/AssigneUserType','LoginInfo>/UserTypeId','PainterNameChangeRequest/InitiateForceTat'],formatter:'.formatter.fmtNameEscalate'}" />
                           </HBox>
                     </items>

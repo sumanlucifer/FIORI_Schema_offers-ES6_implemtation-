@@ -443,6 +443,11 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
+                    var sRemark = oModelControl.getProperty("/RejectRemark1")
+                    if(sRemark.length <=0){
+                        this._showMessageToast("Message11");
+                        return false;
+                    }
                     var oPayloadInput = {
                         Status: "REJECTED",
                         Remark: oModelControl.getProperty("/RejectRemark1"),
@@ -450,11 +455,11 @@ sap.ui.define(
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sType = this._RemarksDialog1.data()["Type"];
                     this.onDialogCloseNew();
-                    if (sType === "Name") {
+                    if (sType === "NAME") {
                         var sId = object["PainterNameChangeRequest"]["__ref"];
                         var sPath = "/" + sId + "/Status";
                         this._sendNameChangeReqPayload(sPath, oPayloadInput);
-                    } else if (sType === "Mobile") {
+                    } else if (sType === "MOBILE") {
                         var sId = object["PainterMobileNumberChangeRequest"]["__ref"];
                         var sPath = "/" + sId + "/Status";
                         this._sendMobileChangeReqPayload(sPath, oPayloadInput);
