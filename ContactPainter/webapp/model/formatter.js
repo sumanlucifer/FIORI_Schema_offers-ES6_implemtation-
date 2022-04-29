@@ -436,15 +436,47 @@ sap.ui.define([
             //   return t.getText("EXECUTION_LOG_TYPE_" + e, [r])
             //   if("FORCETAT" == sSubject) return "Manual Escalation";
             switch (sSubject) {
-                case "FORCETAT": return "Manual Escalation";
-                case "PENDING_FOR_APPROVAL": return "Pending for Approval"
+                case "FORCETAT":
+                    return "Manual Escalation";
+                case "APPROVED":
+                    return "Name Change request Approved";
+                case "REJECTED":
+                    return "Name Change request Rejected";
             }
             switch (sType) {
-                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT": return "Auto Escalation";
-                case "WORKFLOW_STARTED": return "Workflow Request raised";
-                case "WORKFLOW_COMPLETED": return "Workflow Request closed";
-                case "WORKFLOW_CANCELED": return "Workflow Request Cancelled";
-                case "USERTASK_COMPLETED": return "Workflow Request Completed";
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
+                    return "Auto Escalation";
+                case "WORKFLOW_STARTED":
+                    return "Name Change request Sent for Approval.";
+                case "WORKFLOW_COMPLETED":
+                    return "Name Change request Approval Process Completed.";
+                case "WORKFLOW_CANCELED":
+                    return "Name Change request Workflow Cancelled.";
+                case "USERTASK_COMPLETED":
+                    return "Name Change request Approved.";
+            }
+            return sSubject;
+        },
+        ExecutionLogTitle2: function (sSubject, sType) {
+            switch (sSubject) {
+                case "FORCETAT":
+                    return "Manual Escalation";
+                case "APPROVED":
+                    return "Mobile No. Change request Approved";
+                case "REJECTED":
+                    return "Mobile No. Change request Rejected";
+            }
+            switch (sType) {
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
+                    return "Auto Escalation";
+                case "WORKFLOW_STARTED":
+                    return "Mobile No. Change request Sent for Approval.";
+                case "WORKFLOW_COMPLETED":
+                    return "Mobile No. Change request Approval Process Completed.";
+                case "WORKFLOW_CANCELED":
+                    return "Mobile No. Change request Workflow Cancelled.";
+                case "USERTASK_COMPLETED":
+                    return "Mobile No. Change request Approved.";
             }
             return sSubject;
         },

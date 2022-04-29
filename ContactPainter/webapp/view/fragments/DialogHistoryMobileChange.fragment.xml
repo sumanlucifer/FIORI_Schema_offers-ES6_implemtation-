@@ -105,7 +105,7 @@
 		<commons:content>
            <!-- formatter required datetime, title icon -->
 			<commons:TimelineItem	dateTime="{ path :'wfmodel1>timestamp', formatter :'.formatter.ExecutionLogDateTime' }"
-					title="{ parts :['wfmodel1>subject' , 'wfmodel1>type' ], formatter : '.formatter.ExecutionLogTitle'}"
+					title="{ parts :['wfmodel1>subject' , 'wfmodel1>type' ], formatter : '.formatter.ExecutionLogTitle2'}"
 					text="{ path : 'wfmodel1>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
                     filterValue="{wfmodel1>type}"
 					icon="{path : 'wfmodel1>type' , formatter : '.formatter.formatLogIcon'}">
