@@ -300,7 +300,7 @@ sap.ui.define([
                 "nppaocor021@nerolac.com",
                 "nppaocor042@nerolac.com",
                 "azhar.sayyed@extentia.com",
-                "Sachin.Korpad@extentia.com"
+                "sachin.korpad@extentia.com"
               ]
             if (mParam1) {
                 var sEmail = mParam1.toLowerCase().trim();
