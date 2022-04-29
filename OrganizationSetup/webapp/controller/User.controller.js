@@ -14,13 +14,15 @@ sap.ui.define([
         "sap/m/DialogType",
         "sap/m/Button",
         "sap/m/ButtonType",
-        "sap/m/Text"
+        "sap/m/Text",
+        "sap/ui/model/Filter",
+        "sap/ui/model/FilterOperator",
     ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, History, UIComponent, MessageToast, BindingMode, Message, library, Fragment,
-        ValueState, Validator, JSONModel, Dialog, DialogType, Button, ButtonType, Text) {
+        ValueState, Validator, JSONModel, Dialog, DialogType, Button, ButtonType, Text,Filter,FilterOperator) {
         "use strict";
 
         // shortcut for sap.ui.core.ValueState
@@ -67,6 +69,7 @@ sap.ui.define([
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("EditUser").attachPatternMatched(this._onObjectMatched, this);
+                oRouter.getRoute("AddUser").attachPatternMatched(this._onObjectMatched2, this);
 
 
 
@@ -93,8 +96,98 @@ sap.ui.define([
                         },
                     },
                 });
+                var c1, c2, c3, c4, c5, c6;
+                var othat = this;
+                c1 = othat._CreateControlModel(userSet);
+                c1.then(function () {
+                    c2 = othat._setInitViewModel();
+                    c2.then(function (oPayLoad) {
+                        c3 = othat._setEditMultiComboData(oPayLoad)
+                    })
+                })
                 this.onUserTypeFilter(userSet);
 
+
+            },
+            _onObjectMatched2: function () {
+                var c1, c2, c3, c4, c5, c6;
+                var othat = this;
+                var oData = {
+                    AdminZone: [],
+                    AdminDivision: []
+                }
+                var oViewModel = new JSONModel(oData)
+                this.getView().setModel(oViewModel, "oModelView");
+                c1 = othat._CreateControlModel(null);
+
+
+            },
+            _setEditMultiComboData: function (oPayLoad) {
+                var promise = $.Deferred();
+                // set the data for pin code poper
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl");
+                var aArra1 = [];
+                if (oPayLoad["AdminZone"]["results"].length > 0) {
+                    for (var x of oPayLoad["AdminZone"]["results"]) {
+                        aArra1.push(x["ZoneId"]);
+                    }
+                }
+                oModelControl.setProperty("/MultiCombo/Zone", aArra1);
+                var aArra2 = [];
+                if (oPayLoad["AdminDivision"]["results"].length > 0) {
+                    for (var x of oPayLoad["AdminDivision"]["results"]) {
+                        aArra2.push(x["DivisionId"]);
+                    }
+                }
+                oModelControl.setProperty("/MultiCombo/Division", aArra2);
+                console.log(oModelControl)
+                promise.resolve(oPayLoad);
+                return promise;
+            },
+
+            _setInitViewModel: function () {
+                var promise = jQuery.Deferred();
+                var oView = this.getView();
+                var othat = this;
+
+                var oModelControl = this.getView().getModel("oModelControl")
+                var oProp = oModelControl.getProperty("/bindProp");
+                var exPand = "AdminZone,AdminDivision";
+                return new Promise((resolve, reject) => {
+                    oView.getModel("data").read("/" + oProp, {
+                        urlParameters: {
+                            $expand: exPand,
+                        },
+                        success: function (data) {
+
+                            var oModel = new JSONModel(data);
+
+
+                            oView.setModel(oModel, "oModelView");
+
+
+                            resolve(data);
+                        },
+                        error: function () {},
+                    });
+                });
+
+            },
+            _CreateControlModel: function (userSet) {
+                var promise = $.Deferred();
+                var oView = this.getView();
+                var oData = {
+                    bindProp: userSet !== null ? window.decodeURIComponent(userSet) : null,
+                    MultiCombo: {
+                        Zone: [],
+                        Division: []
+                    }
+                }
+                var oModel = new JSONModel(oData);
+                oView.setModel(oModel, "oModelControl");
+                promise.resolve();
+                return promise;
             },
             onUserTypeFilter: function (userSet) {
                 var oModel = this.getView().getModel("data");
@@ -117,7 +210,8 @@ sap.ui.define([
                         }
                     },
                     error: function (oError) {
-                        /* do something */ }
+                        /* do something */
+                    }
                 });
 
             },
@@ -201,11 +295,25 @@ sap.ui.define([
 
                 this.onDialogPress();
             },
+            onChangeZone:function(oEvent){
+                var oView = this.getView();
+                var oDivision = oView.byId("division");
+                var sKeys = oEvent.getSource().getSelectedKeys();
+                var aDivFilter = [];
+                for (var y of sKeys) {
+                    aDivFilter.push(new Filter("Zone", FilterOperator.EQ, y));
+                }
+                if(aDivFilter.length>0){
+                    oDivision.getBinding("items").filter(aDivFilter);
+                    this.getView().getModel("oModelControl").setProperty("/MultiCombo/Division")
+                }
+              
+            },
 
             add: function () {
 
 
-
+                var oView = this.getView();
                 var name = this.getView().byId("name").getValue();
                 var email = this.getView().byId("email").getValue();
 
@@ -213,7 +321,16 @@ sap.ui.define([
                 var countrycode = this.getView().byId("countrycode").getValue();
                 var role = this.getView().byId("role").getSelectedKey();
                 var userType = this.getView().byId("iduserType").getSelectedKey();
-
+                var sBankUpdate = oView.byId("rb1").getSelectedIndex();
+                var bBank = false;
+                if (sBankUpdate == "1") {
+                    bBank = true
+                }
+                var sKyc = oView.byId("rb2").getSelectedIndex();
+                var bKyc = false;
+                if (sKyc == "1") {
+                    bKyc = true
+                }
                 var passedValidation = this.onValidateAdd();
 
                 if (passedValidation === false) {
@@ -231,15 +348,30 @@ sap.ui.define([
                     Mobile: mobile,
                     CountryCode: countrycode,
                     RoleId: role,
-                    UserTypeId: userType
+                    UserTypeId: userType,
+                    IsBankUpdateAllowed: bBank,
+                    IsKYCUpdateAllowed: bKyc,
+                    AdminDivision: [],
+                    AdminZone: []
                 }
 
+                var c1, c2;
+                var othat = this;
+                c1 = othat._AddMultiComboDataEdit(oData, "Add");
+                c1.then(function (oPayload) {
+                    c2 = othat._CreateMethod(oPayload);
+                })
 
-                oModel.create("/AdminSet", oData, {
-                    success: this.onSuccessPress("Successfully created!")
+
+
+
+            },
+            _CreateMethod: function (oPayload) {
+                var othat = this;
+                var oModel = this.getView().getModel("data");
+                oModel.create("/AdminSet", oPayload, {
+                    success: othat.onSuccessPress("Successfully created!")
                 });
-
-
             },
             update: function () {
                 var oView = this.getView();
@@ -279,15 +411,79 @@ sap.ui.define([
                     RoleId: role,
                     UserTypeId: userType,
                     IsBankUpdateAllowed: bBank,
-                    IsKYCUpdateAllowed: bKyc
+                    IsKYCUpdateAllowed: bKyc,
+                    AdminDivision: [],
+                    AdminZone: []
                 }
-                console.log(oData);
+
 
                 var editSet = this.getView().getBindingContext("data").getPath();
+                var c1, c2;
+                var othat = this;
+                c1 = othat._AddMultiComboDataEdit(oData, "Edit");
+                c1.then(function (oPayload) {
+                    c2 = othat._UpdateRequest(oPayload);
+                })
 
-                oModel.update(editSet, oData, {
-                    success: this.onSuccessPress("Successfully Updated!")
+                // oModel.update(editSet, oData, {
+                //     success: this.onSuccessPress("Successfully Updated!")
+                // });
+            },
+            _UpdateRequest: function (oPayload) {
+                var othat = this;
+                var editSet = this.getView().getBindingContext("data").getPath();
+                var oModel = this.getView().getModel("data");
+                oModel.update(editSet, oPayload, {
+                    success: othat.onSuccessPress("Successfully Updated!")
                 });
+            },
+            _AddMultiComboDataEdit: function (oPayload, sMode) {
+                var promise = $.Deferred();
+                var oView = this.getView();
+                var oModelView = oView.getModel("oModelView");
+                var oModelControl = oView.getModel("oModelControl");
+                var sResults = ""
+                if (sMode === "Edit") {
+                    sResults = "/results"
+                }
+                //zone
+                var aExistingData = oModelView.getProperty("/AdminZone" + sResults);
+                var aSelectedData = oModelControl.getProperty("/MultiCombo/Zone")
+                var iData = -1;
+                var aDataFinal = [];
+                for (var x of aSelectedData) {
+                    iData = aExistingData.findIndex(item => item["ZoneId"] === x)
+                    if (iData >= 0) {
+                        //oPayload["PainterExpertise"][iExpIndex]["IsArchived"] = false;
+                        aDataFinal.push(aExistingData[iData]);
+                    } else {
+                        aDataFinal.push({
+                            ZoneId: x
+                        });
+                    }
+                }
+                oPayload["AdminZone"] = aDataFinal;
+                //Division
+                var aExistingData = oModelView.getProperty("/AdminDivision" + sResults);
+                var aSelectedData = oModelControl.getProperty("/MultiCombo/Division")
+                var iData = -1;
+                var aDataFinal = [];
+                for (var x of aSelectedData) {
+                    iData = aExistingData.findIndex(item => item["DivisionId"] === x)
+                    if (iData >= 0) {
+                        //oPayload["PainterExpertise"][iExpIndex]["IsArchived"] = false;
+                        aDataFinal.push(aExistingData[iData]);
+                    } else {
+                        aDataFinal.push({
+                            DivisionId: x
+                        });
+                    }
+                }
+                oPayload["AdminDivision"] = aDataFinal;
+                console.log(oPayload);
+                promise.resolve(oPayload);
+                return promise
+
             },
 
             onClearPress: function () {

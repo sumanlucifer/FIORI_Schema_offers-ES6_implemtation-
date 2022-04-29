@@ -108,6 +108,15 @@ floatingFooter="true"
                     <RadioButton text="{i18n>No}"/>
                       <RadioButton text="{i18n>Yes}"/>
                 </RadioButtonGroup>
+                	<Label text="{i18n>Zone}" labelFor="zone" design="Bold" required="false" />
+                       <MultiComboBox required="false" id="zone" selectedKeys="{path:'oModelControl>/MultiCombo/Zone' }" selectionChange="onChangeZone" placeholder="{i18n>placeHolder1}" items="{path:'data>/MasterZoneSet' }">
+                            <core:Item text="{data>Id}" key="{data>Id}"/>
+                     </MultiComboBox>
+                     <Label text="{i18n>Division}" labelFor="division" design="Bold" required="false" />
+                       <MultiComboBox required="false" id="division" selectedKeys="{path:'oModelControl>/MultiCombo/Division' }"  placeholder="{i18n>placeHolder1}" items="{path:'data>/MasterDivisionSet' }">
+                            <core:Item text="{data>Id}" key="{data>Id}"/>
+                     </MultiComboBox>
+
 
 			</f:content>
 		</f:SimpleForm>
