@@ -108,15 +108,24 @@ sap.ui.define([], function () {
             //   return t.getText("EXECUTION_LOG_TYPE_" + e, [r])
             //   if("FORCETAT" == sSubject) return "Manual Escalation";
             switch (sSubject) {
-                case "FORCETAT": return "Manual Escalation";
-                case "PENDING_FOR_APPROVAL": return "Pending for Approval"
+                case "FORCETAT":
+                    return "Manual Escalation";
+                case "APPROVED":
+                    return "Condonation request Approved";
+                case "REJECTED":
+                    return "Condonation request Rejected";
             }
             switch (sType) {
-                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT": return "Auto Escalation";
-                case "WORKFLOW_STARTED": return "Condonation Worfklow Started";
-                case "WORKFLOW_COMPLETED": return "Condonation Workflow Completed";
-                case "WORKFLOW_CANCELED": return "Condonation Workflow Cancelled";
-                case "USERTASK_COMPLETED": return "Condonation Workflow Completed";
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
+                    return "Auto Escalation";
+                case "WORKFLOW_STARTED":
+                    return "Condonation request Sent for Approval.";
+                case "WORKFLOW_COMPLETED":
+                    return "Condonation request Approval Process Completed.";
+                case "WORKFLOW_CANCELED":
+                    return "Condonation request Workflow Cancelled.";
+                case "USERTASK_COMPLETED":
+                    return "Condonation request Approved.";
             }
             return sSubject;
         },
@@ -137,6 +146,40 @@ sap.ui.define([], function () {
             });
             var oNow = new Date(localDate);
             return oDateFormat.format(oNow);
+        },
+        fmtLowerCase: function (mParam) {
+            if (!mParam) {
+                return
+            }
+            var sStatus = "";
+
+            if (mParam.split("_").length > 1) {
+                var mArray = mParam.split("_");
+
+            } else {
+                var mArray = mParam.split(" ");
+
+            }
+            for (var x of mArray) {
+                var a = x.toLowerCase() + " ";
+                var b = a[0].toUpperCase() + a.slice(1);
+
+                sStatus += b;
+            }
+            return sStatus;
+        },
+
+        fmtStatusStateColor: function (mParam) {
+            if (mParam === "APPROVED") {
+                return "Success";
+            }
+            if (mParam === "PUBLISHED") {
+                return "Success";
+            }
+            if (mParam === "PENDING") {
+                return "Warning";
+            }
+            return "Error";
         },
 
     };

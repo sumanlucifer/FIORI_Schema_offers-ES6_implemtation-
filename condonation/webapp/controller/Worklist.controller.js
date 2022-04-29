@@ -241,7 +241,7 @@ sap.ui.define(
                             } else if (prop === "ComplaintStatus") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter(prop, FilterOperator.EQ, oViewFilter[prop]));
+                                    new Filter("ApprovalStatus", FilterOperator.EQ, oViewFilter[prop]));
                             } else if (prop === "ZoneId") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
