@@ -19,6 +19,7 @@
                 <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
                 <Label text="{i18n>Status}"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
                 <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
+                 <core:Title text=" "/>
                  <Label text="{i18n>CreatedBy}" />
  <Text text="{path:'PainterKycDetails/CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />  
  <Label text="{i18n>CreatedAt}" />
