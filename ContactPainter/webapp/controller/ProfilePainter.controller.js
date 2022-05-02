@@ -306,7 +306,7 @@ sap.ui.define(
 
                     console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
-
+                    console.log(aWfData)
                     this.oWorkflowModel.setData(aWfData);
 
                 },
