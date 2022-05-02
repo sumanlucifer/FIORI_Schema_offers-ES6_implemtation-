@@ -320,14 +320,15 @@ sap.ui.define([
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
         },
-        fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6) {
+        fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6,mParam7) {
             // mParam1 PainterNameChangeRequest
-            // mParam2 'oModelControl2>/NameChange/Edit
-            //mParam3 LoginInfo>/UserTypeId
+            // mParam2 oModelControl2>/NameChange/Edit
+            //mParam3  LoginInfo>/UserTypeId
             // mParam4 PainterBankDetails/Status
             // mParam5 PainterBankDetails/Status
             // mParam6 MembershipID
-            if (mParam1 === null) {
+            // mParam7 Rejected status for PainterNameChangeRequest
+            if (mParam1 === null || mParam7==="REJECTED") {
                 if (mParam2 === false) {
                     if (mParam3 === 2) {
                         if (mParam4 !== "APPROVED") {

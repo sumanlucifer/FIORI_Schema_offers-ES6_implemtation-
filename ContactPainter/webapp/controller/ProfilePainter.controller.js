@@ -374,24 +374,56 @@ sap.ui.define(
                         RequestedName: oModelControl.getProperty("/NameChange/RequestedName"),
                         AssigneUserType: "AGENT",
                         Status: "PENDING",
-                        IsWorkFlowApplicable: true
+                        IsWorkFlowApplicable: true,
+                        InitiateForceTat:false,
+                        Remark:null
                     };
-                    console.log(oPayloadInput)
+                    console.log(oPayloadInput);
+                    var object = this.getView().getElementBinding().getBoundContext().getObject();
+                    var sEdit = "NEW";
+                    var sId = null;
+                    var sPath=null;
+                    if(object["PainterNameChangeRequest"]){
+                        sEdit="UPDATE"
+                        sId = object["PainterNameChangeRequest"]["__ref"];
+                        sPath = "/" + sId + "/Status";
+                    }
                     oModelControl.setProperty("/ProfilePageBuzy", true);
                     var c1, c2;
                     var othat = this;
 
-
-                    oModel.create("/PainterNameChangeRequestSet", oPayloadInput, {
-                        success: function () {
-                            this._showMessageToast("Message6");
-                            this.getView().getModel().refresh(true);
-                            oModelControl.setProperty("/ProfilePageBuzy", false);
-                        }.bind(othat),
-                        error: function () {
-                            oModelControl.setProperty("/ProfilePageBuzy", false)
-                        }
-                    })
+                    if(sEdit==="NEW"){
+                        console.log("new")
+                        oModel.create("/PainterNameChangeRequestSet", oPayloadInput, {
+                            success: function () {
+                                this._showMessageToast("Message6");
+                                this.getView().getModel().refresh(true);
+                                oModelControl.setProperty("/ProfilePageBuzy", false);
+                                oModelControl.setProperty("/NameChange/Edit", false);
+                                oModelControl.setProperty("/NameChange/RequestedName", "");
+                                oModelControl.refresh(true)
+                            }.bind(othat),
+                            error: function () {
+                                oModelControl.setProperty("/ProfilePageBuzy", false)
+                            }
+                        })
+                    }else if(sEdit==="UPDATE"){
+                        console.log("update")
+                        oModel.update(sPath, oPayloadInput, {
+                            success: function () {
+                                this._showMessageToast("Message6");
+                                this.getView().getModel().refresh(true);
+                                oModelControl.setProperty("/ProfilePageBuzy", false);
+                                oModelControl.getProperty("/NameChange/Edit",false);
+                                oModelControl.getProperty("/NameChange/RequestedName","");
+                                oModelControl.refresh(true)
+                            }.bind(othat),
+                            error: function () {
+                                oModelControl.setProperty("/ProfilePageBuzy", false)
+                            }
+                        })
+                    }
+                   
 
 
 

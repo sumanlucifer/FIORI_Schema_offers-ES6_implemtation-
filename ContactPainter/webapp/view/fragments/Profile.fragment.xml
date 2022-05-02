@@ -77,12 +77,12 @@
                             <core:Icon src="sap-icon://message-information" press="onIconNameHistoryPress" visible="{= ${PainterNameChangeRequest} !== null  }"/>
                           </items></HBox>
                            <ObjectAttribute title="{i18n>NameChangeStatus}" text="{PainterNameChangeRequest/Status}" visible="{= ${PainterNameChangeRequest/Status} === 'APPROVED'  }" ></ObjectAttribute>
-                          <Link text="{i18n>SendReqForUpdateName}" visible="{parts:['PainterNameChangeRequest', 'oModelControl2>/NameChange/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprNameChangeReq'}" press="onNameChangePress" />
+                          <Link text="{i18n>SendReqForUpdateName}" visible="{parts:['PainterNameChangeRequest', 'oModelControl2>/NameChange/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard','PainterNameChangeRequest/Status'], formatter:'.formatter.fmtSendApprNameChangeReq'}" press="onNameChangePress" />
                     </items>
                 </VBox>
                   <!-- This section is the edit section used for taking the details like name and sending the req to back end -->  
-                <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true &amp;&amp;  ${PainterNameChangeRequest}===null }"/>
-                <VBox width="100%"  visible="{= ${oModelControl2>/NameChange/Edit} === true &amp;&amp;  ${PainterNameChangeRequest}===null  }">
+                <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true }"/>
+                <VBox width="100%"  visible="{= ${oModelControl2>/NameChange/Edit} === true }">
                     <items>
                           <Input placeholder="{i18n>Enter} {i18n>UpdateName}" value="{oModelControl2>/NameChange/RequestedName}" />
                           <HBox>
