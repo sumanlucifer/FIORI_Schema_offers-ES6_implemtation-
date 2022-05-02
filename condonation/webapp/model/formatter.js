@@ -111,22 +111,24 @@ sap.ui.define([], function () {
                 case "FORCETAT":
                     return "Manual Escalation";
                 case "APPROVED":
-                    return "Condonation request Approved";
+                    return "Redemption request Approved";
                 case "REJECTED":
-                    return "Condonation request Rejected";
+                    return "Redemption request Rejected";
             }
+
             switch (sType) {
                 case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
                     return "Auto Escalation";
                 case "WORKFLOW_STARTED":
-                    return "Condonation request Sent for Approval.";
+                    return "Redemption request Sent for Approval.";
                 case "WORKFLOW_COMPLETED":
-                    return "Condonation request Approval Process Completed.";
+                    return "Redemption request Approval Process Completed.";
                 case "WORKFLOW_CANCELED":
-                    return "Condonation request Workflow Cancelled.";
+                    return "Redemption request Workflow Cancelled.";
                 case "USERTASK_COMPLETED":
-                    return "Condonation request Approved.";
+                    return "Redemption request Approved.";
             }
+
             return sSubject;
         },
         formatLogIcon: function (sStatus) {

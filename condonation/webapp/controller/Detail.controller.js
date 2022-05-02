@@ -262,12 +262,12 @@ sap.ui.define(
                             "WORKFLOW_CANCELED",
                             "USERTASK_CREATED",
                             "USERTASK_COMPLETED",
-                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT"
+                            "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
                         ]);
 
                         console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
-                    
+                    console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
                     oModelControl.setProperty("/bBusy", false)
                 },
