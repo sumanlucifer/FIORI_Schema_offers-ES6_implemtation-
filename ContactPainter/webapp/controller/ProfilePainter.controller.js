@@ -256,7 +256,7 @@ sap.ui.define(
                     if (mParam1 === "Name") {
                         var sId = object["PainterNameChangeRequest"]["__ref"];
                         var sData = this.getView().getModel().getData("/" + sId);
-                        this._getExecLogData1("123")
+                        this._getExecLogData1(sData["WorkflowInstanceId"])
                     } else if (mParam1 === "Mobile") {
                         var sId = object["PainterMobileNumberChangeRequest"]["__ref"];
                         var sData = this.getView().getModel().getData("/" + sId);
@@ -306,7 +306,7 @@ sap.ui.define(
 
                     console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
-                    console.log(aWfData)
+                    console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
 
                 },
@@ -402,7 +402,8 @@ sap.ui.define(
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
                     var oPayloadInput = {
-                        Status: mParam
+                        Status: mParam,
+                        InitiateForceTat:false
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterNameChangeRequest"]["__ref"]
@@ -450,6 +451,7 @@ sap.ui.define(
                     }
                     var oPayloadInput = {
                         Status: "REJECTED",
+                        InitiateForceTat:false,
                         Remark: oModelControl.getProperty("/RejectRemark1"),
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
@@ -575,7 +577,8 @@ sap.ui.define(
                 onApproveMobileChange: function (mParam) {
                     var oView = this.getView();
                     var oPayloadInput = {
-                        Status: mParam
+                        Status: mParam,
+                        InitiateForceTat:false
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterMobileNumberChangeRequest"]["__ref"]

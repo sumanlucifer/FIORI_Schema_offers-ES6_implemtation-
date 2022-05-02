@@ -478,8 +478,7 @@ sap.ui.define([
                 case "USERTASK_COMPLETED":
                     return "Mobile No. Change request Approved.";
             }
-            return 
-            ;
+            return sSubject ;
         },
         formatLogIcon: function (sStatus) {
             return wfIcons[sStatus];

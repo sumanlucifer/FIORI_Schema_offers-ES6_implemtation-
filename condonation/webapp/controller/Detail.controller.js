@@ -267,9 +267,9 @@ sap.ui.define(
                             "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
                         ]);
 
-                      //  console.log(aWfData);
+                    console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
-                    //console.log(aWfData);
+                    console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
                     oModelControl.setProperty("/bBusy", false)
                 },
@@ -474,7 +474,8 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var sId = oModel.getProperty("/bindProp")
                     var oPayloadInput = {
-                        ApprovalStatus: "APPROVED"
+                        ApprovalStatus: "APPROVED",
+                        InitiateForceTat:false
                     };
 
                     var sPath = "/" + sId + "/ApprovalStatus";
@@ -512,6 +513,7 @@ sap.ui.define(
                     var sPath = "/" + sId + "/ApprovalStatus";
                     var oPayloadInput = {
                         ApprovalStatus: "REJECTED",
+                        InitiateForceTat:false,
                         Remark: oModelControl.getProperty("/RejectRemark1"),
                     };
                     this.onDialogCloseNew();
