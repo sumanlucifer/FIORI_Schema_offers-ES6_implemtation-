@@ -215,13 +215,15 @@ sap.ui.define(
                 onBeforeRebindHistoryTable: function (oEvent) {
                     var oView = this.getView();
                     var oViewData = oView.getElementBinding().getBoundContext().getObject();
-                    var sComplainCode = oViewData["ComplaintCode"]
+                    var sComplainCode = oViewData["ComplaintCode"];
+                    var sCompliainId = oView.getModel("oModelControl").getProperty("/ComplainId");
 
                     var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "UpdatedByDetails";
                     var oFilter = new Filter(
-                        "ComplaintCode",
+                        "ComplainId",
                         FilterOperator.EQ,
-                        sComplainCode,
+                        sCompliainId,
                     );
 
                     oBindingParams.filters.push(oFilter);
@@ -265,9 +267,9 @@ sap.ui.define(
                             "USERTASK_CANCELED_BY_BOUNDARY_EVENT", //TODO: Change text to TAT triggered
                         ]);
 
-                        console.log(aWfData);
+                      //  console.log(aWfData);
                     aWfData = aWfData.filter(ele => taskSet.has(ele.type));
-                    console.log(aWfData);
+                    //console.log(aWfData);
                     this.oWorkflowModel.setData(aWfData);
                     oModelControl.setProperty("/bBusy", false)
                 },
