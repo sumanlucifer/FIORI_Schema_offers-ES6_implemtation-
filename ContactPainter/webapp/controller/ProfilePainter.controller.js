@@ -365,7 +365,7 @@ sap.ui.define(
                     var sName = oModelControl.getProperty("/NameChange/RequestedName");
                     let pattern1 = /^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$/g;
                     let result1 = pattern1.test(sName);
-                    if(sName.length < 0 || result1 !== true ){
+                    if (sName.length < 0 || result1 !== true) {
                         this._showMessageToast("Message9")
                         return false;
                     }
@@ -375,26 +375,26 @@ sap.ui.define(
                         AssigneUserType: "AGENT",
                         Status: "PENDING",
                         IsWorkFlowApplicable: true,
-                        InitiateForceTat:false,
-                        Remark:"Request Raised From Portal"
+                        InitiateForceTat: false,
+                        Remark: "Request Raised From Portal"
                     };
                     console.log(oPayloadInput);
                     var object = this.getView().getElementBinding().getBoundContext().getObject();
                     var sEdit = "NEW";
                     var sId = null;
-                    var sPath=null;
-                    
-                    if(object["PainterNameChangeRequest"]){
-                        sEdit="UPDATE"
+                    var sPath = null;
+
+                    if (object["PainterNameChangeRequest"]) {
+                        sEdit = "UPDATE"
                         sId = object["PainterNameChangeRequest"]["__ref"];
                         sPath = "/" + sId + "/Status";
-                        oPayloadInput["Id"]=parseInt(object["PainterNameChangeRequest"]["__ref"].match(/\d{1,}/)[0]);
+                        oPayloadInput["Id"] = parseInt(object["PainterNameChangeRequest"]["__ref"].match(/\d{1,}/)[0]);
                     }
                     //oModelControl.setProperty("/ProfilePageBuzy", true);
                     var c1, c2;
                     var othat = this;
 
-                    if(sEdit==="NEW"){
+                    if (sEdit === "NEW") {
                         console.log("new")
                         oModel.create("/PainterNameChangeRequestSet", oPayloadInput, {
                             success: function () {
@@ -409,12 +409,12 @@ sap.ui.define(
                                 oModelControl.setProperty("/ProfilePageBuzy", false)
                             }
                         })
-                    }else if(sEdit==="UPDATE"){
-                        console.log("update",oPayloadInput);
+                    } else if (sEdit === "UPDATE") {
+                        console.log("update", oPayloadInput);
                         oModel.create("/PainterNameChangeRequestSet", oPayloadInput, {
                             success: function () {
                                 this._showMessageToast("Message6");
-                             
+
                                 oModelControl.setProperty("/ProfilePageBuzy", false);
                                 oModelControl.setProperty("/NameChange/Edit", false);
                                 oModelControl.setProperty("/NameChange/RequestedName", "");
@@ -439,7 +439,7 @@ sap.ui.define(
                         //     }
                         // })
                     }
-                   
+
 
 
 
@@ -451,7 +451,7 @@ sap.ui.define(
                     var sMobile = oModelControl.getProperty("/MobileChangeWorkflow/RequestedField");
                     let pattern1 = /^[0-9]{10}$/g;
                     let result1 = pattern1.test(sMobile);
-                    if(result1 !== true ){
+                    if (result1 !== true) {
                         this._showMessageToast("Message10");
                         return false;
                     }
@@ -461,23 +461,23 @@ sap.ui.define(
                         AssigneUserType: "AGENT",
                         Status: "PENDING",
                         IsWorkFlowApplicable: true,
-                        InitiateForceTat:false,
-                        Remark:"Request Raised From Portal"
+                        InitiateForceTat: false,
+                        Remark: "Request Raised From Portal"
                     };
-                   
+
                     oModelControl.setProperty("/ProfilePageBuzy", true);
                     var c1, c2;
                     var othat = this;
                     var object = this.getView().getElementBinding().getBoundContext().getObject();
                     var sEdit = "NEW";
                     var sId = null;
-                    var sPath=null;
-                    
-                    if(object["PainterMobileNumberChangeRequest"]){
-                        sEdit="UPDATE"
+                    var sPath = null;
+
+                    if (object["PainterMobileNumberChangeRequest"]) {
+                        sEdit = "UPDATE"
                         sId = object["PainterMobileNumberChangeRequest"]["__ref"];
                         sPath = "/" + sId + "/Status";
-                        oPayloadInput["Id"]=parseInt(object["PainterMobileNumberChangeRequest"]["__ref"].match(/\d{1,}/)[0]);
+                        oPayloadInput["Id"] = parseInt(object["PainterMobileNumberChangeRequest"]["__ref"].match(/\d{1,}/)[0]);
                     }
 
                     oModel.create("/PainterMobileNumberChangeRequestSet", oPayloadInput, {
@@ -488,8 +488,14 @@ sap.ui.define(
                             this.getView().getModel().refresh(true);
                             oModelControl.setProperty("/ProfilePageBuzy", false);
                         }.bind(othat),
-                        error: function () {
-                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        error: function (odata) {
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                            if (odata.statusCode == 409) {
+                                MessageBox.error(odata["responseText"], {
+                                    title: "Error Code: " + odata.statusCode,
+                                });
+                            }
+
                         }
                     })
 
@@ -502,7 +508,7 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl2");
                     var oPayloadInput = {
                         Status: mParam,
-                        InitiateForceTat:false,
+                        InitiateForceTat: false,
                         //Remark:"Approved"
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
@@ -545,13 +551,13 @@ sap.ui.define(
                     var oModel = oView.getModel();
                     var oModelControl = oView.getModel("oModelControl2");
                     var sRemark = oModelControl.getProperty("/RejectRemark1")
-                    if(sRemark.length <=0){
+                    if (sRemark.length <= 0) {
                         this._showMessageToast("Message11");
                         return false;
                     }
                     var oPayloadInput = {
                         Status: "REJECTED",
-                        InitiateForceTat:false,
+                        InitiateForceTat: false,
                         Remark: oModelControl.getProperty("/RejectRemark1"),
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
@@ -600,6 +606,7 @@ sap.ui.define(
 
                 },
                 _sendNameChangeReqPayload: function (sPath, oPayloadInput) {
+                     // Approve, Reject And Escalate calls are done from here.
                     var othat = this;
                     var oView = this.getView();
                     var oModel = oView.getModel();
@@ -618,6 +625,7 @@ sap.ui.define(
 
                 },
                 _sendMobileChangeReqPayload: function (sPath, oPayloadInput) {
+                    // Approve, Reject And Escalate calls are done from here.
                     var othat = this;
                     var oView = this.getView();
                     var oModel = oView.getModel();
@@ -630,18 +638,23 @@ sap.ui.define(
                             this.getView().getModel().refresh(true);
                             oModelControl.setProperty("/ProfilePageBuzy", false);
                         }.bind(othat),
-                        error: function () {
-                            oModelControl.setProperty("/ProfilePageBuzy", false)
+                        error: function (odata) {
+                            oModelControl.setProperty("/ProfilePageBuzy", false);
+                            if (odata.statusCode == 409) {
+                                MessageBox.error(odata["responseText"], {
+                                    title: "Error Code: " + odata.statusCode,
+                                });
+                            }
                         }
                     })
 
                 },
-             
+
                 onApproveMobileChange: function (mParam) {
                     var oView = this.getView();
                     var oPayloadInput = {
                         Status: mParam,
-                        InitiateForceTat:false
+                        InitiateForceTat: false
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterMobileNumberChangeRequest"]["__ref"]
