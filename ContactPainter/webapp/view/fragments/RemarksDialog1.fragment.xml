@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog busyIndicatorDelay="0" class="sapUiContentPadding" id="ChangeStatus" title="{i18n>AddRemark}" >
+        <content>
+            <f:SimpleForm id="RemarkForm" layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                <f:content>
+                    <Label text="{i18n>Remark}" />
+                    <TextArea required="true" placeholder="{i18n>AddRemark}" maxLength="300" value="{path : 'oModelControl2>/RejectRemark1', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }"/>
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        <buttons>
+            <Button text="{i18n>Close}" press="onDialogCloseNew" />
+            <Button press="onRejectRequest" type="Emphasized" text="{i18n>Submit}" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

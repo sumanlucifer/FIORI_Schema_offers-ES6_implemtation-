@@ -18,7 +18,11 @@ sap.ui.define([
         getRouter: function () {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
-
+        _dummyPromise:function(oParam1){
+            var promise = $.Deferred();
+            promise.resolve(oParam1);
+            return promise;
+        },
         sActivationStatus: function (sStatus) {
 
             switch (sStatus) {
@@ -33,7 +37,52 @@ sap.ui.define([
             }
 
         },
+        _geti18nText: function (mParam, mParam2) {
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            return oModel.getText(mParam, mParam2);
+        },
 
+        _showMessageBox1: function (pType, pMessage, pMessageParam, pfn1, pfn2) {
+            // 
+            /*pType(string) > type of message box ex: information or alert etc.
+              pMessage (string)> i18n property name for the message
+              pMessageParam(array/null)> i18n property has params specify in array or else pass as null
+              pfn1(function1/null) > this is a function to be called after user presses yes 
+              pfn2(function2/null) > this is a function to be called after user presses no
+
+              you can call this below method like this
+              this._showMessageBox1("information", "i18nProper", ["i18nParamerter1if any"],
+              this._sample1.bind(this, "first paramters", "secondParameter"));
+              In this code all the message type will have 2 buttons yes and no
+            */
+            var sMessage = this._geti18nText(pMessage, pMessageParam);
+            var sPtye = pType.trim().toLowerCase();
+            var othat = this;
+            var aMessageType = ["success", "information", "alert", "error", "warning", "confirm"];
+
+            if (aMessageType.indexOf(sPtye) >= 0) {
+                MessageBox[sPtye](sMessage, {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    emphasizedAction: MessageBox.Action.YES,
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            if (pfn1) {
+                                pfn1();
+                            }
+                        } else {
+                            if (pfn2) {
+                                pfn2();
+                            };
+                        }
+                    }
+                });
+                return
+            } else {
+                this._showMessageToast("Message6");
+            }
+
+
+        },
 
 
         addContentDensityClass: function () {
@@ -202,7 +251,32 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             return oModel.getText(mParam, mParam2);
         },
+        onDialogCloseNew: function () {
+            var oView = this.getView(),
+                oModelContrl = oView.getModel("oModelControl2");
+      
+            console.log("Dialog Close");
+            if (this._RemarksDialog1) {
+              
+                this._RemarksDialog1.close();
+                this._RemarksDialog1.destroy();
+                delete this._RemarksDialog1;
+                return;
+            }
 
+            if (this._NameChangeHistoryDialog) {
+                this._NameChangeHistoryDialog.close();
+                this._NameChangeHistoryDialog.destroy();
+                delete this._NameChangeHistoryDialog;
+                return;
+            }
+            if (this._MobileChangeHistoryDialog) {
+                this._MobileChangeHistoryDialog.close();
+                this._MobileChangeHistoryDialog.destroy();
+                delete this._MobileChangeHistoryDialog;
+                return;
+            }
+        },
         /**
          * Adds a history entry in the FLP page history
          * @public

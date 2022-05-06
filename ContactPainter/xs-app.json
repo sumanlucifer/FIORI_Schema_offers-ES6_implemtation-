@@ -19,6 +19,14 @@
         "service": "sap-approuter-userapi"
     },
     {
+		"source": "^/bpmworkflowruntime/(.*)$",
+		"target": "/$1",
+		"service": "com.sap.bpm.workflow",
+		"endpoint": "workflow_rest_url",
+        "authenticationType": "xsuaa",
+        "cacheControl" : "no-cache"
+	},
+    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",

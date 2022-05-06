@@ -8,7 +8,7 @@
                 <ObjectStatus visible="{= ${PainterKycDetails} !== null}" text="{path:'PainterKycDetails/Status'}" state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined  || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined }"/>
                 <ToolbarSpacer/>
                     <FlexBox visible="{=${PainterKycDetails/Status} !== 'INPROGRESS'}">
-                        <Button enabled="{path:'userInfo>/email', formatter:'.formatter.fmtEnableAccess1'}"  visible="{=!${oModelControl>/EditKycButton}}" text="{i18n>Edit}" type="Emphasized" press=".onEditKycFields"/>
+                        <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed', formatter:'.formatter.fmtEnableAccess1'}"  visible="{=!${oModelControl>/EditKycButton}}" text="{i18n>Edit}" type="Emphasized" press=".onEditKycFields"/>
                         <Button visible="{=${oModelControl>/EditKycButton}}" text="{i18n>Cancel}" press="onEditCancelKycFields"/>
                     </FlexBox>
             </OverflowToolbar>
@@ -54,9 +54,9 @@
             <!--Aditya changes start-->
 			<Toolbar visible="{= ${PainterKycDetails} !== null}">
 				<ToolbarSpacer/>
-                <Button enabled="{path:'userInfo>/email',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-				<Button enabled="{path:'userInfo>/email',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-    <Button enabled="{path:'userInfo>/email',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}"/>
+                <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+				<Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
+    <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}"/>
 			</Toolbar>
 		<!--Aditya changes end-->
     </VBox>

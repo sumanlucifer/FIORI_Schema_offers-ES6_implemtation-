@@ -32,6 +32,7 @@ sap.ui.define(
 
                     // disable busy indication when the metadata is loaded and in case of errors
                     this.getComponentModel().metadataLoaded().then(fnSetAppNotBusy);
+                    this.getComponentModel().metadataLoaded().then(this.fnLoadLoginData.bind(this));
                     this.getComponentModel().attachMetadataFailed(fnSetAppNotBusy);
 
                     // apply content density mode to root view
@@ -81,6 +82,31 @@ sap.ui.define(
                     var appModulePath = jQuery.sap.getModulePath(appPath);
                     return appModulePath;
                 },
+                fnLoadLoginData:function() {
+                    var oLoginModel = this.getView().getModel("LoginInfo");
+                    var oViewModel = this.getView().getModel("appView");
+                    this.getOwnerComponent().getModel()
+                        .callFunction("/GetLoggedInAdmin", {
+                            method: "GET",
+                            urlParameters: {
+                                $expand: "UserType"
+                            },
+                            success: function (data) {
+                                if (data.hasOwnProperty("results")) {
+                                    if (data["results"].length > 0) {
+                                        //data["results"][0]["UserTypeId"]=3;
+                                        oLoginModel.setData(data["results"][0]);
+                                        //console.log(oLoginModel)
+                                    }
+                                }
+
+                                oViewModel.setProperty("/busy", false);
+                            }.bind(this),
+                            error:function(){
+                                oViewModel.setProperty("/busy", false);
+                            }
+                        });
+                }
 
             }
         );

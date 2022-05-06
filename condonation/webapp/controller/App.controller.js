@@ -28,6 +28,7 @@ sap.ui.define([
             this.getOwnerComponent().getModel().metadataLoaded().
                 then(fnSetAppNotBusy);
             this.getOwnerComponent().getModel().attachMetadataFailed(fnSetAppNotBusy);
+            this.getOwnerComponent().getModel().metadataLoaded().then(this.fnLoadLoginData.bind(this));
 
             // apply content density mode to root view
             this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
@@ -46,7 +47,33 @@ sap.ui.define([
                 });
             */
 
+        },
+        fnLoadLoginData:function() {
+                   
+            var oLoginModel = this.getView().getModel("LoginInfo");
+            var oViewModel = this.getView().getModel("appView");
+            this.getOwnerComponent().getModel()
+                .callFunction("/GetLoggedInAdmin", {
+                    method: "GET",
+                    urlParameters: {
+                        $expand: "UserType"
+                    },
+                    success: function (data) {
+                        if (data.hasOwnProperty("results")) {
+                            if (data["results"].length > 0) {
+                                //data["results"][0]["UserTypeId"]=3;
+                                oLoginModel.setData(data["results"][0]);
+                            }
+                        }
+
+                        oViewModel.setProperty("/busy", false);
+                    }.bind(this),
+                    error:function(){
+                        oViewModel.setProperty("/busy", false);
+                    }
+                });
         }
+
     });
 
 });

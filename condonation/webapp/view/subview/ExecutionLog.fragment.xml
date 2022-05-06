@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.suite.ui.commons" xmlns:core="sap.ui.core">
+<Timeline
+            height="100%"
+			id="idTimeline"
+            alignment="Right"
+            scrollingFadeout="None"
+            axisOrientation="Vertical"
+			enableDoubleSided="false"
+            forceGrowing="false"
+            enableBusyIndicator= "true"
+            enableModelFilter= "true"
+			growingThreshold="100"
+			filterTitle="Task Type"
+            showIcons="true"
+            showSearch="false"
+            enableScroll="false"
+            sortOldestFirst="false"
+			content="{wfmodel>/}">
+		<content>
+           <!-- formatter required datetime, title icon -->
+			<TimelineItem	dateTime="{ path :'wfmodel>timestamp', formatter :'.formatter.ExecutionLogDateTime' }"
+					title="{ parts :['wfmodel>subject' , 'wfmodel>type' ], formatter : '.formatter.ExecutionLogTitle'}"
+					text="{ path : 'wfmodel>recipientUsers', formatter : '.formatter.ExecutionLogUserName' }"
+                    filterValue="{wfmodel>type}"
+					icon="{path : 'wfmodel>type' , formatter : '.formatter.formatLogIcon'}">
+			</TimelineItem>
+		</content>
+	</Timeline>
+</core:FragmentDefinition>

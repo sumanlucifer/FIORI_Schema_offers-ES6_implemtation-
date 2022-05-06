@@ -3,40 +3,152 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/m/library",
     "sap/ui/core/routing/History",
-     "sap/ui/core/Fragment"
-], function (Controller, UIComponent, mobileLibrary, History,Fragment) {
+    "sap/ui/core/Fragment",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+
+], function (Controller, UIComponent, mobileLibrary, History, Fragment, MessageToast, MessageBox) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
     var URLHelper = mobileLibrary.URLHelper;
 
     return Controller.extend("com.knpl.pragati.redeempoints.controller.BaseController", {
-		/**
-		 * Convenience method for accessing the router.
-		 * @public
-		 * @returns {sap.ui.core.routing.Router} the router for this component
-		 */
+        /**
+         * Convenience method for accessing the router.
+         * @public
+         * @returns {sap.ui.core.routing.Router} the router for this component
+         */
         getRouter: function () {
             return UIComponent.getRouterFor(this);
         },
 
-		/**
-		 * Convenience method for getting the view model by name.
-		 * @public
-		 * @param {string} [sName] the model name
-		 * @returns {sap.ui.model.Model} the model instance
-		 */
+        /**
+         * Convenience method for getting the view model by name.
+         * @public
+         * @param {string} [sName] the model name
+         * @returns {sap.ui.model.Model} the model instance
+         */
         getModel: function (sName) {
             return this.getView().getModel(sName);
         },
+        _geti18nText: function (mParam, mParam2) {
+            /*
+             * Author: manik saluja
+             * Date: 15-Mar-2022
+             * Language:  JS
+             * Purpose: This is the for getting the i18n text with additional paramters
+             */
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            return oModel.getText(mParam, mParam2);
+        },
+        _showMessageToast: function (mParam, mParam2) {
+            /*
+             * Author: manik saluja
+             * Date: 15-Mar-2022
+             * Language:  JS
+             * Purpose: A common method of controllers to call the messgae toast with the property
+             */
+            var oModel = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            var sText = oModel.getText(mParam, mParam2);
+            MessageToast.show(sText, {
+                duration: 6000
+            })
+        },
 
-		/**
-		 * Convenience method for setting the view model.
-		 * @public
-		 * @param {sap.ui.model.Model} oModel the model instance
-		 * @param {string} sName the model name
-		 * @returns {sap.ui.mvc.View} the view instance
-		 */
+        _showMessageBox1: function (pType, pMessage, pMessageParam, pfn1, pfn2) {
+            // 
+            /*pType(string) > type of message box ex: information or alert etc.
+              pMessage (string)> i18n property name for the message
+              pMessageParam(array/null)> i18n property has params specify in array or else pass as null
+              pfn1(function1/null) > this is a function to be called after user presses yes 
+              pfn2(function2/null) > this is a function to be called after user presses no
+
+              you can call this below method like this
+              this._showMessageBox1("information", "i18nProper", ["i18nParamerter1if any"],
+              this._sample1.bind(this, "first paramters", "secondParameter"));
+              In this code all the message type will have 2 buttons yes and no
+            */
+            var sMessage = this._geti18nText(pMessage, pMessageParam);
+            var sPtye = pType.trim().toLowerCase();
+            var othat = this;
+            var aMessageType = ["success", "information", "alert", "error", "warning", "confirm"];
+
+            if (aMessageType.indexOf(sPtye) >= 0) {
+                MessageBox[sPtye](sMessage, {
+                    actions: [sap.m.MessageBox.Action.NO, sap.m.MessageBox.Action.YES],
+                    emphasizedAction: MessageBox.Action.YES,
+                    onClose: function (sAction) {
+                        if (sAction === "YES") {
+                            if (pfn1) {
+                                pfn1();
+                            }
+                        } else {
+                            if (pfn2) {
+                                pfn2();
+                            };
+                        }
+                    }
+                });
+                return
+            } else {
+                this._showMessageToast("Message6");
+            }
+
+
+        },
+        _showMessageBox2: function (pType, pMessage, pMessageParam, pfn1, pfn2) {
+
+            /*  pType(string) > type of message box ex: information or alert etc.
+                pMessage (string)> i18n property name for the message
+                pMessageParam(array/null)> i18n property has params specify in array or else pass as null
+                pfn1(function1/null) > this is a function to be called after user presses yes 
+                pfn2(function2/null) > this is a function to be called after user presses no
+
+                you can call this below method like this
+                this._showMessageBox1("information", "i18nProper", ["i18nParamerter1if any"],
+                this._sample1.bind(this, "first paramters", "secondParameter"));
+
+                In this code all the message type will have 1 button 
+            */
+            var sMessage = this._geti18nText(pMessage, pMessageParam);
+          
+            var sPtye = pType.trim().toLowerCase();
+            var othat = this;
+            var aMessageType = ["success", "information", "alert", "error", "warning"];
+
+
+            if (aMessageType.indexOf(sPtye) >= 0) {
+                MessageBox[sPtye](sMessage, {
+
+                    onClose: function (sAction) {
+                        // in case for error dialog we will have a close button insttead of okay
+                        if (sAction === "OK" || sAction === "CLOSE") {
+                            if (pfn1) {
+                                pfn1();
+                            }
+                        } else {
+                            if (pfn2) {
+                                pfn2();
+                            };
+                        }
+                    }
+                });
+                return
+            } else {
+                this._showMessageToast("Message6");
+            }
+
+
+        },
+
+        /**
+         * Convenience method for setting the view model.
+         * @public
+         * @param {sap.ui.model.Model} oModel the model instance
+         * @param {string} sName the model name
+         * @returns {sap.ui.mvc.View} the view instance
+         */
         setModel: function (oModel, sName) {
             return this.getView().setModel(oModel, sName);
         },
@@ -68,8 +180,7 @@ sap.ui.define([
             // if (!this._formFragments) {
             this._formFragments = Fragment.load({
                 id: oView.getId(),
-                name:
-                    "com.knpl.pragati.redeempoints.view.subview." + sFragmentName,
+                name: "com.knpl.pragati.redeempoints.view.subview." + sFragmentName,
                 controller: othat,
             }).then(function (oFragament) {
                 return oFragament;
@@ -80,19 +191,19 @@ sap.ui.define([
 
         },
 
-		/**
-		 * Getter for the resource bundle.
-		 * @public
-		 * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
-		 */
+        /**
+         * Getter for the resource bundle.
+         * @public
+         * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
+         */
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
 
-		/**
-		 * Event handler when the share by E-Mail button has been clicked
-		 * @public
-		 */
+        /**
+         * Event handler when the share by E-Mail button has been clicked
+         * @public
+         */
         onShareEmailPress: function () {
             var oViewModel = (this.getModel("objectView") || this.getModel("worklistView"));
             URLHelper.triggerEmail(

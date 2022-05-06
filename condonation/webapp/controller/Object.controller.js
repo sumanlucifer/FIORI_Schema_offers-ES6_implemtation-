@@ -81,7 +81,7 @@ sap.ui.define([
                 Remark: "",
                 Source: "CONDONATION",
                 ComplaintStatus: "RESOLVED",
-                ApprovalStatus: "APPROVED",
+                ApprovalStatus: "PENDING",
                 ResolutionType:2,
                 ComplaintSubtypeId: 1,
                 ComplaintTypeId: 1,

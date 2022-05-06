@@ -2,6 +2,45 @@ sap.ui.define([
     "sap/ui/core/format/DateFormat"
 ], function (DateFormat) {
     "use strict";
+    var wfIcons = {
+        WORKFLOW_STARTED: "sap-icon://initiative",
+        WORKFLOW_COMPLETED: "sap-icon://stop",
+        WORKFLOW_CANCELED: "sap-icon://sys-cancel-2",
+        WORKFLOW_SUSPENDED: "sap-icon://media-pause",
+        WORKFLOW_CONTINUED: "sap-icon://redo",
+        WORKFLOW_RESUMED: "sap-icon://media-play",
+        WORKFLOW_CONTEXT_OVERWRITTEN_BY_ADMIN: "sap-icon://user-edit",
+        WORKFLOW_CONTEXT_PATCHED_BY_ADMIN: "sap-icon://user-edit",
+        USERTASK_CREATED: "sap-icon://activity-individual",
+        USERTASK_CLAIMED: "sap-icon://activity-individual",
+        USERTASK_RELEASED: "sap-icon://activity-individual",
+        USERTASK_CANCELED_BY_BOUNDARY_EVENT: "sap-icon://lateness",
+        USERTASK_COMPLETED: "sap-icon://activity-2",
+        USERTASK_FAILED: "sap-icon://activity-individual",
+        USERTASK_PATCHED_BY_ADMIN: "sap-icon://activity-individual",
+        SERVICETASK_CREATED: "sap-icon://settings",
+        SERVICETASK_COMPLETED: "sap-icon://settings",
+        SERVICETASK_FAILED: "sap-icon://settings",
+        SCRIPTTASK_CREATED: "sap-icon://activities",
+        SCRIPTTASK_COMPLETED: "sap-icon://activities",
+        SCRIPTTASK_FAILED: "sap-icon://activities",
+        INTERMEDIATE_MESSAGE_EVENT_REACHED: "sap-icon://message-popup",
+        INTERMEDIATE_MESSAGE_EVENT_TRIGGERED: "sap-icon://message-popup",
+        CANCELING_BOUNDARY_TIMER_EVENT_TRIGGERED: "sap-icon://circle-task",
+        NONCANCELING_BOUNDARY_TIMER_EVENT_TRIGGERED: "sap-icon://mirrored-task-circle",
+        INTERMEDIATE_TIMER_EVENT_REACHED: "sap-icon://fob-watch",
+        INTERMEDIATE_TIMER_EVENT_TRIGGERED: "sap-icon://fob-watch",
+        MAILTASK_CREATED: "sap-icon://email",
+        MAILTASK_COMPLETED: "sap-icon://email",
+        MAILTASK_FAILED: "sap-icon://email",
+        PARALLEL_GATEWAY_REACHED: "sap-icon://combine",
+        PARALLEL_GATEWAY_FAILED: "sap-icon://combine",
+        EXCLUSIVE_GATEWAY_REACHED: "sap-icon://split",
+        EXCLUSIVE_GATEWAY_FAILED: "sap-icon://split",
+        REFERENCED_SUBFLOW_STARTED: "sap-icon://process",
+        REFERENCED_SUBFLOW_COMPLETED: "sap-icon://process",
+        REFERENCED_SUBFLOW_FAILED: "sap-icon://process"
+    }
     return {
         /**
          * Rounds the number unit value to 2 digits
@@ -111,26 +150,26 @@ sap.ui.define([
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                            if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
-                                var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                                return "Gift - " + giftData.RewardGiftName;
-                            } else
-                                if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
-                                    var cash = "Cash - Rs. " + pointData["RewardCash"];
-                                    return cash;
-                                } else if (pointData.RedemptionType === "MULTI_REWARDS") {
-                                    var aString = [];
-                                    if (pointData["RewardPoints"]) {
-                                        aString.push("Points - " + pointData["RewardPoints"]);
-                                    }
-                                    if (pointData["GiftRedemptionId"]) {
-                                        aString.push("Gift - " + pointData["RewardGiftName"]);
-                                    }
-                                    if (pointData["RewardCash"]) {
-                                        aString.push("Cash - Rs." + pointData["RewardCash"]);
-                                    }
-                                    return aString.join(", ")
-                                }
+                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
+                            var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
+                            return "Gift - " + giftData.RewardGiftName;
+                        } else
+                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
+                            var cash = "Cash - Rs. " + pointData["RewardCash"];
+                            return cash;
+                        } else if (pointData.RedemptionType === "MULTI_REWARDS") {
+                            var aString = [];
+                            if (pointData["RewardPoints"]) {
+                                aString.push("Points - " + pointData["RewardPoints"]);
+                            }
+                            if (pointData["GiftRedemptionId"]) {
+                                aString.push("Gift - " + pointData["RewardGiftName"]);
+                            }
+                            if (pointData["RewardCash"]) {
+                                aString.push("Cash - Rs." + pointData["RewardCash"]);
+                            }
+                            return aString.join(", ")
+                        }
                     }
                 }
             }
@@ -240,11 +279,29 @@ sap.ui.define([
             }
             return []
         },
-        fmtEnableAccess1: function (mParam1) {
+        fmtEnableAccess2: function (mParam1) {
             // method used to give approve reject kyc and bank details buttons only to specific users. 
             // mParam1 > user email id
             //shatakshi users has been given access for the purpose of QA.
-            var aAllowedUsers = ["nppaocor031@nerolac.com", "nppaocor032@nerolac.com", "nppaocor004@nerolac.com", "nppaocor028@nerolac.com", "opsnpp@nerolac.com", "nppaocor001@nerolac.com", "shatakshi.upadhyay@extentia.com"]
+            var aAllowedUsers = [
+                "nppaocor031@nerolac.com",
+                "nppaocor032@nerolac.com",
+                "nppaocor004@nerolac.com",
+                "nppaocor028@nerolac.com",
+                "opsnpp@nerolac.com",
+                "nppaocor001@nerolac.com",
+                "shatakshi.upadhyay@extentia.com",
+                "eastnppsupport@nerolac.com",
+                "northnppsupport@nerolac.com",
+                "westnppsupport@nerolac.com",
+                "southnppsupport@nerolac.com",
+                "north1nppsupport@nerolac.com",
+                "south1nppsupport@nerolac.com",
+                "nppaocor021@nerolac.com",
+                "nppaocor042@nerolac.com",
+                "azhar.sayyed@extentia.com",
+                "sachin.korpad@extentia.com"
+            ]
             if (mParam1) {
                 var sEmail = mParam1.toLowerCase().trim();
                 if (aAllowedUsers.indexOf(sEmail) >= 0) {
@@ -252,6 +309,12 @@ sap.ui.define([
                 }
             }
             return false;
+        },
+        fmtEnableAccess1: function (mParam1) {
+            if (mParam1) {
+                return true;
+            }
+            return false
         },
         fmtDisplayUpdatedDetails: function (mParam1) {
             // mParam1 > createdbydetails/updatedby details
@@ -261,6 +324,181 @@ sap.ui.define([
             if (mParam1) {
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
-        }
+        },
+        fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6, mParam7) {
+            // mParam1 PainterNameChangeRequest
+            // mParam2 oModelControl2>/NameChange/Edit
+            //mParam3  LoginInfo>/UserTypeId
+            // mParam4 PainterBankDetails/Status
+            // mParam5 PainterBankDetails/Status
+            // mParam6 MembershipID
+            // mParam7 Rejected status for PainterNameChangeRequest
+            if (mParam1 === null || mParam7 === "REJECTED") {
+                if (mParam2 === false) {
+                    if (mParam3 === 2) {
+                        if (mParam4 !== "APPROVED") {
+                            if (mParam5 !== "APPROVED") {
+                                if (mParam6) {
+                                    return true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        },
+        fmtNameApprove: function (mParam1, mParam2) {
+            if (mParam1 === "PENDING") {
+                if (mParam2 === 3 || mParam2 === 4) {
+                    return true;
+                }
+            }
+            return false
+        },
+        fmtNameEscalate: function (mParam1, mParam2, mParam3, mParam4) {
+
+            if (mParam1 === "PENDING") {
+                if (mParam2 === "TL") {
+                    if (mParam3 === 3) {
+                        if (mParam4 === false) {
+                            return true;
+                        }
+
+                    }
+                }
+            }
+
+            return false
+        },
+        fmtSendApprMobChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6, mParam7) {
+            // mParam1 PainterNameChangeRequest
+            // mParam2 'oModelControl2>/NameChange/Edit
+            //mParam3 LoginInfo>/UserTypeId
+            // mParam4 PainterBankDetails/Status
+            // mParam5 PainterBankDetails/Status
+            // mParam6 MembershipID
+            //console.log(mParam1, mParam2, mParam3, mParam4, mParam5, mParam6)
+            if (mParam1 === null || mParam7 === "REJECTED") {
+                if (mParam2 === false) {
+                    if (mParam3 === 2) {
+                        if (mParam6) {
+                            return true
+                        }
+                    }
+                }
+            }
+            return false;
+        },
+        fmtMobileChangeApproveBtn: function (mParam1, mParam2) {
+            if (mParam1 === "PENDING") {
+                if (mParam2 === 3 || mParam2 === 4) {
+                    return true;
+                }
+            }
+            return false
+        },
+        fmtMobileEscalateBtn: function (mParam1, mParam2, mParam3, mParam4) {
+            if (mParam1 === "PENDING") {
+                if (mParam2 === "TL") {
+                    if (mParam3 === 3) {
+                        if (mParam4 === false) {
+                            return true;
+                        }
+
+                    }
+                }
+            }
+            return false
+        },
+        fmtStatus1: function (sStatus) {
+            var newStatus = "";
+            if (sStatus === "REGISTERED") {
+                newStatus = "Registered";
+            } else if (sStatus === "INREVIEW") {
+                newStatus = "In Review";
+            } else if (sStatus === "RESOLVED") {
+                newStatus = "Resolved";
+            } else if (sStatus === "WITHDRAWN") {
+                newStatus = "Withdrawn";
+            } ///// added by deepanjali for History table////
+            else if (sStatus === "REOPEN") {
+                newStatus = "Reopen";
+            } else if (sStatus === "PENDING") {
+                newStatus = "Pending";
+            } else if (sStatus === "APPROVED") {
+                newStatus = "Approved";
+            } else if (sStatus === "REJECTED") {
+                newStatus = "Rejected";
+            }
+            return newStatus;
+        },
+        // workflow icons
+        ExecutionLogTitle: function (sSubject, sType) {
+            //   return t.getText("EXECUTION_LOG_TYPE_" + e, [r])
+            //   if("FORCETAT" == sSubject) return "Manual Escalation";
+            switch (sSubject) {
+                case "FORCETAT":
+                    return "Manual Escalation";
+                case "APPROVED":
+                    return "Name Change request Approved";
+                case "REJECTED":
+                    return "Name Change request Rejected";
+            }
+            switch (sType) {
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
+                    return "Auto Escalation";
+                case "WORKFLOW_STARTED":
+                    return "Name Change request Sent for Approval.";
+                case "WORKFLOW_COMPLETED":
+                    return "Name Change request Approval Process Completed.";
+                case "WORKFLOW_CANCELED":
+                    return "Name Change request Workflow Cancelled.";
+                case "USERTASK_COMPLETED":
+                    return "Name Change request Approved.";
+            }
+            return sSubject;
+        },
+        ExecutionLogTitle2: function (sSubject, sType) {
+            switch (sSubject) {
+                case "FORCETAT":
+                    return "Manual Escalation";
+                case "APPROVED":
+                    return "Mobile No. Change request Approved";
+                case "REJECTED":
+                    return "Mobile No. Change request Rejected";
+            }
+            switch (sType) {
+                case "USERTASK_CANCELED_BY_BOUNDARY_EVENT":
+                    return "Auto Escalation";
+                case "WORKFLOW_STARTED":
+                    return "Mobile No. Change request Sent for Approval.";
+                case "WORKFLOW_COMPLETED":
+                    return "Mobile No. Change request Approval Process Completed.";
+                case "WORKFLOW_CANCELED":
+                    return "Mobile No. Change request Workflow Cancelled.";
+                case "USERTASK_COMPLETED":
+                    return "Mobile No. Change request Approved.";
+            }
+            return sSubject;
+        },
+        formatLogIcon: function (sStatus) {
+            return wfIcons[sStatus];
+        },
+        ExecutionLogUserName: function (aEmails) {
+            return !!(aEmails) ? aEmails.join(" ") : " ";
+        },
+        ExecutionLogDateTime: function (dValue) {
+            if (!dValue) {
+                return "";
+            }
+            var localDate = new Date(dValue);
+            var pattern = "dd/MM/yyyy hh:mm a";
+            var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                pattern: pattern
+            });
+            var oNow = new Date(localDate);
+            return oDateFormat.format(oNow);
+        },
     };
 });

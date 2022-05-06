@@ -97,7 +97,26 @@ xmlns:f="sap.ui.layout.form">
 			items="{path: 'data>/MasterUserTypeSet'}">
 				<core:Item key="{data>Id}" text="{data>Description}" />
 			</Select>
-		
+                <Label text="{i18n>IsBankUpdateApplicable}" labelFor="rb1" design="Bold" required="false" />
+                  
+                   <RadioButtonGroup id="rb1"  columns="2" >
+                    <RadioButton text="{i18n>No}"/>
+                      <RadioButton text="{i18n>Yes}"/>
+                </RadioButtonGroup>
+                	<Label text="{i18n>IsKycUpdateApplicable}" labelFor="rb2" design="Bold" required="false" />
+                   <RadioButtonGroup id="rb2" columns="2" >
+                    <RadioButton text="{i18n>No}"/>
+                      <RadioButton text="{i18n>Yes}"/>
+                </RadioButtonGroup>
+                	<Label text="{i18n>Zone}" labelFor="zone" design="Bold" required="false" />
+                       <MultiComboBox selectionChange="onChangeZone" required="false" id="zone" selectedKeys="{path:'oModelControl>/MultiCombo/Zone' }"  placeholder="{i18n>placeHolder1}" items="{path:'data>/MasterZoneSet' }">
+                            <core:Item text="{data>Id}" key="{data>Id}"/>
+                     </MultiComboBox>
+                     <Label text="{i18n>Division}" labelFor="division" design="Bold" required="false" />
+                       <MultiComboBox required="false" id="division" selectedKeys="{path:'oModelControl>/MultiCombo/Division' }"  placeholder="{i18n>placeHolder1}" items="{path:'data>/MasterDivisionSet' }">
+                            <core:Item text="{data>Id}" key="{data>Id}"/>
+                     </MultiComboBox>
+
 			</f:content>
 		</f:SimpleForm>
 	</VBox>

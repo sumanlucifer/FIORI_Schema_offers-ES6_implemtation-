@@ -1,0 +1,79 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                            id="smartHistory"
+                            editable="false"
+                            beforeRebindTable="onBeforeRebindHistoryTable"                    
+                            entitySet="ComplainApprovalLogSet"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="HistoryPersistenceKey"
+                            requestAtLeastFields="ComplainId"
+                             initialNoDataText="{i18n>tableNoDataText}"
+                           >
+
+        <Table growing="true" growingThreshold="15" growingScrollToLoad="false">
+            <columns>
+                <!-- <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintCode", "leadingProperty": "ComplaintCode", "columnIndex": 0 ,"sortProperty": "ComplaintCode","filterProperty": "ComplaintCode"}'/>
+                    </customData>
+                    <Text text="{i18n>CondonationId}"/>
+                </Column> -->
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedAt", "leadingProperty": "UpdatedAt", "columnIndex": 1 ,"sortProperty": "UpdatedAt","filterProperty": "UpdatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>UpdatedAt}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ApprovalStatus", "leadingProperty": "ApprovalStatus", "columnIndex": 2 ,"sortProperty": "ApprovalStatus","filterProperty": "ApprovalStatus"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintStatus}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Remark", "leadingProperty": "Remark", "columnIndex": 3 ,"sortProperty": "Remark","filterProperty": "Remark"}'/>
+                    </customData>
+                    <Text text="{i18n>Remark}"/>
+                </Column>
+                  <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedByDetails/Name", "leadingProperty": "UpdatedByDetails/Name", "columnIndex": 4 ,"sortProperty": "UpdatedByDetails/Name","filterProperty": "UpdatedByDetails/Name"}'/>
+                    </customData>
+                    <Text text="{i18n>UpdatedBy}"/>
+                </Column>
+               
+                
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                    <!-- <HBox>
+                      
+                        <ObjectAttribute
+		
+			text="{ComplaintCode}"
+				active="true"
+				press="onPressHistoryCompliantCode" />
+                    </HBox> -->
+                        	
+                       <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                         <Text text="{path:'ApprovalStatus',formatter:'.formatter.fmtLowerCase'}"/>
+                           <Text text="{path:'Remark'}"/>
+                            <Text text="{UpdatedByDetails/Name}"/>
+
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

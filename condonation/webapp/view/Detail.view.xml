@@ -43,23 +43,35 @@
             </f:DynamicPageHeader>
         </f:header> -->
         <f:content>
-            <IconTabBar expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <IconTabBar expandable="false" expanded="true" id="iconTabBar"  class="sapUiResponsiveContentPadding"  select="onIcnTabChange" selectedKey="{oModelControl>/IcnTabKey}" >
                 <items>
-                    <IconTabFilter  text="{i18n>Overview}" >
+                    <IconTabFilter  text="{i18n>Overview}"  key="0">
                         <VBox id="oVbxSmtTbl" width="100%">
                           </VBox>
                         </IconTabFilter>
                         
+                    
+                        <IconTabFilter  text="{i18n>History}" key="1" >
+                                <core:Fragment fragmentName="com.knpl.pragati.condonation.view.subview.HistoryTable" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter  text="Execution Log" key="2" >
+                            <VBox height="100%" width="100%">
+                                    <core:Fragment fragmentName="com.knpl.pragati.condonation.view.subview.ExecutionLog" type="XML"/>
+                            </VBox>
+                        </IconTabFilter>
                     </items>
                 </IconTabBar>
+                 
          
         </f:content>
         <f:footer>
             <Toolbar>
                 <ToolbarSpacer/>
+                   <Button width="7%" text="{i18n>Approve}" type="Accept" press="onPressApprove" visible="{parts:['ApprovalStatus','LoginInfo>/UserTypeId'], formatter:'.formatter.fmtBtnApprove'}" />
+                       
+                 <Button width="7%" text="{i18n>Reject}" type="Reject"  press="onRemarksDialogOpen" visible="{parts:['ApprovalStatus','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtBtnApprove'}" /> 
+                   <Button width="10%" text="{i18n>Escalate}" type="Critical"   press="onPressEscalate" visible="{parts:['ApprovalStatus','AssigneUserType','LoginInfo>/UserTypeId','InitiateForceTat'], formatter:'.formatter.fmtEscalateBtn'}" /> 
                 <Button id="cancel" text="Cancel" type="Ghost" visible="true" press="onNavBack"/>
-                   <!-- <Button text="{i18n>Escalate}" type="Critical" press="onPressEscalate"/>
-                <Button id="save" text="Save" type="Emphasized" visible="true" press="handleSavePress"/> -->
             </Toolbar>
         </f:footer>
     </f:DynamicPage>

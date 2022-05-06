@@ -40,19 +40,41 @@ sap.ui.define([
 
                 // build filter array
                 var aFilter = [];
+                
                 var sQuery = oEvent.getParameter("query");
+                var oList = this.getView().byId("tableUsers");
+                var oBinding = oList.getBinding("items");
                 if (sQuery) {
                     // aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
-                    aFilter.push(new Filter(
-                        "tolower(Name)",
-                        FilterOperator.Contains,
-                        "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
-                    ));
+                    aFilter = new Filter ({
+                        and:false,
+                        filters:[
+                        new Filter({
+                            path: "Name",
+                            operator: "Contains",
+                            value1: sQuery.trim(),
+                            caseSensitive: false
+                        }),
+                        new Filter({
+                            path: "Mobile",
+                            operator: "Contains",
+                            value1: sQuery.trim(),
+                            caseSensitive: false
+                        }),
+                        new Filter({
+                            path: "Email",
+                            operator: "Contains",
+                            value1: sQuery.trim(),
+                            caseSensitive: false
+                        })
+                    ]})
+                    oBinding.filter(aFilter);
+                }else {
+                    oBinding.filter([]);
                 }
 
                 // filter binding
-                var oList = this.getView().byId("tableUsers");
-                var oBinding = oList.getBinding("items");
+                
                 oBinding.filter(aFilter);
             },
             onFilterRoles: function (oEvent) {

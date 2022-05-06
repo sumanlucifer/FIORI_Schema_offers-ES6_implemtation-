@@ -122,6 +122,7 @@ sap.ui.define(
                                 success: function (data) {
                                     if (data.hasOwnProperty("results")) {
                                         if (data["results"].length > 0) {
+                                            //data["results"][0]["UserTypeId"]=3
                                             oLoginModel.setData(data["results"][0]);
                                             oControlModel.setProperty(
                                                 "/LoggedInUser",
@@ -278,6 +279,17 @@ sap.ui.define(
                     oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
 
                 },
+                _onCreationFailed: function (mParam1) {
+                    // mParam1 > error object
+
+                    var sMessage;
+                    if (mParam1.statusCode == 409) {
+                        this._showMessageBox2("error", "Message13", [mParam1.responseText]);
+
+                    }
+
+                },
+
                 onApproveReject: function (mParam1) {
 
                     var oView = this.getView();
@@ -319,13 +331,13 @@ sap.ui.define(
 
                     var c1, c2, c3;
 
-
+                    var aFailureCallback = this._onCreationFailed.bind(this);
                     c2 = othat._UpdatePoints(oNewPayLoad);
                     c2.then(function (oNewPayLoad) {
                         oModelC.setProperty("/bBusy", false);
                         othat.onNavBack();
 
-                    })
+                    }, aFailureCallback)
 
                 },
                 _UpdatePoints: function (oPayLoad) {
@@ -334,8 +346,6 @@ sap.ui.define(
                     var oView = this.getView();
                     var oDataModel = oView.getModel();
                     var oProp = oView.getModel("oModelControl").getProperty("/bindProp");
-
-
                     return new Promise((resolve, reject) => {
                         oDataModel.update("/" + oProp, oPayLoad, {
                             success: function (data) {
@@ -344,13 +354,12 @@ sap.ui.define(
                                 resolve(data);
                             },
                             error: function (data) {
-                                MessageToast.show("Error In Update");
+                                //MessageToast.show("Error In Update");
+                                oView.getModel("oModelControl").setProperty("/bBusy", false)
                                 reject(data);
                             },
                         });
                     });
-
-
                 },
                 _CreatePayLoadEdit2: function (mParam1) {
                     var promise = jQuery.Deferred();

@@ -7,14 +7,48 @@
                 <Text text="{MembershipCard}" />
                 <Label required="false" text="{i18n>DateOfJoining}" />
                 <Text text="{path:'JoiningDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <!-- This section is visible initally for the displaying mobile no, to send change request for the first time, showing the status of mob no change req if its approved-->  
                 <Label required="false" text="{i18n>PrimaryMobileNo}" />
-                <Text text="{Mobile}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <VBox>
+                    <items>
+                            <HBox width="100%" alignContent="Center"><items>
+                             <Text text="{Mobile}" class="sapUiTinyMarginEnd" />
+                            <core:Icon src="sap-icon://message-information" press="onIconMobileHistoryPress"  visible="{= ${PainterMobileNumberChangeRequest} !== null  }"/>
+                          </items></HBox>
+                             <ObjectAttribute title="{i18n>MobileChangeStatus}" text="{PainterMobileNumberChangeRequest/Status}" visible="{= ${PainterMobileNumberChangeRequest/Status} === 'APPROVED'  }" ></ObjectAttribute>
+                           <Link text="{i18n>SendReqForUpdateMobile}" visible="{parts:['PainterMobileNumberChangeRequest', 'oModelControl2>/MobileChangeWorkflow/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard','PainterMobileNumberChangeRequest/Status'], formatter:'.formatter.fmtSendApprMobChangeReq'}" press="onMobileChangePress" />
+                    </items>
+                </VBox>
+                  <!-- This section is the edit section used for taking the details like new mob no and sending the request-->  
+                 <Label text="{i18n>UpdateMobile}" visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true }"/>
+                <VBox width="100%"  visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true}">
+                    <items>
+                          <Input type="Number" placeholder="{i18n>Enter} {i18n>UpdateMobile}" value="{oModelControl2>/MobileChangeWorkflow/RequestedField}" />
+                          <HBox>
+                            <Button text="{i18n>SendForApproval}" class="sapUiTinyMarginEnd" type="Ghost" press=".onSendApprovalMobileChange" />
+                            <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressMobileChange" />
+                          </HBox>
+                    </items>
+                </VBox>
+                  <!-- This section used for approve and reject of mob no change request. And also displaying detials if the request is not approved-->  
+                 <Label text="{i18n>UpdateMobile}" visible="{= ${PainterMobileNumberChangeRequest}!==null &amp;&amp; ${PainterMobileNumberChangeRequest/Status}!=='APPROVED' }"/>
+                <VBox width="100%"  visible="{= ${PainterMobileNumberChangeRequest}!==null &amp;&amp; ${PainterMobileNumberChangeRequest/Status}!=='APPROVED'  }">
+                    <items>
+                          <Text text="{PainterMobileNumberChangeRequest/RequestedMobileNumber}" />
+                          <ObjectAttribute title="{i18n>MobileChangeStatus}" text="{PainterMobileNumberChangeRequest/Status}" ></ObjectAttribute>
+                            <ObjectAttribute title="{i18n>Remark}" text="{PainterMobileNumberChangeRequest/Remark}" ></ObjectAttribute>
+                          <HBox>
+                            <Button text="{i18n>Approve}"  class="sapUiTinyMarginEnd" type="Accept" press="onApproveMobileChange('APPROVED')" visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}" />
+                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Reject" press="onRemarksDialogOpen('MOBILE')"  visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}"  />
+                              <Button text="{i18n>Escalate}" type="Critical"  press="onEscalateMobileChange" visible="{parts:['PainterMobileNumberChangeRequest/Status','PainterMobileNumberChangeRequest/AssigneUserType','LoginInfo>/UserTypeId','PainterMobileNumberChangeRequest/InitiateForceTat'],formatter:'.formatter.fmtMobileEscalateBtn'}" />
+                          </HBox>
+                    </items>
+                </VBox>
                 <Label text="{i18n>SecondryMobileNo}" />
                 <VBox items="{path:'PainterContact/',templateShareable: false}">
                     <Text text="{Mobile}" />
                 </VBox>
-                <!-- <Label text="{i18n>IsAppInstalled}" />
-                <Text text="{path:'IsAppInstalled',formatter:'.formatter.fmtCheckNull'}"/> -->
+
                 <Label text="{i18n>PainterType}" />
                 <Text text="{PainterType/PainterType}" />
                 <Label text="{i18n>AgeGroup}" />
@@ -34,8 +68,43 @@
                 <Label text="{i18n>LastUpdatedAt}" />
                 <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
                 <core:Title text="{i18n>PersonalDetails}" />
+                <!-- This section is visible initally for the displaying name, to re-assign change request for the first time, showing the status of name change if its approved-->  
                 <Label text="{i18n>FullName}" />
-                <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }" />
+                <VBox width="100%">
+                    <items>
+                          <HBox width="100%" alignContent="Center"><items>
+                            <Text text="{Name}" visible="{= ${oModelView>/profileEdit} !== true }"  class="sapUiTinyMarginEnd"/>
+                            <core:Icon src="sap-icon://message-information" press="onIconNameHistoryPress" visible="{= ${PainterNameChangeRequest} !== null  }"/>
+                          </items></HBox>
+                           <ObjectAttribute title="{i18n>NameChangeStatus}" text="{PainterNameChangeRequest/Status}" visible="{= ${PainterNameChangeRequest/Status} === 'APPROVED'  }" ></ObjectAttribute>
+                          <Link text="{i18n>SendReqForUpdateName}" visible="{parts:['PainterNameChangeRequest', 'oModelControl2>/NameChange/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard','PainterNameChangeRequest/Status'], formatter:'.formatter.fmtSendApprNameChangeReq'}" press="onNameChangePress" />
+                    </items>
+                </VBox>
+                  <!-- This section is the edit section used for taking the details like name and sending the req to back end -->  
+                <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true }"/>
+                <VBox width="100%"  visible="{= ${oModelControl2>/NameChange/Edit} === true }">
+                    <items>
+                          <Input placeholder="{i18n>Enter} {i18n>UpdateName}" value="{oModelControl2>/NameChange/RequestedName}" />
+                          <HBox>
+                            <Button text="{i18n>SendForApproval}" class="sapUiTinyMarginEnd" type="Ghost" press=".onSendApprovalNameChange" />
+                            <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressNameChange" />
+                          </HBox>
+                    </items>
+                </VBox>
+                 <!-- This section used for approve and reject of name change request. And also displaying detials if the request is not approved-->  
+                <Label text="{i18n>UpdateName}" visible="{= ${PainterNameChangeRequest}!==null &amp;&amp; ${PainterNameChangeRequest/Status} !== 'APPROVED'  }"/>
+                <VBox width="100%"  visible="{= ${PainterNameChangeRequest}!==null &amp;&amp; ${PainterNameChangeRequest/Status} !== 'APPROVED' }">
+                    <items>
+                          <Text text="{PainterNameChangeRequest/RequestedName}" />
+                          <ObjectAttribute title="{i18n>NameChangeStatus}" text="{PainterNameChangeRequest/Status}" ></ObjectAttribute>
+                            <ObjectAttribute title="{i18n>Remark}" text="{PainterNameChangeRequest/Remark}" ></ObjectAttribute>
+                          <HBox>
+                            <Button text="{i18n>Approve}" class="sapUiTinyMarginEnd" type="Accept" press="onApproveNameChange('APPROVED')" visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}" />
+                            <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Reject" press="onRemarksDialogOpen('NAME')"  visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}"  />
+                              <Button text="{i18n>Escalate}" type="Critical" press="onEscalateNameChange" visible="{parts:['PainterNameChangeRequest/Status','PainterNameChangeRequest/AssigneUserType','LoginInfo>/UserTypeId','PainterNameChangeRequest/InitiateForceTat'],formatter:'.formatter.fmtNameEscalate'}" />
+                          </HBox>
+                    </items>
+                </VBox>
                 <Label required="false" text="{i18n>EmailId}" />
                 <Text text="{Email}" visible="{= ${oModelView>/profileEdit} !== true }" />
                 <Label text="{i18n>MaritalStatus}" />
@@ -78,12 +147,10 @@
                 <Label text="{i18n>Depot}" />
                 <Text text="{Depot/Depot}" />
                 <Label text="{i18n>LinkPrimaryDealer}" />
-                <Text id="profPDlr" text="{PrimaryDealerDetails/DealerName} - {PrimaryDealerDetails/Id}" />
+                <Text text="{PrimaryDealerDetails/DealerName} - {PrimaryDealerDetails/Id}" />
                 <Label text="{i18n>LinkSecondryDealer}" />
                 <Link text="{=${Dealers}.length} {i18n>Dealers}" visible="{= ${oModelView>/profileEdit} !== true }" press="onPressDealerLink" />
-                <!-- <Label text="{i18n>AddressLine2}" />
-                <Text text="{PainterAddress/AddressLine2}"/>-->
-
+              
                 <core:Title text="{i18n>SecurityQuestions}" />
                 <Label text="{i18n>Question}" />
                 <Text text="{Preference/SecurityQuestion/Question}" visible="{= ${oModelView>/profileEdit} !== true }" />

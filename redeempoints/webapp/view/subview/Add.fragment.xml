@@ -32,7 +32,13 @@
                 <Label />
                 <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 22  }" value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
                 <core:Title text="" />
-                <Title visible="{oModelControl>/bDoc}" text="Bank details and KYC documents should be approved to redeem points." />
+                <VBox width="100%">
+                    <items>
+                      <Title visible="{oModelControl>/bDoc}" text="Bank details and KYC documents should be approved to redeem points." />
+                        <Title visible="{oModelControl>/bPrimaryDealer}" text="Primary Dealer not there for the painter." />
+                    </items>
+                </VBox>
+              
                 <Label text="{i18n>Balpts}" />
                 <Text  text="{oModelView>/AddFields/BalPoints}" />
                 <Label text="{i18n>bnkStatus}" />
