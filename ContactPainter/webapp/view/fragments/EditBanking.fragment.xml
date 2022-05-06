@@ -10,7 +10,7 @@
 			<ToolbarSpacer/>
             <FlexBox visible="{= ${PainterBankDetails/Status} === 'APPROVED'|| ${PainterBankDetails/Status} === 'REJECTED' || ${PainterBankDetails} === null}">
                <HBox  visible="{= ${oModelControl>/PennyDropVisible} }" >
- <Button enabled="{path:LoginInfo>/IsBankUpdateAllowed', formatter:'.formatter.fmtEnableAccess1'}"  class="sapUiTinyMarginEnd"   visible="{= ${PainterBankDetails/Status} === 'REJECTED' ? true :false }" tooltip="{i18n>addpennydrop}" text="{i18n>addpennydrop}" type="Ghost"  press="addPennyDrop"/>
+ <Button enabled="{path:'LoginInfo>/IsBankUpdateAllowed', formatter:'.formatter.fmtEnableAccess1'}"  class="sapUiTinyMarginEnd"   visible="{= ${PainterBankDetails/Status} === 'REJECTED' ? true :false }" tooltip="{i18n>addpennydrop}" text="{i18n>addpennydrop}" type="Ghost"  press="addPennyDrop"/>
 </HBox>
                 <Button enabled="{path:'LoginInfo>/IsBankUpdateAllowed', formatter:'.formatter.fmtEnableAccess1'}"  visible="{=!${oModelControl>/EditBankButton}}" text="Edit" type="Emphasized" press="onEditBankingFields"/>
                 <Button visible="{=${oModelControl>/EditBankButton}}" text="Cancel" press="onEditCancelBankingFields"/>
