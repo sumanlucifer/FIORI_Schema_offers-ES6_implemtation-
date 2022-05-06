@@ -26,7 +26,7 @@
                 <ToolbarSpacer/>
                
                 <Button width="7%" text="{i18n>Cancel}" type="Ghost" press="onNavBack"/>
-                 <Button width="7%" text="{i18n>SendForApproval}" type="Emphasized" press="onPressSave"/>
+                 <Button width="14%" text="{i18n>SendForApproval}" type="Emphasized" press="onPressSave"/>
             </Toolbar>
         </footer>
     </Page>
