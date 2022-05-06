@@ -43,7 +43,7 @@
                                     <ComboBox placeholder="{i18n>Enter} {i18n>Status}" selectedKey="{oModelControl>/filterBar/ComplaintStatus}">
                                         <!-- <core:Item text="Registered" key="REGISTERED"/> -->
                                           <core:Item text="Pending" key="PENDING"/>
-                                        <core:Item text="Approved" key="Approved"/>
+                                        <core:Item text="Approved" key="APPROVED"/>
                                         <core:Item text="Rejected" key="REJECTED"/>
                                         <!-- <core:Item text="Withdrawn" key="WITHDRAWN"/> -->
                                     </ComboBox>
