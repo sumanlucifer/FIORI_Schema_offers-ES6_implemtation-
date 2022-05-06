@@ -163,18 +163,18 @@
                                         <Text class="sapUiTinyMarginTop"  text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY',UTC:true}}"/>
                                     </form:fields>
                                 </form:FormElement> -->
-                                    <form:FormElement label="{i18n>CreatedBy}">
+                                <!-- <form:FormElement label="{i18n>CreatedBy}">
                                     <form:fields>
-                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                      
                                          <Text class="sapUiTinyMarginTop"  text="{path:'CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" /> 
                                     </form:fields>
                                 </form:FormElement>
                                     <form:FormElement label="{i18n>CreatedAt}">
                                     <form:fields>
-                                        <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
+                                       
                                         <Text class="sapUiTinyMarginTop"  text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a',UTC:false}}"/>
                                     </form:fields>
-                                </form:FormElement>
+                                </form:FormElement> -->
                                     <form:FormElement label="{i18n>LastUpdatedBy}">
                                     <form:fields>
                                         <!-- <Text class="sapUiTinyMarginTop" text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}" /> -->
