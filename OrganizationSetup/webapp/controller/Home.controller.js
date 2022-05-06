@@ -40,14 +40,31 @@ sap.ui.define([
 
                 // build filter array
                 var aFilter = [];
+                
                 var sQuery = oEvent.getParameter("query");
                 if (sQuery) {
                     // aFilter.push(new Filter("Name", FilterOperator.Contains, sQuery));
-                    aFilter.push(new Filter(
-                        "tolower(Name)",
-                        FilterOperator.Contains,
-                        "'" + sQuery.trim().toLowerCase().replace("'", "''") + "'"
-                    ));
+                    aFilter = new Filter ([
+                        new Filter({
+                            path:'Name',
+                            FilterOperator:"Contains",
+                            value1:sQuery,
+                            caseSensitive:false
+                        }),
+                        new Filter({
+                            path:'Email',
+                            FilterOperator:"Contains",
+                            value1:sQuery,
+                            caseSensitive:false
+                        }),
+                        new Filter({
+                            path:'Mobile',
+                            FilterOperator:"Contains",
+                            value1:sQuery,
+                            caseSensitive:false
+                        })
+                    ])
+                   
                 }
 
                 // filter binding
