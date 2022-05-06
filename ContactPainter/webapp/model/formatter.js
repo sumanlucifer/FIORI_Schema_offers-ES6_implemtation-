@@ -301,7 +301,7 @@ sap.ui.define([
                 "nppaocor042@nerolac.com",
                 "azhar.sayyed@extentia.com",
                 "sachin.korpad@extentia.com"
-              ]
+            ]
             if (mParam1) {
                 var sEmail = mParam1.toLowerCase().trim();
                 if (aAllowedUsers.indexOf(sEmail) >= 0) {
@@ -320,7 +320,7 @@ sap.ui.define([
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
         },
-        fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6,mParam7) {
+        fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6, mParam7) {
             // mParam1 PainterNameChangeRequest
             // mParam2 oModelControl2>/NameChange/Edit
             //mParam3  LoginInfo>/UserTypeId
@@ -328,7 +328,7 @@ sap.ui.define([
             // mParam5 PainterBankDetails/Status
             // mParam6 MembershipID
             // mParam7 Rejected status for PainterNameChangeRequest
-            if (mParam1 === null || mParam7==="REJECTED") {
+            if (mParam1 === null || mParam7 === "REJECTED") {
                 if (mParam2 === false) {
                     if (mParam3 === 2) {
                         if (mParam4 !== "APPROVED") {
@@ -366,7 +366,7 @@ sap.ui.define([
 
             return false
         },
-        fmtSendApprMobChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6) {
+        fmtSendApprMobChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6, mParam7) {
             // mParam1 PainterNameChangeRequest
             // mParam2 'oModelControl2>/NameChange/Edit
             //mParam3 LoginInfo>/UserTypeId
@@ -374,15 +374,11 @@ sap.ui.define([
             // mParam5 PainterBankDetails/Status
             // mParam6 MembershipID
             //console.log(mParam1, mParam2, mParam3, mParam4, mParam5, mParam6)
-            if (mParam1 === null) {
+            if (mParam1 === null || mParam7 === "REJECTED") {
                 if (mParam2 === false) {
                     if (mParam3 === 2) {
-                        if (mParam4 !== "APPROVED") {
-                            if (mParam5 !== "APPROVED") {
-                                if (mParam6) {
-                                    return true
-                                }
-                            }
+                        if (mParam6) {
+                            return true
                         }
                     }
                 }
@@ -423,11 +419,11 @@ sap.ui.define([
             } ///// added by deepanjali for History table////
             else if (sStatus === "REOPEN") {
                 newStatus = "Reopen";
-            }  else if (sStatus === "PENDING") {
+            } else if (sStatus === "PENDING") {
                 newStatus = "Pending";
             } else if (sStatus === "APPROVED") {
                 newStatus = "Approved";
-            }else if (sStatus === "REJECTED") {
+            } else if (sStatus === "REJECTED") {
                 newStatus = "Rejected";
             }
             return newStatus;
@@ -479,7 +475,7 @@ sap.ui.define([
                 case "USERTASK_COMPLETED":
                     return "Mobile No. Change request Approved.";
             }
-            return sSubject ;
+            return sSubject;
         },
         formatLogIcon: function (sStatus) {
             return wfIcons[sStatus];

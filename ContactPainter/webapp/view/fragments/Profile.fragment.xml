@@ -16,12 +16,12 @@
                             <core:Icon src="sap-icon://message-information" press="onIconMobileHistoryPress"  visible="{= ${PainterMobileNumberChangeRequest} !== null  }"/>
                           </items></HBox>
                              <ObjectAttribute title="{i18n>MobileChangeStatus}" text="{PainterMobileNumberChangeRequest/Status}" visible="{= ${PainterMobileNumberChangeRequest/Status} === 'APPROVED'  }" ></ObjectAttribute>
-                           <Link text="{i18n>SendReqForUpdateMobile}" visible="{parts:['PainterMobileNumberChangeRequest', 'oModelControl2>/MobileChangeWorkflow/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard'], formatter:'.formatter.fmtSendApprMobChangeReq'}" press="onMobileChangePress" />
+                           <Link text="{i18n>SendReqForUpdateMobile}" visible="{parts:['PainterMobileNumberChangeRequest', 'oModelControl2>/MobileChangeWorkflow/Edit', 'LoginInfo>/UserTypeId','PainterBankDetails/Status','PainterKycDetails/Status','MembershipCard','PainterMobileNumberChangeRequest/Status'], formatter:'.formatter.fmtSendApprMobChangeReq'}" press="onMobileChangePress" />
                     </items>
                 </VBox>
                   <!-- This section is the edit section used for taking the details like new mob no and sending the request-->  
-                 <Label text="{i18n>UpdateMobile}" visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true &amp;&amp;  ${PainterMobileNumberChangeRequest}===null }"/>
-                <VBox width="100%"  visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true &amp;&amp;  ${PainterMobileNumberChangeRequest}===null }">
+                 <Label text="{i18n>UpdateMobile}" visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true }"/>
+                <VBox width="100%"  visible="{= ${oModelControl2>/MobileChangeWorkflow/Edit} === true}">
                     <items>
                           <Input type="Number" placeholder="{i18n>Enter} {i18n>UpdateMobile}" value="{oModelControl2>/MobileChangeWorkflow/RequestedField}" />
                           <HBox>
