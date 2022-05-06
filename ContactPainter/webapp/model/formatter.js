@@ -279,7 +279,7 @@ sap.ui.define([
             }
             return []
         },
-        fmtEnableAccess1: function (mParam1) {
+        fmtEnableAccess2: function (mParam1) {
             // method used to give approve reject kyc and bank details buttons only to specific users. 
             // mParam1 > user email id
             //shatakshi users has been given access for the purpose of QA.
@@ -310,7 +310,12 @@ sap.ui.define([
             }
             return false;
         },
-
+        fmtEnableAccess1: function (mParam1) {
+            if (mParam1) {
+                return true;
+            }
+            return false
+        },
         fmtDisplayUpdatedDetails: function (mParam1) {
             // mParam1 > createdbydetails/updatedby details
             if (!mParam1) {

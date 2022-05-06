@@ -94,8 +94,9 @@ sap.ui.define(
                             success: function (data) {
                                 if (data.hasOwnProperty("results")) {
                                     if (data["results"].length > 0) {
-                                        //data["results"][0]["UserTypeId"]=2;
+                                        //data["results"][0]["UserTypeId"]=3;
                                         oLoginModel.setData(data["results"][0]);
+                                        //console.log(oLoginModel)
                                     }
                                 }
 
