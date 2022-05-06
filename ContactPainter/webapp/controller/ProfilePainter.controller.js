@@ -502,7 +502,8 @@ sap.ui.define(
                     var oModelControl = oView.getModel("oModelControl2");
                     var oPayloadInput = {
                         Status: mParam,
-                        InitiateForceTat:false
+                        InitiateForceTat:false,
+                        //Remark:"Approved"
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterNameChangeRequest"]["__ref"]

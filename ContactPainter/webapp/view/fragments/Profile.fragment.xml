@@ -36,7 +36,7 @@
                     <items>
                           <Text text="{PainterMobileNumberChangeRequest/RequestedMobileNumber}" />
                           <ObjectAttribute title="{i18n>MobileChangeStatus}" text="{PainterMobileNumberChangeRequest/Status}" ></ObjectAttribute>
-                            <ObjectAttribute title="{i18n>Remark}" text="{PainterMobileNumberChangeRequest/Remark}" visible="{= ${PainterMobileNumberChangeRequest/Status}==='REJECTED'}" ></ObjectAttribute>
+                            <ObjectAttribute title="{i18n>Remark}" text="{PainterMobileNumberChangeRequest/Remark}" ></ObjectAttribute>
                           <HBox>
                             <Button text="{i18n>Approve}"  class="sapUiTinyMarginEnd" type="Accept" press="onApproveMobileChange('APPROVED')" visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}" />
                             <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Reject" press="onRemarksDialogOpen('MOBILE')"  visible="{parts:['PainterMobileNumberChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtMobileChangeApproveBtn'}"  />
@@ -97,7 +97,7 @@
                     <items>
                           <Text text="{PainterNameChangeRequest/RequestedName}" />
                           <ObjectAttribute title="{i18n>NameChangeStatus}" text="{PainterNameChangeRequest/Status}" ></ObjectAttribute>
-                            <ObjectAttribute title="{i18n>Remark}" text="{PainterNameChangeRequest/Remark}" visible="{= ${PainterNameChangeRequest/Status}==='REJECTED'}" ></ObjectAttribute>
+                            <ObjectAttribute title="{i18n>Remark}" text="{PainterNameChangeRequest/Remark}" ></ObjectAttribute>
                           <HBox>
                             <Button text="{i18n>Approve}" class="sapUiTinyMarginEnd" type="Accept" press="onApproveNameChange('APPROVED')" visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}" />
                             <Button text="{i18n>Reject}" class="sapUiTinyMarginEnd" type="Reject" press="onRemarksDialogOpen('NAME')"  visible="{parts:['PainterNameChangeRequest/Status','LoginInfo>/UserTypeId'],formatter:'.formatter.fmtNameApprove'}"  />
