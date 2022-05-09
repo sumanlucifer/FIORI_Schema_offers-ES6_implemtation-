@@ -25,7 +25,7 @@
                 </ComboBox>
             
                  <Label text="{i18n>PrimaryMobileNo}" />
-                <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" required="true" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelView>/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }" />
+                <Input editable="false" fieldGroupIds="PMobile" change="onPrimaryNoChang" required="true" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelView>/Mobile',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }" />
                 <Label text="{i18n>SecondryMobileNo}" />
                 <VBox>
                     <Input fieldGroupIds="PMobile" change="onPrimaryNoChang" valueStateText="Kindly enter the mobile number of 10 digits." type="Number" value="{path:'oModelControl>/PainterAddDet/SMobile1',type : 'sap.ui.model.type.String', constraints:{ minLength:10,maxLength:10, search: '^[0-9]*$' } }" />
