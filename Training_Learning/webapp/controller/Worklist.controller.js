@@ -80,7 +80,7 @@ sap.ui.define([
                             if (data["results"].length > 0) {
                                 var oLoginData = dat.getView().getModel("LoginInfo");
                                 oLoginData.setData(data["results"][0]);
-                                 console.log(oLoginData);
+                               
                                  dat._setInitialData();
                             }
                         }
@@ -137,13 +137,17 @@ sap.ui.define([
             var oView = this.getView();
             var oLoginData = this.getView().getModel("LoginInfo").getData();
             var aFilter = [];
-            var aLeadsFilter = this._CreateLeadsFilter()
+            var aLeadsFilter = this._CreateLeadsFilter();
+            console.log(aLeadsFilter)
             if (aLeadsFilter) {
                 oView.byId("table").getBinding("items").filter(new Filter({
                     filters: aLeadsFilter,
                     and: true
                 }), "Application")
-           
+                oView.byId("table1").getBinding("items").filter(new Filter({
+                    filters: aLeadsFilter,
+                    and: true
+                }), "Application")
             }
 
 

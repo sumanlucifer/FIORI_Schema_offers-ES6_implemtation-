@@ -3,12 +3,12 @@ sap.ui.define([], function () {
 
     return {
 
-		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
+        /**
+         * Rounds the number unit value to 2 digits
+         * @public
+         * @param {string} sValue the number string to be rounded
+         * @returns {string} sValue with 2 digits rounded
+         */
         numberUnit: function (sValue) {
             if (!sValue) {
                 return "";
@@ -92,7 +92,7 @@ sap.ui.define([], function () {
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
         },
-        fmtDisplayUpdatedDetails2: function (mParam1,mParam2) {
+        fmtDisplayUpdatedDetails2: function (mParam1, mParam2) {
             // mParam1 > createor name
             // mparam2 > creator email
             if (!mParam1) {
@@ -103,23 +103,25 @@ sap.ui.define([], function () {
             }
         },
         fmtLeadsZoneCheck: function (mParam1, mParam2, mParam3) {
-          
+
             if (mParam2 !== 3) {
                 return true
             }
-            if (mParam3["results"].length > 0) {
-                for (var x of mParam3["results"]) {
-                    if (x["ZoneId"] == mParam1) {
-                        return true;
-                      
-                    }
-                }
-                return false;
-            } else {
-                return true;
-            }
+            if (mParam3) {
+                if (mParam3["results"].length > 0) {
+                    for (var x of mParam3["results"]) {
+                        if (x["ZoneId"] == mParam1) {
+                            return true;
 
-          
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
+
+
+
 
         }
 
