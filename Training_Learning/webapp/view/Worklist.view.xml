@@ -61,14 +61,14 @@
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>colDivision}">
 								<fb:control>
 									<ComboBox items="{ path: '/MasterDivisionSet' }" id="idDivision" selectionChange="onDivisionChange" enabled="{= ${worklistView>/filterBar/TrainingZone}.length>1}" selectedKey="{worklistView>/filterBar/TrainingDivision}" placeholder="{i18n>enterDivision}">
-										<core:Item key="{Id}" text="{Id}"/>
+										<core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminDivision'],formatter:'.formatter.fmtLeadDivisionCheck'}" key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDepot" groupTitle="Filters" label="{i18n>colDepot}">
 								<fb:control>
 									<ComboBox items="{ path: '/MasterDepotSet' }" id="idDepot" enabled="{= ${worklistView>/filterBar/TrainingDivision}.length>1}" selectionChange="onDepotChange" selectedKey="{worklistView>/filterBar/TrainingDepot}" placeholder="{i18n>enterDepot}">
-										<core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminDivision'],formatter:'.formatter.fmtLeadDivisionCheck'}" key="{Id}" text="{Depot} ( {Id} )"/>
+										<core:Item  key="{Id}" text="{Depot} ( {Id} )"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
