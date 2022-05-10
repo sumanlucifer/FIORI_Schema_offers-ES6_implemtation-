@@ -83,13 +83,14 @@ sap.ui.define(
                     return appModulePath;
                 },
                 fnLoadLoginData:function() {
+                    console.log("function called1")
                     var oLoginModel = this.getView().getModel("LoginInfo");
                     var oViewModel = this.getView().getModel("appView");
                     this.getOwnerComponent().getModel()
                         .callFunction("/GetLoggedInAdmin", {
                             method: "GET",
                             urlParameters: {
-                                $expand: "UserType"
+                                $expand: "UserType,AdminZone"
                             },
                             success: function (data) {
                                 if (data.hasOwnProperty("results")) {

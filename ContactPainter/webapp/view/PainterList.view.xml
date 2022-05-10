@@ -25,7 +25,7 @@
                          <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
-                                        <core:Item text="{Id} " key="{Id}" />
+                                        <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminZone'],formatter:'.formatter.fmtZones'}" text="{Id} " key="{Id}" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>

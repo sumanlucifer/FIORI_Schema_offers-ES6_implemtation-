@@ -98,7 +98,7 @@ sap.ui.define(
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
                                 urlParameters: {
-                                    $expand: "UserType",
+                                    $expand: "UserType,AdminZone",
                                 },
                                 success: function (data) {
                                     if (data.hasOwnProperty("results")) {
@@ -121,15 +121,59 @@ sap.ui.define(
                     // this._addSearchFieldAssociationToFB();
                     // this._CheckLoginData();
                     var othat = this;
-                    var c1,c2,c3,c4,c5;
-                    c1=othat._initData();
-                    c1.then(function(){
-                        c2=othat._addSearchFieldAssociationToFB();
-                        c2.then(function(){
-                            c3=othat._dummyPromise();
+                    var c1, c2, c3, c4, c5;
+                    c1 = othat._initData();
+                    c1.then(function () {
+                        c2 = othat._addSearchFieldAssociationToFB();
+                        c2.then(function () {
+                            c3 = othat._CheckLoginData();
+                            c3.then(function () {
+                                c4 = othat._initLoginFilterTable1();
+                            })
                         })
                     })
                 },
+                _CreateLeadsFilter: function (mParam1) {
+                    var oView = this.getView();
+                    var oLoginData = this.getView().getModel("LoginInfo").getData();
+                    var aFilter = [];
+                    if (oLoginData["UserTypeId"] === 3) {
+                        if (oLoginData["AdminZone"]["results"].length > 0) {
+                            for (var x of oLoginData["AdminZone"]["results"]) {
+                                aFilter.push(new Filter("ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                            }
+                        }
+                        if (aFilter.length > 0) {
+                            var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, mParam1==="table2"?true:false)];
+                            aEndFilter.push(new Filter({
+                                filters: aFilter,
+                                and: false
+                            }))
+                            return aEndFilter;
+
+                        }
+                    }
+                    return false;
+                },
+                _initLoginFilterTable1: function (mParam1, mParam2) {
+
+                    var promise = $.Deferred();
+                    var oView = this.getView();
+                    var oLoginData = this.getView().getModel("LoginInfo").getData();
+                    var aFilter = [];
+                    var aLeadsFilter = this._CreateLeadsFilter()
+                    if (aLeadsFilter) {
+                        oView.byId("idPainterTable").getBinding("items").filter(new Filter({
+                            filters: aLeadsFilter,
+                            and: true
+                        }), "Application")
+                    }
+
+
+                    promise.resolve();
+                    return promise;
+                },
+
                 _initData: function () {
                     var promise = $.Deferred();
                     var oViewModel = new JSONModel({
@@ -181,6 +225,10 @@ sap.ui.define(
                         .getModel("oModelControl")
                         .getProperty("/filterBar");
                     var aFlaEmpty = true;
+                    // check if there is a lead and it has zones;
+                    // if yes add the filter Zone in the array;
+                    // if the method is trigerred initially we have to add some filters else on the filers that are there in the system
+
                     for (let prop in oViewFilter) {
                         if (oViewFilter[prop]) {
                             if (prop === "AgeGroupId") {
@@ -387,14 +435,14 @@ sap.ui.define(
                     //deleted table
                     var oTable = this.byId("idDelPainterTable");
                     var oBinding = oTable.getBinding("items");
-                    if(oBinding){
+                    if (oBinding) {
                         oBinding.filter([]);
                         oBinding.sort(new Sorter({
                             path: "CreatedAt",
                             descending: true
                         }));
                     }
-                   
+
 
                     this._fiterBarSort();
                 },
@@ -407,7 +455,11 @@ sap.ui.define(
                     if (sKey === "delpainters") {
                         var oView = this.getView();
                         var oTable = oView.byId("idDelPainterTable");
+                        var aFilters = this._CreateLeadsFilter("table2");
                         if (!oTable.getBinding("items")) {
+                            if (!aFilters) {
+                                aFilters = [new Filter("IsArchived", FilterOperator.EQ, true)]
+                            }
                             oTable.bindItems({
                                 path: "/PainterSet",
                                 template: oView.byId("idDelPainterTableTemplate"),
@@ -416,7 +468,7 @@ sap.ui.define(
                                     expand: 'AgeGroup,Preference/Language,PainterBankDetails,PrimaryDealerDetails,PainterKycDetails,PainterType',
                                     select: "Id,RegistrationStatus,Name,MembershipCard,CreatedAt,Mobile,PrimaryDealerDetails/DealerName,Preference/Language/Language,PainterKycDetails/Status,PainterBankDetails/Status,ProfileCompleted,CallBackReqOrComplainFlag"
                                 },
-                                filters: [new Filter("IsArchived", FilterOperator.EQ, true)],
+                                filters: aFilters,
                                 sorter: new Sorter("CreatedAt", true)
                             })
                             this.onFilter();
@@ -440,7 +492,7 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     // clearning data for dealer
-                   // this._dealerReset();
+                    // this._dealerReset();
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
