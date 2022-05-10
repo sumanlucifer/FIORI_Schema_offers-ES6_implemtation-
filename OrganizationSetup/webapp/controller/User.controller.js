@@ -296,6 +296,7 @@ sap.ui.define([
                 this.onDialogPress();
             },
             onChangeZone:function(oEvent){
+                console.log("zone changed")
                 var oView = this.getView();
                 var oDivision = oView.byId("division");
                 var sKeys = oEvent.getSource().getSelectedKeys();
@@ -305,8 +306,9 @@ sap.ui.define([
                 }
                 if(aDivFilter.length>0){
                     oDivision.getBinding("items").filter(aDivFilter);
-                    this.getView().getModel("oModelControl").setProperty("/MultiCombo/Division")
+                    
                 }
+                this.getView().getModel("oModelControl").setProperty("/MultiCombo/Division",[]);
               
             },
 

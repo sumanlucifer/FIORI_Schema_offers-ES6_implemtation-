@@ -113,7 +113,7 @@ floatingFooter="true"
                             <core:Item text="{data>Id}" key="{data>Id}"/>
                      </MultiComboBox>
                      <Label text="{i18n>Division}" labelFor="division" design="Bold" required="false" />
-                       <MultiComboBox required="false" id="division" selectedKeys="{path:'oModelControl>/MultiCombo/Division' }"  placeholder="{i18n>placeHolder1}" items="{path:'data>/MasterDivisionSet' }">
+                       <MultiComboBox editable="{= ${oModelControl>/MultiCombo/Zone}.length > 0 }" required="false" id="division" selectedKeys="{path:'oModelControl>/MultiCombo/Division' }"  placeholder="{i18n>placeHolder1}" items="{path:'data>/MasterDivisionSet' }">
                             <core:Item text="{data>Id}" key="{data>Id}"/>
                      </MultiComboBox>
 

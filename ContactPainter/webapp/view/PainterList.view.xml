@@ -187,9 +187,7 @@
                     <Column>
                         <Text text="{i18n>ProfileCompleted}"/>
                     </Column>
-                    <!-- <Column>
-                        <Text text="{i18n>RegStatus}"/>
-                    </Column> -->
+                 
                     <Column width="8%">
                         <Text text="{i18n>Action}"/>
                     </Column>
@@ -215,9 +213,6 @@
                             </FlexBox>
                             
                             <Text text="{path:'Preference/Language/Language'}"/>
-                            <!-- <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtStatus'}"/> -->
-                            <!-- <Text text="{path:'PainterBankDetails/Status',formatter:'.fmtStatus'}"/> -->
-                            <!-- Aditya changes start-->
                             <FlexBox >
                             <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error"/>
                             <ObjectStatus text="{path: 'PainterKycDetails/Status', formatter: '.fmtStatus'}"
@@ -228,14 +223,7 @@
                              <ObjectStatus text="{path: 'PainterBankDetails/Status', formatter: '.fmtStatus'}"
                             state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
                             </FlexBox>
-                            
-                             <!-- <ObjectStatus text="{path: 'PainterKycDetails/Status', formatter: '.fmtStatus'}"
-                            state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/> -->
-                            <!-- <ObjectStatus text="{path: 'PainterBankDetails/Status', formatter: '.fmtStatus'}"
-                            state="{= ${PainterBankDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterBankDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterBankDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterBankDetails/Status} === 'PENDING'? 'Warning' : undefined}"/> -->
-                            <!-- Aditya changes end-->
                             <Text text="{= ${ProfileCompleted}===true?'Yes':'No'}"/>
-                            <!-- <ObjectStatus text="{path:'RegistrationStatus',formatter:'.fmtStatus'}" state="{= ${RegistrationStatus} === 'PENDING' ? 'None' : 'Success' }"/> -->
                             <HBox justifyContent="End">
                                  <core:Icon class="sapUiTinyMarginTop" tooltip="{i18n>Pending1}" src="sap-icon://pending" color="#1C4C98" visible="{CallBackReqOrComplainFlag}" />
                                 <Button tooltip="{i18n>Edit}" visible="{= ${ActivationStatus} !== 'DEACTIVATED'  }" icon="sap-icon://edit" type="Transparent" press="onListItemPress"></Button>
