@@ -135,7 +135,7 @@ sap.ui.define(
                 },
                 _CreateLeadsFilter: function (mParam1) {
                     var oView = this.getView();
-                    var oLoginData = this.getView().getModel("LoginInfo").getData();
+                    var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
                     if (oLoginData["UserTypeId"] === 3) {
                         if (oLoginData["AdminDivision"]["results"].length > 0) {

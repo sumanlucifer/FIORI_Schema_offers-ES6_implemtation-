@@ -67,14 +67,14 @@
                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Zone" label="{i18n>Zone}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                      <ComboBox id="idZone" placeholder="{i18n>Enter} {i18n>Zone}" selectionChange="onZoneChange"  items="{/MasterZoneSet}" selectedKey="{path:'oModelControl>/filterBar/ZoneId' }">
-                                        <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminZone'],formatter:'.formatter.fmtLeadsZoneCheck'}" text="{Id} " key="{Id}" />
+                                        <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminZone'],formatter:'.formatter.fmtLeadZoneCheck'}" text="{Id} " key="{Id}" />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="Division" label="{i18n>Division}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                       <ComboBox  enabled="{= ${oModelControl>/filterBar/ZoneId}.length>1}" placeholder="{i18n>Enter} {i18n>Division}" id="idDivision" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelControl>/filterBar/DivisionId'}">
-                    <core:Item text="{Id}" key="{Id}" />
+                    <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminDivision'],formatter:'.formatter.fmtLeadDivisionCheck'}" text="{Id}" key="{Id}" />
                 </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
