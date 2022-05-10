@@ -509,7 +509,7 @@ sap.ui.define(
                     var oPayloadInput = {
                         Status: mParam,
                         InitiateForceTat: false,
-                        //Remark:"Approved"
+                        Remark:"Approved"
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterNameChangeRequest"]["__ref"]
@@ -654,7 +654,8 @@ sap.ui.define(
                     var oView = this.getView();
                     var oPayloadInput = {
                         Status: mParam,
-                        InitiateForceTat: false
+                        InitiateForceTat: false,
+                        Remark:"Approved"
                     };
                     var object = oView.getElementBinding().getBoundContext().getObject();
                     var sId = object["PainterMobileNumberChangeRequest"]["__ref"]
