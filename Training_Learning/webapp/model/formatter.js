@@ -102,8 +102,8 @@ sap.ui.define([], function () {
                 return mParam1 + "-" + mParam2;
             }
         },
-        fmtLeadsZoneCheck: function (mParam1, mParam2, mParam3) {
-
+        fmtLeadZoneCheck: function (mParam1, mParam2, mParam3) {
+            //console.log(mParam1, mParam2, mParam3);
             if (mParam2 !== 3) {
                 return true
             }
@@ -118,11 +118,27 @@ sap.ui.define([], function () {
                     return false;
                 }
             }
+
             return true;
+        },
+        fmtLeadDivisionCheck: function (mParam1, mParam2, mParam3) {
+            //console.log(mParam1, mParam2, mParam3);
+            if (mParam2 !== 3) {
+                return true
+            }
+            if (mParam3) {
+                if (mParam3["results"].length > 0) {
+                    for (var x of mParam3["results"]) {
+                        if (x["DivisionId"] == mParam1) {
+                            return true;
 
+                        }
+                    }
+                    return false;
+                }
+            }
 
-
-
+            return true;
         }
 
     };

@@ -115,7 +115,11 @@ sap.ui.define([
             var oLoginData = this.getView().getModel("LoginInfo").getData();
             var aFilter = [];
             if (oLoginData["UserTypeId"] === 3) {
-                if (oLoginData["AdminZone"]["results"].length > 0) {
+                if (oLoginData["AdminDivision"]["results"].length > 0) {
+                    for (var x of oLoginData["AdminDivision"]["results"]) {
+                        aFilter.push(new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                    }
+                }else if (oLoginData["AdminZone"]["results"].length > 0) {
                     for (var x of oLoginData["AdminZone"]["results"]) {
                         aFilter.push(new Filter("TrainingZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                     }
