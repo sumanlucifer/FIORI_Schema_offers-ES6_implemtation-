@@ -102,11 +102,11 @@
                 <!-- Permanent Address End-->
                  <Label text="{i18n>Zone}" />
                 <ComboBox selectionChange="onZoneChange" items="{/MasterZoneSet}" selectedKey="{path:'oModelView>/PainterDetails/ZoneId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Id}" key="{Id}" />
+                    <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminZone'],formatter:'.formatter.fmtLeadZoneCheck'}" text="{Id}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>Division}" />
                 <ComboBox id="idDivision" editable="{= ${oModelView>/PainterDetails/ZoneId}!=='' }" selectionChange="onDivisionChange" items="{/MasterDivisionSet}" selectedKey="{path:'oModelView>/PainterDetails/DivisionId',type:'sap.ui.model.type.String' }">
-                    <core:Item text="{Id}" key="{Id}" />
+                    <core:Item  enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminDivision'],formatter:'.formatter.fmtLeadDivisionCheck'}" text="{Id}" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>Depot}" />
                 <ComboBox selectionChange="onDepotChange" editable="{= ${oModelView>/PainterDetails/DivisionId}!=='' }" id="idDepot" items="{/MasterDepotSet}" selectedKey="{path:'oModelView>/PainterDetails/DepotId',type:'sap.ui.model.type.String' }">
