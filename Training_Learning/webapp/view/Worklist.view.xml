@@ -54,7 +54,7 @@
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>colZone}">
 								<fb:control>
 									<ComboBox items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange" selectedKey="{worklistView>/filterBar/TrainingZone}" placeholder="{i18n>enterZone}">
-										<core:Item key="{Id}" text="{Id}"/>
+										<core:Item  enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminZone'],formatter:'.formatter.fmtLeadsZoneCheck'}"  key="{Id}" text="{Id}"/>
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>

@@ -91,6 +91,9 @@
                     "bundleName": "com.knpl.pragati.Training_Learning.i18n.i18n"
                 }
             },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
             "": {
                 "dataSource": "mainService",
                 "preload": true,

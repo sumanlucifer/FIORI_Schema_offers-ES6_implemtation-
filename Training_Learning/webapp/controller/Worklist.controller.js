@@ -67,12 +67,24 @@ sap.ui.define([
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
                 //Fetch loggedIn User ID to disable delete button for loggedIn user
                 var oModel = dat.getModel();
+
                 oModel.callFunction("/GetLoggedInAdmin", {
                     method: "GET",
+                    urlParameters: {
+                        $expand: "AdminZone",
+                    },
                     success: function (data) {
                         dat.getModel("appView").setProperty("/loggedUserId", data.results[0].Id);
                         dat.getModel("appView").setProperty("/loggedUserRoleId", data.results[0].RoleId);
-
+                        if (data.hasOwnProperty("results")) {
+                            if (data["results"].length > 0) {
+                                var oLoginData = dat.getView().getModel("LoginInfo");
+                                oLoginData.setData(data["results"][0]);
+                                 console.log(oLoginData);
+                                 dat._setInitialData();
+                            }
+                        }
+                       
                         dat.getModel().read("/MasterLanguageSet", {
                             success: function (data1) {
                                 if (data1.results.length) {
@@ -94,7 +106,50 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter(this);
             oRouter.getRoute("worklist").attachMatched(this.onRefreshView, this);
         },
+        _setInitialData:function(){
+            console.log("function called")
+            this._initLoginFilterTable1();
+        },
+        _CreateLeadsFilter: function (mParam1) {
+            var oView = this.getView();
+            var oLoginData = this.getView().getModel("LoginInfo").getData();
+            var aFilter = [];
+            if (oLoginData["UserTypeId"] === 3) {
+                if (oLoginData["AdminZone"]["results"].length > 0) {
+                    for (var x of oLoginData["AdminZone"]["results"]) {
+                        aFilter.push(new Filter("TrainingZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                    }
+                }
+                if (aFilter.length > 0) {
+                    var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                    aEndFilter.push(new Filter({
+                        filters: aFilter,
+                        and: false
+                    }))
+                    return aEndFilter;
 
+                }
+            }
+            return false;
+        },
+        _initLoginFilterTable1:function(){
+            var promise = $.Deferred();
+            var oView = this.getView();
+            var oLoginData = this.getView().getModel("LoginInfo").getData();
+            var aFilter = [];
+            var aLeadsFilter = this._CreateLeadsFilter()
+            if (aLeadsFilter) {
+                oView.byId("table").getBinding("items").filter(new Filter({
+                    filters: aLeadsFilter,
+                    and: true
+                }), "Application")
+           
+            }
+
+
+            promise.resolve();
+            return promise;
+        },
         _addSearchFieldAssociationToFB: function () {
             let oFilterBar = this.getView().byId("filterbar");
             let oSearchField = oFilterBar.getBasicSearch();
