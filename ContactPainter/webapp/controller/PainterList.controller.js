@@ -98,7 +98,7 @@ sap.ui.define(
                             oData.callFunction("/GetLoggedInAdmin", {
                                 method: "GET",
                                 urlParameters: {
-                                    $expand: "UserType,AdminZone",
+                                    $expand: "UserType,AdminZone,AdminDivision",
                                 },
                                 success: function (data) {
                                     if (data.hasOwnProperty("results")) {
@@ -138,7 +138,11 @@ sap.ui.define(
                     var oLoginData = this.getView().getModel("LoginInfo").getData();
                     var aFilter = [];
                     if (oLoginData["UserTypeId"] === 3) {
-                        if (oLoginData["AdminZone"]["results"].length > 0) {
+                        if (oLoginData["AdminDivision"]["results"].length > 0) {
+                            for (var x of oLoginData["AdminDivision"]["results"]) {
+                                aFilter.push(new Filter("DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                            }
+                        }else if (oLoginData["AdminZone"]["results"].length > 0) {
                             for (var x of oLoginData["AdminZone"]["results"]) {
                                 aFilter.push(new Filter("ZoneId", FilterOperator.EQ, x["ZoneId"]))
                             }

@@ -506,25 +506,43 @@ sap.ui.define([
             var oNow = new Date(localDate);
             return oDateFormat.format(oNow);
         },
-        fmtLeadsZoneCheck: function (mParam1, mParam2, mParam3) {
-            console.log(mParam1, mParam2, mParam3);
+        fmtLeadZoneCheck: function (mParam1, mParam2, mParam3) {
+            //console.log(mParam1, mParam2, mParam3);
             if (mParam2 !== 3) {
                 return true
             }
-            if (mParam3["results"].length > 0) {
-                for (var x of mParam3["results"]) {
-                    if (x["ZoneId"] == mParam1) {
-                        return true;
-                      
+            if (mParam3) {
+                if (mParam3["results"].length > 0) {
+                    for (var x of mParam3["results"]) {
+                        if (x["ZoneId"] == mParam1) {
+                            return true;
+
+                        }
                     }
+                    return false;
                 }
-                return false;
-            } else {
-                return true;
             }
 
-          
+            return true;
+        },
+        fmtLeadDivisionCheck: function (mParam1, mParam2, mParam3) {
+            //console.log(mParam1, mParam2, mParam3);
+            if (mParam2 !== 3) {
+                return true
+            }
+            if (mParam3) {
+                if (mParam3["results"].length > 0) {
+                    for (var x of mParam3["results"]) {
+                        if (x["DivisionId"] == mParam1) {
+                            return true;
 
+                        }
+                    }
+                    return false;
+                }
+            }
+
+            return true;
         }
     };
 });

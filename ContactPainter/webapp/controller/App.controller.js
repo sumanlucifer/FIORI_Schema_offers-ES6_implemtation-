@@ -90,7 +90,7 @@ sap.ui.define(
                         .callFunction("/GetLoggedInAdmin", {
                             method: "GET",
                             urlParameters: {
-                                $expand: "UserType,AdminZone"
+                                $expand: "UserType,AdminZone,AdminDivision"
                             },
                             success: function (data) {
                                 if (data.hasOwnProperty("results")) {
