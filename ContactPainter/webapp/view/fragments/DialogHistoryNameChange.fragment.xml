@@ -74,7 +74,7 @@
                        <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
                          <Text text="{path:'Status',formatter:'.formatter.fmtStatus1'}"/>
                             <Text text="{Remark}"/>
-                            <Text text="{UpdatedByDetails/Name}"/>
+                             <Text text="{path:'UpdatedByDetails/Name',formatter:'.formatter.fmtDisplayUpdatedDetails2'}"/>
 
 
                     </cells>

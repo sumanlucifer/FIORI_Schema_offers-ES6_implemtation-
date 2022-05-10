@@ -325,6 +325,12 @@ sap.ui.define([
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
         },
+        fmtDisplayUpdatedDetails2:function(mParam){
+            if(!mParam){
+                return "Mobile User"
+            }
+            return mParam
+        },
         fmtSendApprNameChangeReq: function (mParam1, mParam2, mParam3, mParam4, mParam5, mParam6, mParam7) {
             // mParam1 PainterNameChangeRequest
             // mParam2 oModelControl2>/NameChange/Edit
