@@ -157,6 +157,26 @@ sap.ui.define([], function () {
             if (mParam1) {
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
+        },
+        fmtLeadsZoneCheck: function (mParam1, mParam2, mParam3) {
+          
+            if (mParam2 !== 3) {
+                return true
+            }
+            if (mParam3["results"].length > 0) {
+                for (var x of mParam3["results"]) {
+                    if (x["ZoneId"] == mParam1) {
+                        return true;
+                      
+                    }
+                }
+                return false;
+            } else {
+                return true;
+            }
+
+          
+
         }
     };
 });

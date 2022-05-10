@@ -506,7 +506,7 @@ sap.ui.define([
             var oNow = new Date(localDate);
             return oDateFormat.format(oNow);
         },
-        fmtZones: function (mParam1, mParam2, mParam3) {
+        fmtLeadsZoneCheck: function (mParam1, mParam2, mParam3) {
             console.log(mParam1, mParam2, mParam3);
             if (mParam2 !== 3) {
                 return true
