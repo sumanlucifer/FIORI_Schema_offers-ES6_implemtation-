@@ -71,7 +71,7 @@ sap.ui.define([
                 oModel.callFunction("/GetLoggedInAdmin", {
                     method: "GET",
                     urlParameters: {
-                        $expand: "AdminZone",
+                        $expand: "AdminZone,AdminDivision",
                     },
                     success: function (data) {
                         dat.getModel("appView").setProperty("/loggedUserId", data.results[0].Id);
