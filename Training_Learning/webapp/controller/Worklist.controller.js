@@ -141,9 +141,10 @@ sap.ui.define([
             var oLoginData = this.getView().getModel("LoginInfo").getData();
             var aFilter = [];
             var aLeadsFilter1 = this._CreateLeadsFilter();
-            var aLeadsFilter2 = aLeadsFilter1.slice();
+            
            
             if (aLeadsFilter1) {
+                var aLeadsFilter2 = aLeadsFilter1.slice();
                 aLeadsFilter1.push(new Filter("TrainingTypeId",FilterOperator.EQ,1));
                 oView.byId("table").getBinding("items").filter(new Filter({
                     filters: aLeadsFilter1,
