@@ -164,17 +164,18 @@ sap.ui.define([], function () {
                 return true
             }
             if (mParam3) {
-                if (mParam3["results"].length > 0) {
-                    for (var x of mParam3["results"]) {
-                        if (x["ZoneId"] == mParam1) {
-                            return true;
-
+                if(mParam3.hasOwnProperty("results")){
+                    if (mParam3["results"].length > 0) {
+                        for (var x of mParam3["results"]) {
+                            if (x["ZoneId"] == mParam1) {
+                                return true;
+    
+                            }
                         }
+                        return false;
                     }
-                    return false;
                 }
             }
-
             return true;
         },
         fmtLeadDivisionCheck: function (mParam1, mParam2, mParam3) {
@@ -183,17 +184,18 @@ sap.ui.define([], function () {
                 return true
             }
             if (mParam3) {
-                if (mParam3["results"].length > 0) {
-                    for (var x of mParam3["results"]) {
-                        if (x["DivisionId"] == mParam1) {
-                            return true;
-
+                if(mParam3.hasOwnProperty("results")){
+                    if (mParam3["results"].length > 0) {
+                        for (var x of mParam3["results"]) {
+                            if (x["DivisionId"] == mParam1) {
+                                return true;
+    
+                            }
                         }
+                        return false;
                     }
-                    return false;
                 }
             }
-
             return true;
         }
     };
