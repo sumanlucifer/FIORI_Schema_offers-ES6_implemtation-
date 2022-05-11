@@ -174,7 +174,7 @@ sap.ui.define(
                             }
                         }
                         if (aFilter.length > 0) {
-                            var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ,false)];
+                            var aEndFilter = [new Filter("ComplaintSubtypeId",FilterOperator.NE,1),new Filter("IsArchived", FilterOperator.EQ,false)];
                             aEndFilter.push(new Filter({
                                 filters: aFilter,
                                 and: false
