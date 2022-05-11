@@ -107,7 +107,6 @@ sap.ui.define([
             oRouter.getRoute("worklist").attachMatched(this.onRefreshView, this);
         },
         _setInitialData:function(){
-            console.log("function called")
             this._initLoginFilterTable1();
         },
         _CreateLeadsFilter: function (mParam1) {
@@ -141,15 +140,18 @@ sap.ui.define([
             var oView = this.getView();
             var oLoginData = this.getView().getModel("LoginInfo").getData();
             var aFilter = [];
-            var aLeadsFilter = this._CreateLeadsFilter();
-            console.log(aLeadsFilter)
-            if (aLeadsFilter) {
+            var aLeadsFilter1 = this._CreateLeadsFilter();
+            var aLeadsFilter2 = aLeadsFilter1.slice();
+           
+            if (aLeadsFilter1) {
+                aLeadsFilter1.push(new Filter("TrainingTypeId",FilterOperator.EQ,1));
                 oView.byId("table").getBinding("items").filter(new Filter({
-                    filters: aLeadsFilter,
+                    filters: aLeadsFilter1,
                     and: true
-                }), "Application")
+                }), "Application");
+                
                 oView.byId("table1").getBinding("items").filter(new Filter({
-                    filters: aLeadsFilter,
+                    filters: aLeadsFilter2,
                     and: true
                 }), "Application")
             }
