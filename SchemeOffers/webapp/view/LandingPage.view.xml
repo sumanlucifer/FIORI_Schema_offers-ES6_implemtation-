@@ -51,14 +51,14 @@
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingZone" groupTitle="Filters" label="{i18n>formRegionLbl1}">
                                 <fb:control>
                                     <ComboBox id="idZone" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterZoneSet' }" selectionChange="onZoneChange" selectedKey="{oModelControl>/filterBar/Zone}">
-                                        <core:Item key="{Id}" text="{Id}"/>
+                                        <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminZone'],formatter:'.formatter.fmtLeadZoneCheck'}" key="{Id}" text="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem visibleInFilterBar="true" groupName="A" name="TrainingDivision" groupTitle="Filters" label="{i18n>formRegionLbl2}">
                                 <fb:control>
                                     <ComboBox enabled="{= ${oModelControl>/filterBar/Zone}.length>1}" id="idDivision" selectionChange="onDivisionChange" placeholder="{i18n>placeHolder1}" items="{ path: '/MasterDivisionSet' }" selectedKey="{oModelControl>/filterBar/Division}">
-                                        <core:Item key="{Id}" text="{Id}"/>
+                                        <core:Item enabled="{parts:['Id','LoginInfo>/UserTypeId','LoginInfo>/AdminDivision'],formatter:'.formatter.fmtLeadDivisionCheck'}" key="{Id}" text="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
