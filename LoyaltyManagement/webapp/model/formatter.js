@@ -5,12 +5,12 @@ sap.ui.define([
 
     return {
 
-		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
+        /**
+         * Rounds the number unit value to 2 digits
+         * @public
+         * @param {string} sValue the number string to be rounded
+         * @returns {string} sValue with 2 digits rounded
+         */
         numberUnit: function (sValue) {
             if (!sValue) {
                 return "";
@@ -18,13 +18,17 @@ sap.ui.define([
             return parseFloat(sValue).toFixed(2);
         },
         dateFormatter: function (jsonDateString) {
-            const dt = DateFormat.getDateTimeInstance({ pattern: "dd/MM/yyyy" });
+            const dt = DateFormat.getDateTimeInstance({
+                pattern: "dd/MM/yyyy"
+            });
             var date = new Date(parseInt(jsonDateString.replace('/Date(', '')));
             const dayMonthYear = dt.format(date) // returns: "01/08/2020"
             return dayMonthYear;
         },
         dateFormatter2: function (jsonDateString) {
-            const dt = DateFormat.getDateTimeInstance({ pattern: "dd/MM/yyyy" });
+            const dt = DateFormat.getDateTimeInstance({
+                pattern: "dd/MM/yyyy"
+            });
             // var date= new Date(parseInt(jsonDateString.replace('/Date(', '')));
             const dayMonthYear = dt.format(jsonDateString) // returns: "01/08/2020"
             return dayMonthYear;
@@ -77,27 +81,23 @@ sap.ui.define([
         //     }
         // },
         status: function (status) {
-                 if (status == "PENDING") {
+            if (status == "PENDING") {
                 return "Pending";
-            }
-            else if (status == "REGISTERED") {
+            } else if (status == "REGISTERED") {
                 return "Registered";
-            }
-            else if (status == "COMPLETED") {
+            } else if (status == "COMPLETED") {
                 return "Completed";
             }
         },
         requestType: function (request) {
-                 if (request == "ACCRUED") {
+            if (request == "ACCRUED") {
                 return "Accrual";
-            }
-            else if (request == "REDEEMED") {
+            } else if (request == "REDEEMED") {
                 return "Redemption";
-            }
-            else if (request == "CLOSING_BALANCE") {
+            } else if (request == "CLOSING_BALANCE") {
                 return "Closing Balance";
             }
-           
+
         },
         fmtDisplayUpdatedDetails: function (mParam1) {
             // mParam1 > createdbydetails/updatedby details
@@ -108,22 +108,62 @@ sap.ui.define([
                 return mParam1["Name"] + " - " + mParam1["Email"];
             }
         },
-        accuralType: function (mParam){
-                    var sStatus = "";
-                    if (mParam) {
-                        sStatus = mParam;
-                       var StatusStr = sStatus.toLowerCase().split('_');
-                            for (var i = 0; i < StatusStr.length; i++) {
-                                // You do not need to check if i is larger than splitStr length, as your for does that for you
-                                // Assign it back to the array
-                                StatusStr[i] = StatusStr[i].charAt(0).toUpperCase() + StatusStr[i].substring(1);     
-                            }
-                            // Directly return the joined string
-                            return StatusStr.join(' '); 
-                    }
+        accuralType: function (mParam) {
+            var sStatus = "";
+            if (mParam) {
+                sStatus = mParam;
+                var StatusStr = sStatus.toLowerCase().split('_');
+                for (var i = 0; i < StatusStr.length; i++) {
+                    // You do not need to check if i is larger than splitStr length, as your for does that for you
+                    // Assign it back to the array
+                    StatusStr[i] = StatusStr[i].charAt(0).toUpperCase() + StatusStr[i].substring(1);
+                }
+                // Directly return the joined string
+                return StatusStr.join(' ');
+            }
 
-                    return StatusStr;
-                },
+            return StatusStr;
+        },
+        fmtLeadZoneCheck: function (mParam1, mParam2, mParam3) {
+            //console.log(mParam1, mParam2, mParam3);
+            if (mParam2 !== 3) {
+                return true
+            }
+            if (mParam3) {
+                if(mParam3.hasOwnProperty("results")){
+                    if (mParam3["results"].length > 0) {
+                        for (var x of mParam3["results"]) {
+                            if (x["ZoneId"] == mParam1) {
+                                return true;
+    
+                            }
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        },
+        fmtLeadDivisionCheck: function (mParam1, mParam2, mParam3) {
+            //console.log(mParam1, mParam2, mParam3);
+            if (mParam2 !== 3) {
+                return true
+            }
+            if (mParam3) {
+                if(mParam3.hasOwnProperty("results")){
+                    if (mParam3["results"].length > 0) {
+                        for (var x of mParam3["results"]) {
+                            if (x["DivisionId"] == mParam1) {
+                                return true;
+    
+                            }
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
     };
 

@@ -47,14 +47,89 @@ sap.ui.define([
 
 
             },
+            _initLoginFilterTable1: function () {
+                var promise = $.Deferred();
+                var oView = this.getView();
+                var oLoginData = this.getView().getModel("LoginInfo").getData();
+                var aFilter = [];
+                var aLeadsFilter = this._CreateLeadsFilter()
+                if (aLeadsFilter) {
+                    oView.byId("idAllTable").getBinding("items").filter(new Filter({
+                        filters: aLeadsFilter,
+                        and: true
+                    }), "Application")
+                }
 
+
+                promise.resolve();
+                return promise;
+            },
+            _CreateLeadsFilter: function (mParam1) {
+                var oView = this.getView();
+                var oLoginData = oView.getModel("LoginInfo").getData();
+                var aFilter = [];
+                if (oLoginData["UserTypeId"] === 3) {
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                        }
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                        }
+                    }
+                    if (aFilter.length > 0) {
+                        var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                        aEndFilter.push(new Filter({
+                            filters: aFilter,
+                            and: false
+                        }))
+                        return aEndFilter;
+
+                    }
+                }
+                return false;
+            },
+            _getLoggedInInfo: function () {
+                var oView = this.getView()
+                var oData = oView.getModel();
+                var oLoginData = oView.getModel("LoginInfo");
+                return new Promise((resolve, reject) => {
+                    oData.callFunction("/GetLoggedInAdmin", {
+                        method: "GET",
+                        urlParameters: {
+                            $expand: "UserType,AdminZone,AdminDivision",
+                        },
+                        success: function (data) {
+                            if (data.hasOwnProperty("results")) {
+                                if (data["results"].length > 0) {
+                                    oLoginData.setData(data["results"][0]);
+                                    // console.log(oLoginData)
+                                }
+                            }
+                            resolve();
+                        },
+                        error: function () {
+                            reject();
+                        }
+                    });
+                })
+            },
             _onObjectMatched: function (oEvent) {
                 //this.primaryFilter();
                 var smartTable = this.getView().byId("idPainterTable");
-
+                var c1, c2, c3;
+                var othat = this;
+                c1 = othat._getLoggedInInfo();
+                c1.then(function () {
+                    c2 = othat._LoadTableData()
+                })
 
             },
-
+            _LoadTableData: function () {
+                var oView = this.getView();
+               this.onFilter();
+            },
             onPressAddPointBtn: function () {
                 this.oRouter.navTo("AddLoyaltyPoint");
             },
@@ -170,7 +245,11 @@ sap.ui.define([
                 // oBinding.filter([]);
             },
             onFilter: function (oEvent) {
-                var aCurrentFilterValues = [];
+                var aCurrentFilterValues = this._CreateLeadsFilter();
+                console.log(aCurrentFilterValues)
+                if (!aCurrentFilterValues) {
+                    aCurrentFilterValues = [];
+                }
                 var oViewFilter = this.getView()
                     .getModel("oModelControl")
                     .getProperty("/filterBar");
@@ -350,18 +429,19 @@ sap.ui.define([
                 this.oCustom = null;
                 this.oFilter = null;
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                if (this.oFilter) {
-                    oBindingParams.filters.push(this.oFilter);
-                }
-                if (this.oCustom) {
-                    oBindingParams.parameters.search = this.oCustom.search;
-                }
-                var oTable = this.byId("idAllTable");
-                oTable.rebindTable();
-                var oTable = this.byId("idAccTable");
-                oTable.rebindTable();
-                var oTable1 = this.byId("idRdmTable");
-                oTable1.rebindTable();
+                this.onFilter();
+                // if (this.oFilter) {
+                //     oBindingParams.filters.push(this.oFilter);
+                // }
+                // if (this.oCustom) {
+                //     oBindingParams.parameters.search = this.oCustom.search;
+                // }
+                // var oTable = this.byId("idAllTable");
+                // oTable.rebindTable();
+                // var oTable = this.byId("idAccTable");
+                // oTable.rebindTable();
+                // var oTable1 = this.byId("idRdmTable");
+                // oTable1.rebindTable();
 
             },
             onZoneChange: function (oEvent) {
@@ -523,12 +603,12 @@ sap.ui.define([
             onItabSelection: function (oEvent) {
                 var oView = this.getView();
                 var sKey = oEvent.getSource().getSelectedKey();
-            
-                if(sKey==="all"){
 
-                }else if (sKey ==="acc"){
+                if (sKey === "all") {
+
+                } else if (sKey === "acc") {
                     oView.byId("idAccTable").rebindTable();
-                }else if (sKey ==="redemption"){
+                } else if (sKey === "redemption") {
                     oView.byId("idRdmTable").rebindTable();
                 }
             },
