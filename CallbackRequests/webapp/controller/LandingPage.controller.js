@@ -79,6 +79,7 @@ sap.ui.define(
                     var oView = this.getView();
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
+                    var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
                     if (oLoginData["UserTypeId"] === 3) {
                         if (oLoginData["AdminDivision"]["results"].length > 0) {
                             for (var x of oLoginData["AdminDivision"]["results"]) {
@@ -89,17 +90,14 @@ sap.ui.define(
                                 aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                             }
                         }
-                        if (aFilter.length > 0) {
-                            var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
-                            aEndFilter.push(new Filter({
-                                filters: aFilter,
-                                and: false
-                            }))
-                            return aEndFilter;
-
-                        }
                     }
-                    return false;
+                    if (aFilter.length > 0) {
+                        aEndFilter.push(new Filter({
+                            filters: aFilter,
+                            and: false
+                        }))
+                    }
+                    return aEndFilter;
                 },
                 _getLoggedInInfo: function () {
                     var oData = this.getView().getModel();
