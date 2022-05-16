@@ -90,6 +90,9 @@
                     "bundleName": "com.knpl.pragati.CallbackRequests.i18n.i18n"
                 }
             },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
             "": {
                 "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {

@@ -47,6 +47,10 @@ sap.ui.define(
 
                     this.getComponentModel().metadataLoaded().
                     then(this._fnLoginAdminData.bind(this));
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter
+                        .getRoute("RouteLandingPage")
+                        .attachMatched(this._onRouteMatched, this);
 
                 },
 
@@ -61,32 +65,92 @@ sap.ui.define(
                         }
                     });
                 },
+                _onRouteMatched:function(){
+                    console.log("route triferred");
+                    var c1,c2,c3;
+                    var oView = this.getView();
+                    var othat=this;
+                    c1= othat._getLoggedInInfo();
+                    c1.then(function(){
+                        oView.byId("idPendingSmartTable").rebindTable();
+                    })
+                },
+                _CreateLeadsFilter: function (mParam1) {
+                    var oView = this.getView();
+                    var oLoginData = oView.getModel("LoginInfo").getData();
+                    var aFilter = [];
+                    if (oLoginData["UserTypeId"] === 3) {
+                        if (oLoginData["AdminDivision"]["results"].length > 0) {
+                            for (var x of oLoginData["AdminDivision"]["results"]) {
+                                aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                            }
+                        }else if (oLoginData["AdminZone"]["results"].length > 0) {
+                            for (var x of oLoginData["AdminZone"]["results"]) {
+                                aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                            }
+                        }
+                        if (aFilter.length > 0) {
+                            var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                            aEndFilter.push(new Filter({
+                                filters: aFilter,
+                                and: false
+                            }))
+                            return aEndFilter;
 
+                        }
+                    }
+                    return false;
+                },
+                _getLoggedInInfo: function () {
+                    var oData = this.getView().getModel();
+                    var oLoginData = this.getView().getModel("LoginInfo");
+                    return new Promise((resolve,reject)=>{
+                        oData.callFunction("/GetLoggedInAdmin", {
+                            method: "GET",
+                            urlParameters: {
+                                $expand: "UserType,AdminZone,AdminDivision",
+                            },
+                            success: function (data) {
+                                if (data.hasOwnProperty("results")) {
+                                    if (data["results"].length > 0) {
+                                        oLoginData.setData(data["results"][0]);
+                                        // console.log(oLoginData)
+                                    }
+                                }
+                                resolve();
+                            },
+                            error:function(){
+                                reject();
+                            }
+                        });
+                    }) 
+                },
                 onBeforeRebind: function (oEvent) {
                     var sTableId = oEvent.getSource().getId().split("--")[2];
                     var oBindingParams = oEvent.getParameter("bindingParams");
+                    var aFinalFiler = this._CreateLeadsFilter();
+                    console.log(aFinalFiler)
+                   
                     if (sTableId === "idPendingSmartTable") {
-                        oBindingParams.filters.push(
-                            new Filter({
-                                filters: [
-                                    new Filter("Status", FilterOperator.EQ, "REGISTERED"),
-                                    new Filter("Status", FilterOperator.EQ, "INPROGRESS"),
-                                ],
-                                and: false,
-                            })
-                        );
+                        aFinalFiler.push(new Filter({
+                            filters: [
+                                new Filter("Status", FilterOperator.EQ, "REGISTERED"),
+                                new Filter("Status", FilterOperator.EQ, "INPROGRESS"),
+                            ],
+                            and: false,
+                        }))
+                        oBindingParams.filters = aFinalFiler;
                     } else {
-                        oBindingParams.filters.push(
-                            new Filter({
-                                filters: [
-                                    new Filter("Status", FilterOperator.EQ, "RESOLVED"),
-                                    new Filter("Status", FilterOperator.EQ, "REJECTED"),
-                                ],
-                                and: false,
-                            })
-                        );
+                        aFinalFiler.push( new Filter({
+                            filters: [
+                                new Filter("Status", FilterOperator.EQ, "RESOLVED"),
+                                new Filter("Status", FilterOperator.EQ, "REJECTED"),
+                            ],
+                            and: false,
+                        }))
+                        oBindingParams.filters = aFinalFiler;
                     }
-                    oBindingParams.filters.push(new Filter("IsArchived", FilterOperator.EQ, false));
+                   
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
 
