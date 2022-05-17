@@ -69,7 +69,7 @@ sap.ui.define([
             var othat = this;
             c1 = othat._getLoggedInInfo();
             c1.then(function () {
-                c2 = othat._initLoginFilterTable1()
+                //c2 = othat._initLoginFilterTable1()
             })
         },
         _initLoginFilterTable1:function(){
