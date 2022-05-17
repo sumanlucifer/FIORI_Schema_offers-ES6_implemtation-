@@ -204,7 +204,7 @@ sap.ui.define([
                     oView.getModel("oModelControl").setProperty("/bPayloadSent", false);
                     oView.getModel("oModelControl").setProperty("/bBusy", false);
                     MessageBox.error(
-                        "Unable to create Redemption request due to the server issues", {
+                        a["responseText"], {
                             title: "Error Code: " + a.statusCode,
                         }
                     );

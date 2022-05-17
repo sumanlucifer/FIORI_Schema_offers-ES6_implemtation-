@@ -285,7 +285,8 @@ sap.ui.define(
                     var sMessage;
                     if (mParam1.statusCode == 409) {
                         this._showMessageBox2("error", "Message13", [mParam1.responseText]);
-
+                    }else {
+                        this._showMessageBox2("error", "Message1", [mParam1.responseText]);
                     }
 
                 },
