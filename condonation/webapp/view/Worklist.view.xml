@@ -79,7 +79,7 @@
                     <Column width="6%">
                         <Text text="{i18n>Zone}"/>
                     </Column>
-                    <Column width="6%">
+                    <Column width="8%">
                         <Text text="{i18n>Division}"/>
                     </Column>
                     <Column width="6%">
