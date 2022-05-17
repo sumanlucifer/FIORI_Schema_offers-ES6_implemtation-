@@ -38,7 +38,7 @@ floatingFooter="true"
 				<ToolbarSpacer/>
                 
 
-                <Button text="Cancel" press="onCancelPress"></Button>
+                <Button text="Cancel" type="Ghost"  press="onCancelPress"></Button>
 				<Button text="Save"
                 type="Emphasized"
 				press="update"

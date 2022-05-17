@@ -126,7 +126,7 @@ xmlns:f="sap.ui.layout.form">
             
 				<ToolbarSpacer/>
                 
-                <Button text="Cancel" press="onCancelPressForAdd"></Button>
+                <Button text="Cancel"    type="Ghost" press="onCancelPressForAdd"></Button>
 				<Button text="Save"
                 type="Emphasized"
 				press="add"

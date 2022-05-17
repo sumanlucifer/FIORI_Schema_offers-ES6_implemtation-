@@ -140,6 +140,7 @@ floatingFooter="true"
 				<ToolbarSpacer />
                 
                 <Button text="Cancel"
+                type="Ghost"
                 press="onCancelPress"
 						>
 					
