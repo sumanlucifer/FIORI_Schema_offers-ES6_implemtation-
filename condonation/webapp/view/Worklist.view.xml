@@ -94,7 +94,7 @@
                     <Column width="6%">
                         <Text text="{i18n>Points}"/>
                     </Column>
-                     <Column width="6%">
+                     <Column width="9%">
                         <Text text="{i18n>Status}"/>
                     </Column>
                     <Column width="8%">
