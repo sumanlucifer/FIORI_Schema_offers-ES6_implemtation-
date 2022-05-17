@@ -6,6 +6,8 @@ xmlns:f="sap.ui.layout.form">
 id="editUser"
 floatingFooter="true"
  title="Edit User"
+ showNavButton="true"
+ navButtonPress="onNavToHome"
          class="sapUiContentPadding"
         >
         <VBox class="sapUiSmallMargin">

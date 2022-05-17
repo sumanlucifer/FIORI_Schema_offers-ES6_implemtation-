@@ -254,6 +254,8 @@ sap.ui.define([
 
                 this.oEscapePreventDialog.open();
             },
-
+            onNavToHome:function(){
+                sap.ui.core.UIComponent.getRouterFor(this).navTo("RouteHome");
+            },
         });
     });

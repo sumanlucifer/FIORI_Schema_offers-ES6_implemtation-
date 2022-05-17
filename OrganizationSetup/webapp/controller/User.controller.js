@@ -78,6 +78,9 @@ sap.ui.define([
                 this.onClearPress();
 
             },
+            onNavToHome:function(){
+                sap.ui.core.UIComponent.getRouterFor(this).navTo("RouteHome");
+            },
             _onObjectMatched: function (oEvent) {
 
                 sap.ui.getCore().getMessageManager().removeAllMessages();
