@@ -68,26 +68,25 @@ sap.ui.define([
                 var oView = this.getView();
                 var oLoginData = oView.getModel("LoginInfo").getData();
                 var aFilter = [];
-                if (oLoginData["UserTypeId"] === 3) {
-                    if (oLoginData["AdminDivision"]["results"].length > 0) {
-                        for (var x of oLoginData["AdminDivision"]["results"]) {
-                            aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                        }
-                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
-                        for (var x of oLoginData["AdminZone"]["results"]) {
-                            aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                        }
+                //if (oLoginData["UserTypeId"] === 3) {
+                if (oLoginData["AdminDivision"]["results"].length > 0) {
+                    for (var x of oLoginData["AdminDivision"]["results"]) {
+                        aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
                     }
-                    if (aFilter.length > 0) {
-                        var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
-                        aEndFilter.push(new Filter({
-                            filters: aFilter,
-                            and: false
-                        }))
-                        return aEndFilter;
-
+                } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                    for (var x of oLoginData["AdminZone"]["results"]) {
+                        aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                     }
                 }
+                if (aFilter.length > 0) {
+                    var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                    aEndFilter.push(new Filter({
+                        filters: aFilter,
+                        and: false
+                    }))
+                    return aEndFilter;
+                }
+                //}
                 return false;
             },
             _getLoggedInInfo: function () {
@@ -128,7 +127,7 @@ sap.ui.define([
             },
             _LoadTableData: function () {
                 var oView = this.getView();
-               this.onFilter();
+                this.onFilter();
             },
             onPressAddPointBtn: function () {
                 this.oRouter.navTo("AddLoyaltyPoint");

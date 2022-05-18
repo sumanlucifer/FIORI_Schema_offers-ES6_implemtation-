@@ -65,13 +65,13 @@ sap.ui.define(
                         }
                     });
                 },
-                _onRouteMatched:function(){
+                _onRouteMatched: function () {
                     console.log("route triferred");
-                    var c1,c2,c3;
+                    var c1, c2, c3;
                     var oView = this.getView();
-                    var othat=this;
-                    c1= othat._getLoggedInInfo();
-                    c1.then(function(){
+                    var othat = this;
+                    c1 = othat._getLoggedInInfo();
+                    c1.then(function () {
                         oView.byId("idPendingSmartTable").rebindTable();
                     })
                 },
@@ -80,17 +80,17 @@ sap.ui.define(
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
                     var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
-                    if (oLoginData["UserTypeId"] === 3) {
-                        if (oLoginData["AdminDivision"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminDivision"]["results"]) {
-                                aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                            }
-                        }else if (oLoginData["AdminZone"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminZone"]["results"]) {
-                                aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                            }
+                    //if (oLoginData["UserTypeId"] === 3) {
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                        }
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                         }
                     }
+                    //}
                     if (aFilter.length > 0) {
                         aEndFilter.push(new Filter({
                             filters: aFilter,
@@ -102,7 +102,7 @@ sap.ui.define(
                 _getLoggedInInfo: function () {
                     var oData = this.getView().getModel();
                     var oLoginData = this.getView().getModel("LoginInfo");
-                    return new Promise((resolve,reject)=>{
+                    return new Promise((resolve, reject) => {
                         oData.callFunction("/GetLoggedInAdmin", {
                             method: "GET",
                             urlParameters: {
@@ -117,18 +117,18 @@ sap.ui.define(
                                 }
                                 resolve();
                             },
-                            error:function(){
+                            error: function () {
                                 reject();
                             }
                         });
-                    }) 
+                    })
                 },
                 onBeforeRebind: function (oEvent) {
                     var sTableId = oEvent.getSource().getId().split("--")[2];
                     var oBindingParams = oEvent.getParameter("bindingParams");
                     var aFinalFiler = this._CreateLeadsFilter();
                     console.log(aFinalFiler)
-                   
+
                     if (sTableId === "idPendingSmartTable") {
                         aFinalFiler.push(new Filter({
                             filters: [
@@ -139,7 +139,7 @@ sap.ui.define(
                         }))
                         oBindingParams.filters = aFinalFiler;
                     } else {
-                        aFinalFiler.push( new Filter({
+                        aFinalFiler.push(new Filter({
                             filters: [
                                 new Filter("Status", FilterOperator.EQ, "RESOLVED"),
                                 new Filter("Status", FilterOperator.EQ, "REJECTED"),
@@ -148,7 +148,7 @@ sap.ui.define(
                         }))
                         oBindingParams.filters = aFinalFiler;
                     }
-                   
+
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
 
