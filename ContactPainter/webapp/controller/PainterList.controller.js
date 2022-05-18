@@ -57,8 +57,8 @@ sap.ui.define(
                             PreferredLanguage: "",
                             SourceRegistration: "",
                             BankDetailsStatus: "",
-                            NameChangeRequest:"",
-                            MobileChangeRequest:"",
+                            NameChangeRequest: "",
+                            MobileChangeRequest: "",
                             KycStatus: "" /*Aditya changes*/
                         },
 
@@ -95,8 +95,8 @@ sap.ui.define(
                         PreferredLanguage: "",
                         PainterType: "",
                         BankDetailsStatus: "",
-                        NameChangeRequest:"",
-                        MobileChangeRequest:"",
+                        NameChangeRequest: "",
+                        MobileChangeRequest: "",
                         KycStatus: "" /*Aditya changes*/
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
@@ -181,15 +181,15 @@ sap.ui.define(
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
                     //if (oLoginData["UserTypeId"] === 3) {
-                    // if (oLoginData["AdminDivision"]["results"].length > 0) {
-                    //     for (var x of oLoginData["AdminDivision"]["results"]) {
-                    //         aFilter.push(new Filter("DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                    //     }
-                    // } else if (oLoginData["AdminZone"]["results"].length > 0) {
-                    //     for (var x of oLoginData["AdminZone"]["results"]) {
-                    //         aFilter.push(new Filter("ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                    //     }
-                    // }
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                        }
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                        }
+                    }
                     if (aFilter.length > 0) {
                         var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, mParam1 === "table2" ? true : false)];
                         aEndFilter.push(new Filter({
@@ -389,11 +389,11 @@ sap.ui.define(
 
                             } else if (prop === "NameChangeRequest") {
                                 aFlaEmpty = false;
-                               
+
                                 if (oViewFilter[prop] === "YES") {
                                     //console.log("enter herer",oViewFilter[prop])
                                     aCurrentFilterValues.push(
-                                        new Filter("PainterNameChangeRequest", FilterOperator.NE,null )
+                                        new Filter("PainterNameChangeRequest", FilterOperator.NE, null)
                                     );
                                 } else if (oViewFilter[prop] === "NO") {
                                     //console.log("enter herer",oViewFilter[prop])
@@ -407,7 +407,7 @@ sap.ui.define(
                                 if (oViewFilter[prop] === "YES") {
                                     //console.log("enter herer",oViewFilter[prop])
                                     aCurrentFilterValues.push(
-                                        new Filter("PainterMobileNumberChangeRequest", FilterOperator.NE,null )
+                                        new Filter("PainterMobileNumberChangeRequest", FilterOperator.NE, null)
                                     );
                                 } else if (oViewFilter[prop] === "NO") {
                                     //console.log("enter herer",oViewFilter[prop])
@@ -416,7 +416,7 @@ sap.ui.define(
                                     );
                                 }
 
-                            }   else if (prop === "Name") {
+                            } else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -480,7 +480,7 @@ sap.ui.define(
                     this._ResetFilterBar();
                 },
 
-               
+
                 onPressAddPainter: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteAddEditP", {});
