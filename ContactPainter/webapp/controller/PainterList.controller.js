@@ -181,15 +181,15 @@ sap.ui.define(
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
                     //if (oLoginData["UserTypeId"] === 3) {
-                    if (oLoginData["AdminDivision"]["results"].length > 0) {
-                        for (var x of oLoginData["AdminDivision"]["results"]) {
-                            aFilter.push(new Filter("DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                        }
-                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
-                        for (var x of oLoginData["AdminZone"]["results"]) {
-                            aFilter.push(new Filter("ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                        }
-                    }
+                    // if (oLoginData["AdminDivision"]["results"].length > 0) {
+                    //     for (var x of oLoginData["AdminDivision"]["results"]) {
+                    //         aFilter.push(new Filter("DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                    //     }
+                    // } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                    //     for (var x of oLoginData["AdminZone"]["results"]) {
+                    //         aFilter.push(new Filter("ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                    //     }
+                    // }
                     if (aFilter.length > 0) {
                         var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, mParam1 === "table2" ? true : false)];
                         aEndFilter.push(new Filter({
