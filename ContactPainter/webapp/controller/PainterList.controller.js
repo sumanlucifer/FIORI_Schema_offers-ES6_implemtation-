@@ -57,7 +57,8 @@ sap.ui.define(
                             PreferredLanguage: "",
                             SourceRegistration: "",
                             BankDetailsStatus: "",
-                            /*Aditya changes*/
+                            NameChangeRequest:"",
+                            MobileChangeRequest:"",
                             KycStatus: "" /*Aditya changes*/
                         },
 
@@ -79,7 +80,49 @@ sap.ui.define(
                         }
                     }
                 },
+                _ResetFilterBar: function () {
+                    var aCurrentFilterValues = [];
+                    var aResetProp = {
+                        AgeGroupId: "",
+                        StartDate: null,
+                        EndDate: null,
+                        RegistrationStatus: "",
+                        MembershipId: "",
+                        Name: "",
+                        ZoneId: "",
+                        DepotId: "",
+                        DivisionId: "",
+                        PreferredLanguage: "",
+                        PainterType: "",
+                        BankDetailsStatus: "",
+                        NameChangeRequest:"",
+                        MobileChangeRequest:"",
+                        KycStatus: "" /*Aditya changes*/
+                    };
+                    var oViewModel = this.getView().getModel("oModelControl");
+                    oViewModel.setProperty("/filterBar", aResetProp);
+                    var oTable = this.byId("idPainterTable");
+                    var oBinding = oTable.getBinding("items");
+                    oBinding.filter([]);
+                    oBinding.sort(new Sorter({
+                        path: "CreatedAt",
+                        descending: true
+                    }));
 
+                    //deleted table
+                    var oTable = this.byId("idDelPainterTable");
+                    var oBinding = oTable.getBinding("items");
+                    if (oBinding) {
+                        oBinding.filter([]);
+                        oBinding.sort(new Sorter({
+                            path: "CreatedAt",
+                            descending: true
+                        }));
+                    }
+
+
+                    this._fiterBarSort();
+                },
                 _onNavToPainterDetails: function (param1) {
                     console.log(param1);
                     var oRouter = this.getOwnerComponent().getRouter();
@@ -344,7 +387,36 @@ sap.ui.define(
                                     );
                                 }
 
-                            } else if (prop === "Name") {
+                            } else if (prop === "NameChangeRequest") {
+                                aFlaEmpty = false;
+                               
+                                if (oViewFilter[prop] === "YES") {
+                                    //console.log("enter herer",oViewFilter[prop])
+                                    aCurrentFilterValues.push(
+                                        new Filter("PainterNameChangeRequest", FilterOperator.NE,null )
+                                    );
+                                } else if (oViewFilter[prop] === "NO") {
+                                    //console.log("enter herer",oViewFilter[prop])
+                                    aCurrentFilterValues.push(
+                                        new Filter("PainterNameChangeRequest", FilterOperator.EQ, null)
+                                    );
+                                }
+
+                            } else if (prop === "MobileChangeRequest") {
+                                aFlaEmpty = false;
+                                if (oViewFilter[prop] === "YES") {
+                                    //console.log("enter herer",oViewFilter[prop])
+                                    aCurrentFilterValues.push(
+                                        new Filter("PainterMobileNumberChangeRequest", FilterOperator.NE,null )
+                                    );
+                                } else if (oViewFilter[prop] === "NO") {
+                                    //console.log("enter herer",oViewFilter[prop])
+                                    aCurrentFilterValues.push(
+                                        new Filter("PainterMobileNumberChangeRequest", FilterOperator.EQ, null)
+                                    );
+                                }
+
+                            }   else if (prop === "Name") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
                                     new Filter(
@@ -408,48 +480,7 @@ sap.ui.define(
                     this._ResetFilterBar();
                 },
 
-                _ResetFilterBar: function () {
-                    var aCurrentFilterValues = [];
-                    var aResetProp = {
-                        AgeGroupId: "",
-                        StartDate: null,
-                        EndDate: null,
-                        RegistrationStatus: "",
-                        MembershipId: "",
-                        Name: "",
-                        ZoneId: "",
-                        DepotId: "",
-                        DivisionId: "",
-                        PreferredLanguage: "",
-                        PainterType: "",
-                        BankDetailsStatus: "",
-                        /*Aditya changes*/
-                        KycStatus: "" /*Aditya changes*/
-                    };
-                    var oViewModel = this.getView().getModel("oModelControl");
-                    oViewModel.setProperty("/filterBar", aResetProp);
-                    var oTable = this.byId("idPainterTable");
-                    var oBinding = oTable.getBinding("items");
-                    oBinding.filter([]);
-                    oBinding.sort(new Sorter({
-                        path: "CreatedAt",
-                        descending: true
-                    }));
-
-                    //deleted table
-                    var oTable = this.byId("idDelPainterTable");
-                    var oBinding = oTable.getBinding("items");
-                    if (oBinding) {
-                        oBinding.filter([]);
-                        oBinding.sort(new Sorter({
-                            path: "CreatedAt",
-                            descending: true
-                        }));
-                    }
-
-
-                    this._fiterBarSort();
-                },
+               
                 onPressAddPainter: function (oEvent) {
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("RouteAddEditP", {});

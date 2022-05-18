@@ -118,13 +118,30 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="BankDetailsStatus" label="{i18n>BankDetailsStatus}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>Enter} {i18n>BankDetailsStatus}" selectedKey="{oModelControl>/filterBar/BankDetailsStatus}">
-                                        <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Approved" key="Yes"/>
                                         <core:Item text="Pending" key="PENDING"/>
                                         <core:Item text="Rejected" key="REJECTED"/>
                                         <core:Item text="In Progress" key="INPROGRESS"/>
                                       </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="NameChangeRequest" label="{i18n>NameChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>NameChangeRequestRaised}" selectedKey="{oModelControl>/filterBar/NameChangeRequest}">
+                                        <core:Item text="Yes" key="YES"/>
+                                        <core:Item text="No" key="NO"/>
+                                      </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="MobileChangeRequest" label="{i18n>MobileChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                                <fb:control>
+                                    <ComboBox placeholder="{i18n>MobileChangeRequestRaised}" selectedKey="{oModelControl>/filterBar/MobileChangeRequest}">
+                                        <core:Item text="Yes" key="YES"/>
+                                        <core:Item text="No" key="NO"/>
+                                      </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>
