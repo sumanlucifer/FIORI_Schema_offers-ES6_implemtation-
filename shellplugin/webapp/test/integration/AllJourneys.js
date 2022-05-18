@@ -1,13 +1,17 @@
 sap.ui.define([
 	"sap/ui/test/Opa5",
 	"./arrangements/Startup",
-	"./NavigationJourney"
+	"./WorklistJourney",
+	"./NavigationJourney",
+	"./NotFoundJourney",
+	"./ObjectJourney"
 ], function (Opa5, Startup) {
 	"use strict";
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "com.knpl.pragati.shellplugin.shellplugin.view.",
+		viewNamespace: "com.knpl.pragati.shellplugin.view.",
 		autoWait: true
 	});
+
 });

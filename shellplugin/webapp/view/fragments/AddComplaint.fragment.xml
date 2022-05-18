@@ -1,0 +1,34 @@
+<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+  
+        <f:SimpleForm class="addForm" id="FormObjectData" editable="true" layout="ResponsiveGridLayout" title="{oModelControl>/Pagetitle}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>ComplaintDetails}" />
+                <Label text="{i18n>ComplaintType}" />
+                <ComboBox change="onCmpTypChange" required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                    <items>
+                        <core:Item text="{ComplaintType}" key="{Id}" />
+                    </items>
+                </ComboBox>
+                 <Label text="{i18n>PrimaryMobileNo}" />
+                <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onPainterValueHelpRequest" value="{path:'oModelControl>/AddFields/PainterMobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
+                <Label text="{i18n>PainterName}" />
+                <Text  text="{oModelControl>/AddFields/PainterName}" />
+                <Label text="{i18n>MembershipId}" />
+                <Text text="{oModelControl>/AddFields/PainterMembershipId}" />
+                <!-- Zone Division Depot Info -->
+                <Label text="{i18n>Zone}" />
+                <Text text="{oModelControl>/AddFields/PainterZone}" />
+                <Label text="{i18n>Division}" />
+                <Text text="{oModelControl>/AddFields/PainterDivision}" />
+                <Label text="{i18n>Depot}" />
+                <Text text="{oModelControl>/AddFields/PainterDepot}" />
+
+                <core:Title text="{i18n>RemarkDetails}" />
+                <Label text="{i18n>Remark}" />
+               <Input  maxLength="300" width="100%"
+                value="{path : 'oModelView>/Remark', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }" required="false" />
+           
+            </f:content>
+        </f:SimpleForm>
+   
+</core:FragmentDefinition>

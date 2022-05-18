@@ -1,7 +1,14 @@
-<mvc:View controllerName="com.knpl.pragati.shellplugin.shellplugin.controller.App"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <App id="app">
-    </App>
+<mvc:View
+	controllerName="com.knpl.pragati.shellplugin.controller.App"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Shell>
+	<App
+		id="app"
+		busy="{appView>/busy}"
+		busyIndicatorDelay="0"/>
+	</Shell>
+
 </mvc:View>

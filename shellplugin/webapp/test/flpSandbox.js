@@ -39,8 +39,8 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "App Title",
-									"targetURL": "#comknplpragatishellpluginshellplugin-display"
+									"title": "Condonation",
+									"targetURL": "#Condonation-display"
 								}
 							}]
 						}]
@@ -51,18 +51,18 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"comknplpragatishellpluginshellplugin-display": {
-								"semanticObject": "comknplpragatishellpluginshellplugin",
+							"Condonation-display": {
+								"semanticObject": "Condonation",
 								"action": "display",
 								"description": "A Fiori application.",
-								"title": "App Title",
+								"title": "Condonation",
 								"signature": {
 									"parameters": {}
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=com.knpl.pragati.shellplugin.shellplugin",
-									"url": sap.ui.require.toUrl("com/knpl/pragati/shellplugin/shellplugin")
+									"additionalInformation": "SAPUI5.Component=com.knpl.pragati.shellplugin",
+									"url": sap.ui.require.toUrl("com/knpl/pragati/shellplugin")
 								}
 							}
 						}

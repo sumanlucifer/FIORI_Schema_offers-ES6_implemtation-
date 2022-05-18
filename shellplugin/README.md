@@ -1,24 +1,23 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed May 18 2022 07:07:57 GMT+0000 (Coordinated Universal Time)|
-|**App Generator**<br>@sap/generator-fiori-freestyle|
-|**App Generator Version**<br>1.6.0|
+|**Generation Date and Time**<br>Tue Jul 20 2021 07:20:41 GMT+0000 (Coordinated Universal Time)|
+|**App Generator**<br>@sap/generator-fiori|
+|**App Generator Version**<br>1.2.4|
 |**Generation Platform**<br>SAP Business Application Studio|
-|**Floorplan Used**<br>simple|
-|**Service Type**<br>None|
-|**Service URL**<br>N/A
+|**Floorplan Used**<br>1worklist|
+|**Service Type**<br>SAP System (ABAP On Premise)|
+|**Service URL**<br>https://services.odata.org/V2/Northwind/Northwind.svc/
 |**Module Name**<br>shellplugin|
-|**Application Title**<br>App Title|
-|**Namespace**<br>com.knpl.pragati.shellplugin|
+|**Application Title**<br>Painter Requests|
+|**Namespace**<br>com.knpl.pragati|
 |**UI5 Theme**<br>sap_fiori_3|
-|**UI5 Version**<br>1.101.0|
-|**Enable Code Assist Libraries**<br>False|
-|**Add Eslint configuration**<br>False|
+|**UI5 Version**<br>Latest|
+|**Enable Telemetry**<br>True|
 
 ## shellplugin
 
-A Fiori application.
+
 
 ### Starting the generated app
 

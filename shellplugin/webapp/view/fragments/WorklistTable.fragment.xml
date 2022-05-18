@@ -1,0 +1,71 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core">
+    <smartTable:SmartTable id="idWorkListTable1" header="{i18n>ComplainList}" enableAutoBinding="false" initialNoDataText="{i18n>tableNoDataText}" width="100%" editable="false" entitySet="PainterComplainsSet" beforeRebindTable="onBindTblComplainList" tableType="ResponsiveTable" showRowCount="true" useExportToExcel="false" useVariantManagement="false" useTablePersonalisation="true" demandPopin="false" requestAtLeastFields="ParentComplaintId,Id" >
+        <smartTable:customToolbar>
+			<OverflowToolbar>
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>AddComplaint}" press="onPressAddObject"/>
+                    </OverflowToolbar>
+		</smartTable:customToolbar>
+
+        <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
+           
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Painter/Name", "leadingProperty": "Painter/Name", "columnIndex": 0 ,"sortProperty": "Painter/Name","filterProperty": "Painter/Name"}'/>
+                    </customData>
+                    <Text text="{i18n>PainterName}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintCode", "leadingProperty": "ComplaintCode", "columnIndex": 1 ,"sortProperty": "ComplaintCode","filterProperty": "ComplaintCode"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintCode}"/>
+                </Column>
+
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintType/ComplaintType", "leadingProperty": "ComplaintType/ComplaintType", "columnIndex": 2 ,"sortProperty": "ComplaintType/ComplaintType","filterProperty": "ComplaintType/ComplaintType"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintType}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "CreatedAt", "type":"date", "leadingProperty": "CreatedAt", "columnIndex": 3 ,"sortProperty": "CreatedAt","filterProperty": "CreatedAt"}'/>
+                    </customData>
+                    <Text text="{i18n>DateAndTime}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintStatus", "leadingProperty": "ComplaintStatus", "columnIndex": 4 ,"sortProperty": "ComplaintStatus","filterProperty": "ComplaintStatus"}'/>
+                    </customData>
+                    <Text text="{i18n>ComplaintStatus}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Actions"}'/>
+                    </customData>
+                    <Text text="{i18n>Actions}"/>
+                </Column>
+
+            </columns>
+            <items>
+                <ColumnListItem press="onListItemPress" type="Navigation">
+                    <cells>
+                        <Text text="{Painter/Name}"/>
+                        <Text text="{ComplaintCode}"/>
+                         <Text text="{ComplaintType/ComplaintType}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <ObjectStatus text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.formatter.fmtLowerCase'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
+                           <HBox >
+                                            <Button icon="sap-icon://edit" press="onEditListItemPress" type="Transparent" tooltip="{i18n>Edit}"/>
+							                <Button icon="sap-icon://delete" press="onPressDelete" type="Transparent" tooltip="{i18n>Delete}"/>
+                                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

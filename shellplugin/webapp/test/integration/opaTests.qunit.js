@@ -1,7 +1,13 @@
 /* global QUnit */
 
-sap.ui.require(["com/knpl/pragati/shellplugin/shellplugin/test/integration/AllJourneys"
-], function () {
-	QUnit.config.autostart = false;
-	QUnit.start();
+QUnit.config.autostart = false;
+
+sap.ui.getCore().attachInit(function() {
+	"use strict";
+
+	sap.ui.require([
+		"com/knpl/pragati/shellplugin/test/integration/AllJourneys"
+	], function() {
+		QUnit.start();
+	});
 });

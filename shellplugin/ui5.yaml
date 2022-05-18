@@ -1,31 +1,27 @@
-# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
-
-specVersion: "2.5"
+specVersion: '1.0'
 metadata:
-  name: com.knpl.pragati.shellplugin.shellplugin
+  name: 'redeempoints'
 type: application
-server:
-  customMiddleware:
-    - name: fiori-tools-proxy
-      afterMiddleware: compression
-      configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-        ui5:
-          path:
-            - /resources
-            - /test-resources
-          url: https://ui5.sap.com
-        backend:
-          - path: /sap
-            url: http://localhost
-    - name: fiori-tools-appreload
-      afterMiddleware: compression
-      configuration:
-        port: 35729
-        path: webapp
-        delay: 300
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
-      configuration:
-        component: com.knpl.pragati.shellplugin.shellplugin
-        ui5Theme: sap_fiori_3
+resources:
+  configuration:
+    propertiesFileSourceEncoding: UTF-8
+builder:
+  resources:
+    excludes:
+      - "/test/**"
+      - "/localService/**"
+  customTasks:
+  - name: webide-extension-task-updateManifestJson
+    afterTask: generateVersionInfo
+    configuration:
+      appFolder: webapp
+      destDir: dist
+  - name: webide-extension-task-resources
+    afterTask: webide-extension-task-updateManifestJson
+    configuration:
+      nameSpace: com/knpl/pragati
+  - name: webide-extension-task-copyFile
+    afterTask: webide-extension-task-resources
+    configuration:
+      srcFile: "/xs-app.json"
+      destFile: "/xs-app.json"

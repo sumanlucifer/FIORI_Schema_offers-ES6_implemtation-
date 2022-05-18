@@ -1,54 +1,45 @@
 {
-    "_version": "1.40.0",
+    "_version": "1.32.0",
     "sap.app": {
-        "id": "com.knpl.pragati.shellplugin.shellplugin",
-        "type": "component",
+        "id": "com.knpl.pragati.shellplugin",
+        "type": "application",
         "i18n": "i18n/i18n.properties",
-        "applicationVersion": {
-            "version": "0.0.1"
-        },
         "title": "{{appTitle}}",
         "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "sourceTemplate": {
-            "id": "@sap-ux/fiori-freestyle-writer:basic",
-            "version": "0.11.9"
+        "applicationVersion": {
+            "version": "1.0.0"
         },
+        "resources": "resources.json",
         "dataSources": {
             "mainService": {
-                "uri": "/sap/opu/odata/",
+                "uri": "KNPL_PAINTER_API/api/v2/odata.svc/",
                 "type": "OData",
                 "settings": {
-                    "annotations": [],
-                    "localUri": "localService/metadata.xml",
-                    "odataVersion": "4.0"
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
                 }
             }
         },
         "crossNavigation": {
             "inbounds": {
-                "com-knpl-pragati-shellplugin-shellplugin-inbound": {
+                "intent1": {
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "hideLauncher": true,
-                    "semanticObject": "shell",
-                    "action": "plugin",
-                    "title": "{{flpTitle}}",
-                    "subTitle": "{{flpSubtitle}}",
+                    "semanticObject": "Manage",
+                    "action": "PaintReq",
+                    "title": "Painter Requests",
+                    "subTitle": "",
                     "icon": ""
                 }
             }
         }
     },
-    "sap.flp": {
-        "type": "plugin"
-    },
     "sap.ui": {
         "technology": "UI5",
         "icons": {
-            "icon": "",
+            "icon": "sap-icon://task",
             "favIcon": "",
             "phone": "",
             "phone@2": "",
@@ -62,18 +53,18 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": true,
+        "rootView": {
+            "viewName": "com.knpl.pragati.shellplugin.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
         "dependencies": {
-            "minUI5Version": "1.101.0",
+            "minUI5Version": "1.66.0",
             "libs": {
-                "sap.m": {},
                 "sap.ui.core": {},
-                "sap.f": {},
-                "sap.suite.ui.generic.template": {},
-                "sap.ui.comp": {},
-                "sap.ui.generic.app": {},
-                "sap.ui.table": {},
-                "sap.ushell": {}
+                "sap.m": {},
+                "sap.f": {}
             }
         },
         "contentDensities": {
@@ -84,65 +75,96 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.knpl.pragati.shellplugin.shellplugin.i18n.i18n"
+                    "bundleName": "com.knpl.pragati.shellplugin.i18n.i18n"
                 }
             },
             "": {
                 "dataSource": "mainService",
                 "preload": true,
                 "settings": {
-                    "synchronizationMode": "None",
-                    "operationMode": "Server",
-                    "autoExpandSelect": true,
-                    "earlyRequests": true
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "defaultUpdateMethod": "Put",
+                    "useBatch": false
+                }
+            },
+            "LoginInfo": {
+                "type": "sap.ui.model.json.JSONModel"
+            }
+
+        },
+        "services": {
+            "ShellUIService": {
+                "factoryName": "sap.ushell.ui5service.ShellUIService",
+                "lazy": false,
+                "settings": {
+                    "setTitle": "auto"
                 }
             }
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
         },
         "routing": {
             "config": {
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
-                "async": true,
-                "viewPath": "com.knpl.pragati.shellplugin.shellplugin.view",
-                "controlAggregation": "pages",
+                "viewPath": "com.knpl.pragati.shellplugin.view",
                 "controlId": "app",
-                "clearControlAggregation": false
-            },
-            "routes": [
-                {
-                    "name": "RouteView1",
-                    "pattern": "RouteView1",
+                "controlAggregation": "pages",
+                "bypassed": {
                     "target": [
-                        "TargetView1"
+                        "notFound"
+                    ]
+                },
+                "async": true
+            },
+            "routes": [{
+                    "pattern": "",
+                    "name": "worklist",
+                    "target": [
+                        "worklist"
+                    ]
+                },
+                {
+                    "pattern": "Detail/{Mode}/{Id}",
+                    "name": "Detail",
+                    "target": [
+                        "Detail"
+                    ]
+                },
+                {
+                    "pattern": "Add",
+                    "name": "Add",
+                    "target": [
+                        "object"
                     ]
                 }
             ],
             "targets": {
-                "TargetView1": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "View1",
-                    "viewName": "View1"
+                "worklist": {
+                    "viewName": "Worklist",
+                    "viewId": "worklist",
+                    "viewLevel": 1,
+                    "title": "{i18n>worklistViewTitle}"
+                },
+                "object": {
+                    "viewName": "AddObject",
+                    "viewId": "object",
+                    "viewLevel": 2
+                },
+                "objectNotFound": {
+                    "viewName": "ObjectNotFound",
+                    "viewId": "objectNotFound"
+                },
+                "Detail": {
+                    "viewName": "Detail",
+                    "viewId": "Detail",
+                    "viewLevel": 2
+                },
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
                 }
             }
-        },
-        "rootView": {
-            "viewName": "com.knpl.pragati.shellplugin.shellplugin.view.App",
-            "type": "XML",
-            "async": true,
-            "id": "App"
         }
-    },
-    "sap.cloud": {
-        "public": true,
-        "service": "com.knpl.pragati.shellplugin.shellplugin"
     }
 }
