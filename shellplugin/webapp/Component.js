@@ -39,6 +39,7 @@ sap.ui.define([
                     oRenderer;
     
     
+                
                 that._oShellContainer = jQuery.sap.getObject("sap.ushell.Container");
                 if (!that._oShellContainer) {
                     oDeferred.reject(
