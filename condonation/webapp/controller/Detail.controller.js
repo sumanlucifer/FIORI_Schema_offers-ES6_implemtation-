@@ -484,7 +484,6 @@ sap.ui.define(
                 },
                 onRemarksDialogOpen: function (mParam) {
                     var oView = this.getView();
-
                     var oModelControl = oView.getModel("oModelControl");
                     var othat = this;
                     var sType = mParam
@@ -500,7 +499,6 @@ sap.ui.define(
                             this._RemarksDialog1.open();
                         }.bind(this))
                     } else {
-
                         this._RemarksDialog1.open();
                     }
                 },
