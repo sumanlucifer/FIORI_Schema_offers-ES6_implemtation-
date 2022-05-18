@@ -1,6 +1,5 @@
 sap.ui.define([
-	"./model/formatter",
-	"./model/models"
-], function() {
+	"comknplpragatishellplugin/shellplugin/test/unit/controller/View1.controller"
+], function () {
 	"use strict";
 });

@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"com/knpl/pragati/shellplugin/test/unit/AllTests"
+		"comknplpragatishellplugin/shellplugin/test/unit/AllTests"
 	], function () {
 		QUnit.start();
 	});

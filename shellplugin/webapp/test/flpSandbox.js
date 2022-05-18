@@ -39,8 +39,8 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "Condonation",
-									"targetURL": "#Condonation-display"
+									"title": "App Title",
+									"targetURL": "#comknplpragatishellpluginshellplugin-display"
 								}
 							}]
 						}]
@@ -51,11 +51,11 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"Condonation-display": {
-								"semanticObject": "Condonation",
+							"comknplpragatishellpluginshellplugin-display": {
+								"semanticObject": "comknplpragatishellpluginshellplugin",
 								"action": "display",
 								"description": "A Fiori application.",
-								"title": "Condonation",
+								"title": "App Title",
 								"signature": {
 									"parameters": {}
 								},

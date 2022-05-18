@@ -12,3 +12,7 @@ knpl-influencer-web/MDM/.env1
 knpl-influencer-web/portfolio/.env1
 # auto generated wildcard
 knpl-influencer-web/ContactPainter/.env4
+# auto generated wildcard
+knpl-influencer-web/shellplugin/.env1
+# auto generated wildcard
+knpl-influencer-web/shellplugin/.env2
