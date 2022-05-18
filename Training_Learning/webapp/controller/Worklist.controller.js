@@ -17,10 +17,10 @@ sap.ui.define([
         /* lifecycle methods                                           */
         /* =========================================================== */
 
-		/**
-		 * Called when the worklist controller is instantiated.
-		 * @public
-		 */
+        /**
+         * Called when the worklist controller is instantiated.
+         * @public
+         */
         onInit: function () {
             var oViewModel,
                 iOriginalBusyDelay,
@@ -80,11 +80,11 @@ sap.ui.define([
                             if (data["results"].length > 0) {
                                 var oLoginData = dat.getView().getModel("LoginInfo");
                                 oLoginData.setData(data["results"][0]);
-                               
-                                 dat._setInitialData();
+
+                                dat._setInitialData();
                             }
                         }
-                       
+
                         dat.getModel().read("/MasterLanguageSet", {
                             success: function (data1) {
                                 if (data1.results.length) {
@@ -106,51 +106,51 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter(this);
             oRouter.getRoute("worklist").attachMatched(this.onRefreshView, this);
         },
-        _setInitialData:function(){
+        _setInitialData: function () {
             this._initLoginFilterTable1();
         },
         _CreateLeadsFilter: function (mParam1) {
             var oView = this.getView();
             var oLoginData = this.getView().getModel("LoginInfo").getData();
             var aFilter = [];
-            if (oLoginData["UserTypeId"] === 3) {
-                if (oLoginData["AdminDivision"]["results"].length > 0) {
-                    for (var x of oLoginData["AdminDivision"]["results"]) {
-                        aFilter.push(new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                    }
-                }else if (oLoginData["AdminZone"]["results"].length > 0) {
-                    for (var x of oLoginData["AdminZone"]["results"]) {
-                        aFilter.push(new Filter("TrainingZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                    }
+            //if (oLoginData["UserTypeId"] === 3) {
+            if (oLoginData["AdminDivision"]["results"].length > 0) {
+                for (var x of oLoginData["AdminDivision"]["results"]) {
+                    aFilter.push(new Filter("TrainingDivision/DivisionId", FilterOperator.EQ, x["DivisionId"]))
                 }
-                if (aFilter.length > 0) {
-                    var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
-                    aEndFilter.push(new Filter({
-                        filters: aFilter,
-                        and: false
-                    }))
-                    return aEndFilter;
-
+            } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                for (var x of oLoginData["AdminZone"]["results"]) {
+                    aFilter.push(new Filter("TrainingZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                 }
             }
+            if (aFilter.length > 0) {
+                var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                aEndFilter.push(new Filter({
+                    filters: aFilter,
+                    and: false
+                }))
+                return aEndFilter;
+
+            }
+            //}
             return false;
         },
-        _initLoginFilterTable1:function(){
+        _initLoginFilterTable1: function () {
             var promise = $.Deferred();
             var oView = this.getView();
             var oLoginData = this.getView().getModel("LoginInfo").getData();
             var aFilter = [];
             var aLeadsFilter1 = this._CreateLeadsFilter();
-            
-           
+
+
             if (aLeadsFilter1) {
                 var aLeadsFilter2 = aLeadsFilter1.slice();
-                aLeadsFilter1.push(new Filter("TrainingTypeId",FilterOperator.EQ,1));
+                aLeadsFilter1.push(new Filter("TrainingTypeId", FilterOperator.EQ, 1));
                 oView.byId("table").getBinding("items").filter(new Filter({
                     filters: aLeadsFilter1,
                     and: true
                 }), "Application");
-                
+
                 oView.byId("table1").getBinding("items").filter(new Filter({
                     filters: aLeadsFilter2,
                     and: true
@@ -184,15 +184,15 @@ sap.ui.define([
         /* event handlers                                              */
         /* =========================================================== */
 
-		/**
-		 * Triggered by the table's 'updateFinished' event: after new table
-		 * data is available, this handler method updates the table counter.
-		 * This should only happen if the update was successful, which is
-		 * why this handler is attached to 'updateFinished' and not to the
-		 * table's list binding's 'dataReceived' method.
-		 * @param {sap.ui.base.Event} oEvent the update finished event
-		 * @public
-		 */
+        /**
+         * Triggered by the table's 'updateFinished' event: after new table
+         * data is available, this handler method updates the table counter.
+         * This should only happen if the update was successful, which is
+         * why this handler is attached to 'updateFinished' and not to the
+         * table's list binding's 'dataReceived' method.
+         * @param {sap.ui.base.Event} oEvent the update finished event
+         * @public
+         */
         onUpdateFinished: function (oEvent) {
             // update the worklist's object counter after the table update
             var sTitle,
@@ -266,11 +266,11 @@ sap.ui.define([
             oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
         },
 
-		/**
-		 * Event handler when a table item gets pressed
-		 * @param {sap.ui.base.Event} oEvent the table selectionChange event
-		 * @public
-		 */
+        /**
+         * Event handler when a table item gets pressed
+         * @param {sap.ui.base.Event} oEvent the table selectionChange event
+         * @public
+         */
         onPress: function (oEvent) {
             // The source is the list item that got pressed
             this._showObject(oEvent.getSource());
@@ -305,11 +305,11 @@ sap.ui.define([
             oBinding2.filter([]);
         },
 
-		/**
-		 * Event handler for navigating back.
-		 * We navigate back in the browser history
-		 * @public
-		 */
+        /**
+         * Event handler for navigating back.
+         * We navigate back in the browser history
+         * @public
+         */
         onNavBack: function () {
             // eslint-disable-next-line sap-no-history-manipulation
             history.go(-1);
@@ -534,8 +534,7 @@ sap.ui.define([
                         aCurrentFilterValues1.push(
                             new Filter("TrainingDepot/DepotId", FilterOperator.EQ, oViewFilter1[prop])
                         );
-                    }
-                    else if (prop === "TrainingSubTypeId") {
+                    } else if (prop === "TrainingSubTypeId") {
                         aFlaEmpty1 = false;
                         aCurrentFilterValues1.push(
                             new Filter(prop, FilterOperator.EQ, oViewFilter1[prop])
