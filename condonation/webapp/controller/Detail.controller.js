@@ -475,7 +475,8 @@ sap.ui.define(
                     var sId = oModel.getProperty("/bindProp")
                     var oPayloadInput = {
                         ApprovalStatus: "APPROVED",
-                        InitiateForceTat:false
+                        InitiateForceTat:false,
+                        Remark:"Approved"
                     };
 
                     var sPath = "/" + sId + "/ApprovalStatus";
@@ -496,9 +497,7 @@ sap.ui.define(
                         }).then(function (oDialog) {
                             this._RemarksDialog1 = oDialog;
                             oView.addDependent(this._RemarksDialog1);
-
                             this._RemarksDialog1.open();
-
                         }.bind(this))
                     } else {
 
