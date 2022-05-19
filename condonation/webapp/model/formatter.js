@@ -185,9 +185,9 @@ sap.ui.define([], function () {
         },
         fmtLeadZoneCheck: function (mParam1, mParam2, mParam3) {
             //console.log(mParam1, mParam2, mParam3);
-            if (mParam2 !== 3) {
-                return true
-            }
+            // if (mParam2 !== 3) {
+            //     return true
+            // }
             if (mParam3) {
                 if(mParam3.hasOwnProperty("results")){
                     if (mParam3["results"].length > 0) {
@@ -205,9 +205,9 @@ sap.ui.define([], function () {
         },
         fmtLeadDivisionCheck: function (mParam1, mParam2, mParam3) {
             //console.log(mParam1, mParam2, mParam3);
-            if (mParam2 !== 3) {
-                return true
-            }
+            // if (mParam2 !== 3) {
+            //     return true
+            // }
             if (mParam3) {
                 if(mParam3.hasOwnProperty("results")){
                     if (mParam3["results"].length > 0) {

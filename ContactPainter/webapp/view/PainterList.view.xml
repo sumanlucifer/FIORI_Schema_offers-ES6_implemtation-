@@ -128,16 +128,18 @@
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="NameChangeRequest" label="{i18n>NameChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>NameChangeRequestRaised}" selectedKey="{oModelControl>/filterBar/NameChangeRequest}">
-                                        <core:Item text="Yes" key="YES"/>
-                                        <core:Item text="No" key="NO"/>
+                                          <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="Pending" key="PENDING"/>
                                       </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                               <fb:FilterGroupItem groupName="__$INTERNAL$" name="MobileChangeRequest" label="{i18n>MobileChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>MobileChangeRequestRaised}" selectedKey="{oModelControl>/filterBar/MobileChangeRequest}">
-                                        <core:Item text="Yes" key="YES"/>
-                                        <core:Item text="No" key="NO"/>
+                                          <core:Item text="Approved" key="APPROVED"/>
+                                        <core:Item text="Rejected" key="REJECTED"/>
+                                        <core:Item text="Pending" key="PENDING"/>
                                       </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>

@@ -77,11 +77,11 @@ sap.ui.define(
                 },
                 _onRouteMatched: function (mParam1) {
                     this._InitData();
-                    var c1,c2,c3;
-                    var othat=this;
-                    c1= othat._getLoggedInInfo();
-                    c1.then(function(){
-                        c2=othat._initLoginFilterTable1()
+                    var c1, c2, c3;
+                    var othat = this;
+                    c1 = othat._getLoggedInInfo();
+                    c1.then(function () {
+                        c2 = othat._initLoginFilterTable1()
                     })
 
                 },
@@ -98,29 +98,29 @@ sap.ui.define(
                     var oView = this.getView();
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
-                    if (oLoginData["UserTypeId"] === 3) {
-                        if (oLoginData["AdminDivision"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminDivision"]["results"]) {
-                                aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                            }
-                        }else if (oLoginData["AdminZone"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminZone"]["results"]) {
-                                aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                            }
+                    //if (oLoginData["UserTypeId"] === 3) {
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
                         }
-                        if (aFilter.length > 0) {
-                            var aEndFilter = [new Filter("ComplaintSubtypeId",FilterOperator.EQ,1),new Filter("IsArchived", FilterOperator.EQ,false)];
-                            aEndFilter.push(new Filter({
-                                filters: aFilter,
-                                and: false
-                            }))
-                            return aEndFilter;
-
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                         }
                     }
+                    if (aFilter.length > 0) {
+                        var aEndFilter = [new Filter("ComplaintSubtypeId", FilterOperator.EQ, 1), new Filter("IsArchived", FilterOperator.EQ, false)];
+                        aEndFilter.push(new Filter({
+                            filters: aFilter,
+                            and: false
+                        }))
+                        return aEndFilter;
+
+                    }
+                    //}
                     return false;
                 },
-                _initLoginFilterTable1:function(){
+                _initLoginFilterTable1: function () {
                     var promise = $.Deferred();
                     var oView = this.getView();
                     var oLoginData = this.getView().getModel("LoginInfo").getData();
@@ -140,7 +140,7 @@ sap.ui.define(
                 _getLoggedInInfo: function () {
                     var oData = this.getModel();
                     var oLoginData = this.getView().getModel("LoginInfo");
-                    return new Promise((resolve,reject)=>{
+                    return new Promise((resolve, reject) => {
                         oData.callFunction("/GetLoggedInAdmin", {
                             method: "GET",
                             urlParameters: {
@@ -155,11 +155,11 @@ sap.ui.define(
                                 }
                                 resolve();
                             },
-                            error:function(){
+                            error: function () {
                                 reject();
                             }
                         });
-                    }) 
+                    })
                 },
                 _InitData: function () {
                     var oViewModel,

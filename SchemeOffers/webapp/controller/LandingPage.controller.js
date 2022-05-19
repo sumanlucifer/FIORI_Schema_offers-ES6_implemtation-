@@ -60,7 +60,7 @@ sap.ui.define(
                             Division: "",
                             Depot: "",
                             Active: "",
-                            ProdCode:""
+                            ProdCode: ""
                         },
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -87,17 +87,17 @@ sap.ui.define(
                         oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
                     });
                     this.getView().getModel().refresh();
-                    var c1,c2,c3;
-                    var othat=this;
-                    c1= othat._getLoggedInInfo();
-                    c1.then(function(){
-                        c2=othat._initLoginFilterTable1()
+                    var c1, c2, c3;
+                    var othat = this;
+                    c1 = othat._getLoggedInInfo();
+                    c1.then(function () {
+                        c2 = othat._initLoginFilterTable1()
                     })
                 },
                 _getLoggedInInfo: function () {
                     var oData = this.getView().getModel();
                     var oLoginData = this.getView().getModel("LoginInfo");
-                    return new Promise((resolve,reject)=>{
+                    return new Promise((resolve, reject) => {
                         oData.callFunction("/GetLoggedInAdmin", {
                             method: "GET",
                             urlParameters: {
@@ -115,7 +115,7 @@ sap.ui.define(
                         });
                     })
                 },
-                _initLoginFilterTable1:function(){
+                _initLoginFilterTable1: function () {
                     var promise = $.Deferred();
                     var oView = this.getView();
                     var oLoginData = this.getView().getModel("LoginInfo").getData();
@@ -136,26 +136,26 @@ sap.ui.define(
                     var oView = this.getView();
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
-                    if (oLoginData["UserTypeId"] === 3) {
-                        if (oLoginData["AdminDivision"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminDivision"]["results"]) {
-                                aFilter.push(new Filter("OfferDivision/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                            }
-                        }else if (oLoginData["AdminZone"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminZone"]["results"]) {
-                                aFilter.push(new Filter("OfferZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                            }
+                    //if (oLoginData["UserTypeId"] === 3) {
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("OfferDivision/DivisionId", FilterOperator.EQ, x["DivisionId"]))
                         }
-                        if (aFilter.length > 0) {
-                            var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ,false)];
-                            aEndFilter.push(new Filter({
-                                filters: aFilter,
-                                and: false
-                            }))
-                            return aEndFilter;
-
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("OfferZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                         }
                     }
+                    if (aFilter.length > 0) {
+                        var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                        aEndFilter.push(new Filter({
+                            filters: aFilter,
+                            and: false
+                        }))
+                        return aEndFilter;
+
+                    }
+                    //}
                     return false;
                 },
 
@@ -532,7 +532,7 @@ sap.ui.define(
                         Division: "",
                         Depot: "",
                         Active: "",
-                        ProdCode:""
+                        ProdCode: ""
                     };
                     var oViewModel = this.getView().getModel("oModelControl");
                     oViewModel.setProperty("/filterBar", aResetProp);
@@ -573,7 +573,7 @@ sap.ui.define(
                         delete this._oDialog;
                     }
                 },
-                _handleListProdSearch:function(oEvent){
+                _handleListProdSearch: function (oEvent) {
                     var sValue = oEvent.getParameter("value").trim();
                     if (sValue.length > 0) {
                         var aFilter = new Filter({
@@ -591,9 +591,9 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl")
                     var object = oEvent.getParameter("selectedItem").getBindingContext().getObject();
-                    oModelControl.setProperty("/filterBar/ProdCode",object["Id"]);
+                    oModelControl.setProperty("/filterBar/ProdCode", object["Id"]);
                     this._onDialogClose();
-                    
+
                 },
                 onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();

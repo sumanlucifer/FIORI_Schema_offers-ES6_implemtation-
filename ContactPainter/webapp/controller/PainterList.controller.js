@@ -389,32 +389,37 @@ sap.ui.define(
 
                             } else if (prop === "NameChangeRequest") {
                                 aFlaEmpty = false;
-
-                                if (oViewFilter[prop] === "YES") {
-                                    //console.log("enter herer",oViewFilter[prop])
-                                    aCurrentFilterValues.push(
-                                        new Filter("PainterNameChangeRequest", FilterOperator.NE, null)
-                                    );
-                                } else if (oViewFilter[prop] === "NO") {
-                                    //console.log("enter herer",oViewFilter[prop])
-                                    aCurrentFilterValues.push(
-                                        new Filter("PainterNameChangeRequest", FilterOperator.EQ, null)
-                                    );
-                                }
+                                aCurrentFilterValues.push(
+                                    new Filter("PainterNameChangeRequest/Status", FilterOperator.EQ, oViewFilter[prop])
+                                );
+                                // if (oViewFilter[prop] === "YES") {
+                                //     //console.log("enter herer",oViewFilter[prop])
+                                //     aCurrentFilterValues.push(
+                                //         new Filter("PainterNameChangeRequest/Status", FilterOperator.NE, null)
+                                //     );
+                                // } else if (oViewFilter[prop] === "NO") {
+                                //     //console.log("enter herer",oViewFilter[prop])
+                                //     aCurrentFilterValues.push(
+                                //         new Filter("PainterNameChangeRequest/Status", FilterOperator.EQ, null)
+                                //     );
+                                // }
 
                             } else if (prop === "MobileChangeRequest") {
                                 aFlaEmpty = false;
-                                if (oViewFilter[prop] === "YES") {
-                                    //console.log("enter herer",oViewFilter[prop])
-                                    aCurrentFilterValues.push(
-                                        new Filter("PainterMobileNumberChangeRequest", FilterOperator.NE, null)
-                                    );
-                                } else if (oViewFilter[prop] === "NO") {
-                                    //console.log("enter herer",oViewFilter[prop])
-                                    aCurrentFilterValues.push(
-                                        new Filter("PainterMobileNumberChangeRequest", FilterOperator.EQ, null)
-                                    );
-                                }
+                                aCurrentFilterValues.push(
+                                    new Filter("PainterMobileNumberChangeRequest/Status", FilterOperator.EQ,oViewFilter[prop])
+                                );
+                                // if (oViewFilter[prop] === "YES") {
+                                //     //console.log("enter herer",oViewFilter[prop])
+                                //     aCurrentFilterValues.push(
+                                //         new Filter("PainterMobileNumberChangeRequest/Status", FilterOperator.NE, null)
+                                //     );
+                                // } else if (oViewFilter[prop] === "NO") {
+                                //     //console.log("enter herer",oViewFilter[prop])
+                                //     aCurrentFilterValues.push(
+                                //         new Filter("PainterMobileNumberChangeRequest/Status", FilterOperator.EQ, null)
+                                //     );
+                                // }
 
                             } else if (prop === "Name") {
                                 aFlaEmpty = false;

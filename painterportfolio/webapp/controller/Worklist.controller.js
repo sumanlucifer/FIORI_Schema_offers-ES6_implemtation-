@@ -62,7 +62,7 @@ sap.ui.define(
                             ReasonKey: ""
                         },
                         CarouselVisible: true,
-                        CarouselImgCount:null
+                        CarouselImgCount: null
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
@@ -222,32 +222,32 @@ sap.ui.define(
                     var oView = this.getView();
                     var oLoginData = oView.getModel("LoginInfo").getData();
                     var aFilter = [];
-                    if (oLoginData["UserTypeId"] === 3) {
-                        if (oLoginData["AdminDivision"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminDivision"]["results"]) {
-                                aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                            }
-                        }else if (oLoginData["AdminZone"]["results"].length > 0) {
-                            for (var x of oLoginData["AdminZone"]["results"]) {
-                                aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                            }
+                    //if (oLoginData["UserTypeId"] === 3) {
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("Painter/DivisionId", FilterOperator.EQ, x["DivisionId"]))
                         }
-                        if (aFilter.length > 0) {
-                            var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ,false)];
-                            aEndFilter.push(new Filter({
-                                filters: aFilter,
-                                and: false
-                            }))
-                            return aEndFilter;
-
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("Painter/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                         }
                     }
+                    if (aFilter.length > 0) {
+                        var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
+                        aEndFilter.push(new Filter({
+                            filters: aFilter,
+                            and: false
+                        }))
+                        return aEndFilter;
+
+                    }
+                    //}
                     return false;
                 },
                 _CreateFilter: function () {
                     var aCurrentFilterValues = this._CreateLeadsFilter();
-                    if(!aCurrentFilterValues){
-                        aCurrentFilterValues=[];
+                    if (!aCurrentFilterValues) {
+                        aCurrentFilterValues = [];
                     }
                     var oViewFilter = this.getView()
                         .getModel("oModelControl")
@@ -258,13 +258,13 @@ sap.ui.define(
                     aCurrentFilterValues.push(
                         new Filter("IsArchived", FilterOperator.EQ, false));
 
-                    if(!oViewFilter["Status"]){
+                    if (!oViewFilter["Status"]) {
                         aCurrentFilterValues.push(
                             new Filter("ApprovalStatus", FilterOperator.NotContains, "NONE"));
                     }
                     //console.log(oViewFilter)
-                  
-                   
+
+
 
                     // filter bar filters
                     for (let prop in oViewFilter) {
@@ -478,14 +478,14 @@ sap.ui.define(
                     //oList.getBinding("pages").sorter(new Sorter("PortfolioCategory/category"));
                     this._QuickApproveDialog.open();
                 },
-                onDataRequested:function(oEvent){
-                   // this._QuickApproveDialog.setBusy(true);
+                onDataRequested: function (oEvent) {
+                    // this._QuickApproveDialog.setBusy(true);
                 },
                 onDataReceived: function (oEvent) {
                     var oData = oEvent.getParameter("data");
                     var oModelControl = this.getModel("oModelControl");
-                    var sCount =  oModelControl.getProperty("/CarouselImgCount");
-                   
+                    var sCount = oModelControl.getProperty("/CarouselImgCount");
+
                     if (oData["__count"]) {
                         if (parseInt(oData["__count"]) > 0) {
                             oModelControl.setProperty("/CarouselVisible", true);
@@ -493,10 +493,10 @@ sap.ui.define(
                         } else {
                             oModelControl.setProperty("/CarouselVisible", false);
                         }
-                        if(!sCount){
-                            oModelControl.setProperty("/CarouselImgCount",oData["__count"]);
+                        if (!sCount) {
+                            oModelControl.setProperty("/CarouselImgCount", oData["__count"]);
                         }
-                        
+
                     }
                     //this._QuickApproveDialog.setBusy(false);
                 },
@@ -528,7 +528,7 @@ sap.ui.define(
                     var othat = this;
                     var oModelControl = oView.getModel("oModelControl");
                     oModelControl.setProperty("/PageBusy", true);
-                 
+
                     c1 = othat._SendReqForImageStatus(oPayload, sId);
                     c1.then(function () {
                         c3 = othat._UpdateBindingsCarousel();
@@ -619,7 +619,7 @@ sap.ui.define(
                             ApprovalStatus: "REJECTED",
                             Remark: oModelControl.getProperty("/Dialog/Remarks")
                         };
-                        
+
                         this._ChangePortImageStatusApproved(oPayLoad, oData["Id"]);
                     }
 
@@ -658,7 +658,7 @@ sap.ui.define(
                                 actions: [sap.m.MessageBox.Action.OK],
                                 emphasizedAction: MessageBox.Action.OK,
                                 onClose: function (sAction) {
-                                   
+
                                 }.bind(this)
                             });
                             return;
