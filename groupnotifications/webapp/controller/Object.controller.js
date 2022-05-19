@@ -110,7 +110,7 @@ sap.ui.define([
                 // this._bindView("/" + sObjectPath, sObjectId);
                 this.getModel().read(sObjectPath, {
                     urlParameters: {
-                        "$expand": "NotificationGroupZone,NotificationGroupDivision,NotificationGroupDepot,NotificationGroupPainterType,NotificationGroupPainterArcheType,CreatedByDetails,UpdatedByDetails"
+                        "$expand": "NotificationGroupZone,NotificationGroupDivision,Members/Painter,NotificationGroupDepot,NotificationGroupPainterType,NotificationGroupPainterArcheType,CreatedByDetails,UpdatedByDetails"
                     },
                     success: this._setView.bind(this)
                 });
@@ -160,8 +160,9 @@ sap.ui.define([
                 oViewModel.setProperty("/oDetails", data);
                 if (data.IsTargetGroup == false) {
 
-                    // oViewModel.setProperty("/oDetails/Members", data.Members.results);
-                    oViewModel.setProperty("/oDetails/Members", []);
+                    oViewModel.setProperty("/oDetails/Members", data.Members.results);
+                    console.log(oViewModel)
+                    //oViewModel.setProperty("/oDetails/Members", []);
                     oViewModel.setProperty("/TargetDetails/TargetFilterType", "PAINTER");
                     oViewModel.setProperty("/TargetDetails/NotificationGroupZone", []);
                     oViewModel.setProperty("/TargetDetails/NotificationGroupDivision", []);

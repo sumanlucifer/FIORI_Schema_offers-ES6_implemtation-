@@ -84,7 +84,7 @@
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 			</uxap:ObjectPageSection>
-			<uxap:ObjectPageSection title="{i18n>members}" visible="{=${objectView>/TargetDetails/TargetFilterType} === 'PAINTER'}">
+			<uxap:ObjectPageSection title="{i18n>members}." visible="{=${objectView>/TargetDetails/TargetFilterType} === 'PAINTER'}">
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection>
 						<Table id="List" mode="Delete" delete="onDeleteMember" width="auto"
