@@ -134,7 +134,7 @@
                                       </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                              <fb:FilterGroupItem groupName="__$INTERNAL$" name="MobileChangeRequest" label="{i18n>MobileChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="MobileChangeRequest" label="{i18n>MobileChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>MobileChangeRequestRaised}" selectedKey="{oModelControl>/filterBar/MobileChangeRequest}">
                                           <core:Item text="Approved" key="APPROVED"/>
