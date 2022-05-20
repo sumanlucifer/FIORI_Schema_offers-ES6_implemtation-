@@ -125,7 +125,7 @@
                                       </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <!-- <fb:FilterGroupItem groupName="__$INTERNAL$" name="NameChangeRequest" label="{i18n>NameChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
+                           <fb:FilterGroupItem groupName="__$INTERNAL$" name="NameChangeRequest" label="{i18n>NameChangeRequestRaised}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
                                     <ComboBox placeholder="{i18n>NameChangeRequestRaised}" selectedKey="{oModelControl>/filterBar/NameChangeRequest}">
                                           <core:Item text="Approved" key="APPROVED"/>
@@ -142,7 +142,7 @@
                                         <core:Item text="Pending" key="PENDING"/>
                                       </ComboBox>
                                 </fb:control>
-                            </fb:FilterGroupItem> -->
+                            </fb:FilterGroupItem> 
 
                         </fb:filterGroupItems>
                     </fb:FilterBar>

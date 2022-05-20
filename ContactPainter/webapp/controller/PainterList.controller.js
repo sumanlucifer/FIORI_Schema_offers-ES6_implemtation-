@@ -390,7 +390,7 @@ sap.ui.define(
                             } else if (prop === "NameChangeRequest") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("PainterNameChangeRequest/Status", FilterOperator.EQ, oViewFilter[prop])
+                                    new Filter("PainterNameChangeRequestDetails/Status", FilterOperator.EQ, oViewFilter[prop])
                                 );
                                 // if (oViewFilter[prop] === "YES") {
                                 //     //console.log("enter herer",oViewFilter[prop])
@@ -407,7 +407,7 @@ sap.ui.define(
                             } else if (prop === "MobileChangeRequest") {
                                 aFlaEmpty = false;
                                 aCurrentFilterValues.push(
-                                    new Filter("PainterMobileNumberChangeRequest/Status", FilterOperator.EQ,oViewFilter[prop])
+                                    new Filter("PainterMobileNumberChangeRequestDetails/Status", FilterOperator.EQ,oViewFilter[prop])
                                 );
                                 // if (oViewFilter[prop] === "YES") {
                                 //     //console.log("enter herer",oViewFilter[prop])
