@@ -110,10 +110,6 @@ modules:
       - painterportfolio-content.zip
       name: painterportfolio
       target-path: resources/
-    - artifacts:
-      - shellplugin-content.zip
-      name: shellplugin
-      target-path: resources/
 - name: MDM
   type: html5
   path: MDM
@@ -279,14 +275,6 @@ modules:
 - name: painterportfolio
   type: html5
   path: painterportfolio
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
-    supported-platforms: []
-- name: shellplugin
-  type: html5
-  path: shellplugin
   build-parameters:
     builder: custom
     commands:
