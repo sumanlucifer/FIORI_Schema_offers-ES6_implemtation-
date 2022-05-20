@@ -138,10 +138,12 @@ sap.ui.define(
                     var aFilter = [];
                     //if (oLoginData["UserTypeId"] === 3) {
                     if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        aFilter.push(new Filter("IsSpecificDivision", FilterOperator.EQ, false))
                         for (var x of oLoginData["AdminDivision"]["results"]) {
                             aFilter.push(new Filter("OfferDivision/DivisionId", FilterOperator.EQ, x["DivisionId"]))
                         }
                     } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        aFilter.push(new Filter("IsSpecificZone", FilterOperator.EQ, false))
                         for (var x of oLoginData["AdminZone"]["results"]) {
                             aFilter.push(new Filter("OfferZone/ZoneId", FilterOperator.EQ, x["ZoneId"]))
                         }
