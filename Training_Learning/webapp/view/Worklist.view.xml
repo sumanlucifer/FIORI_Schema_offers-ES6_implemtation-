@@ -207,7 +207,7 @@
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
 							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoData}" growingThreshold="20" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoData}" growingThreshold="20" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished="onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
