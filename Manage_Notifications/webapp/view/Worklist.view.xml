@@ -58,7 +58,7 @@
 					<IconTabFilter text="{worklistView>/draft}">
 						<Table id="table" width="auto"
 							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'DRAFT' } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="10" growingScrollToLoad="false"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="20" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -122,7 +122,7 @@
 					<IconTabFilter text="{worklistView>/scheduled}">
 						<Table id="table1" width="auto"
 							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'SCHEDULED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="10" growingScrollToLoad="false"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="20" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -185,7 +185,7 @@
 					<IconTabFilter text="{worklistView>/triggered}">
 						<Table id="table2" width="auto"
 							items="{ path: '/NotificationSet', parameters : { expand : 'Group, Receivers, Redirection' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'IsSystemGenerated' , operator : 'EQ' , value1 : false }, { path : 'NotificationStatus' , operator : 'EQ' , value1 : 'TRIGGERED' } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="10" growingScrollToLoad="false"
+							noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="20" growingScrollToLoad="false"
 							updateFinished=".onUpdateFinished2">
 							<headerToolbar>
 								<OverflowToolbar>

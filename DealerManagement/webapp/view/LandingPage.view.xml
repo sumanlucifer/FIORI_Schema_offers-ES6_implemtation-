@@ -63,7 +63,7 @@
         <f:content>
             <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'DealerSalesDetails/SalesGroup,DealerNumber'},sorter : {
             path : 'DealerName' 
-         }}" noDataText="No Data" growing="true" growingThreshold="10" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
+         }}" noDataText="No Data" growing="true" growingThreshold="20" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="{worklistViewModel>/worklistTableTitle}" level="H4" class="stdTitleColor"/>
