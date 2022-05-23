@@ -61,7 +61,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'DealerSalesDetails/SalesGroup'},sorter : {
+            <Table id="idDealerTable" width="auto" items="{path: '/DealerSet' ,parameters : {expand:'DealerSalesDetails/SalesGroup,DealerNumber'},sorter : {
             path : 'DealerName' 
          }}" noDataText="No Data" growing="true" growingThreshold="10" growingScrollToLoad="true" busyIndicatorDelay="{worklistViewModel>/tableBusyDelay}" updateFinished="onUpdateFinished">
                 <headerToolbar>
@@ -106,6 +106,10 @@
                     <Column>
                         <Text text="{i18n>customerCategory}"/>
                     </Column>
+                     <Column>
+                        <Text text="{i18n>mobnumber}"/>
+                    </Column>
+                    
                     
                 </columns>
 
@@ -125,7 +129,7 @@
                             <Text text="{FiscalYear}"/>
                             
                             <Text text="{CustomerCategory}"/>
-                            
+                             <Text text="{DealerNumber/SMSNumber}"/>
                         </cells>
                     </ColumnListItem>
                 </items>

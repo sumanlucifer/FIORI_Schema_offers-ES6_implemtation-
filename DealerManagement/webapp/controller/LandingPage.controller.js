@@ -165,6 +165,7 @@ sap.ui.define([
 
                 aFilters.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }));
                 aFilters.push(new Filter({ path: "Id", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
+                aFilters.push(new Filter({ path: "DealerNumber/SMSNumber", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
                 for (let i = 1; i < aKeys.length; i++) {
 
                     aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
