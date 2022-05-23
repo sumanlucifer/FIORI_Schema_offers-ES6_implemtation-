@@ -70,7 +70,7 @@
                 noDataText="{i18n>tblNoDataText}"
                 growing="true"
                 growingScrollToLoad="false"
-                growingThreshold="10"
+                growingThreshold="20"
                 busy="{ViewModel>/busy}"
                 updateFinished="onUpdateFinished">
                 <headerToolbar>

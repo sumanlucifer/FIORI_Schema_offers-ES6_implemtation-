@@ -116,7 +116,7 @@
                     persistencyKey="PainterListSmartTableKey"
                   >
                   
-                  <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>nodata}">
+                  <Table growing="true" growingThreshold="20" growingScrollToLoad="false" noDataText="{i18n>nodata}">
                    
 
                                 <columns>
@@ -201,7 +201,7 @@
 				
 			</OverflowToolbar>
 		</smartTable:customToolbar>
-                  <Table growing="true" growingThreshold="10" growingScrollToLoad="false" >
+                  <Table growing="true" growingThreshold="20" growingScrollToLoad="false" >
                     
                                 <columns>
                                 <Column hAlign="Center">
@@ -269,7 +269,7 @@
 				
 			</OverflowToolbar>
 		</smartTable:customToolbar>
-                   <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
+                   <Table growing="true" growingThreshold="20" growingScrollToLoad="false">
                     
                                 <columns>
                                 <Column hAlign="Center">

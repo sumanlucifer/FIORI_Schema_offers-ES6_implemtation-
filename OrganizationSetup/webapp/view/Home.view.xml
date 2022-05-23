@@ -19,7 +19,7 @@ xmlns:l="sap.ui.layout"
                     descending: true
                     }
                  }"
-                growing="true" growingThreshold="10" growingScrollToLoad="false">
+                growing="true" growingThreshold="20" growingScrollToLoad="false">
                             <headerToolbar>
                             
                                 <Toolbar class="tblTlbrAd">
@@ -79,7 +79,7 @@ xmlns:l="sap.ui.layout"
                 filters: {path: 'IsArchived', operator: 'EQ', value1: false}}"
                 growing="true" 
                 growingScrollToLoad="false"
-                growingThreshold="10">
+                growingThreshold="20">
                             <headerToolbar>
                                 <Toolbar class="tblTlbrAd">
 

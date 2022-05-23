@@ -9,7 +9,7 @@
                     </OverflowToolbar>
 		</smartTable:customToolbar>
 
-        <Table  growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
+        <Table  growing="true" growingThreshold="20" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
            
             <columns>
                  <Column width="11%" hAlign="Begin">

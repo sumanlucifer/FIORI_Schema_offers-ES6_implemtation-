@@ -59,7 +59,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterLoyaltyRedemptionRequestSet',sorter:{path:'CreatedAt',descending:true}, 
+            <Table id="table" growing="true" growingThreshold="20" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterLoyaltyRedemptionRequestSet',sorter:{path:'CreatedAt',descending:true}, 
             filters:[{path:'IsArchived',operator:'EQ',value1:false}], parameters:{expand:'PainterDetails/Depot,MasterSlabBankRedemptionDetails'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>

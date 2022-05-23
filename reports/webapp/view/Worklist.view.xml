@@ -58,7 +58,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table  busyIndicatorDelay="0" id="table" growing="true" growingThreshold="10" updateFinished="onUpdateFinished" width="auto" items="{path: '/PragatiReportSet',sorter:{path:'UpdatedAt',descending:true}, 
+            <Table  busyIndicatorDelay="0" id="table" growing="true" growingThreshold="20" updateFinished="onUpdateFinished" width="auto" items="{path: '/PragatiReportSet',sorter:{path:'UpdatedAt',descending:true}, 
             filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>

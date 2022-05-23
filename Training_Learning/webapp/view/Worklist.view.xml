@@ -83,7 +83,7 @@
 					<IconTabFilter text="{worklistView>/onlineTraining}">
 						<Table id="table" width="auto"
 							items="{ path: '/TrainingSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false }, { path : 'TrainingTypeId' , operator : 'EQ' , value1 : 1 } ], sorter: { path: 'StartDate', descending: true } }"
-							noDataText="{worklistView>/tableNoData}" growingThreshold="15" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
+							noDataText="{worklistView>/tableNoData}" growingThreshold="20" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 							updateFinished="onUpdateFinished">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -157,7 +157,7 @@
 						</Table>
 					</IconTabFilter>
                     <IconTabFilter text="{worklistView>/offlineTraining}">
-						<Table id="table2" growing="true" growingThreshold="15" growingScrollToLoad="false" updateFinished="onUpdateFinished2" width="auto" items="{ path: '/TrainingSet', sorter: { path: 'StartDate', descending: true }, filters : [ { path:'IsArchived', operator:'EQ', value1:false }, { path:'TrainingTypeId', operator:'EQ' , value1:2 } ], parameters : { expand : 'TrainingSubTypeDetails' } }" noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}">
+						<Table id="table2" growing="true" growingThreshold="20" growingScrollToLoad="false" updateFinished="onUpdateFinished2" width="auto" items="{ path: '/TrainingSet', sorter: { path: 'StartDate', descending: true }, filters : [ { path:'IsArchived', operator:'EQ', value1:false }, { path:'TrainingTypeId', operator:'EQ' , value1:2 } ], parameters : { expand : 'TrainingSubTypeDetails' } }" noDataText="{worklistView>/tableNoData}" busyIndicatorDelay="{worklistView>/tableBusyDelay}">
 							<headerToolbar>
 								<OverflowToolbar>
 									<ToolbarSpacer/>
@@ -207,7 +207,7 @@
 					<IconTabFilter text="{worklistView>/video}">
 						<Table id="table1" width="auto"
 							items="{ path: '/LearningSet', parameters : { expand : 'TrainingSubTypeDetails' }, filters : [ { path : 'IsArchived' , operator : 'EQ' , value1 : false } ], sorter: { path: 'UpdatedAt', descending: true } }"
-							noDataText="{worklistView>/tableNoData}" growingThreshold="15" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+							noDataText="{worklistView>/tableNoData}" growingThreshold="20" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 							updateFinished="onUpdateFinished1">
 							<headerToolbar>
 								<OverflowToolbar>

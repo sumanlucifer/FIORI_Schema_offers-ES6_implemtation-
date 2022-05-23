@@ -24,7 +24,7 @@
 		<f:content>
 			<Table id="table" width="auto"
 				items="{ path: '/NotificationGroupSet', filters : { path : 'IsArchived' , operator : 'EQ' , value1 : false }, sorter: { path: 'CreatedAt', descending: true } }"
-				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false" growingThreshold="10"
+				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false" growingThreshold="20"
 				updateFinished=".onUpdateFinished">
 				<headerToolbar>
 					<OverflowToolbar>

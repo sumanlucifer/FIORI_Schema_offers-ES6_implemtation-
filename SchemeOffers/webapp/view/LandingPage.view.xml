@@ -83,7 +83,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails,OfferZone,OfferDivision,OfferDepot',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable,OfferCode,OfferZone,OfferDivision,OfferDepot' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
+            <Table id="idOffersTable" width="auto" items="{path: '/OfferSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'OfferType,CreatedByDetails,OfferZone,OfferDivision,OfferDepot',select:'Id,Title,OfferType/OfferType,CreatedByDetails/Name,StartDate,EndDate,IsActive,OfferStatus,IsUpdateApplicable,OfferCode,OfferZone,OfferDivision,OfferDepot' }}" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="20" updateFinished="onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
