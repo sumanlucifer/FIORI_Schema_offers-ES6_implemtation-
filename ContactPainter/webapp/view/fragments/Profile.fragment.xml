@@ -85,6 +85,7 @@
                 <VBox width="100%"  visible="{= ${oModelControl2>/NameChange/Edit} === true }">
                     <items>
                           <Input placeholder="{i18n>Enter} {i18n>UpdateName}" value="{oModelControl2>/NameChange/RequestedName}" />
+                          <Text text="{i18n>Message12}"/>
                           <HBox>
                             <Button text="{i18n>SendForApproval}" class="sapUiTinyMarginEnd" type="Ghost" press=".onSendApprovalNameChange" />
                             <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressNameChange" />
