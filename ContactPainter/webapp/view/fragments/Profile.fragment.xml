@@ -81,11 +81,10 @@
                     </items>
                 </VBox>
                   <!-- This section is the edit section used for taking the details like name and sending the req to back end -->  
-                <Label text="{i18n>UpdateName}" visible="{= ${oModelControl2>/NameChange/Edit} === true }"/>
+                <Label text="{i18n>UpdateName} ({i18n>Message12})" visible="{= ${oModelControl2>/NameChange/Edit} === true }"/>
                 <VBox width="100%"  visible="{= ${oModelControl2>/NameChange/Edit} === true }">
                     <items>
                           <Input placeholder="{i18n>Enter} {i18n>UpdateName}" value="{oModelControl2>/NameChange/RequestedName}" />
-                          <Text text="{i18n>Message12}"/>
                           <HBox>
                             <Button text="{i18n>SendForApproval}" class="sapUiTinyMarginEnd" type="Ghost" press=".onSendApprovalNameChange" />
                             <Button text="{i18n>Cancel}" type="Ghost" press="onCancelPressNameChange" />

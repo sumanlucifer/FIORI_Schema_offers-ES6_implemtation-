@@ -31,10 +31,10 @@
                 <Label text="{i18n>ReferralCode}"/>
                 <Input value="{path:'oModelView>/PainterDetails/RegistrationReferralCode',type : 'sap.ui.model.type.String', constraints : {minLength:1, search:'^[A-Z0-9]+$'} }" />
                 <core:Title text="{i18n>PersonalDetails}" />
-                <Label text="{i18n>FullName}" />
+                <Label text="{i18n>FullName} ({i18n>Message12})" />
                 <VBox width="100%">
                     <Input valueStateText="Kindly enter a valid name without any additonal space in the end.Max 50 chars allowed." maxLength="50" required="true" value="{path : 'oModelView>/PainterDetails/Name', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[A-Za-z]{1}$|^(?:[A-Za-z][ ]?[.]?[ ]?){1,40}[A-Za-z]$' } }" />
-                    <Text text="{i18n>Message12}"/>
+                    <!-- <Text text="{i18n>Message12}"/> -->
                 </VBox>
                 <Label text="{i18n>EmailId}" />
                 <Input value="{ path : 'oModelView>/PainterDetails/Email', type : 'sap.ui.model.type.String', constraints : { search : '^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$' } }" />
