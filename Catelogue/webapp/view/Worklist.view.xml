@@ -107,7 +107,7 @@
                         
                     </OverflowToolbar>
 		</smartTable:customToolbar>
-                        <Table>
+                        <Table growingScrollToLoad="false" growing="true" growingThreshold="20" >
                     
                                 <columns>
                                  <Column hAlign="Begin" width="15%">
