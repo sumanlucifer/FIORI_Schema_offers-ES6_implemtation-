@@ -81,15 +81,15 @@ sap.ui.define(
                     var aFilter = [];
                     var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
                     //if (oLoginData["UserTypeId"] === 3) {
-                    if (oLoginData["AdminDivision"]["results"].length > 0) {
-                        for (var x of oLoginData["AdminDivision"]["results"]) {
-                            aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                        }
-                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
-                        for (var x of oLoginData["AdminZone"]["results"]) {
-                            aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                        }
-                    }
+                    // if (oLoginData["AdminDivision"]["results"].length > 0) {
+                    //     for (var x of oLoginData["AdminDivision"]["results"]) {
+                    //         aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                    //     }
+                    // } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                    //     for (var x of oLoginData["AdminZone"]["results"]) {
+                    //         aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                    //     }
+                    // }
                     //}
                     if (aFilter.length > 0) {
                         aEndFilter.push(new Filter({
@@ -126,31 +126,31 @@ sap.ui.define(
                 onBeforeRebind: function (oEvent) {
                     var sTableId = oEvent.getSource().getId().split("--")[2];
                     var oBindingParams = oEvent.getParameter("bindingParams");
-                    var aFinalFiler = this._CreateLeadsFilter();
-                    console.log(aFinalFiler)
-
                     if (sTableId === "idPendingSmartTable") {
-                        aFinalFiler.push(new Filter({
-                            filters: [
-                                new Filter("Status", FilterOperator.EQ, "REGISTERED"),
-                                new Filter("Status", FilterOperator.EQ, "INPROGRESS"),
-                            ],
-                            and: false,
-                        }))
-                        oBindingParams.filters = aFinalFiler;
+                        oBindingParams.filters.push(
+                            new Filter({
+                                filters: [
+                                    new Filter("Status", FilterOperator.EQ, "REGISTERED"),
+                                    new Filter("Status", FilterOperator.EQ, "INPROGRESS"),
+                                ],
+                                and: false,
+                            })
+                        );
                     } else {
-                        aFinalFiler.push(new Filter({
-                            filters: [
-                                new Filter("Status", FilterOperator.EQ, "RESOLVED"),
-                                new Filter("Status", FilterOperator.EQ, "REJECTED"),
-                            ],
-                            and: false,
-                        }))
-                        oBindingParams.filters = aFinalFiler;
+                        oBindingParams.filters.push(
+                            new Filter({
+                                filters: [
+                                    new Filter("Status", FilterOperator.EQ, "RESOLVED"),
+                                    new Filter("Status", FilterOperator.EQ, "REJECTED"),
+                                ],
+                                and: false,
+                            })
+                        );
                     }
-
+                    oBindingParams.filters.push(new Filter("IsArchived", FilterOperator.EQ, false));
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
+
 
                 onPressComplete: function (oEvent) {
                     var oView = this.getView();
