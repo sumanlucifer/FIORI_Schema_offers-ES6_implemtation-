@@ -38,7 +38,7 @@
                             useVariantManagement="false"
                             useTablePersonalisation="true"
                             demandPopin="true"
-                            enableAutoBinding="true"
+                            enableAutoBinding="false"
                             placeToolbarInTable="true"
                             persistencyKey="PendingSmartTableKey"
                             ignoredFields="AdminDetails/Name"

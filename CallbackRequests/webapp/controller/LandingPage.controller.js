@@ -81,23 +81,20 @@ sap.ui.define(
                     var aFilter = [];
                     var aEndFilter = [new Filter("IsArchived", FilterOperator.EQ, false)];
                     //if (oLoginData["UserTypeId"] === 3) {
-                    // if (oLoginData["AdminDivision"]["results"].length > 0) {
-                    //     for (var x of oLoginData["AdminDivision"]["results"]) {
-                    //         aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
-                    //     }
-                    // } else if (oLoginData["AdminZone"]["results"].length > 0) {
-                    //     for (var x of oLoginData["AdminZone"]["results"]) {
-                    //         aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
-                    //     }
-                    // }
+                    if (oLoginData["AdminDivision"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminDivision"]["results"]) {
+                            aFilter.push(new Filter("PainterDetails/DivisionId", FilterOperator.EQ, x["DivisionId"]))
+                        }
+                    } else if (oLoginData["AdminZone"]["results"].length > 0) {
+                        for (var x of oLoginData["AdminZone"]["results"]) {
+                            aFilter.push(new Filter("PainterDetails/ZoneId", FilterOperator.EQ, x["ZoneId"]))
+                        }
+                    }
                     //}
                     if (aFilter.length > 0) {
-                        aEndFilter.push(new Filter({
-                            filters: aFilter,
-                            and: false
-                        }))
+                        return new Filter({filters:aFilter,and:false})
                     }
-                    return aEndFilter;
+                    
                 },
                 _getLoggedInInfo: function () {
                     var oData = this.getView().getModel();
@@ -126,6 +123,7 @@ sap.ui.define(
                 onBeforeRebind: function (oEvent) {
                     var sTableId = oEvent.getSource().getId().split("--")[2];
                     var oBindingParams = oEvent.getParameter("bindingParams");
+                    var aLocationFilter = this._CreateLeadsFilter();
                     if (sTableId === "idPendingSmartTable") {
                         oBindingParams.filters.push(
                             new Filter({
@@ -148,6 +146,9 @@ sap.ui.define(
                         );
                     }
                     oBindingParams.filters.push(new Filter("IsArchived", FilterOperator.EQ, false));
+                    if(aLocationFilter){
+                        oBindingParams.filters.push(aLocationFilter);
+                    }
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
                 },
 
