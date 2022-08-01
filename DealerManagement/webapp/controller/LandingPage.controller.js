@@ -146,7 +146,7 @@ sap.ui.define([
 
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
-                var aFinFilter = new Filter({ "filters": aFilters, and: false })
+                var aFinFilter = new Filter({ "filters": aFilters, and: true })
                 var aKeys = [
                     "search", "PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
                 ];
