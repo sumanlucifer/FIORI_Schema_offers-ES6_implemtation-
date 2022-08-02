@@ -35,7 +35,7 @@
                         <Text text="{path:'masterAdditionalBenifit/Title',formatter:'.formatter.fmtStatus'}" />
                         <Text text="{Remark}" />
                         <Text text="{path:'Status',formatter:'.formatter.fmtStatus'}" />
-                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
                         <Button tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onReqListItemPress"></Button>
                     </cells>
                 </ColumnListItem>

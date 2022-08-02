@@ -36,7 +36,7 @@
             <items>
                 <ColumnListItem>
                     <cells>
-                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}"/>
                         <HBox>
                             <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
                             <Button tooltip="{i18n>ViewQuestion}" width="100%" visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press=".onViewTrainingQuestionaire"/>

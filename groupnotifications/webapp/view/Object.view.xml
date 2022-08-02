@@ -24,11 +24,11 @@
                                          <Label text="{i18n>CreatedBy}" />
                                         <Text text="{path:'objectView>/oDetails/CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
                                         <Label text="{i18n>CreatedAt}"  class="sapUiTinyMarginTop" />
-                                        <Text text="{path:'objectView>/oDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                        <Text text="{path:'objectView>/oDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                                         <Label text="{i18n>LastUpdatedBy}"  class="sapUiTinyMarginTop" />
                                         <Text text="{path:'objectView>/oDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />      
                                         <Label text="{i18n>LastUpdatedAt}"  class="sapUiTinyMarginTop" />
-                                        <Text text="{path:'objectView>/oDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                        <Text text="{path:'objectView>/oDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                                     </items>
                                 </VBox>
                                  

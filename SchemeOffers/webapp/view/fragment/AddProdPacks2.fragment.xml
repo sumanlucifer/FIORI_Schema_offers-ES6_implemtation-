@@ -37,7 +37,7 @@
                                 <Label text="{i18n>formBonusValidaityFrom}" required="true"/>
                             </f:label>
 								<f:fields>
-										<DatePicker change=".onStartDateBRRChange"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>/Dialog/Bonus2/StartDate}" />
+										<DatePicker change=".onStartDateBRRChange"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>/Dialog/Bonus2/StartDate}" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement>
@@ -45,7 +45,7 @@
                                 <Label text="{i18n>formBonusValidaityTo}" required="true"/>
                             </f:label>
 								<f:fields>
-									 <DatePicker  change=".onEndDateBRRChange"   displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>/Dialog/Bonus2/EndDate}" />
+									 <DatePicker  change=".onEndDateBRRChange"   displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>/Dialog/Bonus2/EndDate}" />
 								</f:fields>
 							</f:FormElement>
                             <f:FormElement label="{i18n>Table3Label1}">

@@ -46,9 +46,9 @@
                                 	<u:FileUploader change="onFileUploaderChange" app:type="fileUploader" typeMissmatch="onFilteMisMatch" fileType="jpg,jpeg,png" maximumFileSize="5" fileSizeExceed="onFileSizeMismatch" placeholder="{i18n>Message5}" tooltip="{i18n>Message5}"  visible="{= ${oModelControl>editable} === true }"/>
                                     <Link text="{i18n>ViewImage}" press="onViewImage"  visible="{= ${oModelControl>editable} !== true }"/>
                             </VBox>
-                              <Text text="{ path:'oModelControl>CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" />
+                              <Text text="{ path:'oModelControl>CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'} }" />
                                  <Text text="{ parts:['oModelControl>CreatedBy','oModelControl>CreatedByDetails'] ,formatter:'.formatter.fmtCheckCreatedName'}" />
-                                 <Text text="{ path:'oModelControl>UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'} }" /> 
+                                 <Text text="{ path:'oModelControl>UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'} }" /> 
                                    <Text text="{ parts:['oModelControl>UpdatedBy','oModelControl>UpdatedByDetails'] ,formatter:'.formatter.fmtCheckCreatedName'}" />
                               <Text text="{ path:'oModelControl>Remark',formatter:'.formatter.fmtCheckNull'}" />
                            

@@ -56,7 +56,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         fmtDate: function (mDate) {
             var date = new Date(mDate);
             var oDateFormat = DateFormat.getDateTimeInstance({
-                pattern: "dd/MM/YYYY h:mm a",
+                pattern: "dd/MM/yyyy h:mm a",
                 UTC: true,
                 strictParsing: true,
             });
@@ -65,7 +65,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
         fmtDate2: function (mDate) {
             var date = new Date(mDate);
             var oDateFormat = DateFormat.getDateTimeInstance({
-                pattern: "dd/MM/YYYY",
+                pattern: "dd/MM/yyyy",
                 UTC: false,
                 strictParsing: false,
             });

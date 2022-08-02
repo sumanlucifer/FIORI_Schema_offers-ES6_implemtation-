@@ -212,12 +212,12 @@
                 <f:formElements >
                     <f:FormElement label="{i18n>From}">
                         <f:fields>
-                            <DatePicker displayFormat="dd/MM/yyyy" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" dateValue="{oModelView>/PurchaseStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                            <DatePicker displayFormat="dd/MM/yyyy" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" dateValue="{oModelView>/PurchaseStartDate}" placeholder="DD/MM/yyyy"></DatePicker>
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement label="{i18n>To}">
                         <f:fields>
-                            <DatePicker displayFormat="dd/MM/yyyy" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" dateValue="{oModelView>/PurchaseEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                            <DatePicker displayFormat="dd/MM/yyyy" enabled="{= ${oModelControl>/Rbtn/AppPainter} === 1 }" dateValue="{oModelView>/PurchaseEndDate}" placeholder="DD/MM/yyyy"></DatePicker>
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement label="Buyer {i18n>formApplicableLbl7}">
