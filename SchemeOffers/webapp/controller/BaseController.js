@@ -3257,6 +3257,20 @@ sap.ui.define(
                             ProductCode: oBj["ProductCode"]
                         });
                     }
+                    
+                    // Append multi select value with previous select
+                    for(var i=0; i<oModel.getProperty("/MultiCombo/AppPacks" + aNumber).length;i++){
+                        var flag = false;
+                        for(var j=0; j<aProds.length; j++){
+                            if(oModel.getProperty("/MultiCombo/AppPacks" + aNumber)[i].Id === aProds[j].Id){
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if(!flag)
+                        aProds.push(oModel.getProperty("/MultiCombo/AppPacks" + aNumber)[i]);
+                    }  
+
                     oView
                         .getModel("oModelControl")
                         .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
@@ -3348,6 +3362,19 @@ sap.ui.define(
                             Id: oBj["Id"],
                         });
                     }
+                    // Append multi select value with previous select
+                    for(var i=0; i<oModel.getProperty("/MultiCombo/AppProd" + aNumber).length;i++){
+                        var flag = false;
+                        for(var j=0; j<aProds.length; j++){
+                            if(oModel.getProperty("/MultiCombo/AppProd" + aNumber)[i].Id === aProds[j].Id){
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if(!flag)
+                        aProds.push(oModel.getProperty("/MultiCombo/AppProd" + aNumber)[i]);
+                    }                    
+
                     oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
                     oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
                     this._handleProdValueHelpClose();
