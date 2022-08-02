@@ -156,8 +156,8 @@ sap.ui.define([
                         // aFilters.push(new Filter(aKeys[i], sap.ui.model.FilterOperator.Contains,  "'" + aCurrentFilterValues[i].trim().toLowerCase().replace("'", "''") + "'"))
                         aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: aCurrentFilterValues[i].trim(), caseSensitive: false }))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
-                        // this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
-                        aFilters.push(this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]));
+                        this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
+                        // aFilters.push(this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]));
                 }
 
                 return aFinFilter;
@@ -172,13 +172,18 @@ sap.ui.define([
                 //     aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
 
                 // }
-                var aCurrentSearchFilter = [new Filter(
-                    {
-                        filters: aSearchFilter,
-                        and: false
-                    }
-                )]
-                return aCurrentSearchFilter;
+                // var aCurrentSearchFilter = [new Filter(
+                //     {
+                //         filters: aSearchFilter,
+                //         and: false
+                //     }
+                // )]
+                aFilters.push(new Filter(
+                        {
+                            filters: aSearchFilter,
+                            and: false
+                        }
+                    ));
             },
 
 
