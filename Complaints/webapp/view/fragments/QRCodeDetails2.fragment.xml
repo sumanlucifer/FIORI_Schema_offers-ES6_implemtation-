@@ -15,7 +15,7 @@
                 <Label text="Painter Mobile No." visible="{= ${oModelControl>PainterName} !== null }"  />
                 <Text text="{oModelControl>PainterMobile}" visible="{= ${oModelControl>PainterName} !== null }"  />
                 <Label text="Date" visible="{= ${oModelControl>ScanDate} !== null }"/>
-                <Text text="{path:'oModelControl>ScanDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}" />
+                <Text text="{path:'oModelControl>ScanDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
             </form:SimpleForm>
                 <ObjectStatus  state="{= ${oModelControl>Status} ? 'Success'  : 'Error'   }" text= "{oModelControl>Message}" />
         </content>

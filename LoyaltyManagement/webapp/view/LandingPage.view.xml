@@ -65,12 +65,12 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="StartDate" label="{i18n>StartDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/yyyy" id="idDpickerFilter" value="{path:'oModelControl>/filterBar/StartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="{i18n>EndDate}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <DatePicker placeholder="DD/MM/YYYY"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
+                                    <DatePicker placeholder="DD/MM/yyyy"  value="{path:'oModelControl>/filterBar/EndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern:'dd/MM/yyyy', UTC:false } }" displayFormat="dd/MM/yyyy"></DatePicker>
                                 </fb:control>
                             </fb:FilterGroupItem>
 
@@ -157,7 +157,7 @@
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionMessage} }"/>
                                             <!-- <Text text="{path:'CreatedAt',formatter:'.formatter.dateFormatter2'}"/> -->
-                                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY',UTC:true}}"/>
+                                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy',UTC:true}}"/>
                         
                                             
                                         </cells>      
@@ -229,7 +229,7 @@
                                         <cells>
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{path:'RewardPoints'}"/>
-                                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY',UTC:true}}"/>
+                                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy',UTC:true}}"/>
                         
                                             
                                         </cells>      
@@ -303,7 +303,7 @@
                                             <Text text="{path:'PointType',formatter:'.formatter.accuralType'}"/>
                                             <Text text="{= ${GiftRedemption}=== null ? ${PaymentTransaction/TransactionAmount} : ${GiftRedemption/RewardGiftName} }"/>
                                             <Text text="{= ${PaymentTransaction}=== null ? 'NA' : ${PaymentTransaction/TransactionMessage} }"/>
-                                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY',UTC:true}}"/>
+                                            <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy',UTC:true}}"/>
                         
                                             
                                         </cells>      

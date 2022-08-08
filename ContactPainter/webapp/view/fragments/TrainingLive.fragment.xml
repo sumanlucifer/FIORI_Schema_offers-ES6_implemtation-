@@ -56,8 +56,8 @@
                         <Text text="{TrainingDetails/TrainingType/TrainingType}"/>
                         <Text text="{TrainingDetails/Title}"/>
 
-                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                        <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
+                        <Text text="{path:'AttendedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                         <Text text="{EarnedPoints}"/>
                         <VBox>
                             <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>

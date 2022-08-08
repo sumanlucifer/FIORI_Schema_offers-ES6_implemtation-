@@ -461,7 +461,7 @@ sap.ui.define(
                 fmtDate: function (mDate) {
                     var date = new Date(mDate);
                     var oDateFormat = DateFormat.getDateTimeInstance({
-                        pattern: "dd/MM/YYYY h:mm a",
+                        pattern: "dd/MM/yyyy h:mm a",
                         UTC: false,
                         strictParsing: false,
                     });

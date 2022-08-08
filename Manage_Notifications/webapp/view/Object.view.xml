@@ -29,11 +29,11 @@
                                  <Label text="{i18n>CreatedBy}" />
                                 <Text text="{path:'objectView>/oDetails/CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
                                 <Label text="{i18n>CreatedAt}" />
-                                <Text text="{path:'objectView>/oDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                <Text text="{path:'objectView>/oDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                                 <Label text="{i18n>LastUpdatedBy}" />
                                 <Text text="{path:'objectView>/oDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />      
                                 <Label text="{i18n>LastUpdatedAt}" />
-                                <Text text="{path:'objectView>/oDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                                <Text text="{path:'objectView>/oDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                             </VBox>
 							<VBox>
 								<Label required="true" text="{i18n>colBody}"/>

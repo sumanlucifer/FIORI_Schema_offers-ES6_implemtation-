@@ -146,7 +146,7 @@ sap.ui.define([
 
             getFilters: function (aCurrentFilterValues) {
                 var aFilters = [];
-                var aFinFilter = new Filter({ "filters": aFilters, and: false })
+                var aFinFilter = new Filter({ "filters": aFilters, and: true })
                 var aKeys = [
                     "search", "PlantCode", "DealerSalesDetails/Depot", "DealerSalesDetails/SalesGroup/Description", "FiscalYear"
                 ];
@@ -157,22 +157,33 @@ sap.ui.define([
                         aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: aCurrentFilterValues[i].trim(), caseSensitive: false }))
                     else if (aCurrentFilterValues[i].length > 0 && aKeys[i] == "search")
                         this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]);
+                        // aFilters.push(this.SearchInAllFields(aKeys, aFilters, aCurrentFilterValues[i]));
                 }
 
                 return aFinFilter;
             },
             SearchInAllFields: function (aKeys, aFilters, searchValue) {
+                var aSearchFilter = [];
+                aSearchFilter.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }));
+                aSearchFilter.push(new Filter({ path: "Id", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
+                // aFilters.push(new Filter({ path: "DealerNumber/SMSNumber", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
+                // for (let i = 1; i < aKeys.length; i++) {
 
-                aFilters.push(new Filter({ path: "DealerName", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }));
-                aFilters.push(new Filter({ path: "Id", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
-                aFilters.push(new Filter({ path: "DealerNumber/SMSNumber", operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
-                for (let i = 1; i < aKeys.length; i++) {
+                //     aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
 
-                    aFilters.push(new Filter({ path: aKeys[i], operator: sap.ui.model.FilterOperator.Contains, value1: searchValue.trim(), caseSensitive: false }))
-
-                }
-
-
+                // }
+                // var aCurrentSearchFilter = [new Filter(
+                //     {
+                //         filters: aSearchFilter,
+                //         and: false
+                //     }
+                // )]
+                aFilters.push(new Filter(
+                        {
+                            filters: aSearchFilter,
+                            and: false
+                        }
+                    ));
             },
 
 

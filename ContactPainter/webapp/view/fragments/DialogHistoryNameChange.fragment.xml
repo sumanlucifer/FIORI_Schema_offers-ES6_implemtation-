@@ -71,7 +71,7 @@
 				press="onPressHistoryCompliantCode" />
                     </HBox> -->
                         	
-                       <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                       <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
                          <Text text="{path:'Status',formatter:'.formatter.fmtStatus1'}"/>
                             <Text text="{Remark}"/>
                              <Text text="{path:'UpdatedByDetails/Name',formatter:'.formatter.fmtDisplayUpdatedDetails2'}"/>

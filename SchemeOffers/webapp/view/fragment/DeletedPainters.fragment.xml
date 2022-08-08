@@ -52,7 +52,7 @@
                                         <Text text="{Painter/DepotId}"/>
                                         <Button tooltip="{i18n>Delete}" icon="sap-icon://delete" type="Transparent" press="onRemovePainter"></Button>
                                         <!-- <Text text="{Painter/PrimaryDealerDetails/DealerName}"/>
-                                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}"/>
                                         <Text text="{EarnedPoints}"/> -->
                                     </cells>
                                 </ColumnListItem>

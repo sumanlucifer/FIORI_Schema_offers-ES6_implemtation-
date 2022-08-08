@@ -45,7 +45,7 @@
                         <Text text="{ComplaintCode}" />
                         <Text text="{ComplaintType/ComplaintType}" />
                         <Text text="{ComplaintSubtype/ComplaintSubtype}" />
-                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}" />
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
                         <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtLowerCase'}" />
                     </cells>
                 </ColumnListItem>

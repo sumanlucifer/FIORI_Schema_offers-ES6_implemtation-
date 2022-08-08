@@ -41,15 +41,15 @@
                         <VBox>
                             <!-- <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                <Label  visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>              
-                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" value="{path:'oModelControl>StartDate'}" /> -->
-                   <DatePicker visible="{= ${oModelControl>editable} === true }" editable="false" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY"  width="100%" dateValue="{oModelControl>StartDate}"/>       
+                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy"  width="100%" value="{path:'oModelControl>StartDate'}" /> -->
+                   <DatePicker visible="{= ${oModelControl>editable} === true }" editable="false" change=".onStartDateAddInfo" required="true"  displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy"  width="100%" dateValue="{oModelControl>StartDate}"/>       
                         </VBox>
                         <!-- <VBox visible="{= ${oModelView>/InputType}===1 }"> -->
                          <VBox >
                             <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                    <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />          
-                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" value="{path:'oModelControl>EndDate'}" /> -->
-                    <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" change= ".onEndDateAddInfo" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />     
+                            <!-- <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" value="{path:'oModelControl>EndDate'}" /> -->
+                    <DatePicker visible="{= ${oModelControl>editable} === true }" required="true" change= ".onEndDateAddInfo" displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>EndDate}" />     
                         </VBox>
                         <VBox >
                             <!-- <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>AchieverCount'}" /> -->
@@ -102,12 +102,12 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                               <DatePicker change=".onBonusVaidityTo" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                               <DatePicker change=".onBonusVaidityTo" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/yyyy"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                               <DatePicker change=".onBonusVaidityFrom" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                               <DatePicker change=".onBonusVaidityFrom" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/yyyy"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>

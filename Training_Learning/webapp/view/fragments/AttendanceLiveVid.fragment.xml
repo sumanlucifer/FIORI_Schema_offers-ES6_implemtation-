@@ -56,7 +56,7 @@
                         <Text text="{PainterDetails/DivisionId}"/>
                         <Text text="{PainterDetails/DepotId}"/>
                         <Text text="{PainterDetails/PrimaryDealerDetails/DealerName}"/>
-                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY'}}"/>
+                        <Text text="{path:'AttendedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}"/>
                         <VBox>
                             <Text visible="{= !${IsQuestionnaireSubmitted} }" text="{path:'TrainingDetails/TrainingType/TrainingType',formatter:'.fmtTrainStatus'}"/>
                             <Button visible="{path:'IsQuestionnaireSubmitted'}" text="{i18n>ViewQuestion}" press="onViewTrainingQuestionaire"/>

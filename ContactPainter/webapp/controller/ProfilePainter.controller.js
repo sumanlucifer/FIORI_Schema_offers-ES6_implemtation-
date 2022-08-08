@@ -773,7 +773,7 @@ sap.ui.define(
                                 expand: 'PainterComplainProducts, PainterComplainProducts/ProductPackDetails, PainterComplainProducts/ProductPackDetails/ProductCategoryDetails',
                             },
                             templateShareable: true,
-                            filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.EQ, 1)],
+                            filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.EQ, 1), new Filter("ApprovalStatus", FilterOperator.EQ, "APPROVED")],
                             sorter: new Sorter("CreatedAt", true)
                         })
                     } else if (sId.match("tokenSection")) {
@@ -2565,6 +2565,11 @@ sap.ui.define(
                             operator: FilterOperator.EQ,
                             value1: sIfscCode,
                             caseSensitive: false,
+                        }), new Filter({
+                            path: "Status",
+                            operator: FilterOperator.NE,
+                            value1: "REJECTED",
+                            caseSensitive: false
                         })],
                         success: function (oData) {
 
@@ -2640,6 +2645,11 @@ sap.ui.define(
                             operator: FilterOperator.EQ,
                             value1: sGovtIdNo,
                             caseSensitive: false,
+                        }), new Filter({
+                            path: "Status",
+                            operator: FilterOperator.NE,
+                            value1: "REJECTED",
+                            caseSensitive: false
                         })],
                         success: function (oData) {
                             if (oData["results"].length > 0) {

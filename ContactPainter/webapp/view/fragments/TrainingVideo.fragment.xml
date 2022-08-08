@@ -46,8 +46,8 @@
                 <ColumnListItem>
                     <cells>
                         <Text text="{LearningDetails/Title}"/>
-                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
-                        <Text text="{path:'SubmissionDate',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
+                        <Text text="{path:'SubmissionDate',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                           <Text text="{RewardPoints}"/>
                         <VBox>
                             <Button text="{i18n>ViewQuestion}" press="onViewQuestionaireLearning"/>

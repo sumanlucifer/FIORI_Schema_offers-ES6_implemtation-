@@ -141,12 +141,12 @@
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <DatePicker change=".onBonusVaidityTo" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                                <DatePicker change=".onBonusVaidityTo" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceStartDate}" placeholder="DD/MM/yyyy"></DatePicker>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                                <DatePicker change=".onBonusVaidityFrom" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/YYYY"></DatePicker>
+                                <DatePicker change=".onBonusVaidityFrom" displayFormat="dd/MM/yyyy" dateValue="{oModelView>/PerformanceEndDate}" placeholder="DD/MM/yyyy"></DatePicker>
                             </f:fields>
                         </f:FormElement>
 
@@ -194,11 +194,11 @@
                     <cells>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
+                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>StartDate}" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
-                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
+                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>EndDate}" />
                         </VBox>
                         <VBox visible="{= ${oModelView>/BonusInputType}===0 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPoints'}" visible="{= ${oModelControl>editable} !== true  }" />
@@ -279,11 +279,11 @@
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true }" text="{path:'oModelControl>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>StartDate}" />
+                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onStartDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>StartDate}" />
                         </VBox>
                         <VBox >
                             <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
-                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/YYYY" width="100%" dateValue="{oModelControl>EndDate}" />
+                            <DatePicker visible="{= ${oModelControl>editable} === true }" change=".onEndDateBRRChange" displayFormat="dd/MM/yyyy" placeholder="DD/MM/yyyy" width="100%" dateValue="{oModelControl>EndDate}" />
                         </VBox>
                         <VBox visible="{= ${oModelView>/BonusInputType}===0 }">
                             <Label width="60%" text="{path:'oModelControl>BonusPoints'}" visible="{= ${oModelControl>editable} !== true  }" />

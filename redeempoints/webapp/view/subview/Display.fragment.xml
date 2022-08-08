@@ -27,11 +27,11 @@
              <Label text="{i18n>CreatedBy}" />
    <Text text="{path:'CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" /> 
  <Label text="{i18n>CreatedAt}" />
- <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+ <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
  <Label text="{i18n>LastUpdatedBy}" />
      <Text text="{path:'UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />    
  <Label text="{i18n>LastUpdatedAt}" />
- <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/YYYY h:mm a'}}"/>
+ <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
 
             <core:Title text="" />
             <Label text="{i18n>Balpts}" />
