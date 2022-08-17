@@ -145,7 +145,9 @@ sap.ui.define(
                 onUploadPainter1: function () {
                     var that = this;
                     var fU = this.getView().byId("idOfferFileUploader");
-                    var domRef = fU.getFocusDomRef();
+                    // var domRef = fU.getFocusDomRef();
+                    // var file = domRef.files[0];
+                    var domRef = fU.oFileUpload;
                     var file = domRef.files[0];
                     var oView = that.getView();
                     var dataModel = oView.getModel("oModelControl");
@@ -5364,7 +5366,9 @@ sap.ui.define(
                 onUploadDelPainter: function () {
                     var that = this;
                     var fU = this.getView().byId("idOfferFileUploader2");
-                    var domRef = fU.getFocusDomRef();
+                    // var domRef = fU.getFocusDomRef();
+                    // var file = domRef.files[0];
+                    var domRef = fU.oFileUpload;
                     var file = domRef.files[0];
                     var oView = that.getView();
                     var dataModel = oView.getModel("oModelControl3");

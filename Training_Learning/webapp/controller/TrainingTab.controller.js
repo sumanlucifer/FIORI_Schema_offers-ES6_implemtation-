@@ -2372,8 +2372,10 @@ sap.ui.define(
 
                 var that = this;
                 var fU = this.getView().byId("idAttendanceLiveFileUploader");
-                var domRef = fU.getFocusDomRef();
-                var file = domRef.files[0];
+                // var domRef = fU.getFocusDomRef();
+                // var file = domRef.files[0];
+                    var domRef = fU.oFileUpload;
+                    var file = domRef.files[0];
                 var oViewModel = this.getModel("oModelView");
 
                 // if (oPayload.RewardPoints === null || oPayload.RewardPoints === "") {
