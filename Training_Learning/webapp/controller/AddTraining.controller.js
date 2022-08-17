@@ -318,7 +318,9 @@ sap.ui.define(
                     }
                     if (this.getModel("appView").getProperty("/trainingType") === "OFFLINE") {
                         var fU = this.getView().byId("idAttendanceFileUploader");
-                        var domRef = fU.getFocusDomRef();
+                        // var domRef = fU.getFocusDomRef();
+                        // var file = domRef.files[0];
+                        var domRef = fU.oFileUpload;
                         var file = domRef.files[0];
                         if (file) {
                             this.getModel("oModelView").setProperty("/bChange", true);
@@ -994,7 +996,9 @@ sap.ui.define(
                     },
                         aCtrlMessage = [];
                     var fU = this.getView().byId("idAttendanceFileUploader");
-                    var domRef = fU.getFocusDomRef();
+                    // var domRef = fU.getFocusDomRef();
+                    // var file = domRef.files[0];
+                    var domRef = fU.oFileUpload;
                     var file = domRef.files[0];
 
                     if (data.TrainingSubTypeId === "" || data.TrainingSubTypeId === null) {
@@ -1276,7 +1280,9 @@ sap.ui.define(
 
                     var that = this;
                     var fU = this.getView().byId("idAttendanceFileUploader");
-                    var domRef = fU.getFocusDomRef();
+                    // var domRef = fU.getFocusDomRef();
+                    // var file = domRef.files[0];
+                    var domRef = fU.oFileUpload;
                     var file = domRef.files[0];
                     var oViewModel = this.getModel("oModelView");
 
