@@ -1343,7 +1343,17 @@ sap.ui.define(
                         }
                     } else if (!addBankDoc && !addKycDoc) {
                         if (bValidation && dTbleFamily && eTbleAssets && cValidation && fValidationExp) {
-                            this._postDataToSave();
+                            if(this.getView().getModel("oModelView").getProperty("/DealerId") == ""){
+                                MessageToast.show(
+                                    "Kindly input all the mandatory(*) fields to continue registration."
+                                );
+                                this.getView().byId("idMinpPDealers").setValueState("Error");
+                                return;
+                            }
+                            else{
+                                this.getView().byId("idMinpPDealers").setValueState("None");
+                                this._postDataToSave();
+                            }
                         }
                     }
                 },
@@ -3556,12 +3566,13 @@ sap.ui.define(
                 _dealerReset: function () {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
+                    var oModel1 = oView.getModel("oModelControl");
                     var aDiv = ["DivisionId", "DepotId", "ZoneId"];
                     for (var a of aDiv) {
                         if (oModel.getProperty("/" + a) === "") {
                             oView.byId("idMinpPDealers").removeAllTokens();
                             oModel.setProperty("/DealerId", "");
-                            oModel.getProperty("/PainterAddDet/SecondryDealer").length = 0;
+                            oModel1.getProperty("/PainterAddDet/SecondryDealer").length = 0;
                         }
                     }
                 },

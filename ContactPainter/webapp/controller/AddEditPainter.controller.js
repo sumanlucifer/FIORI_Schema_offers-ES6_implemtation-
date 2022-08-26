@@ -321,7 +321,17 @@ sap.ui.define(
                         this._showMessageToast("Messgae5");
                     }
                     if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0] && fValidationExp) {
-                        this._postDataToSave();
+                        if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == ""){
+                            MessageToast.show(
+                                "Kindly input all the mandatory(*) fields to continue registration."
+                            );
+                            this.getView().byId("idMinpPDealers").setValueState("Error");
+                            return;
+                        }
+                        else{
+                            this.getView().byId("idMinpPDealers").setValueState("None");
+                            this._postDataToSave();
+                        }
                     }
 
                 },
