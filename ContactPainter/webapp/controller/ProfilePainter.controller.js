@@ -1304,9 +1304,18 @@ sap.ui.define(
                         );
                     }
                     if (bValidation == false) {
+                        if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == "")
+                            this.getView().byId("idMinpPDealers").setValueState("Error");
                         MessageToast.show(
-                            "Kindly input all the mandatory(*) fields to continue."
+                            "Kindly input all the mandatory(*) fields to continue registration."
                         );
+                    }
+                    else if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == ""){
+                        bValidation = false;
+                        MessageToast.show(
+                            "Kindly input all the mandatory(*) fields to continue registration."
+                        );
+                        this.getView().byId("idMinpPDealers").setValueState("Error");
                     }
                     if (cValidation == false) {
                         MessageToast.show(
@@ -1343,17 +1352,7 @@ sap.ui.define(
                         }
                     } else if (!addBankDoc && !addKycDoc) {
                         if (bValidation && dTbleFamily && eTbleAssets && cValidation && fValidationExp) {
-                            if(this.getView().getModel("oModelView").getProperty("/DealerId") == ""){
-                                MessageToast.show(
-                                    "Kindly input all the mandatory(*) fields to continue registration."
-                                );
-                                this.getView().byId("idMinpPDealers").setValueState("Error");
-                                return;
-                            }
-                            else{
-                                this.getView().byId("idMinpPDealers").setValueState("None");
-                                this._postDataToSave();
-                            }
+                            this._postDataToSave();
                         }
                     }
                 },

@@ -304,9 +304,18 @@ sap.ui.define(
                         return;
                     }
                     if (bValidation == false) {
+                        if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == "")
+                            this.getView().byId("idMinpPDealers").setValueState("Error");
                         MessageToast.show(
                             "Kindly input all the mandatory(*) fields to continue registration."
                         );
+                        return;
+                    }
+                    else if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == ""){
+                        MessageToast.show(
+                            "Kindly input all the mandatory(*) fields to continue registration."
+                        );
+                        this.getView().byId("idMinpPDealers").setValueState("Error");
                         return;
                     }
                     if (!eValidation[0]) {
@@ -321,17 +330,7 @@ sap.ui.define(
                         this._showMessageToast("Messgae5");
                     }
                     if (bValidation && cTbleFamily && dTbleAssets && eValidation[0] && eValidateBank[0] && fValidationExp) {
-                        if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == ""){
-                            MessageToast.show(
-                                "Kindly input all the mandatory(*) fields to continue registration."
-                            );
-                            this.getView().byId("idMinpPDealers").setValueState("Error");
-                            return;
-                        }
-                        else{
-                            this.getView().byId("idMinpPDealers").setValueState("None");
-                            this._postDataToSave();
-                        }
+                        this._postDataToSave();
                     }
 
                 },
@@ -1830,6 +1829,7 @@ sap.ui.define(
                 _handlePValueHelpClose: function (evt) {
                     var aSelectedItems = evt.getParameter("selectedItems"),
                         oMultiInput = this.byId("idMinpPDealers");
+                    oMultiInput.setValueState("None");
                     oMultiInput.removeAllTokens();
                     var oModelView = this.getView().getModel("oModelView");
                     var oSecDealer = this.getView().getModel(
