@@ -3570,6 +3570,7 @@ sap.ui.define(
                     for (var a of aDiv) {
                         if (oModel.getProperty("/" + a) === "") {
                             oView.byId("idMinpPDealers").removeAllTokens();
+                            oView.byId("multiInput").removeAllTokens();
                             oModel.setProperty("/DealerId", "");
                             oModel1.getProperty("/PainterAddDet/SecondryDealer").length = 0;
                         }
