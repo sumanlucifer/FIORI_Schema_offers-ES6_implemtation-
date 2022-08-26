@@ -124,7 +124,7 @@
                     <core:Item text="{Depot} ( {Id} )" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}" />
-                  <MultiInput tokenUpdate="onPTokenUpdate" valueHelpOnly="true" id="idMinpPDealers" suggestionItems="{/DealerSet}" 	valueHelpRequest="handlePDealerValue">
+                  <MultiInput required="true" tokenUpdate="onPTokenUpdate" valueHelpOnly="true" id="idMinpPDealers" suggestionItems="{/DealerSet}" 	valueHelpRequest="handlePDealerValue">
                     	<core:Item key="{Id}" text="{DealerName} - {Id}" />
                 </MultiInput>
                 <Label text="{i18n>LinkSecondryDealer}" />

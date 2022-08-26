@@ -1860,6 +1860,8 @@ sap.ui.define(
                     var oDepot = oView.byId("idDepot");
                     oDepot.clearSelection();
                     oDepot.setValue("");
+                    // clearning data for dealer
+                    this._dealerReset();
                 },
                 onDivisionChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
@@ -1869,11 +1871,14 @@ sap.ui.define(
                     oDepot.clearSelection();
                     oDepot.setValue("");
                     oDepBindItems.filter(new Filter("Division", FilterOperator.EQ, sKey));
-                    //clearning the data for painters
+                    // clearning data for dealer
+                    this._dealerReset();
                 },
                 onDepotChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
+                    // clearning data for dealer
+                    this._dealerReset();
                 },
                 onPressAddFamliy: function () {
                     var oView = this.getView();

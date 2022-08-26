@@ -116,15 +116,15 @@
                     <core:Item text="{Depot} ( {Id} )" key="{Id}" />
                 </ComboBox>
                 <Label text="{i18n>LinkPrimaryDealer}" />
-                <MultiInput tokenUpdate="onPTokenUpdate" valueHelpOnly="true" id="idMinpPDealers" suggestionItems="{/DealerSet}" 	valueHelpRequest="handlePDealerValue">
-                    	<core:Item key="{Id}" text="{DealerName} - {Id}" />
+                <MultiInput required="true" tokenUpdate="onPTokenUpdate" editable="{= ${oModelView>/PainterDetails/DepotId}!=='' }" valueHelpOnly="true" id="idMinpPDealers" suggestionItems="{/DealerSet}" valueHelpRequest="handlePDealerValue">
+                    <core:Item key="{Id}" text="{DealerName} - {Id}" />
                 </MultiInput>
                 <Label text="{i18n>LinkSecondryDealer}" />
-               <MultiInput id="multiInput"	tokens="{oModelView>/PainterAddDet/SecondryDealer}"	valueHelpRequest="onValueHelpRequested">
-	                		<tokens>
-                             <Token editable="false" text="{oModelView>DealerName}" key="{oModelView>Id}" />
-                            </tokens>
-	            	</MultiInput>
+               <MultiInput id="multiInput" editable="{= ${oModelView>/PainterDetails/DepotId}!=='' }" tokens="{oModelView>/PainterAddDet/SecondryDealer}"	valueHelpRequest="onValueHelpRequested">
+                    <tokens>
+                        <Token editable="false" text="{oModelView>DealerName}" key="{oModelView>Id}" />
+                    </tokens>
+                </MultiInput>
                
 
                 <!-- <Label text="{i18n>AddressLine2}"/>
