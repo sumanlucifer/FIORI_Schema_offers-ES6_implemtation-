@@ -1304,13 +1304,13 @@ sap.ui.define(
                         );
                     }
                     if (bValidation == false) {
-                        if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == "")
+                        if(!this.getView().getModel("oModelView").getProperty("/DealerId"))
                             this.getView().byId("idMinpPDealers").setValueState("Error");
                         MessageToast.show(
                             "Kindly input all the mandatory(*) fields to continue registration."
                         );
                     }
-                    else if(this.getView().getModel("oModelView").getProperty("/PainterDetails/DealerId") == ""){
+                    else if(!this.getView().getModel("oModelView").getProperty("/DealerId")){
                         bValidation = false;
                         MessageToast.show(
                             "Kindly input all the mandatory(*) fields to continue registration."
@@ -3651,6 +3651,7 @@ sap.ui.define(
                 _handlePValueHelpClose: function (evt) {
                     var aSelectedItems = evt.getParameter("selectedItems"),
                         oMultiInput = this.byId("idMinpPDealers");
+                    oMultiInput.setValueState("None");
                     oMultiInput.removeAllTokens();
                     var oModelView = this.getView().getModel("oModelView");
                     if (aSelectedItems && aSelectedItems.length > 0) {
