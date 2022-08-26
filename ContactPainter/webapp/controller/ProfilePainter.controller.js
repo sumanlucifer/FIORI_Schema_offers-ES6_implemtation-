@@ -1884,10 +1884,14 @@ sap.ui.define(
                     this._dealerReset();
                 },
                 onDepotChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
-                    var oView = this.getView();
                     // clearning data for dealer
-                    this._dealerReset();
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelView");
+                    var oModel1 = oView.getModel("oModelControl");
+                    oView.byId("idMinpPDealers").removeAllTokens();
+                    oView.byId("multiInput").removeAllTokens();
+                    oModel.setProperty("/DealerId", "");
+                    oModel1.getProperty("/PainterAddDet/SecondryDealer").length = 0;
                 },
                 onPressAddFamliy: function () {
                     var oView = this.getView();

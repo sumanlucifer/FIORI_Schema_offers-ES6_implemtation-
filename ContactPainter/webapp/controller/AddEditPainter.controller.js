@@ -1050,11 +1050,13 @@ sap.ui.define(
                     oControlEvent.getSource().getBinding("items").resume();
                 },
                 onDepotChange: function (oEvent) {
-                    var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
-                    var oPrimaryDealer = oView.byId("cmbxPDlr");
-                    var oSecDealer = oView.byId("mcmbxDlr");
-                    this._dealerReset();
+                    var oModel = oView.getModel("oModelView");
+                    oView.byId("idMinpPDealers").removeAllTokens();
+                    oView.byId("multiInput").removeAllTokens();
+                    oModel.setProperty("/PainterDetails/DealerId", "");
+                    oModel.getProperty("/PainterAddDet/SecondryDealer").length = 0;
+                    oModel.refresh();
                 },
 
 
