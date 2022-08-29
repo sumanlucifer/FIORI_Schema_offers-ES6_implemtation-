@@ -1307,13 +1307,13 @@ sap.ui.define(
                         if(!this.getView().getModel("oModelView").getProperty("/DealerId"))
                             this.getView().byId("idMinpPDealers").setValueState("Error");
                         MessageToast.show(
-                            "Kindly input all the mandatory(*) fields to continue registration."
+                            "Kindly input all the mandatory(*) fields to continue."
                         );
                     }
                     else if(!this.getView().getModel("oModelView").getProperty("/DealerId")){
                         bValidation = false;
                         MessageToast.show(
-                            "Kindly input all the mandatory(*) fields to continue registration."
+                            "Kindly input all the mandatory(*) fields to continue."
                         );
                         this.getView().byId("idMinpPDealers").setValueState("Error");
                     }
