@@ -120,6 +120,18 @@
           "useBatch": false
         }
       },
+      "DGAModel": {
+        "dataSource": "additionalService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": true,
+          "defaultUpdateMethod": "Put",
+          "useBatch": false
+        }
+      },
+
       "uploadModel": {
         "type": "sap.ui.model.json.JSONModel"
       },

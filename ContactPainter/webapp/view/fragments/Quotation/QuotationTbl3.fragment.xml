@@ -3,7 +3,7 @@
                            id="QuotationTbl3"
                             editable="false"
                             width="100%"
-                            entitySet="QuotationAreas"
+                            entitySet="{DGAModel>/QuotationAreas}"
                             beforeRebindTable="onBeforeRebindQuotReq3"
                             tableType="ResponsiveTable"
                             showRowCount="true"
