@@ -2,9 +2,10 @@
   "name": "contactpainter",
   "version": "0.0.1",
   "devDependencies": {
+    "@sap/html5-repo-mock": "1.6.x",
+    "@sap/ui5-builder-webide-extension": "1.0.x",
     "@sapui5/ts-types": "1.71.x",
     "@ui5/cli": "2.2.6",
-    "@sap/ui5-builder-webide-extension": "1.0.x",
     "bestzip": "2.1.4",
     "rimraf": "3.0.2"
   },
@@ -17,5 +18,8 @@
     "dependencies": [
       "@sap/ui5-builder-webide-extension"
     ]
+  },
+  "dependencies": {
+    "jsdom": "^20.0.0"
   }
 }
