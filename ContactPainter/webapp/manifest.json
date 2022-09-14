@@ -26,6 +26,15 @@
                         "annotation0"   ] 
         }
       },
+      "additionalService": {
+        "uri": "/KNPL_DGA_API/api/v2/odata.svc/",
+        "type": "OData",
+        "settings": {
+            "annotations": [],
+            "localUri": "localService/metadata.xml",
+            "odataVersion": "2.0"
+        }
+    },
       "uploadData": {
         "uri": "model/uploaditems.json",
         "type": "JSON"
@@ -164,6 +173,11 @@
           "name": "RouteAdditionalRequestDetail",
           "pattern": "AdditionalRequestDetail/{Id}/{Pid}",
           "target": ["TargetAdditionalRequestDetail"]
+        },
+        {
+            "name": "Detail",
+            "pattern": "Detail/{Mode}/{Id}",
+            "target": ["Detail"]
         }
       ],
       "targets": {
@@ -194,6 +208,11 @@
           "clearControlAggregation": false,
           "viewId": "AdditionalRequestDetail",
           "viewName": "AdditionalRequestDetail"
+        },
+        "Detail": {
+            "viewName": "Detail",
+            "viewId": "Detail",
+            "viewLevel": 3
         }
       }
     }

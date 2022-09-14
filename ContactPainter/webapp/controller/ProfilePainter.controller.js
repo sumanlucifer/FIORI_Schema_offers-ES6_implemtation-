@@ -4596,7 +4596,28 @@ sap.ui.define(
                             },
                         });
                     });
-                }
+                },
+                onListSelectionPress:function(oEvent){
+                    var oBj = oEvent.getSource().getBindingContext().getObject();
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("Detail", {
+                        Id: oBj["Id"],
+                        Mode: "Display"
+                    });
+                },
+                onBindTblDGAList: function (oEvent) {
+                   
+                    var oBindingParams = oEvent.getParameter("bindingParams");
+                    oBindingParams.parameters["expand"] = "DGA, DGADetails, LeadServiceType, State, LeadStatus, Depot, PaintingReqSlab, LeadSource,Dealer";
+                    oBindingParams.sorter.push(new Sorter("CreatedAt", true));
+    
+                    // Apply Filters
+                    var oFilter = this._CreateFilter();
+                    if (oFilter) {
+                        oBindingParams.filters.push(oFilter);
+                    }
+    
+                },
             }
         );
     }

@@ -1,0 +1,115 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <smartTable:SmartTable
+                           id="QuotationTbl5"
+                            editable="false"
+                            width="100%"
+                            entitySet="QuotationAreas"
+                            beforeRebindTable="onBeforeRebindQuotReq5"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="false"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="HistoryPersistenceKey"
+                            initialNoDataText="{i18n>tableNoDataText}"
+                            header="{i18n>Enamel}" >
+
+        <Table growing="true" growingThreshold="10" growingScrollToLoad="false" noDataText="{i18n>tableNoDataText}">
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Type", "leadingProperty": "Type", "sortProperty": "Type", "filterProperty": "Type", "columnIndex": 0 }'/>
+                    </customData>
+                    <Text text="{i18n>Type}"/>
+                    <footer>
+                        <Text id="idLblTotalQuotEnamel" text="{= ${TotalEnamelCosting} ? ${i18n>TotalEnamelCosting} : '' }"/>
+                    </footer>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "MoistureReading", "leadingProperty": "MoistureReading", "sortProperty": "MoistureReading", "filterProperty": "MoistureReading", "columnIndex": 1 }'/>
+                    </customData>
+                    <Text text="{i18n>MoistureReading}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ClassType", "leadingProperty": "ClassType", "sortProperty": "ClassType", "filterProperty": "ClassType", "columnIndex": 2 }'/>
+                    </customData>
+                    <Text text="{i18n>Class}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "QuotationSelectedProducts/MasterProduct", "leadingProperty": "QuotationSelectedProducts/MasterProduct", "columnIndex": 3 }'/>
+                    </customData>
+                    <Text text="{i18n>Products}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "SystemType", "leadingProperty": "SystemType", "sortProperty": "SystemType", "filterProperty": "SystemType", "columnIndex": 4 }'/>
+                    </customData>
+                    <Text text="{i18n>System}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "VAType", "leadingProperty": "VAType", "sortProperty": "VAType", "filterProperty": "VAType", "columnIndex": 5 }'/>
+                    </customData>
+                    <Text text="{i18n>ValueAddition}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "RatePerSqFt", "leadingProperty": "RatePerSqFt", "sortProperty": "RatePerSqFt", "filterProperty": "RatePerSqFt", "columnIndex": 6 }'/>
+                    </customData>
+                    <Text text="{i18n>Rate}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Area", "leadingProperty": "Area", "sortProperty": "Area", "filterProperty": "Area", "columnIndex": 7 }'/>
+                    </customData>
+                    <Text text="{i18n>AreaSqft}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "RateAccToArea", "leadingProperty": "RateAccToArea", "sortProperty": "RateAccToArea", "filterProperty": "RateAccToArea", "columnIndex": 8 }'/>
+                    </customData>
+                    <Text text="{i18n>RateAccToArea}"/>
+                    <footer>
+                        <Text id="idTotalQuotEnamel" text="{= ${TotalEnamelCosting} ? ${i18n>Rupee} + '' + ${TotalEnamelCosting} : '' }"/>
+                    </footer>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "QuotationSelectedProducts/MasterProductShades", "leadingProperty": "QuotationSelectedProducts/MasterProductShades", "columnIndex": 9 }'/>
+                    </customData>
+                    <Text text="{i18n>ProductShade}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>                  
+                       <Text text="{Type}"/> 
+                       <Text text="{MoistureReading}"/>
+                       <Text text="{ClassType}"/>
+                       <VBox items="{
+                           path: 'QuotationSelectedProducts'
+                           }">
+                           <Text text="{MasterProduct/ProductName}"/>
+                        </VBox>
+                       <Text text="{SystemType}"/>
+                       <Text text="{VAType}"/>
+                       <Text text="{i18n>Rupee} {RatePerSqFt}"/>
+                       <Text text="{Area}"/>
+                       <Text text="{i18n>Rupee} {RateAccToArea}"/>
+                       <VBox items="{
+                           path: 'QuotationSelectedProducts'
+                           }">
+                           <Text text="{= ${MasterProductShades/ShadeCode} ? ${MasterProductShades/ShadeCode} + '-' + ${MasterProductShades/ShadeName} : '--' }"/>
+                        </VBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

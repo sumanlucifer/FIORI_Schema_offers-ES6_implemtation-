@@ -14,6 +14,13 @@
       "cacheControl": "no-cache"
     },
     {
+        "source": "^/KNPL_DGA_API/(.*)$",
+        "target": "$1",
+        "destination": "KNPL_DGA_API",
+        "authenticationType": "xsuaa",
+        "csrfProtection": false
+    },
+    {
         "source": "^/user-api(.*)",
         "target": "$1",
         "service": "sap-approuter-userapi"

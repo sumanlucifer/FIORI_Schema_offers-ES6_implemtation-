@@ -173,6 +173,15 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
+             <uxap:ObjectPageSection id="assignedleads" titleUppercase="false" title="{i18n>AssignedLeads}">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox renderType="Bare">
+                            <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.AssignedLeads" type="XML"/>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
             <uxap:ObjectPageSection id="additionalrequest" titleUppercase="false" title="{i18n>additionalrequest}">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>

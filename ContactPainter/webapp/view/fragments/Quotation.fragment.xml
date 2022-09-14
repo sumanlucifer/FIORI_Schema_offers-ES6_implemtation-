@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:tt="sap.ui.table">    
+    <l:VerticalLayout width="100%">
+        <Toolbar>
+            <ToolbarSpacer/>
+            <Button id="idQuotDownload" icon="sap-icon://download" enabled="{= ${Quotation}.length > 0 ? true : false }" press="onQuotDownload"/>
+        </Toolbar>
+        <f:SimpleForm id="QuotDetailsData" editable="false" layout="ResponsiveGridLayout" 
+            labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 
+            emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" 
+            columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+            <f:content>
+                <core:Title text="{i18n>Quotation} {i18n>Details}" />
+                <Label text="{i18n>Quotation} {i18n>Date}" />
+                <Text id="idQuotationDate" text="{path : 'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
+            </f:content>
+        </f:SimpleForm>
+        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.quotation.QuotationTbl1" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.quotation.QuotationTbl2" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.quotation.QuotationTbl3" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.quotation.QuotationTbl4" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.quotation.QuotationTbl5" type="XML" class="sapUiMediumMarginBottom"/>
+        <Toolbar width="90%">
+            <ToolbarSpacer/>
+            <Label text="{i18n>Total} : " design="Bold"/>
+            <Label id="idQuotOCTotal" text="{i18n>Rupee} {Total}" design="Bold"/>
+        </Toolbar>
+        <Toolbar width="90%">
+            <ToolbarSpacer/>
+            <Label id="idQuotDiscountLbl" text="{i18n>Discount} ({Discount}%) : " design="Bold"/>
+            <Label id="idQuotDiscount" text="{i18n>Rupee} {DiscountAmount}" design="Bold"/>
+        </Toolbar>
+        <Toolbar width="90%">
+            <ToolbarSpacer/>
+            <Label text="{i18n>GrandTotal} : " design="Bold"/>
+            <Label id="idQuotGTotal" text="{i18n>Rupee} {GrandTotal}" design="Bold"/>
+        </Toolbar>
+    </l:VerticalLayout>
+
+</core:FragmentDefinition>

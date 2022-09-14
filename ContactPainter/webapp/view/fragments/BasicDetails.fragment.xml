@@ -1,0 +1,104 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox width="100%">
+    <items>
+    <f:SimpleForm id="BasicDetailsData" editable="false" layout="ColumnLayout" 
+    labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 
+    emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"  
+    columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" title="{i18n>Contact} {i18n>Details}">
+        <f:content>
+            <Label text="{i18n>MainObject} {i18n>ConsumerName}" />
+            <Text text="{path : 'ConsumerName',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>WhatsappNo}" />
+            <Text text="{path : 'PrimaryNum',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>SecondaryNo}" />
+            <Text text="{path : 'SecondaryNum',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>Email}" />
+            <Text text="{path : 'Email',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>CarpetArea}({i18n>SqFt})" />
+            <Text text="{path : 'CarpetArea',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>Pincode}" />
+            <Text text="{path : 'Pincode',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>State}" />
+            <Text text="{path : 'State/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>District}" />
+            <Text text="{path : 'District',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>Town}/{i18n>City}" />
+            <Text text="{path : 'CityOrTown',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>Address}" />
+            <Text text="{path : 'Address',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>Landmark}" />
+            <Text text="{path : 'Landmark',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>CreatedAt}" />
+            <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
+            <Label text="{= ${LeadStatusId} === '1' ? '' : ${LeadStatusId} === '2'  ? 'Lead Converted Details' : ${LeadStatusId} === '3' ? 'Lead Lost Reason' : ${LeadStatusId} === '4' ? 'Lead Short Closure Reason' : '' }"/>
+            <Text  text="{parts:['LeadStatusId','IsSamplingRequired', 'AdvancePaymentCollected','LeadLostReasonId','LeadLostReason/Name', 'CompetitionBrand/Name', 'CompetitorServiceType/Name', 'LeadLostMsg','ShortClosureReason/Name','ShortClosureMsg'],formatter:'.formatter.fmtStatusHeader'}"/>
+            <Label text="{i18n>LeadLostMsg}" visible="{= ${LeadStatusId} === '3' ? true : false}"/>
+            <Text text="{= ${LeadLostMsg} ? ${LeadLostMsg} : 'NA' }" visible="{= ${LeadStatusId} === '3' ? true : false}"/>
+    </f:content>
+    </f:SimpleForm>
+    <f:SimpleForm id="SourceDetailsData" editable="false" layout="ResponsiveGridLayout" 
+    labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 
+    emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" 
+    columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" title="{i18n>Source} {i18n>Details}">
+        <f:content>
+            <Label text="{i18n>Selected} {i18n>Source}" />
+            <Text text="{path : 'LeadSource/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>ContractorName}" visible="{= ${LeadSourceId} === '3'? true : false}"/>
+            <Text text="{= ${SourceContractorId} ? ${SourceContractor/Name} ? ${SourceContractor/Name} : 'NA' : ${SourceNewContractorName} ? ${SourceNewContractorName} : 'NA'}" visible="{= ${LeadSourceId} === '3'}"/>
+            <Label text="{i18n>ContractorMobile}" visible="{= ${LeadSourceId} === '3'}"/>
+            <Text text="{= ${SourceContractorId} ? ${SourceContractor/Mobile} ? ${SourceContractor/Mobile} : 'NA' : ${SourceNewContractorMobile} ? ${SourceNewContractorMobile} : 'NA' }" visible="{= ${LeadSourceId} === '3'}"/>
+            <Label text="{i18n>DealerName}" visible="{= ${LeadSourceId} === '2'}"/>
+            <Text text="{= ${SourceDealerId} ? ${SourceDealer/Name} ? ${SourceDealer/Name} : 'NA' : 'NA' }" visible="{= ${LeadSourceId} === '2'}"/>
+            <Label text="{i18n>DealerMobile}" visible="{= ${LeadSourceId} === '2'}"/>
+            <Text text="{= ${SourceDealerId} ? ${SourceDealer/PhoneNumber} ? ${SourceDealer/PhoneNumber} : 'NA' : 'NA' }" visible="{= ${LeadSourceId} === '2'}"/>
+            <Label text="{i18n>ConsumerName}" visible="{= ${LeadSourceId} === '5'}"/>
+            <Text text="{= ${SourceConsumerId} ? ${SourceConsumer/ConsumerName} ? ${SourceConsumer/ConsumerName} : 'NA' : ${SourceNewConsumerName} ? ${SourceNewConsumerName}: 'NA' }" visible="{= ${LeadSourceId} === '5'}"/>
+            <Label text="{i18n>ConsumerMobile}" visible="{= ${LeadSourceId} === '5'}"/>
+            <Text text="{= ${SourceConsumerId} ? ${SourceConsumer/PrimaryNum} ? ${SourceConsumer/PrimaryNum} : 'NA' : ${SourceNewConsumerNum} ? ${SourceNewConsumerNum} : 'NA' }" visible="{= ${LeadSourceId} === '5'}"/>
+         
+        </f:content>
+    </f:SimpleForm>
+    <f:SimpleForm id="ServiceDetailsData" editable="false" layout="ResponsiveGridLayout" 
+    labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 
+    emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" 
+    columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" title="{i18n>ServiceAndPainting} {i18n>Details}">
+        <f:content>
+            <Label text="{i18n>ServiceType}" />
+            <Text text="{= ${LeadServiceSubTypeId} ? ${LeadServiceType/Name} ? ${LeadServiceType/Name} + ' (' + ${LeadServiceSubType/ServiceSubType} + ')' : 'NA' : ${LeadServiceType/Name} ? ${LeadServiceType/Name} : 'NA' }"  />
+            <Label text="{i18n>PaintingType}" />
+            <Text text="{path : 'PaintType/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>PaintingReqDays}" />
+            <Text text="{path : 'PaintingReqSlab/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>SubType}" />
+            <Text text="{path : 'PaintingReqSlab/LeadSubStatus',formatter:'.formatter.fmtCheckNull'}"  />
+            <Label text="{i18n>PaintingReq}" />
+            <VBox>
+                <VBox items="{
+                        path: 'LeadSelectedPaintingRequests'
+                    }"
+                    visible="{= ${LeadSelectedPaintingRequests}.length > 0 ? true : false}">
+                    <Text text="{MasterPaintingReq/Name}"/>
+                </VBox>
+                <Text text="NA" visible="{= ${LeadSelectedPaintingRequests}.length > 0 ? false : true}"/>
+            </VBox>
+            <!-- <List
+                items="{
+                    path: 'LeadSelectedPaintingRequests'
+                }" 
+                backgroundDesign="Transparent"
+                showSeparators="None">
+                <StandardListItem
+                    title="{MasterPaintingReq/Name}"/>
+            </List> -->
+        </f:content>
+    </f:SimpleForm>
+    </items>
+</VBox>
+</core:FragmentDefinition>
