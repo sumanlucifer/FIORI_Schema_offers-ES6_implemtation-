@@ -78,7 +78,7 @@ sap.ui.define([
             _SetDisplayData: function (oProp, sMode) {
                 var oData = {
                     mode: sMode,
-                    bindProp: "Leads(" + oProp + ")",
+                    bindProp: "DGAModel>/Leads(" + oProp + ")",
                     Id: oProp,
                     PageBusy: true,
                     IcnTabKey: "0",
@@ -191,11 +191,12 @@ sap.ui.define([
             //         oControlModel.setProperty("/LoggedInUser", oLoginData);
             //         promise.resolve();
             //         return promise;
-            //     }
+            //     },
 
             // },
 
             _getDisplayData: function (oProp) {
+                // @ts-ignore
                 var promise = jQuery.Deferred(),
                     exPand = "PreEstimation,Quotation,MaterialRequisition,LeadSource,SourceContractor,AssignedContractors,PaintType,PaintingReqSlab,LeadServiceType,State,LeadStatus, DGA, DGADetails,SourceDealer,Dealer,LeadServiceSubType,SourceConsumer,LeadSelectedPaintingRequests,LeadSelectedPaintingRequests/MasterPaintingReq,LeadLostReason,CompetitionBrand,CompetitorServiceType,ShortClosureReason,AssignedContractors/Contractor, ConsumerFeedback/ConsumerFeedbackAnswers/Question, ConsumerFeedback/ConsumerFeedbackAnswers/Answer, SiteImages";
                 if (oProp.trim() !== "") {
@@ -210,10 +211,10 @@ sap.ui.define([
                             }.bind(this),
                             dataReceived: function (oEvent) {
                                 this.getView().setBusy(false);
-                                var oFeedbackData = oEvent.getParameter("data").ConsumerFeedback.length > 0 ? oEvent.getParameter("data").ConsumerFeedback[0].ConsumerFeedbackAnswers : [],
-                                    oFeedbackDataModel = new JSONModel(oFeedbackData);
-                                this.getView().setModel(oFeedbackDataModel, "FeedbackDataModel");
-                                this.getView().getModel("LocalViewModel").setProperty("/NoFeedbackTextVisible", (oFeedbackData.length <= 0 ? true : false));
+                                // var oFeedbackData = oEvent.getParameter("data").ConsumerFeedback.length > 0 ? oEvent.getParameter("data").ConsumerFeedback[0].ConsumerFeedbackAnswers : [],
+                                //     oFeedbackDataModel = new JSONModel(oFeedbackData);
+                                // this.getView().setModel(oFeedbackDataModel, "FeedbackDataModel");
+                                // this.getView().getModel("LocalViewModel").setProperty("/NoFeedbackTextVisible", (oFeedbackData.length <= 0 ? true : false));
                             }.bind(this),
                         },
                     });
@@ -279,6 +280,7 @@ sap.ui.define([
             // },
 
             _bindQuotationTbl: function (oEvent, iPaintingReqId) {
+                // @ts-ignore
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var sId = oView.getModel("oModelDisplay").getProperty("/Id")
@@ -507,6 +509,7 @@ sap.ui.define([
             // },
 
             _LoadFragment: function (mParam) {
+                // @ts-ignore
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var othat = this;

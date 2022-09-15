@@ -14,7 +14,7 @@
         useVariantManagement="false"
         useTablePersonalisation="true"
         demandPopin="true"
-        requestAtLeastFields="Id, DGA/GivenName"
+        requestAtLeastFields="Id, DGA/FamilyName"
     >
         <smartTable:customToolbar>
             <OverflowToolbar>
@@ -28,7 +28,7 @@
             <columns>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/GivenName,DGA/Mobile", "leadingProperty": "DGA/GivenName,DGA/Mobile", "columnIndex": 0 ,"sortProperty": "DGA/GivenName,DGA/Mobile","filterProperty": "DGA/GivenName,DGA/Mobile"}' />
+                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/GivenName,DGA/FamilyName,DGA/Mobile", "leadingProperty": "DGA/GivenName,DGA/FamilyName,DGA/Mobile", "columnIndex": 0 ,"sortProperty": "DGA/GivenName,DGA/FamilyName,DGA/Mobile","filterProperty": "DGA/GivenName,DGA/FamilyName,DGA/Mobile"}' />
                     </customData>
                     <Text text="{i18n>DGAName/Number}" />
                 </Column>
@@ -156,22 +156,22 @@
             <items>
                 <ColumnListItem press="onListSelectionPress" type="Navigation">
                     <cells>
-                        <Text text="{DGAModel>DGA/GivenName} {DGA/FamilyName} {DGA/Mobile}" />
-                        <Text text="{DGAModel>Id}" />
-                        <Text text="{DGAModel>LeadSource/Name}" />
-                        <Text text="{DGAModel>Dealer/Name}" />
-                        <Text text="{DGAModel>Zone}" />
-                        <Text text="{DGAModel>DivisionId}" />
-                        <Text text="{DGAModel>State/Name}" />
-                        <Text text="{DGAModel>Depot/Depot}" />
-                        <Text text="{DGAModel>Pincode}" />
-                        <ObjectStatus text="{path:'DGAModel>LeadStatus/Name',formatter:'.formatter.fmtLowerCase'}" state="{= ${DGAModel>LeadStatus/Name} === 'Converted' ? 'Success' : ${DGAModel>LeadStatus/Name} === 'In Pipeline'  ? 'Warning' : ${DGAModel>LeadStatus/Name} === 'Lost' ? 'Error' : 'None' }" />
-                        <Text text="{path:'DGAModel>CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}" />
-                        <Text text="{DGAModel>PaintingReqSlab/LeadSubStatus}" />
-                        <Text text="{DGAModel>Stage}" />
-                        <Text text="{DGAModel>LeadServiceType/Name}" />
-                        <Text text="{DGAModel>ConsumerName}" />
-                        <Text text="{DGAModel>PrimaryNum}" />
+                        <Text text="{DGA/GivenName} {DGA/FamilyName} {DGA/Mobile}" />
+                        <Text text="{Id}" />
+                        <Text text="{LeadSource/Name}" />
+                        <Text text="{Dealer/Name}" />
+                        <Text text="{Zone}" />
+                        <Text text="{DivisionId}" />
+                        <Text text="{State/Name}" />
+                        <Text text="{Depot/Depot}" />
+                        <Text text="{Pincode}" />
+                        <ObjectStatus text="{path:'LeadStatus/Name',formatter:'.formatter.fmtLowerCase'}" state="{= ${LeadStatus/Name} === 'Converted' ? 'Success' : ${LeadStatus/Name} === 'In Pipeline'  ? 'Warning' : ${LeadStatus/Name} === 'Lost' ? 'Error' : 'None' }" />
+                        <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}" />
+                        <Text text="{PaintingReqSlab/LeadSubStatus}" />
+                        <Text text="{Stage}" />
+                        <Text text="{LeadServiceType/Name}" />
+                        <Text text="{ConsumerName}" />
+                        <Text text="{PrimaryNum}" />
                         <!-- <Text text="{DGA/Id}"/> -->
                         <!-- <Text text="{path:'PrimaryNum',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/> -->
                         <!-- <HBox> -->

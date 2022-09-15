@@ -14,36 +14,36 @@
     columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" title="{i18n>Contact} {i18n>Details}">
         <f:content>
             <Label text="{i18n>MainObject} {i18n>ConsumerName}" />
-            <Text text="{path : 'ConsumerName',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>ConsumerName',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>WhatsappNo}" />
-            <Text text="{path : 'PrimaryNum',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>PrimaryNum',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>SecondaryNo}" />
-            <Text text="{path : 'SecondaryNum',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>SecondaryNum',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>Email}" />
-            <Text text="{path : 'Email',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>Email',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>CarpetArea}({i18n>SqFt})" />
-            <Text text="{path : 'CarpetArea',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>CarpetArea',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>Pincode}" />
-            <Text text="{path : 'Pincode',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>Pincode',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>State}" />
-            <Text text="{path : 'State/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>State/Name',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>District}" />
-            <Text text="{path : 'District',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>District',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>Town}/{i18n>City}" />
-            <Text text="{path : 'CityOrTown',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>CityOrTown',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>Address}" />
-            <Text text="{path : 'Address',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>Address',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>Landmark}" />
-            <Text text="{path : 'Landmark',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>Landmark',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>CreatedAt}" />
-            <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
-            <Label text="{= ${LeadStatusId} === '1' ? '' : ${LeadStatusId} === '2'  ? 'Lead Converted Details' : ${LeadStatusId} === '3' ? 'Lead Lost Reason' : ${LeadStatusId} === '4' ? 'Lead Short Closure Reason' : '' }"/>
+            <Text text="{path:'DGAModel>CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
+            <!-- <Label text="{= ${DGAModel>LeadStatusId} === '1' ? '' : ${DGAModel>LeadStatusId} === '2'  ? 'Lead Converted Details' : ${DGAModel>LeadStatusId} === '3' ? 'Lead Lost Reason' : ${DGAModel>LeadStatusId} === '4' ? 'Lead Short Closure Reason' : '' }"/>
             <Text  text="{parts:['LeadStatusId','IsSamplingRequired', 'AdvancePaymentCollected','LeadLostReasonId','LeadLostReason/Name', 'CompetitionBrand/Name', 'CompetitorServiceType/Name', 'LeadLostMsg','ShortClosureReason/Name','ShortClosureMsg'],formatter:'.formatter.fmtStatusHeader'}"/>
             <Label text="{i18n>LeadLostMsg}" visible="{= ${LeadStatusId} === '3' ? true : false}"/>
-            <Text text="{= ${LeadLostMsg} ? ${LeadLostMsg} : 'NA' }" visible="{= ${LeadStatusId} === '3' ? true : false}"/>
+            <Text text="{= ${LeadLostMsg} ? ${LeadLostMsg} : 'NA' }" visible="{= ${LeadStatusId} === '3' ? true : false}"/> -->
     </f:content>
     </f:SimpleForm>
-    <f:SimpleForm id="SourceDetailsData" editable="false" layout="ResponsiveGridLayout" 
+    <!-- <f:SimpleForm id="SourceDetailsData" editable="false" layout="ResponsiveGridLayout" 
     labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 
     emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" 
     columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" title="{i18n>Source} {i18n>Details}">
@@ -64,29 +64,29 @@
             <Text text="{= ${SourceConsumerId} ? ${SourceConsumer/PrimaryNum} ? ${SourceConsumer/PrimaryNum} : 'NA' : ${SourceNewConsumerNum} ? ${SourceNewConsumerNum} : 'NA' }" visible="{= ${LeadSourceId} === '5'}"/>
          
         </f:content>
-    </f:SimpleForm>
+    </f:SimpleForm> -->
     <f:SimpleForm id="ServiceDetailsData" editable="false" layout="ResponsiveGridLayout" 
     labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 
     emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" 
     columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" title="{i18n>ServiceAndPainting} {i18n>Details}">
         <f:content>
             <Label text="{i18n>ServiceType}" />
-            <Text text="{= ${LeadServiceSubTypeId} ? ${LeadServiceType/Name} ? ${LeadServiceType/Name} + ' (' + ${LeadServiceSubType/ServiceSubType} + ')' : 'NA' : ${LeadServiceType/Name} ? ${LeadServiceType/Name} : 'NA' }"  />
+            <Text text="{= ${DGAModel>LeadServiceSubTypeId} ? ${DGAModel>LeadServiceType/Name} ? ${DGAModel>LeadServiceType/Name} + ' (' + ${DGAModel>LeadServiceSubType/ServiceSubType} + ')' : 'NA' : ${DGAModel>LeadServiceType/Name} ? ${DGAModel>LeadServiceType/Name} : 'NA' }"  />
             <Label text="{i18n>PaintingType}" />
-            <Text text="{path : 'PaintType/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>PaintType/Name',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>PaintingReqDays}" />
-            <Text text="{path : 'PaintingReqSlab/Name',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>PaintingReqSlab/Name',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>SubType}" />
-            <Text text="{path : 'PaintingReqSlab/LeadSubStatus',formatter:'.formatter.fmtCheckNull'}"  />
+            <Text text="{path : 'DGAModel>PaintingReqSlab/LeadSubStatus',formatter:'.formatter.fmtCheckNull'}"  />
             <Label text="{i18n>PaintingReq}" />
             <VBox>
                 <VBox items="{
-                        path: 'LeadSelectedPaintingRequests'
+                        path: 'DGAModel>LeadSelectedPaintingRequests'
                     }"
-                    visible="{= ${LeadSelectedPaintingRequests}.length > 0 ? true : false}">
-                    <Text text="{MasterPaintingReq/Name}"/>
+                    visible="{= ${DGAModel>LeadSelectedPaintingRequests}.length > 0 ? true : false}">
+                    <Text text="{DGAModel>MasterPaintingReq/Name}"/>
                 </VBox>
-                <Text text="NA" visible="{= ${LeadSelectedPaintingRequests}.length > 0 ? false : true}"/>
+                <Text text="NA" visible="{= ${DGAModel>LeadSelectedPaintingRequests}.length > 0 ? false : true}"/>
             </VBox>
             <!-- <List
                 items="{
