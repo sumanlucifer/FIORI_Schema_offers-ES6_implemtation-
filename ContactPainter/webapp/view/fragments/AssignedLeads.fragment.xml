@@ -2,7 +2,7 @@
     <smartTable:SmartTable
         id="idAssignedLeadsTable"
         header="{i18n>AssignedLeads} {i18n>List}"
-        enableAutoBinding="true"
+        enableAutoBinding="false"
         initialNoDataText="{i18n>tableNoDataText}"
         width="100%"
         editable="false"
