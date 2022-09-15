@@ -720,6 +720,10 @@ sap.ui.define(
                         oView.byId("smrtVideoTraining").rebindTable();
                     } else if (sId.match("callbacksection")) {
                         oView.byId("smrtCallback").rebindTable();
+                    } else if (sId.match("assignedleads")) {
+                        var DGAModel = oView.getModel("DGAModel");
+                        oView.byId("idAssignedLeadsTable").setModel(DGAModel);
+                        oView.byId("idAssignedLeadsTable").rebindTable();
                     } else if (sId.match("referral")) {
                         oModelControl.setProperty("/Search/Referral", "")
                         var oTable = oView.byId("Referral")
@@ -867,7 +871,7 @@ sap.ui.define(
                     oView.byId("smrtOfflineTraining").rebindTable();
                     oView.byId("smrtVideoTraining").rebindTable();
                     oView.byId("smrtCallback").rebindTable();
-                },
+                    oView.byId("idAssignedLeadsTable").rebindTable();
                 _initEditData: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -4612,10 +4616,10 @@ sap.ui.define(
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
     
                     // Apply Filters
-                    var oFilter = this._CreateFilter();
-                    if (oFilter) {
-                        oBindingParams.filters.push(oFilter);
-                    }
+                    // var oFilter = this._CreateFilter();
+                    // if (oFilter) {
+                    //     oBindingParams.filters.push(oFilter);
+                    // }
     
                 },
             }
