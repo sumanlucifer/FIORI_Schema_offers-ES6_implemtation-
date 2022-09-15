@@ -872,6 +872,7 @@ sap.ui.define(
                     oView.byId("smrtVideoTraining").rebindTable();
                     oView.byId("smrtCallback").rebindTable();
                     oView.byId("idAssignedLeadsTable").rebindTable();
+                },
                 _initEditData: function () {
                     var promise = jQuery.Deferred();
                     var oView = this.getView();
