@@ -722,7 +722,7 @@ sap.ui.define(
                         oView.byId("smrtCallback").rebindTable();
                     } else if (sId.match("assignedleads")) {
                         var DGAModel = oView.getModel("DGAModel");
-                        oView.byId("idAssignedLeadsTable").setModel(DGAModel,"DGAModel");
+                        oView.byId("idAssignedLeadsTable").setModel(DGAModel);
                         oView.byId("idAssignedLeadsTable").rebindTable();
                     } else if (sId.match("referral")) {
                         oModelControl.setProperty("/Search/Referral", "")
