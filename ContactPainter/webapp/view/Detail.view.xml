@@ -15,7 +15,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>MainObject} {i18n>Details}">
-                        <Link text="{i18n>MainObject2}" press="onNavToHome"/>
+                        <Link text="{i18n>AssignedLeads}" press="onNavBack"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
@@ -38,7 +38,7 @@
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <ObjectAttribute title="{i18n>DGAName}" text="{DGAModel>DGA/GivenName} {DGAModel>DGA/FamilyName}"/>
                         <ObjectAttribute title="{i18n>DealerName}" text="{path:'DGAModel>Dealer/Name',formatter:'.formatter.fmtCheckNull'}"/>
-                        <ObjectAttribute title="{i18n>AssignedContractorName}" text="{path: 'DGAModel>AssignedContractors' , formatter: '.formatter.fmtCommaSepratedAssignedContractor'}"/>
+                        <!-- <ObjectAttribute title="{i18n>AssignedContractorName}" text="{path: 'DGAModel>AssignedContractors' , formatter: '.formatter.fmtCommaSepratedAssignedContractor'}"/> -->
                         <ObjectAttribute title="{i18n>Visits}" text="{path: 'DGAModel>VisitCount'}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
