@@ -226,13 +226,6 @@ sap.ui.define([
             onIcnTbarChange: function (oEvent) {
                 var sKey = oEvent.getSource().getSelectedKey();
                 var oView = this.getView();
-                // if (sKey == "1") {
-                //     oView.byId("PreEstTbl1").rebindTable();
-                //     oView.byId("PreEstTbl2").rebindTable();
-                //     oView.byId("PreEstTbl3").rebindTable();
-                //     oView.byId("PreEstTbl4").rebindTable();
-                //     oView.byId("PreEstTbl5").rebindTable();
-                // } else if
                 if (sKey == "1") {
                     oView.byId("QuotationTbl1").rebindTable();
                     oView.byId("QuotationTbl2").rebindTable();

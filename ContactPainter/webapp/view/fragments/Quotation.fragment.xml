@@ -21,11 +21,11 @@
                 <Text id="idQuotationDate" text="{path : 'DGAModel>CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
             </f:content>
         </f:SimpleForm>
-        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.quotation.QuotationTbl1" type="XML" class="sapUiMediumMarginBottom"/>
-        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.quotation.QuotationTbl2" type="XML" class="sapUiMediumMarginBottom"/>
-        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.quotation.QuotationTbl3" type="XML" class="sapUiMediumMarginBottom"/>
-        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.quotation.QuotationTbl4" type="XML" class="sapUiMediumMarginBottom"/>
-        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.quotation.QuotationTbl5" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation.QuotationTbl1" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation.QuotationTbl2" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation.QuotationTbl3" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation.QuotationTbl4" type="XML" class="sapUiMediumMarginBottom"/>
+        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation.QuotationTbl5" type="XML" class="sapUiMediumMarginBottom"/>
         <Toolbar width="90%">
             <ToolbarSpacer/>
             <Label text="{i18n>Total} : " design="Bold"/>
