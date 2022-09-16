@@ -163,11 +163,11 @@ sap.ui.define([
             var contractorArray = [];
             for (var i in mParam) {
                 var contractorKey = mParam[i];
-                var contractorObject = this.getView().getModel().getProperty("/" + contractorKey);
+                var contractorObject = this.getView().getModel("DGAModel").getProperty("/" + contractorKey);
                 if (contractorObject.IsActive) {
                     if (contractorObject.ContractorId) {
                         if (contractorObject.Contractor) {
-                            var contractorDetails = this.getView().getModel().getProperty("/" + contractorObject.Contractor.__ref);
+                            var contractorDetails = this.getView().getModel("DGAModel").getProperty("/" + contractorObject.Contractor.__ref);
                             contractorArray.push(contractorDetails.Name);
                         }
                     }
