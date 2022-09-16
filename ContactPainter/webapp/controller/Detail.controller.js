@@ -78,7 +78,7 @@ sap.ui.define([
             _SetDisplayData: function (oProp, sMode) {
                 var oData = {
                     mode: sMode,
-                    bindProp: "DGAModel>/Leads(" + oProp + ")",
+                    bindProp: "Leads(" + oProp + ")",
                     Id: oProp,
                     PageBusy: true,
                     IcnTabKey: "0",
