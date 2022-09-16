@@ -79,12 +79,12 @@
                   
                     <!-- Quotation tab -->
                     <IconTabFilter text="{i18n>Quotation}" key="1">
-                        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.Quotation" type="XML"/>
+                        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation" type="XML"/>
                     </IconTabFilter>
-                    <!-- Material Requisition tab -->
-                    <!-- <IconTabFilter text="{i18n>MaterialRequisition}" key="3">
-                        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.MaterialRequisition" type="XML"/>
-                    </IconTabFilter> -->
+                    <!-- DGA Visit Request tab -->
+                    <IconTabFilter text="{i18n>DGA} {i18n>VisitRequest}" key="2">
+                        <!-- <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.MaterialRequisition" type="XML"/> -->
+                    </IconTabFilter>
                    
                 </items>
             </IconTabBar>
