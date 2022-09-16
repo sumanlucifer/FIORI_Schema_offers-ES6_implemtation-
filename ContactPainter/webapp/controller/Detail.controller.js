@@ -227,6 +227,8 @@ sap.ui.define([
                 var sKey = oEvent.getSource().getSelectedKey();
                 var oView = this.getView();
                 if (sKey == "1") {
+                    var DGAModel = oView.getModel("DGAModel");
+                    oView.byId("QuotationTbl1").setModel(DGAModel);
                     oView.byId("QuotationTbl1").rebindTable();
                     oView.byId("QuotationTbl2").rebindTable();
                     oView.byId("QuotationTbl3").rebindTable();
@@ -302,63 +304,63 @@ sap.ui.define([
             // },
 
             // before binding methods of the smart tables
-            onBeforeRebindPreReq1: function (oEvent) {
-                var oView = this.getView();
-                var c1 = this._bindPreEstimationTbl(oEvent, 1);
-                var othat = this;
-                c1.then(() => {
-                    var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-                    var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
-                    this._bindViewElement("idTotalInterior", "/" + sPreEstimationPath);
-                    this._bindViewElement("idLblTotalInterior", "/" + sPreEstimationPath);
-                    this._bindViewElement("idPreEstGTotal", "/" + sPreEstimationPath);
-                    this._bindViewElement("idPreEstimationDate", "/" + sPreEstimationPath);
-                });
-            },
-            onBeforeRebindPreReq2: function (oEvent) {
-                var oView = this.getView();
-                var c1 = this._bindPreEstimationTbl(oEvent, 2);
-                var othat = this;
-                c1.then(() => {
-                    var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-                    var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
-                    this._bindViewElement("idTotalExterior", "/" + sPreEstimationPath);
-                    this._bindViewElement("idLblTotalExterior", "/" + sPreEstimationPath);
-                });
-            },
-            onBeforeRebindPreReq3: function (oEvent) {
-                var oView = this.getView();
-                var c1 = this._bindPreEstimationTbl(oEvent, 3);
-                var othat = this;
-                c1.then(() => {
-                    var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-                    var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
-                    this._bindViewElement("idTotalWC", "/" + sPreEstimationPath);
-                    this._bindViewElement("idLblTotalWC", "/" + sPreEstimationPath);
-                });
-            },
-            onBeforeRebindPreReq4: function (oEvent) {
-                var oView = this.getView();
-                var c1 = this._bindPreEstimationTbl(oEvent, 4);
-                var othat = this;
-                c1.then(() => {
-                    var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-                    var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
-                    this._bindViewElement("idTotalCC", "/" + sPreEstimationPath);
-                    this._bindViewElement("idLblTotalCC", "/" + sPreEstimationPath);
-                });
-            },
-            onBeforeRebindPreReq5: function (oEvent) {
-                var oView = this.getView();
-                var c1 = this._bindPreEstimationTbl(oEvent, 5);
-                var othat = this;
-                c1.then(() => {
-                    var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-                    var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
-                    this._bindViewElement("idTotalEnamel", "/" + sPreEstimationPath);
-                    this._bindViewElement("idLblTotalEnamel", "/" + sPreEstimationPath);
-                });
-            },
+            // onBeforeRebindPreReq1: function (oEvent) {
+            //     var oView = this.getView();
+            //     var c1 = this._bindPreEstimationTbl(oEvent, 1);
+            //     var othat = this;
+            //     c1.then(() => {
+            //         var oBindingObject = oEvent.getSource().getBindingContext().getObject();
+            //         var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
+            //         this._bindViewElement("idTotalInterior", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idLblTotalInterior", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idPreEstGTotal", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idPreEstimationDate", "/" + sPreEstimationPath);
+            //     });
+            // },
+            // onBeforeRebindPreReq2: function (oEvent) {
+            //     var oView = this.getView();
+            //     var c1 = this._bindPreEstimationTbl(oEvent, 2);
+            //     var othat = this;
+            //     c1.then(() => {
+            //         var oBindingObject = oEvent.getSource().getBindingContext().getObject();
+            //         var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
+            //         this._bindViewElement("idTotalExterior", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idLblTotalExterior", "/" + sPreEstimationPath);
+            //     });
+            // },
+            // onBeforeRebindPreReq3: function (oEvent) {
+            //     var oView = this.getView();
+            //     var c1 = this._bindPreEstimationTbl(oEvent, 3);
+            //     var othat = this;
+            //     c1.then(() => {
+            //         var oBindingObject = oEvent.getSource().getBindingContext().getObject();
+            //         var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
+            //         this._bindViewElement("idTotalWC", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idLblTotalWC", "/" + sPreEstimationPath);
+            //     });
+            // },
+            // onBeforeRebindPreReq4: function (oEvent) {
+            //     var oView = this.getView();
+            //     var c1 = this._bindPreEstimationTbl(oEvent, 4);
+            //     var othat = this;
+            //     c1.then(() => {
+            //         var oBindingObject = oEvent.getSource().getBindingContext().getObject();
+            //         var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
+            //         this._bindViewElement("idTotalCC", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idLblTotalCC", "/" + sPreEstimationPath);
+            //     });
+            // },
+            // onBeforeRebindPreReq5: function (oEvent) {
+            //     var oView = this.getView();
+            //     var c1 = this._bindPreEstimationTbl(oEvent, 5);
+            //     var othat = this;
+            //     c1.then(() => {
+            //         var oBindingObject = oEvent.getSource().getBindingContext().getObject();
+            //         var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
+            //         this._bindViewElement("idTotalEnamel", "/" + sPreEstimationPath);
+            //         this._bindViewElement("idLblTotalEnamel", "/" + sPreEstimationPath);
+            //     });
+            // },
             onBeforeRebindQuotReq1: function (oEvent) {
                 var oView = this.getView();
                 var c1 = this._bindQuotationTbl(oEvent, 1);
