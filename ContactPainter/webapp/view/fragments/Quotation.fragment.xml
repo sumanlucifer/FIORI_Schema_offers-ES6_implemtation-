@@ -9,7 +9,7 @@
     <l:VerticalLayout width="100%">
         <Toolbar>
             <ToolbarSpacer/>
-            <Button id="idQuotDownload" icon="sap-icon://download" enabled="{= ${Quotation}.length > 0 ? true : false }" press="onQuotDownload"/>
+            <!-- <Button id="idQuotDownload" icon="sap-icon://download" enabled="{= ${Quotation}.length > 0 ? true : false }" press="onQuotDownload"/> -->
         </Toolbar>
         <f:SimpleForm id="QuotDetailsData" editable="false" layout="ResponsiveGridLayout" 
             labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" 

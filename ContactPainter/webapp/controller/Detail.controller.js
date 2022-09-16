@@ -201,7 +201,7 @@ sap.ui.define([
                     exPand = "PreEstimation,Quotation,MaterialRequisition,LeadSource,SourceContractor,AssignedContractors,PaintType,PaintingReqSlab,LeadServiceType,State,LeadStatus, DGA, DGADetails,SourceDealer,Dealer,LeadServiceSubType,SourceConsumer,LeadSelectedPaintingRequests,LeadSelectedPaintingRequests/MasterPaintingReq,LeadLostReason,CompetitionBrand,CompetitorServiceType,ShortClosureReason,AssignedContractors/Contractor, ConsumerFeedback/ConsumerFeedbackAnswers/Question, ConsumerFeedback/ConsumerFeedbackAnswers/Answer, SiteImages";
                 if (oProp.trim() !== "") {
                     this.getView().bindElement({
-                        path: "/" + oProp,
+                        path: "DGAModel>/" + oProp,
                         parameters: {
                             expand: exPand,
                         },

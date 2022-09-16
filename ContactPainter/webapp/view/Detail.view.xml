@@ -11,7 +11,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{ConsumerName}"/>
+                    <Title text="{DGAModel>ConsumerName}"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>MainObject} {i18n>Details}">
@@ -19,13 +19,13 @@
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>MainObject} {i18n>ID}: {Id}"/>
+                    <Label text="{i18n>MainObject} {i18n>ID}: {DGAModel>Id}"/>
                 </f:expandedContent>
                 <f:snappedContent>
-                    <Label text="{i18n>MainObject} {i18n>ID}: {Id}"/>
+                    <Label text="{i18n>MainObject} {i18n>ID}: {DGAModel>Id}"/>
                 </f:snappedContent>
                 <f:snappedTitleOnMobile>
-                    <Title text="{i18n>MainObject} {i18n>ID}: {Id}"/>
+                    <Title text="{i18n>MainObject} {i18n>ID}: {DGAModel>Id}"/>
                 </f:snappedTitleOnMobile>
                 <!-- <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>Validate}" />
