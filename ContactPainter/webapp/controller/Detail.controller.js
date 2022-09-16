@@ -200,10 +200,9 @@ sap.ui.define([
                 var promise = jQuery.Deferred(),
                     exPand = "PreEstimation,Quotation,MaterialRequisition,LeadSource,SourceContractor,AssignedContractors,PaintType,PaintingReqSlab,LeadServiceType,State,LeadStatus, DGA, DGADetails,SourceDealer,Dealer,LeadServiceSubType,SourceConsumer,LeadSelectedPaintingRequests,LeadSelectedPaintingRequests/MasterPaintingReq,LeadLostReason,CompetitionBrand,CompetitorServiceType,ShortClosureReason,AssignedContractors/Contractor, ConsumerFeedback/ConsumerFeedbackAnswers/Question, ConsumerFeedback/ConsumerFeedbackAnswers/Answer, SiteImages";
                 if (oProp.trim() !== "") {
-                    var DGAModel = this.getOwnerComponent().getModel("DGAModel");
-                    this.getView().setModel(DGAModel);
+                    
                     this.getView().bindElement({
-                        path: "/" + oProp,
+                        path: "DGAModel>/" + oProp,
                         parameters: {
                             expand: exPand,
                         },
@@ -229,7 +228,8 @@ sap.ui.define([
                 var sKey = oEvent.getSource().getSelectedKey();
                 var oView = this.getView();
                 if (sKey == "1") {
-                 
+                    var DGAModel = oView.getModel("DGAModel");
+                    oView.byId("QuotationTbl1").setModel(DGAModel);
                     oView.byId("QuotationTbl1").rebindTable();
                     oView.byId("QuotationTbl2").rebindTable();
                     oView.byId("QuotationTbl3").rebindTable();
