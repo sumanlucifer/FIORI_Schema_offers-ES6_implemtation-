@@ -38,7 +38,7 @@
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <ObjectAttribute title="{i18n>DGAName}" text="{DGAModel>DGA/GivenName} {DGAModel>DGA/FamilyName}"/>
                         <ObjectAttribute title="{i18n>DealerName}" text="{path:'DGAModel>Dealer/Name',formatter:'.formatter.fmtCheckNull'}"/>
-                        <!-- <ObjectAttribute title="{i18n>AssignedContractorName}" text="{path: 'DGAModel>AssignedContractors' , formatter: '.formatter.fmtCommaSepratedAssignedContractor'}"/> -->
+                        <ObjectAttribute title="{i18n>AssignedContractorName}" text="{path: 'DGAModel>AssignedContractors' , formatter: '.formatter.fmtCommaSepratedAssignedContractor'}"/>
                         <ObjectAttribute title="{i18n>Visits}" text="{path: 'DGAModel>VisitCount'}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
@@ -79,7 +79,7 @@
                   
                     <!-- Quotation tab -->
                     <IconTabFilter text="{i18n>Quotation}" key="1">
-                        <!-- <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.Quotation" type="XML"/> -->
+                        <core:Fragment fragmentName="com.knpl.dga.leadmanagement.view.fragments.Quotation" type="XML"/>
                     </IconTabFilter>
                     <!-- Material Requisition tab -->
                     <!-- <IconTabFilter text="{i18n>MaterialRequisition}" key="3">
