@@ -36,22 +36,22 @@
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="false">
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
-                        <ObjectAttribute title="{i18n>DGAName}" text="{DGA/GivenName} {DGA/FamilyName}"/>
-                        <ObjectAttribute title="{i18n>DealerName}" text="{path:'Dealer/Name',formatter:'.formatter.fmtCheckNull'}"/>
-                        <ObjectAttribute title="{i18n>AssignedContractorName}" text="{path: 'AssignedContractors' , formatter: '.formatter.fmtCommaSepratedAssignedContractor'}"/>
-                        <ObjectAttribute title="{i18n>Visits}" text="{path: 'VisitCount'}"/>
+                        <ObjectAttribute title="{i18n>DGAName}" text="{DGAModel>DGA/GivenName} {DGAModel>DGA/FamilyName}"/>
+                        <ObjectAttribute title="{i18n>DealerName}" text="{path:'DGAModel>Dealer/Name',formatter:'.formatter.fmtCheckNull'}"/>
+                        <ObjectAttribute title="{i18n>AssignedContractorName}" text="{path: 'DGAModel>AssignedContractors' , formatter: '.formatter.fmtCommaSepratedAssignedContractor'}"/>
+                        <ObjectAttribute title="{i18n>Visits}" text="{path: 'DGAModel>VisitCount'}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <Label text="{i18n>Status}:"/>
-                        <ObjectStatus class="statusTextSizeLarge" text="{path:'LeadStatus/Name',formatter:'.formatter.fmtCheckNull'}" state="{= ${LeadStatus/Name} === 'Converted' ? 'Success' : ${LeadStatus/Name} === 'In Pipeline'  ? 'Warning' : ${LeadStatus/Name} === 'Lost' ? 'Error' : 'None' }"/>
+                        <ObjectStatus class="statusTextSizeLarge" text="{path:'DGAModel>LeadStatus/Name',formatter:'.formatter.fmtCheckNull'}" state="{= ${DGAModel>LeadStatus/Name} === 'Converted' ? 'Success' : ${DGAModel>LeadStatus/Name} === 'In Pipeline'  ? 'Warning' : ${DGAModel>LeadStatus/Name} === 'Lost' ? 'Error' : 'None' }"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <Label text="{i18n>Stage}:"/>
-                        <ObjectStatus class="statusTextSizeLarge" text="{path:'Stage',formatter:'.formatter.fmtCheckNull'}" state="None"/>
+                        <ObjectStatus class="statusTextSizeLarge" text="{path:'DGAModel>Stage',formatter:'.formatter.fmtCheckNull'}" state="None"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <Label text="{i18n>Source}:"/>
-                        <ObjectStatus class="statusTextSizeLarge" text="{path:'LeadSource/Name',formatter:'.formatter.fmtCheckNull'}" state="None"/>
+                        <ObjectStatus class="statusTextSizeLarge" text="{path:'DGAModel>LeadSource/Name',formatter:'.formatter.fmtCheckNull'}" state="None"/>
                     </layout:VerticalLayout>
                     <!-- <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <Label text="{i18n>LeadOwnerName}:"/>
@@ -59,7 +59,7 @@
                     </layout:VerticalLayout> -->
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <Label text="{i18n>MobNo}:"/>
-                        <ObjectStatus class="statusTextSizeLarge" text="{path:'DGA/Mobile',formatter:'.formatter.fmtCheckNull'}" state="None"/>
+                        <ObjectStatus class="statusTextSizeLarge" text="{path:'DGAModel>DGA/Mobile',formatter:'.formatter.fmtCheckNull'}" state="None"/>
                     </layout:VerticalLayout>
                     <!-- <layout:VerticalLayout class="sapUiSmallMarginEnd">
                         <Label text="{i18n>Visits}:"/>
