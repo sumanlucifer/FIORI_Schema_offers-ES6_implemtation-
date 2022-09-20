@@ -224,6 +224,11 @@ sap.ui.define([
                 promise.resolve();
                 return promise;
             },
+            _bindViewElement: function(sElementId, sBindingPath) {
+                var oView = this.getView();
+                var oElement = oView.byId(sElementId);
+                oElement.bindElement(sBindingPath);
+            },
 
             onIcnTbarChange: function (oEvent) {
                 var sKey = oEvent.getSource().getSelectedKey();
