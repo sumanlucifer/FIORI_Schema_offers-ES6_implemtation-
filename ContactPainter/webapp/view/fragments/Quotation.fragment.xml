@@ -18,7 +18,7 @@
             <f:content>
                 <core:Title text="{i18n>Quotation} {i18n>Details}" />
                 <Label text="{i18n>Quotation} {i18n>Date}" />
-                <Text id="idQuotationDate" text="{path : 'DGAModel>CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
+                <Text id="idQuotationDate" text="{path : 'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy'}}"  />
             </f:content>
         </f:SimpleForm>
         <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.Quotation.QuotationTbl1" type="XML" class="sapUiMediumMarginBottom"/>
