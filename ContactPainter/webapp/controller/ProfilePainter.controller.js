@@ -3721,7 +3721,6 @@ sap.ui.define(
                             }
                             if (oTable.bindItems) {
                                 oTable.bindAggregation("items", "/DealerSet", function () {
-                                    // @ts-ignore
                                     return new sap.m.ColumnListItem({
                                         cells: aCols.map(function (column) {
                                             return new sap.m.Label({
@@ -3851,17 +3850,6 @@ sap.ui.define(
                         oRouter.navTo("RoutePList", {}, true);
                     }
                 },
-                onBackToProfilePainter: function (oEvent) {
-                    var oHistory = History.getInstance();
-                    var sPreviousHash = oHistory.getPreviousHash();
-                    if (sPreviousHash !== undefined) {
-                        window.history.go(-1);
-                    } else {
-                        var oRouter = this.getOwnerComponent().getRouter();
-                        oRouter.navTo("RouteAddEditP", {}, true);
-                    }
-                },
-                
                 
                 //himank loyalty table changes
                 onBeforeRebind: function (oEvent) {
