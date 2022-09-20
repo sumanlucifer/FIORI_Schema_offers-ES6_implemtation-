@@ -224,7 +224,7 @@ sap.ui.define([
                 promise.resolve();
                 return promise;
             },
-            _bindViewElement: function(sElementId, sBindingPath) {
+            _bindViewElement: function (sElementId, sBindingPath) {
                 var oView = this.getView();
                 var oElement = oView.byId(sElementId);
                 oElement.bindElement(sBindingPath);
@@ -242,10 +242,10 @@ sap.ui.define([
                     oView.byId("QuotationTbl4").rebindTable();
                     oView.byId("QuotationTbl5").rebindTable();
                 }
-               
+
             },
 
-           
+
 
             _bindQuotationTbl: function (oEvent, iPaintingReqId) {
                 // @ts-ignore
@@ -262,7 +262,7 @@ sap.ui.define([
                 return promise;
             },
 
-          
+
             onBeforeRebindQuotReq1: function (oEvent) {
                 var oView = this.getView();
                 var c1 = this._bindQuotationTbl(oEvent, 1);
@@ -323,9 +323,9 @@ sap.ui.define([
                     this._bindViewElement("idLblTotalQuotEnamel", "/" + sQuotationPath);
                 });
             },
-          
-            
-           
+
+
+
 
             _LoadFragment: function (mParam) {
                 // @ts-ignore
@@ -346,21 +346,6 @@ sap.ui.define([
                     return promise;
                 });
             },
-
-            onBackToProfilePainter: function (oEvent) {
-                // @ts-ignore
-                var oHistory = History.getInstance();
-                var sPreviousHash = oHistory.getPreviousHash();
-                if (sPreviousHash !== undefined) {
-                    window.history.go(-1);
-                } else {
-                    var oRouter = this.getOwnerComponent().getRouter();
-                    oRouter.navTo("RouteAddEditP", {}, true);
-                }
-            },
-            
-
-           
 
             onpressVisitHistoryItem: function (oEvent) {
                 var sId = oEvent.getSource().getBindingContext().getObject().Id,
@@ -405,8 +390,8 @@ sap.ui.define([
 
 
             // },
-           
-            
+
+
 
 
         }

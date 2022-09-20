@@ -277,6 +277,10 @@ sap.ui.define([
                 return;
             }
         },
+        onNavBack:function(){
+            history.back();
+        },
+
         /**
          * Adds a history entry in the FLP page history
          * @public
