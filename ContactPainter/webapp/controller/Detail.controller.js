@@ -242,44 +242,10 @@ sap.ui.define([
                     oView.byId("QuotationTbl4").rebindTable();
                     oView.byId("QuotationTbl5").rebindTable();
                 }
-                //  else if (sKey == "3") {
-                //     oView.byId("idMaterialsReqTable1").rebindTable();
-                //     oView.byId("idMaterialsReqTable2").rebindTable();
-                //     oView.byId("idMaterialsReqTable3").rebindTable();
-                //     oView.byId("idMaterialsReqTable4").rebindTable();
-                //     oView.byId("idMaterialsReqTable5").rebindTable();
-                //     oView.byId("idMaterialsReqTable6").rebindTable();
-                //     oView.byId("idMaterialsReqTable1").rebindTable();
-                // } else if (sKey == "4") {
-                //     oView.byId("DGAHistoryTbl").rebindTable();
-                // } else if (sKey == "5") {
-                //     this.fnSetFeedbackFormDetails();
-                // } else if (sKey == "6") {
-                //     oView.byId("VisitHistoryTbl").rebindTable();
-                // } else if (sKey == "7") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/ToggleSiteImagesVisible", "Before");
-                //     var sSelectedListKey = this.getView().getModel("LocalViewModel").getProperty("/ToggleSiteImagesVisible"),
-                //         sListID = sSelectedListKey === "After" ? "idSiteImagesAfterList" : "idSiteImagesBeforeList";
-                //     this.getView().byId(sListID).getBinding("items").refresh();
-                // } else if (sKey == "8") {
-                //     oView.byId("PaymentHistoryTbl").rebindTable();
-                // }
+               
             },
 
-            // _bindPreEstimationTbl: function (oEvent, iPaintingReqId) {
-            //     // @ts-ignore
-            //     var promise = jQuery.Deferred();
-            //     var oView = this.getView();
-            //     var sId = oView.getModel("oModelDisplay").getProperty("/Id")
-            //     var mBindingParams = oEvent.getParameter("bindingParams");
-            //     mBindingParams.parameters["expand"] = "PreEstimationSelectedProducts,PreEstimation";
-            //     var oLeadIdFilter = new Filter("LeadId", FilterOperator.EQ, sId);
-            //     var oPaintingReqIdFiler = new Filter("LeadSelectedPaintingRequest/PaintingReqsId", FilterOperator.EQ, iPaintingReqId);
-            //     mBindingParams.filters.push(oLeadIdFilter, oPaintingReqIdFiler);
-            //     // mBindingParams.sorter.push(new Sorter("CreatedAt", true));
-            //     promise.resolve();
-            //     return promise;
-            // },
+           
 
             _bindQuotationTbl: function (oEvent, iPaintingReqId) {
                 // @ts-ignore
@@ -357,87 +323,9 @@ sap.ui.define([
                     this._bindViewElement("idLblTotalQuotEnamel", "/" + sQuotationPath);
                 });
             },
-            // onBeforeBindMatReqTbl1: function (oEvent) {
-            //     var oView = this.getView();
-            //     var c1 = this._bindMRTbl(oEvent, 1);
-            //     var othat = this;
-            //     c1.then(() => {
-            //         var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-            //         var sMaterialRequisitionPath = oBindingObject.MaterialRequisition.__list[0];
-            //         this._bindViewElement("idMRDate", "/" + sMaterialRequisitionPath);
-            //     });
-            // },
-            // onBeforeBindMatReqTbl2: function (oEvent) {
-            //     var oView = this.getView();
-            //     var c1 = this._bindMRTbl(oEvent, 2);
-            //     var othat = this;
-            //     c1.then(() => {
-
-            //     });
-            // },
-            // onBeforeBindMatReqTbl3: function (oEvent) {
-            //     var oView = this.getView();
-            //     var c1 = this._bindMRTbl(oEvent, 3);
-            //     var othat = this;
-            //     c1.then(() => {
-            //     });
-            // },
-            // onBeforeBindMatReqTbl4: function (oEvent) {
-            //     var oView = this.getView();
-            //     var c1 = this._bindMRTbl(oEvent, 4);
-            //     var othat = this;
-            //     c1.then(() => {
-            //     });
-            // },
-            // onBeforeBindMatReqTbl6: function (oEvent) {
-            //     var oView = this.getView();
-            //     var c1 = this._bindMRTbl(oEvent, 5);
-            //     var othat = this;
-            //     c1.then(() => {
-            //     });
-            // },
-            // onBeforeBindMatReqTbl5: function (oEvent) {
-            //     var oView = this.getView();
-            //     var sId = oView.getModel("oModelDisplay").getProperty("/Id")
-            //     var oBindingParams = oEvent.getParameter("bindingParams");
-            //     oBindingParams.parameters["expand"] = "Equipment";
-            //     var oFiler = new Filter("LeadId", FilterOperator.EQ, sId);
-            //     oBindingParams.filters.push(oFiler);
-            //     // oBindingParams.sorter.push(new Sorter("CreatedAt", true));
-            // },
-            // onBeforeRebindDGAHistory: function (oEvent) {
-            //     var oView = this.getView();
-            //     var sId = oView.getModel("oModelDisplay").getProperty("/Id")
-            //     var oBindingParams = oEvent.getParameter("bindingParams");
-            //     oBindingParams.parameters["expand"] = "DGA,DGA/DGAType,DGA/Depot,DGA/Pincode,DGA/PayrollCompany";
-            //     var oFiler = new Filter("Id", FilterOperator.EQ, sId);
-            //     oBindingParams.filters.push(oFiler);
-            //     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
-            // },
-            // onBeforeRebindVisitHistory: function (oEvent) {
-            //     var sId = this.getView().getModel("oModelDisplay").getProperty("/Id"),
-            //         oBindingParams = oEvent.getParameter("bindingParams"),
-            //         oIdFilter = new Filter("VisitTargetId", FilterOperator.EQ, sId),
-            //         oTaskTypeFilter = new Filter("TaskTypeId", FilterOperator.EQ, 1),
-            //         oCompletedStatusFilter = new Filter("Status", FilterOperator.EQ, "Completed"),
-            //         oInitialStatusFilter = new Filter("Status", FilterOperator.EQ, "Initial");
-
-
-            //     oBindingParams.parameters["expand"] = "LeadVisitOutcomeDetails/VisitsOutcome";
-            //     oBindingParams.filters.push(oIdFilter, oTaskTypeFilter, oCompletedStatusFilter,oInitialStatusFilter);
-            //     oBindingParams.sorter.push(new Sorter("Date", true));
-            // },
-
-            // onBeforeRebindPaymentHistory: function (oEvent) {
-            //     var promise = jQuery.Deferred(),
-            //         sLeadId = this.getView().getModel("oModelDisplay").getProperty("/Id"),
-            //         oLeadIdFilter = new Filter("LeadId", FilterOperator.EQ, sLeadId),
-            //         oBindingParams = oEvent.getParameter("bindingParams");
-
-            //     oBindingParams.filters.push(oLeadIdFilter);
-            //     promise.resolve();
-            //     return promise;
-            // },
+          
+            
+           
 
             _LoadFragment: function (mParam) {
                 // @ts-ignore
@@ -459,32 +347,9 @@ sap.ui.define([
                 });
             },
 
-            // onPreEstDownload: function (oEvent) {
-            //     var sServiceURL = this.getView().getModel().sServiceUrl;
-            //     var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-            //     var sPreEstimationPath = oBindingObject.PreEstimation.__list[0];
-            //     var sTokenCode = this.getView().getModel().getProperty("/" + sPreEstimationPath).TokenCode;
-            //     var sURL = sServiceURL + "/" + sPreEstimationPath + "/$value?Token=" + sTokenCode;
-            //     sap.m.URLHelper.redirect(sURL, true);
-            // },
+           
 
-            // onQuotDownload: function (oEvent) {
-            //     var sServiceURL = this.getView().getModel().sServiceUrl;
-            //     var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-            //     var sQuotationPath = oBindingObject.Quotation.__list[0];
-            //     var sTokenCode = this.getView().getModel().getProperty("/" + sQuotationPath).TokenCode;
-            //     var sURL = sServiceURL + "/" + sQuotationPath + "/$value?Token=" + sTokenCode;
-            //     sap.m.URLHelper.redirect(sURL, true);
-            // },
-
-            // onMRDownload: function (oEvent) {
-            //     var sServiceURL = this.getView().getModel().sServiceUrl;
-            //     var oBindingObject = oEvent.getSource().getBindingContext().getObject();
-            //     var sMaterialRequisitionPath = oBindingObject.MaterialRequisition.__list[0];
-            //     var sTokenCode = this.getView().getModel().getProperty("/" + sMaterialRequisitionPath).TokenCode;
-            //     var sURL = sServiceURL + "/" + sMaterialRequisitionPath + "/$value?Token=" + sTokenCode;
-            //     sap.m.URLHelper.redirect(sURL, true);
-            // },
+           
 
             onpressVisitHistoryItem: function (oEvent) {
                 var sId = oEvent.getSource().getBindingContext().getObject().Id,
@@ -529,27 +394,7 @@ sap.ui.define([
 
 
             // },
-            // _UpdatedObject: function (oPayLoad) {
-            //     var othat = this;
-            //     var oView = this.getView();
-            //     var oDataModel = oView.getModel();
-            //     var oModelControl = oView.getModel("oModelControl");
-            //     var sProp = oModelControl.getProperty("/bindProp")
-            //     //console.log(sProp,oPayLoad)
-            //     return new Promise((resolve, reject) => {
-            //         oDataModel.update("/" + sProp, oPayLoad, {
-            //             success: function (data) {
-            //                 MessageToast.show(othat.geti18nText("Message1"));
-            //                 resolve(data);
-            //             },
-            //             error: function (data) {
-            //                 MessageToast.show(othat.geti18nText("Message2"));
-            //                 oModelControl.setProperty("/PageBusy", false);
-            //                 reject(data);
-            //             },
-            //         });
-            //     });
-            // }
+           
             
 
 

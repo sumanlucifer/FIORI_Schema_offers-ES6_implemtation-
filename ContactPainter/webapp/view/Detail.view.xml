@@ -15,7 +15,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>MainObject} {i18n>Details}">
-                        <Link text="{i18n>AssignedLeads}" press="onNavBack"/>
+                        <Link text="{i18n>AssignedLeads}" press="onBackToProfilePainter"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
