@@ -89,7 +89,7 @@
                     </IconTabFilter>
                     <!-- DGA Visit Request tab -->
                     <IconTabFilter text="{i18n>DGA} {i18n>VisitRequest}" key="2">
-                        <core:Fragment fragmentName="com.knpl.dga.ContactPainter.view.fragments.DGAVisitHistory" type="XML"/>
+                        <core:Fragment fragmentName="com.knpl.pragati.ContactPainter.view.fragments.DGAVisitHistory" type="XML"/>
                     </IconTabFilter>
                 </items>
             </IconTabBar>
