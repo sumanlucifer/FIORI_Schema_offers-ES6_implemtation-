@@ -29,50 +29,64 @@
             <columns>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/GivenName", "leadingProperty": "DGA/GivenName", "columnIndex": 0 ,"sortProperty": "DGA/GivenName","filterProperty": "DGA/GivenName"}'/>
-                    </customData>
-                    <Text text="{i18n>Activity}"/>
-                </Column>
-                <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Id", "leadingProperty": "DGA/Id", "columnIndex": 1 ,"sortProperty": "DGA/Id","filterProperty": "DGA/Id"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Id", "leadingProperty": "DGA/Id", "columnIndex": 0 ,"sortProperty": "DGA/Id","filterProperty": "DGA/Id"}'/>
                     </customData>
                     <Text text="{i18n>Id}"/>
                 </Column>
-                <!-- <Column hAlign="Begin">
+                <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Positions", "leadingProperty": "DGA/Positions", "columnIndex": 2 ,"sortProperty": "DGA/Positions","filterProperty": "DGA/Positions"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/GivenName", "leadingProperty": "DGA/GivenName", "columnIndex": 1 ,"sortProperty": "DGA/GivenName","filterProperty": "DGA/GivenName"}'/>
                     </customData>
-                    <Text text="{i18n>Pc}"/>
-                </Column> -->
-                 <Column hAlign="Begin">
-                    <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Time", "leadingProperty": "Time", "columnIndex": 3 ,"sortProperty": "Time","filterProperty": "Time"}'/>
-                    </customData>
-                    <Text text="{i18n>Time}"/>
+                    <Text text="{i18n>DGAName}"/>
                 </Column>
-                  <Column hAlign="Begin">
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "ConsumerName", "leadingProperty": "ConsumerName", "columnIndex": 2 ,"sortProperty": "ConsumerName","filterProperty": "ConsumerName"}'/>
+                    </customData>
+                    <Text text="{i18n>ConsumerName}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "TargetLead/PrimaryNum", "leadingProperty": "TargetLead/PrimaryNum", "columnIndex": 3 ,"sortProperty": "TargetLead/PrimaryNum","filterProperty": "TargetLead/PrimaryNum"}'/>
+                    </customData>
+                    <Text text="{i18n>ConsumerNo}"/>
+                </Column>
+                <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Date", "leadingProperty": "Date", "columnIndex": 4 ,"sortProperty": "Date","filterProperty": "Date"}'/>
                     </customData>
-                    <Text text="{i18n>Date}"/>
+                    <Text text="{i18n>MeetingReqDate}"/>
                 </Column>
                  <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 5 ,"sortProperty": "Status","filterProperty": "Status"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Date", "leadingProperty": "Date", "columnIndex": 5 ,"sortProperty": "Date","filterProperty": "Date"}'/>
                     </customData>
-                    <Text text="{i18n>comments}"/>
+                    <Text text="{i18n>MeetingReqTime}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 6 ,"sortProperty": "Status","filterProperty": "Status"}'/>
+                    </customData>
+                    <Text text="{i18n>Status}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Comments", "leadingProperty": "Comments", "columnIndex": 7 ,"sortProperty": "Comments","filterProperty": "Comments"}'/>
+                    </customData>
+                    <Text text="{i18n>Comments}"/>
                 </Column>
             </columns>
             <items>
                 <ColumnListItem  type="Navigation" press="onItemPress">
                     <cells>
-                        <Text text="{DGA/GivenName}"/>
                         <Text text="{DGA/Id}"/>
-                        <!-- <Text text="{path:'DGA/Positions/', formatter:'.formatter.GetWorkLisPositionId'}"/> -->
-                          <Text text="{Time}"/>
+                        <Text text="{DGA/GivenName}"/>
+                        <Text text="{path:'ConsumerName'}"/>
+                        <Text text="{path:'TargetLead/PrimaryNum'}"/>
+                        <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}"/>
                         <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
                        <ObjectStatus text="{Status}" state="{= ${Status} === 'Completed' ? 'Success' : ${Status} === 'Rejected' ? 'Error' : 'Warning'}"/>
+                       <ObjectStatus text="{Comments}" />
                     </cells>
                 </ColumnListItem>
             </items>

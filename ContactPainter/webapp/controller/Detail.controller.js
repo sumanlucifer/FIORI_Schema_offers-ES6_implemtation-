@@ -79,13 +79,14 @@ sap.ui.define([
                 var oView = this.getView();
                 var sId = oView.getModel("oModelDisplay").getProperty("/Id")
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.parameters["expand"] = "DGA,DGA/Positions";
+                oBindingParams.parameters["expand"] = "DGA,TargetLead";
                 // oBindingParams.parameters["expand"] = "LeadVisitOutcomeDetails/VisitsOutcome";
                 var oIdFilter = new Filter("VisitTargetId", FilterOperator.EQ, sId);
                 // var oFirstVisitFilter = new Filter("LeadVisitOutcomeDetails/VisitOutcomeId", FilterOperator.NE, 1);
-                var oTaskTypeFilter = new Filter("TaskTypeId", FilterOperator.EQ, 2);
+                // var oTaskTypeFilter = new Filter("TaskTypeId", FilterOperator.EQ, 2);
                 // var oArchivedFilter = new Filter("IsArchived", FilterOperator.EQ, false);
-                oBindingParams.filters.push(oIdFilter, oTaskTypeFilter);
+                // oBindingParams.filters.push(oIdFilter, oTaskTypeFilter);
+                oBindingParams.filters.push(oIdFilter);
                 oBindingParams.sorter.push(new Sorter("Date", true));
             },
 
