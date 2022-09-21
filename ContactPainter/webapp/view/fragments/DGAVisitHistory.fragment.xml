@@ -39,12 +39,12 @@
                     </customData>
                     <Text text="{i18n>Id}"/>
                 </Column>
-                <Column hAlign="Begin">
+                <!-- <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Positions", "leadingProperty": "DGA/Positions", "columnIndex": 2 ,"sortProperty": "DGA/Positions","filterProperty": "DGA/Positions"}'/>
                     </customData>
                     <Text text="{i18n>Pc}"/>
-                </Column>
+                </Column> -->
                  <Column hAlign="Begin">
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "Time", "leadingProperty": "Time", "columnIndex": 3 ,"sortProperty": "Time","filterProperty": "Time"}'/>
@@ -69,7 +69,7 @@
                     <cells>
                         <Text text="{DGA/GivenName}"/>
                         <Text text="{DGA/Id}"/>
-                        <Text text="{path:'DGA/Positions/', formatter:'.formatter.GetWorkLisPositionId'}"/>
+                        <!-- <Text text="{path:'DGA/Positions/', formatter:'.formatter.GetWorkLisPositionId'}"/> -->
                           <Text text="{Time}"/>
                         <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
                        <ObjectStatus text="{Status}" state="{= ${Status} === 'Completed' ? 'Success' : ${Status} === 'Rejected' ? 'Error' : 'Warning'}"/>
