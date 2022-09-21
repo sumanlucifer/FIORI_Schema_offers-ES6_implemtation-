@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core">
+    <l:VerticalLayout width="100%">
+        <smartTable:SmartTable
+                           id="VisitHistoryTbl"
+                            editable="false"
+                            width="100%"
+                            entitySet="Visits"
+                            beforeRebindTable="onBeforeRebindVisitHistory"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="false"
+                            demandPopin="true"
+                            enableAutoBinding="false"
+                            placeToolbarInTable="true"
+                            persistencyKey="HistoryPersistenceKey"
+                            requestAtLeastFields="Id"
+                            initialNoDataText="{i18n>tableNoDataText}">
+         <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
+            <columns>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/GivenName", "leadingProperty": "DGA/GivenName", "columnIndex": 0 ,"sortProperty": "DGA/GivenName","filterProperty": "DGA/GivenName"}'/>
+                    </customData>
+                    <Text text="{i18n>Activity}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Id", "leadingProperty": "DGA/Id", "columnIndex": 1 ,"sortProperty": "DGA/Id","filterProperty": "DGA/Id"}'/>
+                    </customData>
+                    <Text text="{i18n>Id}"/>
+                </Column>
+                <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Positions", "leadingProperty": "DGA/Positions", "columnIndex": 2 ,"sortProperty": "DGA/Positions","filterProperty": "DGA/Positions"}'/>
+                    </customData>
+                    <Text text="{i18n>Pc}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Time", "leadingProperty": "Time", "columnIndex": 3 ,"sortProperty": "Time","filterProperty": "Time"}'/>
+                    </customData>
+                    <Text text="{i18n>Time}"/>
+                </Column>
+                  <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Date", "leadingProperty": "Date", "columnIndex": 4 ,"sortProperty": "Date","filterProperty": "Date"}'/>
+                    </customData>
+                    <Text text="{i18n>Date}"/>
+                </Column>
+                 <Column hAlign="Begin">
+                    <customData>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "Status", "leadingProperty": "Status", "columnIndex": 5 ,"sortProperty": "Status","filterProperty": "Status"}'/>
+                    </customData>
+                    <Text text="{i18n>comments}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem  type="Navigation" press="onItemPress">
+                    <cells>
+                        <Text text="{DGA/GivenName}"/>
+                        <Text text="{DGA/Id}"/>
+                        <Text text="{path:'DGA/Positions/', formatter:'.formatter.GetWorkLisPositionId'}"/>
+                          <Text text="{Time}"/>
+                        <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
+                       <ObjectStatus text="{Status}" state="{= ${Status} === 'Completed' ? 'Success' : ${Status} === 'Rejected' ? 'Error' : 'Warning'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+    </l:VerticalLayout>
+</core:FragmentDefinition>

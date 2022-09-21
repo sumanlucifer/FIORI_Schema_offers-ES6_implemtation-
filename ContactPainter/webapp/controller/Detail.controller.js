@@ -74,6 +74,20 @@ sap.ui.define([
             //             return "*****";
             //     }
             // },
+            
+            onBeforeRebindVisitHistory: function (oEvent) {
+                var oView = this.getView();
+                var sId = oView.getModel("oModelDisplay").getProperty("/Id")
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                oBindingParams.parameters["expand"] = "DGA,DGA/Positions";
+                // oBindingParams.parameters["expand"] = "LeadVisitOutcomeDetails/VisitsOutcome";
+                var oIdFilter = new Filter("VisitTargetId", FilterOperator.EQ, sId);
+                // var oFirstVisitFilter = new Filter("LeadVisitOutcomeDetails/VisitOutcomeId", FilterOperator.NE, 1);
+                var oTaskTypeFilter = new Filter("TaskTypeId", FilterOperator.EQ, 2);
+                // var oArchivedFilter = new Filter("IsArchived", FilterOperator.EQ, false);
+                oBindingParams.filters.push(oIdFilter, oTaskTypeFilter);
+                oBindingParams.sorter.push(new Sorter("Date", true));
+            },
 
             _SetDisplayData: function (oProp, sMode) {
                 var oData = {
