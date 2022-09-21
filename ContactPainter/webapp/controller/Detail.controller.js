@@ -53,7 +53,7 @@ sap.ui.define([
                 //     var sFromView = oEvent.getParameter("targetControl").oFromPage.getProperty("viewName");
                 //     if (sFromView === "com.knpl.dga.leadmanagement.view.SiteVisitDetail") {
                 //         this.getView().byId("iconTabBar").setSelectedKey("6");
-                        this.getView().byId("VisitHistoryTbl").attachBeforeRebindTable(this.onBeforeRebindVisitHistory, this);
+                        // this.getView().byId("VisitHistoryTbl").attachBeforeRebindTable(this.onBeforeRebindVisitHistory, this);
                 //         // this.getView().byId("VisitHistoryTbl").fireBeforeRebindTable();
                 //         this.getView().byId("VisitHistoryTbl").getTable().getBinding("items").refresh();
                 //     }
@@ -256,7 +256,9 @@ sap.ui.define([
                     oView.byId("QuotationTbl4").rebindTable();
                     oView.byId("QuotationTbl5").rebindTable();
                 }
-
+                else if(sKey == "2"){
+                    oView.byId("VisitHistoryTbl").rebindTable();
+                }
             },
 
 
