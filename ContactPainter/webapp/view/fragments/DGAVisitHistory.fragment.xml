@@ -77,7 +77,7 @@
                 </Column>
             </columns>
             <items>
-                <ColumnListItem  type="Navigation" press="onItemPress">
+                <ColumnListItem>
                     <cells>
                         <Text text="{TargetLead/Id}"/>
                         <Text text="{DGA/GivenName}"/>
