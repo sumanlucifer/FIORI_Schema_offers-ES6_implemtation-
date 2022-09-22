@@ -29,9 +29,9 @@
             <columns>
                 <Column hAlign="Begin">
                     <customData>
-                        <core:CustomData key="p13nData" value='\{"columnKey": "DGA/Id", "leadingProperty": "DGA/Id", "columnIndex": 0 ,"sortProperty": "DGA/Id","filterProperty": "DGA/Id"}'/>
+                        <core:CustomData key="p13nData" value='\{"columnKey": "TargetLead/Id", "leadingProperty": "TargetLead/Id", "columnIndex": 0 ,"sortProperty": "TargetLead/Id","filterProperty": "TargetLead/Id"}'/>
                     </customData>
-                    <Text text="{i18n>Id}"/>
+                    <Text text="{i18n>LeadId}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
@@ -79,14 +79,16 @@
             <items>
                 <ColumnListItem  type="Navigation" press="onItemPress">
                     <cells>
-                        <Text text="{DGA/Id}"/>
+                        <Text text="{TargetLead/Id}"/>
                         <Text text="{DGA/GivenName}"/>
                         <Text text="{path:'ConsumerName'}"/>
                         <Text text="{path:'TargetLead/PrimaryNum'}"/>
                         <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}"/>
                         <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
                        <ObjectStatus text="{Status}" state="{= ${Status} === 'Completed' ? 'Success' : ${Status} === 'Rejected' ? 'Error' : 'Warning'}"/>
-                       <ObjectStatus text="{Comments}" />
+                       <Link
+                            text="View Comment"
+                            press="handleLinkPress" />
                     </cells>
                 </ColumnListItem>
             </items>

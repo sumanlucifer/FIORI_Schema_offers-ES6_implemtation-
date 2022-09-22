@@ -10,12 +10,33 @@ sap.ui.define([
     "../controller/Validator",
     "sap/ui/core/ValueState",
     "../model/formatter",
+	"sap/m/Dialog",
+	"sap/m/Button",
+	"sap/m/library",
+	"sap/m/Text"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (BaseController, JSONModel, MessageBox, MessageToast, Fragment, Filter, FilterOperator, Sorter, Validator, ValueState, formatter) {
+    function (BaseController, 
+        JSONModel, 
+        MessageBox, 
+        MessageToast, 
+        Fragment, 
+        Filter, 
+        FilterOperator, 
+        Sorter, 
+        Validator, 
+        ValueState, 
+        formatter,
+        Dialog, Button, mobileLibrary, Text) {
         "use strict";
+
+    // shortcut for sap.m.ButtonType
+	var ButtonType = mobileLibrary.ButtonType;
+
+	// shortcut for sap.m.DialogType
+	var DialogType = mobileLibrary.DialogType;
 
         return BaseController.extend("com.knpl.pragati.ContactPainter.controller.Detail", {
             formatter: formatter,
@@ -88,6 +109,26 @@ sap.ui.define([
                 // oBindingParams.filters.push(oIdFilter, oTaskTypeFilter);
                 oBindingParams.filters.push(oIdFilter);
                 oBindingParams.sorter.push(new Sorter("Date", true));
+            },
+
+            handleLinkPress:function(oEvent){
+                var sComment = oEvent.getSource().getBindingContext().getObject("Comments");
+                if (!this.oDefaultMessageDialog) {
+                    this.oDefaultMessageDialog = new Dialog({
+                        type: DialogType.Message,
+                        title: "Default Message",
+                        content: new Text({ text: sComment }),
+                        beginButton: new Button({
+                            type: ButtonType.Emphasized,
+                            text: "Close",
+                            press: function () {
+                                this.oDefaultMessageDialog.close();
+                            }.bind(this)
+                        })
+                    });
+                }
+    
+                this.oDefaultMessageDialog.open();
             },
 
             _SetDisplayData: function (oProp, sMode) {
