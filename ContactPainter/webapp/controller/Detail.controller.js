@@ -116,7 +116,7 @@ sap.ui.define([
                 if (!this.oDefaultMessageDialog) {
                     this.oDefaultMessageDialog = new Dialog({
                         type: DialogType.Message,
-                        title: "Default Message",
+                        title: "Comments",
                         content: new Text({ text: sComment }),
                         beginButton: new Button({
                             type: ButtonType.Emphasized,

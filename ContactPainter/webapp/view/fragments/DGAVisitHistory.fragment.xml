@@ -31,7 +31,7 @@
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "TargetLead/Id", "leadingProperty": "TargetLead/Id", "columnIndex": 0 ,"sortProperty": "TargetLead/Id","filterProperty": "TargetLead/Id"}'/>
                     </customData>
-                    <Text text="{i18n>LeadId}"/>
+                    <Text text="{i18n>Lead} {i18n>Id}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
@@ -49,7 +49,7 @@
                     <customData>
                         <core:CustomData key="p13nData" value='\{"columnKey": "TargetLead/PrimaryNum", "leadingProperty": "TargetLead/PrimaryNum", "columnIndex": 3 ,"sortProperty": "TargetLead/PrimaryNum","filterProperty": "TargetLead/PrimaryNum"}'/>
                     </customData>
-                    <Text text="{i18n>ConsumerNo}"/>
+                    <Text text="{i18n>MobNo}"/>
                 </Column>
                 <Column hAlign="Begin">
                     <customData>
@@ -84,8 +84,8 @@
                         <Text text="{path:'ConsumerName'}"/>
                         <Text text="{path:'TargetLead/PrimaryNum'}"/>
                         <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}"/>
-                        <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'}}" />
-                       <ObjectStatus text="{Status}" state="{= ${Status} === 'Completed' ? 'Success' : ${Status} === 'Rejected' ? 'Error' : 'Warning'}"/>
+                        <Text text="{path:'Date',type:'sap.ui.model.type.Date',formatOptions:{pattern:'h:mm a'}}" />
+                       <ObjectStatus text="{Status}" state="{= ${Status} === 'Accepted' ? 'Success' : ${Status} === 'Rejected' ? 'Error' : 'Warning'}"/>
                        <Link
                             text="View Comment"
                             press="handleLinkPress" />
