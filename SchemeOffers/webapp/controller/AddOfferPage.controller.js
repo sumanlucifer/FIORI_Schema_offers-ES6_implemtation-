@@ -157,7 +157,8 @@ sap.ui.define(
                         AppPacks4: [],
                         Painters: [],
                         Reward: [],
-                        Reward2: [],
+                        Reward2: []
+
                     },
                     Rbtn: {
                         PCat1: 0,
@@ -229,9 +230,10 @@ sap.ui.define(
                         Table8: [],
                         Table9: [],
                         Table10: [],
-                        // added by deepanjali 
-                        Table11: []
-
+                        // added by deepanjali start
+                        Table11: [],
+                        Table12: []
+                        // added by deepanjali end
 
                     },
                     oData: {
@@ -525,7 +527,7 @@ sap.ui.define(
 
             },
 
-           
+
             _postDataToSave: function (bFileFlag) {
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7;
                 var othat = this;
