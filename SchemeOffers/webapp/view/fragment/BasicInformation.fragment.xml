@@ -1,9 +1,4 @@
-<core:FragmentDefinition xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:u="sap.ui.unified"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
-
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <f:Form editable="true">
         <f:layout>
             <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
@@ -12,31 +7,121 @@
         <f:formContainers>
             <f:FormContainer visible="{oModelControl>/OfferType/BasicInformation}" title="{i18n>BasicInformation}">
                 <f:formElements>
-
                     <f:FormElement label="{i18n>formBasicInfoLbl1}">
                         <f:fields>
-                            <ComboBox editable="{= ${oModelControl>/mode}==='add' }" id="OfferType" selectionChange="onOfferTypeChanged" required="true" placeholder="{i18n>placeHolder1}" items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }">
-                                <core:Item text="{OfferType}" key="{Id}"/>
+                            <ComboBox
+                                editable="{= ${oModelControl>/mode}==='add' }"
+                                id="OfferType"
+                                selectionChange="onOfferTypeChanged"
+                                required="true"
+                                placeholder="{i18n>placeHolder1}"
+                                items="{path:'/MasterOfferTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }"
+                                selectedKey="{path:'oModelView>/OfferTypeId',type:'.customInt' }"
+                            >
+                                <core:Item text="{OfferType}" key="{Id}" />
                             </ComboBox>
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement label="{i18n>formBasicInfoLbl3}">
                         <f:fields>
-                            <DatePicker change=".onStartDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/StartDate'}" value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',strictParsing:true},constraints:{minimum:'01/01/2021'}  }" id="startDate" placeholder="DD/MM/yyyy" required="true"/>
+                            <DatePicker
+                                change=".onStartDateChange"
+                                valueStateText="Enter a valid date"
+                                dateValue="{path:'oModelView>/StartDate'}"
+                                value="{path:'oModelControl>/StartDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy',strictParsing:true},constraints:{minimum:'01/01/2021'}  }"
+                                id="startDate"
+                                placeholder="DD/MM/yyyy"
+                                required="true"
+                            />
                         </f:fields>
                     </f:FormElement>
 
-                    <f:FormElement >
+                    <f:FormElement>
                         <f:label>
-                            <Label text="{i18n>OfferImage}" required="false"/>
+                            <Label text="{i18n>OfferImage}" required="false" />
                         </f:label>
                         <f:fields>
-                            <u:FileUploader change="onFileUploadChange" placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload"/>
+                            <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{i18n>catalogues}" />
+                                        <ToolbarSpacer />
+                                        <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column>
+                                        <Text text="{i18n>selectLanguage}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>selectCatalogue}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>media}" />
+                                    </Column>
+
+                                    <Column width="10%">
+                                        <Text text="{i18n>Action}" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <VBox>
+                                                <Select
+                                                    forceSelection="false"
+                                                    selectedKey="{ActionViewModel>LanguageCode}"
+                                                    items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                                                >
+                                                    <core:Item key="{LanguageCode}" text="{Language}" />
+                                                </Select>
+                                            </VBox>
+                                            <VBox>
+                                                <FlexBox>
+                                                    <VBox>
+                                                        <u:FileUploader
+                                                            id="idFormToolPdfUploader"
+                                                            name="formToolPdfUploader"
+                                                            class="sapUiSmallMarginTop"
+                                                            tooltip="{i18n>fileUploaderTooltip}"
+                                                            change="onChangePdf"
+                                                            typeMissmatch="handleTypeMissmatch"
+                                                            fileType="pdf"
+                                                            useMultipart="false"
+                                                            sendXHR="true"
+                                                            maximumFileSize="2.1"
+                                                            fileSizeExceed="onFileSizeExceed"
+                                                            uploadComplete="handleUploadCompletePdf"
+                                                        />
+                                                        <HBox>
+                                                            <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf" />
+                                                            <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB" />
+                                                        </HBox>
+                                                    </VBox>
+                                                </FlexBox>
+                                            </VBox>
+                                            <VBox>
+                                                <Text text="{ActionViewModel>MediaName}" />
+                                            </VBox>
+                                            <HBox>
+                                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
+                                                <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+
+                            <u:FileUploader change="onFileUploadChange" placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload" />
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement>
                         <f:fields>
-                            <Text text="{i18n>FileUploadMessage}"/>
+                            <Text text="{i18n>FileUploadMessage}" />
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
@@ -44,57 +129,57 @@
                             <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
                         </f:fields>
                     </f:FormElement>
-
-
-
                 </f:formElements>
             </f:FormContainer>
 
             <f:FormContainer title="   ">
-
                 <f:FormElement label="{i18n>formBasicInfoLbl2}">
                     <f:fields>
-                        <Input placeholder="{i18n>placeHolder3}" maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                        <Input placeholder="{i18n>placeHolder3}" maxLength="50" required="true" value="{path : 'oModelView>/Title', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :50, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
                     </f:fields>
                 </f:FormElement>
                 <f:FormElement label="{i18n>formBasicInfoLbl4}">
                     <f:fields>
-                        <DatePicker change=".onEndDateChange" valueStateText="Enter a valid date" dateValue="{path:'oModelView>/EndDate'}" value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" id="endDate" placeholder="DD/MM/yyyy" required="true" />
+                        <DatePicker
+                            change=".onEndDateChange"
+                            valueStateText="Enter a valid date"
+                            dateValue="{path:'oModelView>/EndDate'}"
+                            value="{path:'oModelControl>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"
+                            id="endDate"
+                            placeholder="DD/MM/yyyy"
+                            required="true"
+                        />
                     </f:fields>
                 </f:FormElement>
 
                 <f:FormElement label="{i18n>tblColStatus}" visible="{= ${oModelControl>/mode}==='edit'}">
-
                     <f:fields>
                         <ObjectStatus text="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStatus'}" state="{path:'oModelView>/OfferStatus',formatter:'.formatter.fmtOfferStateColor'}" />
-
                     </f:fields>
                 </f:FormElement>
-
             </f:FormContainer>
             <f:FormContainer title="   ">
-                <f:FormElement >
+                <f:FormElement>
                     <f:label>
-                        <Label text="{i18n>formBasicInfoLbl5}" required="true"/>
+                        <Label text="{i18n>formBasicInfoLbl5}" required="true" />
                     </f:label>
                     <f:fields>
                         <VBox width="100%">
                             <items>
-                                <TextArea width="100%" required="true" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                                <TextArea width="100%" required="true" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
                                 <Text text="{i18n>Message2}" />
                             </items>
                         </VBox>
-
                     </f:fields>
                 </f:FormElement>
-                  <f:FormElement label="{i18n>Criteria}">
+                <f:FormElement label="{i18n>Criteria}">
                     <f:fields>
-                        <TextArea required="false" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Criteria', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                        <TextArea required="false" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Criteria', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
                     </f:fields>
                 </f:FormElement>
                 <f:FormElement label="{i18n>Remark}" visible="{= ${oModelControl>/mode}==='edit'}">
                     <f:fields>
-                        <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Remark', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
+                        <TextArea required="true" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelView>/Remark', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }" />
                     </f:fields>
                 </f:FormElement>
                 <!-- <f:FormElement label="{i18n>tblColStatus} (*Temporary Field)" visible="{= ${oModelControl>/mode}==='edit'}">
@@ -110,8 +195,6 @@
                         </ComboBox>
                     </f:fields>
                 </f:FormElement> -->
-
-
             </f:FormContainer>
             <!-- <f:FormContainer title="{i18n>ParentChildOffer}">
                 <f:formElements>
@@ -136,8 +219,6 @@
 
                 </f:formElements>
             </f:FormContainer> -->
-
         </f:formContainers>
     </f:Form>
-
 </core:FragmentDefinition>
