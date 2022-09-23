@@ -887,7 +887,7 @@ sap.ui.define(
                     file: null,
                     fileName: ""
                 });
-                oModel.refresh(true);
+                oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);;
             },
             onSaveGenericBonusReward: function (oEvent) {
                 var oView = this.getView();
