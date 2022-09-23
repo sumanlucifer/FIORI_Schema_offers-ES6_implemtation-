@@ -157,6 +157,92 @@
 
                 </f:formElements>
             </f:FormContainer> -->
+            <f:FormContainer>
+                <f:formElements>
+                    <f:FormElement>
+                        <f:label>
+                            <Label text="{i18n>OfferImage}" required="false" />
+                            <Text text="{i18n>FileUploadMessage}" />
+                        </f:label>
+                        <f:fields>
+                            <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <!-- <Title text="{i18n>catalogues}" /> -->
+                                        <ToolbarSpacer />
+                                        <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column>
+                                        <Text text="{i18n>selectLanguage}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>selectCatalogue}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>media}" />
+                                    </Column>
+
+                                    <Column width="10%">
+                                        <Text text="{i18n>Action}" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <VBox>
+                                                <Select
+                                                    forceSelection="false"
+                                                    selectedKey="{ActionViewModel>LanguageCode}"
+                                                    items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                                                >
+                                                    <core:Item key="{LanguageCode}" text="{Language}" />
+                                                </Select>
+                                            </VBox>
+                                            <VBox>
+                                                <FlexBox>
+                                                    <VBox>
+                                                        <u:FileUploader
+                                                            id="idFormToolPdfUploader"
+                                                            name="formToolPdfUploader"
+                                                            class="sapUiSmallMarginTop"
+                                                            tooltip="{i18n>fileUploaderTooltip}"
+                                                            change="onChangePdf"
+                                                            typeMissmatch="handleTypeMissmatch"
+                                                            fileType="pdf"
+                                                            useMultipart="false"
+                                                            sendXHR="true"
+                                                            maximumFileSize="2.1"
+                                                            fileSizeExceed="onFileSizeExceed"
+                                                            uploadComplete="handleUploadCompletePdf"
+                                                        />
+                                                        <HBox>
+                                                            <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf" />
+                                                            <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB" />
+                                                        </HBox>
+                                                    </VBox>
+                                                </FlexBox>
+                                            </VBox>
+                                            <VBox>
+                                                <Text text="{ActionViewModel>MediaName}" />
+                                            </VBox>
+                                            <HBox>
+                                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
+                                                <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </f:fields>
+                    </f:FormElement>
+                </f:formElements>
+            </f:FormContainer>
         </f:formContainers>
     </f:Form>
 </core:FragmentDefinition>
