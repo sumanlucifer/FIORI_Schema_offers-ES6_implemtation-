@@ -165,7 +165,8 @@
                             <!-- <Text text="{i18n>FileUploadMessage}" /> -->
                         </f:label>
                         <f:fields>
-                            <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                        <VBox width="100%">
+                            <Table id="idPdf" width="60%" busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                                 <headerToolbar>
                                     <Toolbar>
                                         <!-- <Title text="{i18n>catalogues}" /> -->
@@ -239,6 +240,7 @@
                                     </ColumnListItem>
                                 </items>
                             </Table>
+                            </VBox>
                         </f:fields>
                     </f:FormElement>
                 </f:formElements>
