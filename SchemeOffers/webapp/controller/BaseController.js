@@ -87,6 +87,7 @@ sap.ui.define(
                 this._navToHome();
             },
             onFileUploadChange: function (oEvent) {
+                debugger;
                 //console.log(oEvent);
                 var oFileUploder = oEvent.getSource();
                 if (oEvent.getParameter("newValue")) {
@@ -94,6 +95,7 @@ sap.ui.define(
                 }
             },
             _verifyImages: function (files, oFileUploder) {
+                debugger;
                 var file = files; //I'm doing just for one element (Iterato over it and do for many)
                 var obj = this; // to get access of the methods inside the other functions
                 var reader = new FileReader();
@@ -878,7 +880,7 @@ sap.ui.define(
             },
 
             onAddProductPack: function () {
-                debugger;
+              
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl").getProperty("/Table/Table11");
 
