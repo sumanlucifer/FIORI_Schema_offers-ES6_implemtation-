@@ -900,16 +900,29 @@ sap.ui.define(
                     oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     oView.getModel("oModelControl").setProperty("bNew", true, oContext);
-                    
-                    var isValid= this.checkFileName(pdfname);
-                    if(!isValid){
+
+                    var isValid = this.checkFileName(pdfname);
+                    if (!isValid) {
                         MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
                     }
-                    
-                   
+
+
                 }
             },
-    
+            checkFileName: function (fileName) {
+                var isValid = false;
+                var regex = /[~`!@#$%^&()_={}[\]:;,<>+\/?-]/;
+                isValid = regex.test(fileName);
+                if (!isValid) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            },
+
+
             onDeleteFile: function (oEvent) {
                 debugger;
                 this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
