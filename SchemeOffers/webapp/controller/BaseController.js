@@ -892,12 +892,14 @@ sap.ui.define(
 
             onChangePdf: function (oEvent) {
                 debugger;
+                var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
+
                 if (oEvent.getParameter("files").length > 0) {
                     var pdfname = oEvent.getParameter("files")[0].name;
-                    this.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
-                    this.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
-                    this.getModel("oModelControl").setProperty("bNew", true, oContext);
+                    oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
+                    oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                    oView.getModel("oModelControl").setProperty("bNew", true, oContext);
                     
                     var isValid= this.checkFileName(pdfname);
                     if(!isValid){
