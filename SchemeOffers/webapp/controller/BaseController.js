@@ -894,7 +894,7 @@ sap.ui.define(
             onDeleteFile: function (oEvent) {
                 debugger;
                 this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
-                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("oModelControl").getPath().slice("/".length));
+                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("oModelControl").getPath().split("/")[3]);
                 var aTableData1 = this.getViewModel("oModelControl").getProperty("/");
                 var aTableData = this.getViewModel("oModelControl").getProperty("/Table/Table11");
                 aTableData.splice(iRowNumberToDelete, 1);
