@@ -167,7 +167,7 @@
                 <Toolbar>
                     <!-- <Title text="{i18n>catalogues}" /> -->
                     <ToolbarSpacer />
-                    <Button icon="sap-icon://add" press="onAddCatalogue" type="Emphasized" text="Add" />
+                    <Button icon="sap-icon://add" press="onAddProductPack" type="Emphasized" text="Add" />
                 </Toolbar>
             </headerToolbar>
             <columns>
