@@ -889,6 +889,15 @@ sap.ui.define(
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);;
             },
+
+
+            onDeleteFile: function (oEvent) {
+                this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
+                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("oModelControl").getPath().slice("/".length));
+                var aTableData = this.getViewModel("oModelControl").getProperty("/");
+                aTableData.splice(iRowNumberToDelete, 1);
+                this.getView().getModel("oModelControl").refresh();
+            },
             onSaveGenericBonusReward: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
