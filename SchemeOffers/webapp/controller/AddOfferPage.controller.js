@@ -525,18 +525,7 @@ sap.ui.define(
 
             },
 
-            onAddProductPack: function () {
-                debugger;
-                var oView = this.getView();
-                var oModel = oView.getModel("oModelControl");
-                var oObject = this.getModel("oModelControl").getProperty("/Table/Table11");
-                oObject.push({
-                    LanguageCode: "",
-                    file: null,
-                    fileName: ""
-                });
-                oModel.refresh(true);
-            },
+           
             _postDataToSave: function (bFileFlag) {
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7;
                 var othat = this;

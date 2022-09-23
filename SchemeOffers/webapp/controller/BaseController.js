@@ -876,6 +876,19 @@ sap.ui.define(
                         oModel.refresh();
                     }
                 },
+
+                onAddProductPack: function () {
+                    debugger;
+                    var oView = this.getView();
+                    var oModel = oView.getModel("oModelControl");
+                    var oObject = this.getModel("oModelControl").getProperty("/Table/Table11");
+                    oObject.push({
+                        LanguageCode: "",
+                        file: null,
+                        fileName: ""
+                    });
+                    oModel.refresh(true);
+                },
                 onSaveGenericBonusReward: function (oEvent) {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
