@@ -526,6 +526,7 @@ sap.ui.define(
             },
 
             onAddProductPack: function () {
+                debugger;
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 var oObject = this.getModel("oModelControl").getProperty("/Table/Table11");
