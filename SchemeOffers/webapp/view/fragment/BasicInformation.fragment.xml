@@ -160,8 +160,7 @@
         </f:formContainers>
     </f:Form>
     <VBox>
-    
-        <Label design="Bold"  text="{i18n>OfferImage}" required="false" />
+        <Label design="Bold" text="{i18n>OfferImage}" required="false" />
         <Text text="{i18n>FileUploadMessage}" />
         <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl>/Table/Table11', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
             <headerToolbar>
@@ -172,8 +171,8 @@
                 </Toolbar>
             </headerToolbar>
             <columns>
-                <Column >
-                    <Label text="{i18n>selectLanguage}" required="true"/>
+                <Column>
+                    <Label text="{i18n>selectLanguage}" required="true" />
                 </Column>
                 <Column>
                     <Text text="{i18n>uploadImage}" />

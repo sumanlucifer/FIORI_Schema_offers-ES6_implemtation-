@@ -452,6 +452,18 @@ sap.ui.define(
                 this._navToHome();
             },
 
+
+            onAddCatalogue: function () {
+                var oModel = this.getView().getModel("oModelControl");
+                var oObject = this.getModel("oModelControl").getProperty("/Table/Table11");
+                oObject.push({
+                    LanguageCode: "",
+                    file: null,
+                    fileName: ""
+                });
+                oModel.refresh(true);
+            },
+
             onPressSave: function () {
                 var oView = this.getView();
                 var oValidate = new Validator();
@@ -642,16 +654,8 @@ sap.ui.define(
             onExit: function () {
 
             },
-            onAddCatalogue: function () {
-                var oModel = this.getView().getModel("oModelControl");
-                var oObject = this.getModel("oModelControl").getProperty("/Table/Table11");
-                oObject.push({
-                    LanguageCode: "",
-                    file: null,
-                    fileName: ""
-                });
-                oModel.refresh(true);
-            }
+
+        }
         );
     }
 );
