@@ -237,7 +237,7 @@
             </items>
         </Table>
     </VBox>
-     <VBox>
+     <VBox class="sapUiMediumMarginTop">
         <Label design="Bold" text="{i18n>PamphletImage}" required="false" />
         <Text text="{i18n>FileUploadMessage}" />
         <Table id="idpampletPdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl>/Table/Table12', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
