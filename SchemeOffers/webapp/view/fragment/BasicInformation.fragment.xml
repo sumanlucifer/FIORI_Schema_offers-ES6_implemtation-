@@ -159,16 +159,9 @@
             </f:FormContainer> -->
         
         </f:formContainers>
-        <f:formContainers >
-            <f:FormContainer>
-                <f:formElements>
-                    <f:FormElement>
-                        <f:label>
-                            <Label text="{i18n>OfferImage}" required="false" />
-                            <!-- <Text text="{i18n>FileUploadMessage}" /> -->
-                        </f:label>
-                        <f:fields>
-                        <VBox>
+        
+    </f:Form>
+     <VBox>
                             <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                                 <headerToolbar>
                                     <Toolbar>
@@ -243,11 +236,5 @@
                                     </ColumnListItem>
                                 </items>
                             </Table>
-                            </VBox>
-                        </f:fields>
-                    </f:FormElement>
-                </f:formElements>
-            </f:FormContainer>
-        </f:formContainers>
-    </f:Form>
+                        </VBox>
 </core:FragmentDefinition>
