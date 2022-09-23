@@ -890,7 +890,24 @@ sap.ui.define(
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);
             },
 
-
+            onChangePdf: function (oEvent) {
+                debugger;
+                var oContext = oEvent.getSource().getBindingContext("oModelControl");
+                if (oEvent.getParameter("files").length > 0) {
+                    var pdfname = oEvent.getParameter("files")[0].name;
+                    this.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
+                    this.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                    this.getModel("oModelControl").setProperty("bNew", true, oContext);
+                    
+                    var isValid= this.checkFileName(pdfname);
+                    if(!isValid){
+                        MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
+                    }
+                    
+                   
+                }
+            },
+    
             onDeleteFile: function (oEvent) {
                 debugger;
                 this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
