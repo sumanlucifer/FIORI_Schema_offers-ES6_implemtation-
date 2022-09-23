@@ -551,9 +551,9 @@ sap.ui.define(
                                                     c5A = othat._CreateWorkFlowData(oPayLoad);
                                                     c5A.then(function () {
                                                         c6 = othat._CreateOffer(oPayLoad);
-                                                        c6.then(function (oData) {
-                                                            c7 = othat._UploadFile(oData, bFileFlag);
-                                                        });
+                                                        // commented by deepanjali                                                     // c6.then(function (oData) {
+                                                        //     c7 = othat._UploadFile(oData, bFileFlag);
+                                                        // });
                                                     })
                                                 })
                                             });

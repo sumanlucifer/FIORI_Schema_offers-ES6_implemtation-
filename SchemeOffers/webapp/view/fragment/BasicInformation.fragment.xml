@@ -116,7 +116,7 @@
                                 </items>
                             </Table>
 
-                            <u:FileUploader change="onFileUploadChange" placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload" />
+                            <!-- <u:FileUploader change="onFileUploadChange" placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload" /> -->
                         </f:fields>
                     </f:FormElement>
                     <f:FormElement>
