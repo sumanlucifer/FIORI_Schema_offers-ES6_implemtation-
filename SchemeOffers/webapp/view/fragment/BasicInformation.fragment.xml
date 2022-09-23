@@ -162,7 +162,7 @@
                     <f:FormElement>
                         <f:label>
                             <Label text="{i18n>OfferImage}" required="false" />
-                            <Text text="{i18n>FileUploadMessage}" />
+                            <!-- <Text text="{i18n>FileUploadMessage}" /> -->
                         </f:label>
                         <f:fields>
                             <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{ActionViewModel>/bBusy}" items="{path: 'ActionViewModel>/Catalogue', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
