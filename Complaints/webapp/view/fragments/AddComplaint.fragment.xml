@@ -155,7 +155,7 @@
         </f:SimpleForm>
     </VBox>
     <VBox id="idVbx" width="100%">
-        <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1">
+        <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2'}">
             <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
             <!-- Status change to be handled by System -->
             <!-- <VBox renderType="Bare" >
