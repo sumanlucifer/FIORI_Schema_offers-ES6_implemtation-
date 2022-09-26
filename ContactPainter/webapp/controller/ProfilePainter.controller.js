@@ -4613,7 +4613,7 @@ sap.ui.define(
             },
             onBindTblDGAList: function (oEvent) {
                 var oView = this.getView();
-                var oDGAModel = oView.getModel("DGAModel").getProperty("/ContractorId");
+                var oDGAModel = this.getView().getBindingContext().getObject("Id");
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 oBindingParams.parameters["expand"] = "DGA, DGADetails, LeadServiceType, State,AssignedContractors,LeadStatus, Depot, PaintingReqSlab, LeadSource,Dealer";
                 var oFilter1 = new Filter("ContractorId", FilterOperator.EQ, oDGAModel);
