@@ -4616,7 +4616,7 @@ sap.ui.define(
                 var oDGAModel = this.getView().getBindingContext().getObject("Id");
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 oBindingParams.parameters["expand"] = "DGA, DGADetails, LeadServiceType, State,AssignedContractors,LeadStatus, Depot, PaintingReqSlab, LeadSource,Dealer";
-                var oFilter1 = new Filter("ContractorId", FilterOperator.EQ, oDGAModel);
+                var oFilter1 = new Filter("AssignedContractors/ContractorId", FilterOperator.EQ, oDGAModel);
                 oBindingParams.filters.push(oFilter1);
                 oBindingParams.sorter.push(new Sorter("CreatedAt", true));
 
