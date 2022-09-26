@@ -113,7 +113,7 @@
             </f:content>
         </f:SimpleForm>
     </VBox>
-    <VBox width="100%">
+    <!-- <VBox width="100%"> -->
         <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1">
             <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
             <!-- Status change to be handled by System -->
@@ -154,5 +154,5 @@
                 <Text text="{i18n>TxtMaxLength}" />
             </VBox>
         </l:Grid>
-    </VBox>
+    <!-- </VBox> -->
 </core:FragmentDefinition>
