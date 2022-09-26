@@ -4612,16 +4612,14 @@ sap.ui.define(
                     });
                 },
                 onBindTblDGAList: function (oEvent) {
-                   
+                    var oView = this.getView();
+                    var oDGAModel = oView.getModel("DGAModel").getProperty("/ContractorId");
                     var oBindingParams = oEvent.getParameter("bindingParams");
-                    oBindingParams.parameters["expand"] = "DGA, DGADetails, LeadServiceType, State, LeadStatus, Depot, PaintingReqSlab, LeadSource,Dealer";
+                    oBindingParams.parameters["expand"] = "DGA, DGADetails, LeadServiceType, State,AssignedContractors,LeadStatus, Depot, PaintingReqSlab, LeadSource,Dealer";
+                    var oFilter1 = new Filter("PainterId", FilterOperator.EQ, oDGAModel);
                     oBindingParams.sorter.push(new Sorter("CreatedAt", true));
-    
-                    // Apply Filters
-                    // var oFilter = this._CreateFilter();
-                    // if (oFilter) {
-                    //     oBindingParams.filters.push(oFilter);
-                    // }
+                    oBindingParams.filters.push(oFilter1);
+                  
     
                 },
             }
