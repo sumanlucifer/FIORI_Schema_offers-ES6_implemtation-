@@ -1,36 +1,6 @@
-<core:FragmentDefinition
-    xmlns:unified="sap.ui.unified"
-    xmlns:upload="sap.m.upload"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:smartForm="sap.ui.comp.smartform"
-    xmlns:smartField="sap.ui.comp.smartfield"
-    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-    xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core"
->
+<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns:upload="sap.m.upload" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox id="idVbx" width="100%">
-        <f:SimpleForm
-            class="addForm"
-            id="SimpleFormChange480_12120Dual"
-            editable="true"
-            layout="ResponsiveGridLayout"
-            title="{i18n>AddComplaintDetails}"
-            labelSpanXL="12"
-            labelSpanL="12"
-            labelSpanM="12"
-            labelSpanS="12"
-            adjustLabelSpan="false"
-            emptySpanXL="0"
-            emptySpanL="0"
-            emptySpanM="0"
-            emptySpanS="0"
-            columnsXL="2"
-            columnsL="2"
-            columnsM="2"
-            singleContainerFullSize="false"
-        >
+        <f:SimpleForm class="addForm" id="SimpleFormChange480_12120Dual" editable="true" layout="ResponsiveGridLayout" title="{i18n>AddComplaintDetails}" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
             <f:content>
                 <core:Title text="{i18n>ComplaintDetails}" />
                 <Label text="{i18n>ComplaintType}" />
@@ -40,27 +10,20 @@
                     </items>
                 </ComboBox>
                 <Label text="{i18n>ComplaintDetails}" />
-                <ComboBox
-                    change="onComplainSubTypeChange"
-                    enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }"
-                    id="idCompainSubType"
-                    required="true"
-                    items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }"
-                    selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }"
-                >
+                <ComboBox change="onComplainSubTypeChange" enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }" id="idCompainSubType" required="true" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }" >
                     <items>
                         <core:Item text="{ComplaintSubtype}" key="{Id}" />
                     </items>
                 </ComboBox>
-
-                <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}" />
-                <VBox renderType="Bare" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}">
-                    <TextArea maxLength="300" required="true" value="{path:'oModelView>/addComplaint/ComplaintDescription',type:'sap.ui.model.type.String',constraints:{minLength:1, maxLength: 300}}" />
-                    <Label text="{i18n>TxtMaxLength}" />
+                
+                <Label  text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  />
+                <VBox renderType="Bare" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}" >
+                <TextArea maxLength="300" required="true" value="{path:'oModelView>/addComplaint/ComplaintDescription',type:'sap.ui.model.type.String',constraints:{minLength:1, maxLength: 300}}" />
+                 <Label  text="{i18n>TxtMaxLength}" />
                 </VBox>
-                <!-- <Text visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  /> -->
-                <!-- Token Apply flow change 28/05/2021 -              -->
-                <!--     <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>TokenCode}" />
+                 <!-- <Text visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  /> -->
+              <!-- Token Apply flow change 28/05/2021 -              -->
+            <!--     <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>TokenCode}" />
                 <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
                     <layoutData>
                         <l:GridData span="XL10 L10 M10 S12" />
@@ -73,25 +36,14 @@
                 <Label text="{i18n>Status}" />
                 <Text text="{i18n>Open}" />
                 <Label text="{i18n>Images}" />
-                <UploadCollection
-                    numberOfAttachmentsText="{i18n>TxtAttachment}"
-                    typeMissmatch="onUploadFileTypeMis"
-                    fileType="jpg,jpeg,png"
-                    id="idUploadCollection"
-                    maximumFilenameLength="55"
-                    maximumFileSize="10"
-                    multiple="false"
-                    sameFilenameAllowed="true"
-                    instantUpload="false"
-                    noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload"
-                />
-                <Label text="" />
-                <Text text="{i18n>FileUploadMessage}" />
+                <UploadCollection numberOfAttachmentsText="{i18n>TxtAttachment}" typeMissmatch="onUploadFileTypeMis" fileType="jpg,jpeg,png" id="idUploadCollection" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
+                <Label text=""/>
+                <Text text="{i18n>FileUploadMessage}"/>
                 <core:Title text="{i18n>PainterDetails}" />
                 <Label text="{i18n>PrimaryMobileNo}" />
                 <Input required="true" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" value="{path:'oModelView>/addCompAddData/Mobile', type : 'sap.ui.model.type.String', constraints:{ minLength:1 } }" />
                 <Label text="{i18n>PainterName}" />
-                <Text text="{oModelView>/addCompAddData/Name}" />
+                <Text  text="{oModelView>/addCompAddData/Name}" />
                 <Label text="{i18n>MembershipId}" />
                 <Text text="{oModelView>/addCompAddData/MembershipCard}" />
                 <!-- Zone Division Depot Info -->
@@ -112,48 +64,5 @@
                 <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 90  }"  value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
             </f:content>
         </f:SimpleForm>
-    </VBox>
-    <VBox width="100%">
-        <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2'}">
-            <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
-            <!-- Status change to be handled by System -->
-            <!-- <VBox renderType="Bare" >
-            <Label text="{i18n>ComplaintStatus}" required="true" />
-            <Select change="onChangeStatus" editable="{= !${oModelControl>/ComplainResolved} }" selectedKey="{oModelView>/ComplaintStatus}">
-                <core:Item text="Registered" key="REGISTERED" />
-                <core:Item text="In Review" key="INREVIEW" />
-                <core:Item text="Resolved" key="RESOLVED" />
-                <core:Item text="Withdrawn" key="WITHDRAWN" />
-            </Select>
-        </VBox> -->
-            <VBox renderType="Bare">
-                <Label text="{i18n>ResolutionType}" required="true" />
-                <Text text="{i18n>TxtResolution}" />
-                <!-- ,type:'com.knpl.pragati.Complaints.model.cmbxDtype2' -->
-                <!-- <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" -->
-                <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxResolutionType' }"  -->
-
-                <ComboBox id="idResolution" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true">
-                    <items>
-                        <core:Item text="{Resolution}" key="{Id}" />
-                    </items>
-                </ComboBox>
-                <TextArea
-                    maxLength="300"
-                    editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null }"
-                    visible="{= +${oModelView>/ResolutionId} === 90  }"
-                    value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:300,search:'^[a-zA-Z0-9]{1}[wW]*'}}"
-                />
-                <Text visible="{= ${oModelView>/ResolutionId} === 90  }" text="{i18n>TxtMaxLength}" />
-                <layoutData>
-                    <l:GridData linebreak="true" />
-                </layoutData>
-            </VBox>
-            <VBox renderType="Bare">
-                <Label text="{i18n>Remark}" required="true" />
-                <TextArea showExceededText="false" maxLength="300" rows="4" cols="50" editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{ path: 'oModelView>/Remark', type: 'sap.ui.model.type.String', constraints : {  maxLength : 300 }  }" required="false" />
-                <Text text="{i18n>TxtMaxLength}" />
-            </VBox>
-        </l:Grid>
     </VBox>
 </core:FragmentDefinition>
