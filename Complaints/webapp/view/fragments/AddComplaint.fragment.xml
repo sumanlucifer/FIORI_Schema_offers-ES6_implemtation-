@@ -154,7 +154,7 @@
             </f:content>
         </f:SimpleForm>
     </VBox>
-    <VBox id="idVbx" width="100%">
+    <VBox id="idVbxRes" width="100%">
         <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2'}">
             <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
             <!-- Status change to be handled by System -->
@@ -174,7 +174,7 @@
                 <!-- <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" -->
                 <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxResolutionType' }"  -->
 
-                <ComboBox id="resolution" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true">
+                <ComboBox id="idResolution" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true">
                     <items>
                         <core:Item text="{Resolution}" key="{Id}" />
                     </items>
