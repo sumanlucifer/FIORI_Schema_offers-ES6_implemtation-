@@ -209,7 +209,7 @@
                                         name="formToolPdfUploader"
                                         class="sapUiSmallMarginTop"
                                         tooltip="{i18n>fileUploaderTooltip}"
-                                        change="onFileUploadChange"
+                                        change="onChangePdf"
                                         typeMissmatch="onUploadMisMatch"
                                         fileType="jpg,jpeg,png"
                                         useMultipart="false"
