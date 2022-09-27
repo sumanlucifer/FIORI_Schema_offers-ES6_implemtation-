@@ -112,7 +112,7 @@
                 <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 90  }"  value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
             </f:content>
         </f:SimpleForm>
-        <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === 2  }">
+        <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2'  }">
             <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
             <VBox renderType="Bare">
                 <Label text="{i18n>ResolutionType}" required="true" />
