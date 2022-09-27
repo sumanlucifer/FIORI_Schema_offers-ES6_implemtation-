@@ -182,7 +182,6 @@
             <!-- <ComboBox change="onPointsChange"
             editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" -->
             <ComboBox change="onPointsChange"
-           editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtQuantiyInp' }"
             selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}" >
                  <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
             </ComboBox>
