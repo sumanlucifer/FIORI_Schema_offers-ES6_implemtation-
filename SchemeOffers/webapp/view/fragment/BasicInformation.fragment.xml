@@ -219,7 +219,7 @@
                                         uploadComplete="handleUploadCompletePdf"
                                     />
                                     <HBox>
-                                        <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf" />
+                                        <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".image/png" />
                                         <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB" />
                                     </HBox>
                                 </VBox>
@@ -297,7 +297,7 @@
                                         uploadComplete="handleUploadCompletePdf"
                                     />
                                     <HBox>
-                                        <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".pdf" />
+                                        <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".image/png" />
                                         <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB" />
                                     </HBox>
                                 </VBox>

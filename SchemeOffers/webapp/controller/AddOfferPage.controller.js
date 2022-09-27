@@ -461,8 +461,8 @@ sap.ui.define(
                 var oWizardView = oView.byId("wizardViewBranching");
                 var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                 var bFlagValidate = oValidate.validate(oSteps, true);
-
-                var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+//// commented by deepanjali///// 
+                // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                 var bFileFlag = false;
                 var aTableValidation = this._CheckTableValidation();
                 var aTableBonusValidation = this._CheckTableBonusValidation()
@@ -590,6 +590,38 @@ sap.ui.define(
                     });
                 });
             },
+
+            // added by deepanjali start
+            _uploadbanner: function (oData) {
+
+                var oModel = this.getComponentModel();
+                var oModel = this.getModel("oModelControl");
+                var catalogue = oModel.getProperty("/Table/Table11");
+                var fileUploader;
+                var sServiceUrl = this.getOwnerComponent(this)
+                    .getManifestObject()
+                    .getEntry("/sap.app").dataSources.mainService.uri;
+                //To DO promises for sync
+                // var that=this;
+                catalogue.forEach(function (ele) {
+                    //  var isValid= that.checkFileName(ele.fileName);
+                    jQuery.ajax({
+                        method: "PUT",
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
+
+                        },
+                        error: function () { },
+                    })
+
+                });
+
+            },
+            // added by deepanjali end
             _UploadFile: function (mParam1, mParam2) {
                 var promise = jQuery.Deferred();
                 if (!mParam2) {
@@ -623,6 +655,7 @@ sap.ui.define(
                     });
                 });
             },
+
             _NavBack: function () { },
 
             _RemoveEmptyValue: function (mParam) {
