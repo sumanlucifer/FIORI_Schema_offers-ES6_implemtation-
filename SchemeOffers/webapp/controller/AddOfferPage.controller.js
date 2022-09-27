@@ -461,7 +461,7 @@ sap.ui.define(
                 var oWizardView = oView.byId("wizardViewBranching");
                 var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                 var bFlagValidate = oValidate.validate(oSteps, true);
-//// commented by deepanjali///// 
+                //// commented by deepanjali///// 
                 // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                 var bFileFlag = false;
                 var aTableValidation = this._CheckTableValidation();
@@ -477,13 +477,14 @@ sap.ui.define(
                     return;
                 }
                 //check if it has file
-                if (sFile !== undefined) {
-                    bFileFlag = true;
-                }
-                if (!bFileFlag) {
-                    //MessageToast.show("Kindly upload an image to continue.");
-                    //return
-                }
+                /// commented by deepanjali
+                // if (sFile !== undefined) {
+                //     bFileFlag = true;
+                // }
+                // if (!bFileFlag) {
+                //     //MessageToast.show("Kindly upload an image to continue.");
+                //     //return
+                // }
                 if (!aTableValidation[0]) {
                     MessageToast.show(aTableValidation[1]);
                     return;
@@ -556,9 +557,14 @@ sap.ui.define(
                                                 c5A = othat._CreateWorkFlowData(oPayLoad);
                                                 c5A.then(function () {
                                                     c6 = othat._CreateOffer(oPayLoad);
-                                                    // commented by deepanjali                                                     // c6.then(function (oData) {
+                                                    // commented by deepanjali                                                     
+                                                    // c6.then(function (oData) {
                                                     //     c7 = othat._UploadFile(oData, bFileFlag);
                                                     // });
+                                                    // added by deepanjali                                                     
+                                                     c6.then(function (oData) {
+                                                        c7 = othat._uploadbanner(oData);
+                                                    });
                                                 })
                                             })
                                         });
@@ -593,10 +599,12 @@ sap.ui.define(
 
             // added by deepanjali start
             _uploadbanner: function (oData) {
-
+                var oView = this.getView();
                 var oModel = this.getComponentModel();
                 var oModel = this.getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
+                var oWizardView = oView.byId("wizardViewBranching");
+                var file = oWizardView.byId("idFileUpload");
                 var fileUploader;
                 var sServiceUrl = this.getOwnerComponent(this)
                     .getManifestObject()
