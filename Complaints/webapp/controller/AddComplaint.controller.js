@@ -112,7 +112,8 @@ sap.ui.define(
                         tokenCodeValue: "",
                         ZoneId: "",
                         DivisionId : "",
-                        Depot : ""
+                        Depot : "",
+                        resolutionDetail: false
                     };
 
                     var oModelControl = new JSONModel(oDataControl);
@@ -327,6 +328,11 @@ sap.ui.define(
                     var oView = this.getView();
                     var oViewModel = oView.getModel("oModelView");
                     var oModelControl = oView.getModel("oModelControl");
+                    var complaintTypeId = oViewModel.getProperty("/addComplaint/ComplaintTypeId");
+
+                    if(complaintTypeId === '1' && sKey === '2') {
+                        oModelControl.setProperty("/resolutionDetail", true);
+                    }
 
                     if (sKey == "2" || sKey == "3") {
                         oViewModel.setProperty("/addComplaint/RewardPoints", "");
