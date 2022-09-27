@@ -191,6 +191,10 @@
                 </layoutData>
             </VBox>
         </l:Grid>
+    
+        <Button text="Add more" press="onPressAddMore"/>
+
     </VBox>
+
     <!-- <VBox width="100%"> -->
 </core:FragmentDefinition>

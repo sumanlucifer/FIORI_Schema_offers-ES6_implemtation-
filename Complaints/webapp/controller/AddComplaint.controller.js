@@ -649,6 +649,9 @@ sap.ui.define(
                     }
                 },
                 onExit: function () { },
+                onPressAddMore: function() {
+                    debugger;
+                }
             }
         );
     }
