@@ -146,15 +146,21 @@
             <VBox width="100%" items="{oModelView>/addRewardPoint}">
                 <items>
                     <VBox >
-                    <VBox>
-                        <Label text="{i18n>LblCategory}" required="true" />
-                        <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
-                            <core:Item key="{Id}" text="{Category}" />
-                        </ComboBox>
-                        <layoutData>
-                            <l:GridData linebreak="true" />
-                        </layoutData>
-                    </VBox>
+                        <VBox>
+                            <Label text="{i18n>LblCategory}" required="true" />
+                            <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
+                                <core:Item key="{Id}" text="{Category}" />
+                            </ComboBox>
+                            <layoutData>
+                                <l:GridData linebreak="true" />
+                            </layoutData>
+                        </VBox>
+                        <VBox>
+                            <Label text="{i18n>LblProduct}" required="true" />
+                            <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                                <core:Item key="{Id}" text="{ProductName}" />
+                            </ComboBox>
+                        </VBox>
                     </VBox>
                     <!-- <VBox>
                         <Label text="{i18n>LblCategory}" required="true" />
