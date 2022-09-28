@@ -140,25 +140,25 @@
             </VBox>
         </l:Grid>
 
-        <Label visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
+        <Label class="sapUiSmallMargin" visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
             <!-- Below fields are editable if Resolution ID is null -->
             <VBox items="{oModelView>/addRewardPoint}">
                 <items>
-                    <VBox renderType="Bare">
-                        <Label text="Product {oModelView>ProductNum}" design="Bold" />
-                        <VBox renderType="Bare">
+                    <VBox>
+                        <Label class="sapUiSmallMarginBottom" text="Product {oModelView>ProductNum}" design="Bold" />
+                        <VBox>
                             <Label text="{i18n>LblCategory}" required="true" />
-                            <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
+                            <ComboBox change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
                                 <core:Item key="{Id}" text="{Category}" />
                             </ComboBox>
-                            <layoutData>
+                            <!-- <layoutData>
                                 <l:GridData linebreak="true" />
-                            </layoutData>
-                        </VBox>
-                        <VBox>
+                            </layoutData> -->
+                        <!-- </VBox>
+                        <VBox> -->
                             <Label text="{i18n>LblProduct}" required="true" />
-                            <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                            <ComboBox id="idProduct" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
                                 <core:Item key="{Id}" text="{ProductName}" />
                             </ComboBox>
                         </VBox>
