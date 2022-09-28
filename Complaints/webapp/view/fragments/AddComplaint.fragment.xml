@@ -143,9 +143,9 @@
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
             <Label text="{i18n>TtlRewardPointDetails}" design="Bold" />
             <!-- Below fields are editable if Resolution ID is null -->
-            <VBox width="100%" items="{oModelView>/addRewardPoint}">
+            <VBox items="{oModelView>/addRewardPoint}">
                 <items>
-                    <!-- <VBox > -->
+                    <VBox>
                         <VBox>
                             <Label text="{i18n>LblCategory}" required="true" />
                             <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
@@ -183,7 +183,7 @@
                                 <l:GridData linebreak="true" />
                             </layoutData>
                         </VBox>
-                    <!-- </VBox> -->
+                    </VBox>
                 </items>
             </VBox>
             <Button text="Add more" press="onPressAddMore" />
