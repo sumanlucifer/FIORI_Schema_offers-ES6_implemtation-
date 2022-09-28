@@ -230,10 +230,10 @@ sap.ui.define(
                         Table8: [],
                         Table9: [],
                         Table10: [],
-                        // added by deepanjali start
+                        // added by deepanjali start //
                         Table11: [],
                         Table12: []
-                        // added by deepanjali end
+                        // added by deepanjali end // 
 
                     },
                     oData: {
