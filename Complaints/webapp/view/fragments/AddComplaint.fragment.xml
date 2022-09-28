@@ -161,6 +161,12 @@
                                 <core:Item key="{Id}" text="{ProductName}" />
                             </ComboBox>
                         </VBox>
+                        <VBox>
+                            <Label required="true" text="{i18n>LblPack}" />
+                            <ComboBox change="onPackChange" id="idPacks" width="100%" selectedKey="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
+                                <core:Item key="{SkuCode}" text="{Description}" />
+                            </ComboBox>
+                        </VBox>
                     </VBox>
                     <!-- <VBox>
                         <Label text="{i18n>LblCategory}" required="true" />
