@@ -99,6 +99,7 @@ sap.ui.define(
                             Mobile: "",
                             Name: "",
                         },
+                        addRewardPoint:[]
                     });
 
                     if (mParMode == "add") {
@@ -112,7 +113,8 @@ sap.ui.define(
                         tokenCodeValue: "",
                         ZoneId: "",
                         DivisionId : "",
-                        Depot : ""
+                        Depot : "",
+                        resolutionDetail: false
                     };
 
                     var oModelControl = new JSONModel(oDataControl);
@@ -327,6 +329,11 @@ sap.ui.define(
                     var oView = this.getView();
                     var oViewModel = oView.getModel("oModelView");
                     var oModelControl = oView.getModel("oModelControl");
+                    var complaintTypeId = oViewModel.getProperty("/addComplaint/ComplaintTypeId");
+
+                    if(complaintTypeId === '1' && sKey === '2') {
+                        oModelControl.setProperty("/resolutionDetail", true);
+                    }
 
                     if (sKey == "2" || sKey == "3") {
                         oViewModel.setProperty("/addComplaint/RewardPoints", "");
@@ -643,6 +650,25 @@ sap.ui.define(
                     }
                 },
                 onExit: function () { },
+                onPressAddMore: function() {
+                    debugger;
+                    var oModel = this.getView().getModel("oModelView");
+                    var oFamiDtlMdl = oModel.getProperty("/addRewardPoint");
+                    var bFlag = true;
+                    
+                    if (bFlag == true) {
+                        oFamiDtlMdl.push({
+                            ProductCode: "",
+                            PainterComplainProducts: {
+                                ProductSKUCode:"",
+                                ProductQuantity:"",
+                                Points: "",
+                            },
+                        });
+
+                        //relvalue and editable properties are added here and will be removed in the postsave function
+                    }
+                }
             }
         );
     }
