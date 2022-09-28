@@ -140,15 +140,15 @@
             </VBox>
         </l:Grid>
 
-        <Label visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
+        
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
-
+            <Label visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
             <!-- Below fields are editable if Resolution ID is null -->
             <VBox items="{oModelView>/addRewardPoint}">
                 <items>
-                    <VBox>
+                    <VBox renderType="Bare">
                         <Label text="Product {oModelView>ProductNum}" design="Bold" />
-                        <VBox>
+                        <VBox renderType="Bare">
                             <Label text="{i18n>LblCategory}" required="true" />
                             <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
                                 <core:Item key="{Id}" text="{Category}" />
