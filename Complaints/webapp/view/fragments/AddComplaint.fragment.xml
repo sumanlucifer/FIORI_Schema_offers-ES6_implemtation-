@@ -143,7 +143,7 @@
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
             <Label text="{i18n>TtlRewardPointDetails}" design="Bold" />
             <!-- Below fields are editable if Resolution ID is null -->
-            <Vbox width="100%" items="{path: 'oModelView>/addRewardPoint', templateShareable: false}">
+            <VBox width="100%" items="{path: 'oModelView>/addRewardPoint', templateShareable: false}">
                 <VBox>
                     <Label text="{i18n>LblCategory}" required="true" />
                     <!-- Binded name property to display validation error  -->
