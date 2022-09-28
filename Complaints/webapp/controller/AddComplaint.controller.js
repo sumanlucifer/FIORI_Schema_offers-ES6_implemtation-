@@ -669,7 +669,7 @@ sap.ui.define(
                     
                     if (bFlag == true) {
                         oFamiDtlMdl.push({
-                            "productNum": this.productNumber, 
+                            "ProductNum": this.productNumber, 
                             "CategoryCode": "",
                             "ProductCode": "",
                             "PainterComplainProducts": {
