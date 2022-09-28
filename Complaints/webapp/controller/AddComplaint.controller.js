@@ -100,9 +100,13 @@ sap.ui.define(
                             Name: "",
                         },
                         addRewardPoint:[{
-                            "ButtonText" : "B 1"
-                        },{
-                            "ButtonText" : "B 2"
+                            "CategoryCode": "",
+                            "ProductCode": "",
+                            "PainterComplainProducts": {
+                                "ProductSKUCode":"",
+                                "ProductQuantity":"",
+                                "Points": "",
+                            }
                         }]
                     });
 
@@ -661,16 +665,14 @@ sap.ui.define(
                     var bFlag = true;
                     
                     if (bFlag == true) {
-                        // oFamiDtlMdl.push({
-                        //     ProductCode: "",
-                        //     PainterComplainProducts: {
-                        //         ProductSKUCode:"",
-                        //         ProductQuantity:"",
-                        //         Points: "",
-                        //     },
-                        // });
                         oFamiDtlMdl.push({
-                            "ButtonText" : "B 3"
+                            "CategoryCode": "",
+                            "ProductCode": "",
+                            "PainterComplainProducts": {
+                                "ProductSKUCode":"",
+                                "ProductQuantity":"",
+                                "Points": "",
+                            }
                         });
 
                         oModel.setProperty("/addRewardPoint", oFamiDtlMdl);
