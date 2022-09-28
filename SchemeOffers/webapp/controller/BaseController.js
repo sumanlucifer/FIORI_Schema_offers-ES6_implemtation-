@@ -936,7 +936,7 @@ sap.ui.define(
             // },
 
             onDeleteFile: function (oEvent) {
-
+                debugger;
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 //oModel.setProperty("bNew", true);
