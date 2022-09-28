@@ -99,6 +99,7 @@ sap.ui.define(
                             Mobile: "",
                             Name: "",
                         },
+                        addRewardPoint:[]
                     });
 
                     if (mParMode == "add") {
