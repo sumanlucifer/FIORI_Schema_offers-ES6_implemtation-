@@ -99,7 +99,14 @@ sap.ui.define(
                             Mobile: "",
                             Name: "",
                         },
-                        addRewardPoint:[]
+                        addRewardPoint:[{
+                            ProductCode: "",
+                            PainterComplainProducts: {
+                                ProductSKUCode:"",
+                                ProductQuantity:"",
+                                Points: "",
+                            },
+                        }]
                     });
 
                     if (mParMode == "add") {
