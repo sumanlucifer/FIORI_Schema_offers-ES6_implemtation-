@@ -144,9 +144,10 @@
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
 
             <!-- Below fields are editable if Resolution ID is null -->
-            <VBox width="100%" items="{oModelView>/addRewardPoint}">
+            <VBox items="{oModelView>/addRewardPoint}">
                 <items>
-                    <VBox >
+                    <VBox>
+                        <Label text="Product {oModelView>ProductNum}" design="Bold" />
                         <VBox>
                             <Label text="{i18n>LblCategory}" required="true" />
                             <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
@@ -162,44 +163,29 @@
                                 <core:Item key="{Id}" text="{ProductName}" />
                             </ComboBox>
                         </VBox>
+                        <VBox>
+                            <Label required="true" text="{i18n>LblPack}" />
+                            <ComboBox change="onPackChange" id="idPacks" width="100%" selectedKey="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
+                                <core:Item key="{SkuCode}" text="{Description}" />
+                            </ComboBox>
+                        </VBox>
+                        <VBox>
+                            <Label required="true" text="{i18n>LblQuantity}" />
+                            <ComboBox change="onPointsChange" selectedKey="{path:'oModelView>PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}">
+                                <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
+                            </ComboBox>
+                            <layoutData>
+                                <l:GridData linebreak="true" />
+                            </layoutData>
+                        </VBox>
+                        <VBox>
+                            <Label text="{i18n>Points}" />
+                            <Input editable="false" value="{= (+${oModelView>PainterComplainProducts/Points})*(+${oModelView>PainterComplainProducts/ProductQuantity}) }" />
+                            <layoutData>
+                                <l:GridData linebreak="true" />
+                            </layoutData>
+                        </VBox>
                     </VBox>
-                    <!-- <VBox>
-                        <Label text="{i18n>LblCategory}" required="true" />
-                        <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
-                            <core:Item key="{Id}" text="{Category}" />
-                        </ComboBox>
-                        <layoutData>
-                            <l:GridData linebreak="true" />
-                        </layoutData>
-                    </VBox>
-                    <VBox>
-                        <Label text="{i18n>LblProduct}" required="true" />
-                        <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>/ProductCode}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
-                            <core:Item key="{Id}" text="{ProductName}" />
-                        </ComboBox>
-                    </VBox>
-                    <VBox>
-                        <Label required="true" text="{i18n>LblPack}" />
-                        <ComboBox change="onPackChange" id="idPacks" width="100%" selectedKey="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
-                            <core:Item key="{SkuCode}" text="{Description}" />
-                        </ComboBox>
-                    </VBox>
-                    <VBox>
-                        <Label required="true" text="{i18n>LblQuantity}" />
-                        <ComboBox change="onPointsChange" selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}">
-                            <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
-                        </ComboBox>
-                        <layoutData>
-                            <l:GridData linebreak="true" />
-                        </layoutData>
-                    </VBox>
-                    <VBox>
-                        <Label text="{i18n>Points}" />
-                        <Input editable="false" value="{= (+${oModelView>/PainterComplainProducts/Points})*(+${oModelView>/PainterComplainProducts/ProductQuantity}) }" />
-                        <layoutData>
-                            <l:GridData linebreak="true" />
-                        </layoutData>
-                    </VBox> -->
                 </items>
             </VBox>
             <Button text="Add more" press="onPressAddMore" />

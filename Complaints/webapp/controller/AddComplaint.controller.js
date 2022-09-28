@@ -71,6 +71,7 @@ sap.ui.define(
                         .attachMatched(this._onRouteMatched, this);
                     this._ValueState = library.ValueState;
                     this._MessageType = library.MessageType;
+                    this.productNumber = 1;
                 },
                 _onRouteMatched: function (oEvent) {
                     this._GetServiceData();
@@ -100,6 +101,7 @@ sap.ui.define(
                             Name: "",
                         },
                         addRewardPoint:[{
+                            "ProductNum": this.productNumber,
                             "CategoryCode": "",
                             "ProductCode": "",
                             "PainterComplainProducts": {
@@ -663,9 +665,11 @@ sap.ui.define(
                     var oModel = this.getView().getModel("oModelView");
                     var oFamiDtlMdl = oModel.getProperty("/addRewardPoint");
                     var bFlag = true;
+                    this.productNumber = this.productNumber+1;
                     
                     if (bFlag == true) {
                         oFamiDtlMdl.push({
+                            "ProductNum": this.productNumber, 
                             "CategoryCode": "",
                             "ProductCode": "",
                             "PainterComplainProducts": {
