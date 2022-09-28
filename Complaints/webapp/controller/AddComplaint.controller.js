@@ -100,12 +100,9 @@ sap.ui.define(
                             Name: "",
                         },
                         addRewardPoint:[{
-                            ProductCode: "",
-                            PainterComplainProducts: {
-                                ProductSKUCode:"",
-                                ProductQuantity:"",
-                                Points: "",
-                            },
+                            "ButtonText" : "B 1"
+                        },{
+                            "ButtonText" : "B 2"
                         }]
                     });
 
@@ -664,14 +661,19 @@ sap.ui.define(
                     var bFlag = true;
                     
                     if (bFlag == true) {
+                        // oFamiDtlMdl.push({
+                        //     ProductCode: "",
+                        //     PainterComplainProducts: {
+                        //         ProductSKUCode:"",
+                        //         ProductQuantity:"",
+                        //         Points: "",
+                        //     },
+                        // });
                         oFamiDtlMdl.push({
-                            ProductCode: "",
-                            PainterComplainProducts: {
-                                ProductSKUCode:"",
-                                ProductQuantity:"",
-                                Points: "",
-                            },
+                            "ButtonText" : "B 3"
                         });
+
+                        oModel.setProperty("/addRewardPoint", oFamiDtlMdl);
 
                         //relvalue and editable properties are added here and will be removed in the postsave function
                     }

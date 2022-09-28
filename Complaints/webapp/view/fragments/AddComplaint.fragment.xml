@@ -145,11 +145,9 @@
             <!-- Below fields are editable if Resolution ID is null -->
             <VBox width="100%" items="{oModelView>/addRewardPoint}">
                 <items>
-                    <VBox>
+                    <Button text="{oModelView>ButtonText}" />
+                    <!-- <VBox>
                         <Label text="{i18n>LblCategory}" required="true" />
-                        <!-- Binded name property to display validation error  -->
-                        <!-- <ComboBox width="100%" change="filterProducts"   editable="{=  ${ResolutionId} === null }" -->
-                        <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxCategoryType' }" -->
                         <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
                             <core:Item key="{Id}" text="{Category}" />
                         </ComboBox>
@@ -159,25 +157,18 @@
                     </VBox>
                     <VBox>
                         <Label text="{i18n>LblProduct}" required="true" />
-                        <!-- <ComboBox id="idProduct" width="100%" change="filterPacks"  editable="{= ${oModelControl>/CategoryCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"   -->
-                        <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtProductCmbx' }"  -->
-
                         <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>/ProductCode}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
                             <core:Item key="{Id}" text="{ProductName}" />
                         </ComboBox>
                     </VBox>
                     <VBox>
                         <Label required="true" text="{i18n>LblPack}" />
-                        <!-- <ComboBox change="onPackChange" id="idPacks" editable="{= ${oModelControl>/ProductCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" width="100%" -->
-                        <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtPacksCmbx' }" -->
                         <ComboBox change="onPackChange" id="idPacks" width="100%" selectedKey="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
                             <core:Item key="{SkuCode}" text="{Description}" />
                         </ComboBox>
                     </VBox>
                     <VBox>
                         <Label required="true" text="{i18n>LblQuantity}" />
-                        <!-- <ComboBox change="onPointsChange"
-                editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" -->
                         <ComboBox change="onPointsChange" selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}">
                             <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
                         </ComboBox>
@@ -191,12 +182,11 @@
                         <layoutData>
                             <l:GridData linebreak="true" />
                         </layoutData>
-                    </VBox>
+                    </VBox> -->
                 </items>
             </VBox>
             <Button text="Add more" press="onPressAddMore" />
         </l:Grid>
     </VBox>
 
-    <!-- <VBox width="100%"> -->
 </core:FragmentDefinition>
