@@ -599,9 +599,10 @@ sap.ui.define(
 
             // added by deepanjali start
             _uploadbanner: function (oData) {
+                debugger;
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
-                var oModel = this.getModel("oModelControl");
+                var oModel = this.getView().getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
                 var oWizardView = oView.byId("wizardViewBranching");
                 var file = oWizardView.byId("idFileUpload");
