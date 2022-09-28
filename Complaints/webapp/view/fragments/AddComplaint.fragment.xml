@@ -140,8 +140,9 @@
             </VBox>
         </l:Grid>
 
+        <Label visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
-            <Label text="{i18n>TtlRewardPointDetails}" design="Bold" />
+
             <!-- Below fields are editable if Resolution ID is null -->
             <VBox width="100%" items="{oModelView>/addRewardPoint}">
                 <items>
