@@ -176,6 +176,13 @@
                                 <l:GridData linebreak="true" />
                             </layoutData>
                         </VBox>
+                        <VBox>
+                            <Label text="{i18n>Points}" />
+                            <Input editable="false" value="{= (+${oModelView>PainterComplainProducts/Points})*(+${oModelView>PainterComplainProducts/ProductQuantity}) }" />
+                            <layoutData>
+                                <l:GridData linebreak="true" />
+                            </layoutData>
+                        </VBox>
                     </VBox>
                     <!-- <VBox>
                         <Label text="{i18n>LblCategory}" required="true" />
