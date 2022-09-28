@@ -297,7 +297,12 @@ sap.ui.define(
                             Table7: [],
                             Table8: [],
                             Table9: [],
-                            Table10: []
+                            Table10: [],
+                            // added by deepanjali start
+                            Table11: [],
+                            Table12: []
+                        // added by deepanjali end
+
                         },
                         OfferType: {
                             BasicInformation: true,

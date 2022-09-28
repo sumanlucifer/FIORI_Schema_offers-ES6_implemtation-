@@ -1,10 +1,7 @@
-<core:FragmentDefinition xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
-            <Title titleStyle="H3" text="1. {i18n>BasicInformation}"/>
+            <Title titleStyle="H3" text="1. {i18n>BasicInformation}" />
         </Toolbar>
         <f:Form id="FormDisplay" editable="false">
             <f:layout>
@@ -15,12 +12,12 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formBasicInfoLbl1}">
                             <f:fields>
-                                <Text text="{OfferType/OfferType}"/>
+                                <Text text="{OfferType/OfferType}" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl3}">
                             <f:fields>
-                                <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}"/>
+                                <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>Attachment}" visible="{= !${oModelControl2>/ImageLoaded} }">
@@ -39,7 +36,7 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formBasicInfoLbl2}">
                             <f:fields>
-                                <Text text="{Title}"/>
+                                <Text text="{Title}" />
                             </f:fields>
                         </f:FormElement>
                         <!-- <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.endDateField1'}">
@@ -49,13 +46,31 @@
                         </f:FormElement> -->
                         <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{=${OfferStatus}==='EXPIRED'}">
                             <f:fields>
-                             <!-- <Text visible="{=${OfferStatus}==='EXPIRED'}" text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/> -->
-                            <DatePicker editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','OfferTypeId'],formatter:'.formatter.endDateField1'}" minDate="{path:'oModelControl3>/MinDate'}" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/yyyy" required="true" />
+                                <!-- <Text visible="{=${OfferStatus}==='EXPIRED'}" text="{path:'EndDate',formatter:'.formatter.fmtDate2'}"/> -->
+                                <DatePicker
+                                    editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId','OfferTypeId'],formatter:'.formatter.endDateField1'}"
+                                    minDate="{path:'oModelControl3>/MinDate'}"
+                                    change=".onEndDateChange2"
+                                    valueStateText="Enter a valid date"
+                                    dateValue="{path:'oModelDisplay>/EndDate'}"
+                                    value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"
+                                    placeholder="DD/MM/yyyy"
+                                    required="true"
+                                />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBasicInfoLbl4}" visible="{=${OfferStatus}!=='EXPIRED'}">
                             <f:fields>
-                            <DatePicker editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}" minDate="{path:'oModelControl3>/MinDate'}" change=".onEndDateChange2" valueStateText="Enter a valid date" dateValue="{path:'oModelDisplay>/EndDate'}" value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }" placeholder="DD/MM/yyyy" required="true" />
+                                <DatePicker
+                                    editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}"
+                                    minDate="{path:'oModelControl3>/MinDate'}"
+                                    change=".onEndDateChange2"
+                                    valueStateText="Enter a valid date"
+                                    dateValue="{path:'oModelDisplay>/EndDate'}"
+                                    value="{path:'oModelControl2>/EndDate', type :'sap.ui.model.type.Date',formatOptions:{source: {pattern: 'dd/MM/yyyy'},pattern:'dd/MM/yyyy' },constraints:{minimum:'01/01/2021'}  }"
+                                    placeholder="DD/MM/yyyy"
+                                    required="true"
+                                />
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
@@ -64,18 +79,33 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formBasicInfoLbl5}">
                             <f:fields>
-                            <VBox >
-                                <Text visible="{=${OfferStatus} === 'EXPIRED'}" text="{Description}"/>
-                                <TextArea visible="{=${OfferStatus} !== 'EXPIRED'}" width="100%" required="true" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelDisplay>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
-                            </VBox>
+                                <VBox>
+                                    <Text visible="{=${OfferStatus} === 'EXPIRED'}" text="{Description}" />
+                                    <TextArea
+                                        visible="{=${OfferStatus} !== 'EXPIRED'}"
+                                        width="100%"
+                                        required="true"
+                                        placeholder="{i18n>placeHolder3}"
+                                        maxLength="500"
+                                        value="{path : 'oModelDisplay>/Description', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"
+                                    />
+                                </VBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>Criteria}">
                             <f:fields>
-                            <VBox>
-                                <Text visible="{=${OfferStatus} === 'EXPIRED'}" text="{Criteria}"/>
-                                <TextArea width="100%" visible="{=${OfferStatus} !== 'EXPIRED'}" editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===5 ||${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}" required="false" placeholder="{i18n>placeHolder3}" maxLength="500" value="{path : 'oModelDisplay>/Criteria', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"/>
-                            </VBox>
+                                <VBox>
+                                    <Text visible="{=${OfferStatus} === 'EXPIRED'}" text="{Criteria}" />
+                                    <TextArea
+                                        width="100%"
+                                        visible="{=${OfferStatus} !== 'EXPIRED'}"
+                                        editable="{= ${oModelControl3>/LoggedInUser/UserTypeId}===5 ||${oModelControl3>/LoggedInUser/UserTypeId}===6 || ${oModelControl3>/LoggedInUser/UserTypeId}===7}"
+                                        required="false"
+                                        placeholder="{i18n>placeHolder3}"
+                                        maxLength="500"
+                                        value="{path : 'oModelDisplay>/Criteria', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :500, search :'^[a-zA-Z0-9]{1}[wW]*' } }"
+                                    />
+                                </VBox>
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
@@ -92,7 +122,7 @@
             </f:formContainers>
         </f:Form>
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
-            <Title titleStyle="H3" text="2. {i18n>ApplicableProducts}"/>
+            <Title titleStyle="H3" text="2. {i18n>ApplicableProducts}" />
         </Toolbar>
         <f:Form editable="false">
             <f:layout>
@@ -104,30 +134,39 @@
                         <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PCat1}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
-                                <MultiComboBox editable="false" required="false" id="PCat1" visible="{oModelControl2>/MultiEnabled/PCat1}" selectedKeys="{path:'oModelControl2>/MultiCombo/PCat1' }" selectionFinish="onPAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
-                                    <core:Item text="{Category}" key="{Id}"/>
+                                <MultiComboBox
+                                    editable="false"
+                                    required="false"
+                                    id="PCat1"
+                                    visible="{oModelControl2>/MultiEnabled/PCat1}"
+                                    selectedKeys="{path:'oModelControl2>/MultiCombo/PCat1' }"
+                                    selectionFinish="onPAppDropChange"
+                                    placeholder="{i18n>placeHolder1}"
+                                    items="{path:'/MasterProductCategorySet' }"
+                                >
+                                    <core:Item text="{Category}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl8}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PClass1}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
                                 <MultiComboBox editable="false" selectionFinish="onPAppDropChange" visible="{oModelControl2>/MultiEnabled/PClass1}" id="PClass1" selectedKeys="{oModelControl2>/MultiCombo/PClass1}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }">
-                                    <core:Item text="{Classification}" key="{Id}"/>
+                                    <core:Item text="{Classification}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -138,8 +177,8 @@
                         <f:FormElement label="{i18n>formApplicableProducts2}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd1}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -148,9 +187,18 @@
                                 <!-- <MultiComboBox editable="false" selectionFinish="onPAppDropChange" id="AppProd1" visible="{oModelControl2>/MultiEnabled/AppProd1}" selectedKeys="{oModelControl2>/MultiCombo/AppProd1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox> -->
-                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd1}===1}" valueHelpOnly="true" id="AppProd1" valueHelpRequest="handleProdValueHelp" tokens="{path:'oModelControl2>/MultiCombo/AppProd1'}">
+                                <MultiInput
+                                    editable="false"
+                                    placeholder="{i18n>placeHolder1}"
+                                    tokenUpdate="onProdTokenUpdate"
+                                    visible="{= ${oModelControl2>/Rbtn/AppProd1}===1}"
+                                    valueHelpOnly="true"
+                                    id="AppProd1"
+                                    valueHelpRequest="handleProdValueHelp"
+                                    tokens="{path:'oModelControl2>/MultiCombo/AppProd1'}"
+                                >
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -158,8 +206,8 @@
                         <f:FormElement label="{i18n>formApplicableLbl9}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppPacks1}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -168,9 +216,18 @@
                                 <!-- <MultiComboBox editable="false" selectionFinish="onPAppDropChange" id="AppPacks1" visible="{oModelControl2>/MultiEnabled/AppPacks1}" selectedKeys="{oModelControl2>/MultiCombo/AppPacks1}" selectionChange="onChangeAppProducts" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox> -->
-                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks1}===1}" valueHelpOnly="true" id="AppPacks1" valueHelpRequest="handlePackValueHelp" tokens="{path:'oModelControl2>/MultiCombo/AppPacks1'}">
+                                <MultiInput
+                                    editable="false"
+                                    placeholder="{i18n>placeHolder1}"
+                                    tokenUpdate="onPackTokenUpdate"
+                                    visible="{= ${oModelControl2>/Rbtn/AppPacks1}===1}"
+                                    valueHelpOnly="true"
+                                    id="AppPacks1"
+                                    valueHelpRequest="handlePackValueHelp"
+                                    tokens="{path:'oModelControl2>/MultiCombo/AppPacks1'}"
+                                >
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -179,8 +236,88 @@
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
+        <!-- added by deepanjali  start-->
+        <VBox>
+            <Label visible="{= ${oModelControl2>/ImageLoaded}" design="Bold" text="{i18n>OfferImage}" required="false" />
+            <Text text="{i18n>FileUploadMessage}" />
+            <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl2>/bBusy}" items="{path: 'oModelControl2>/Table/Table11', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                <headerToolbar>
+                    <Toolbar>
+                        <!-- <Title text="{i18n>catalogues}" /> -->
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" press="onAddProductPack" type="Emphasized" text="AddP" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Label text="{i18n>selectLanguage}" required="true" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>uploadImage}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>medianame}" />
+                    </Column>
+
+                    <Column width="10%">
+                        <Text text="{i18n>Action}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <VBox>
+                                <Select
+                                    forceSelection="false"
+                                    selectedKey="{oModelControl2>LanguageCode}"
+                                    items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                                >
+                                    <core:Item key="{LanguageCode}" text="{Language}" />
+                                </Select>
+                            </VBox>
+                            <VBox>
+                                <FlexBox>
+                                    <VBox>
+                                        <u:FileUploader
+                                            id="idFormToolPdfUploader"
+                                            name="formToolPdfUploader"
+                                            class="sapUiSmallMarginTop"
+                                            tooltip="{i18n>fileUploaderTooltip}"
+                                            change="onChangePdf"
+                                            typeMissmatch="onUploadMisMatch"
+                                            fileType="jpg,jpeg,png"
+                                            useMultipart="false"
+                                            sendXHR="true"
+                                            maximumFileSize="2.1"
+                                            fileSizeExceed="onFileSizeExceed"
+                                            uploadComplete="handleUploadCompletePdf"
+                                        />
+                                        <HBox>
+                                            <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".image/png" />
+                                            <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB" />
+                                        </HBox>
+                                    </VBox>
+                                </FlexBox>
+                            </VBox>
+                            <VBox>
+                                <Text text="{oModelControl2>MediaName}" />
+                            </VBox>
+                            <HBox>
+                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
+                                <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+        <!-- added by deepanjali end -->
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
-            <Title titleStyle="H3" text="3. {i18n>formApplicableLbl10}"/>
+            <Title titleStyle="H3" text="3. {i18n>formApplicableLbl10}" />
         </Toolbar>
         <!-- <f:Form editable="false">
             <f:layout>
@@ -239,24 +376,24 @@
                     <Title text="{i18n>Slab}" />
                     <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume" selectedIndex="{InputType}">
                         <buttons>
-                            <RadioButton text="{i18n>RequiredVolume}"/>
-                            <RadioButton text="{i18n>Table1Label2}"/>
+                            <RadioButton text="{i18n>RequiredVolume}" />
+                            <RadioButton text="{i18n>Table1Label2}" />
                         </buttons>
                     </RadioButtonGroup>
                     <ToolbarSpacer />
                 </Toolbar>
             </headerToolbar>
             <infoToolbar>
-                <OverflowToolbar >
-                    <Label text="{i18n>IsMultiRewardAllowed}"/>
+                <OverflowToolbar>
+                    <Label text="{i18n>IsMultiRewardAllowed}" />
                     <!-- <Select editable="false" change="onSelection" selectedKey="{= ${IsMultiRewardAllowed} === false ? '1' : '0' }">
 					<core:Item key="0" text="Yes" />
                     <core:Item key="1" text="No" />
 				</Select> -->
                     <RadioButtonGroup editable="false" columns="2" selectedIndex="{= ${IsMultiRewardAllowed} === false ? 0 : 1 }">
                         <buttons>
-                            <RadioButton text="{i18n>No}"/>
-                            <RadioButton text="{i18n>Yes}"/>
+                            <RadioButton text="{i18n>No}" />
+                            <RadioButton text="{i18n>Yes}" />
                         </buttons>
                     </RadioButtonGroup>
                 </OverflowToolbar>
@@ -305,8 +442,8 @@
                 <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" />
                 <RadioButtonGroup editable="false" columns="2" select=".onRbConditions1" selectedIndex="{= ${OfferConditions/IsEarnedPointsCondition} === false ? 0:1}">
                     <buttons>
-                        <RadioButton text="{i18n>No}"/>
-                        <RadioButton text="{i18n>Yes}"/>
+                        <RadioButton text="{i18n>No}" />
+                        <RadioButton text="{i18n>Yes}" />
                     </buttons>
                 </RadioButtonGroup>
                 <Table id="Table5" visible="{OfferConditions/IsEarnedPointsCondition}" items="{oModelDisplay>/OfferEarnedPointsCondition/results}" width="auto" noDataText="{i18n>tableNoDataText}">
@@ -332,11 +469,21 @@
                         </Column>
                     </columns>
                     <items>
-                        <ColumnListItem >
+                        <ColumnListItem>
                             <cells>
-                                <Label text="{path:'oModelDisplay>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                                <VBox >
-                                    <DatePicker displayFormat="dd/MM/yyyy" navigate="onNavEndDtDspCnd1" editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.fnEndDateContion1Display'}" minDate="{oModelDisplay>StartDate}" change="onEndDateCndtDisplay" width="50%" dateValue="{oModelDisplay>EndDate}" placeholder="DD/MM/yyyy" required="true"/>
+                                <Label text="{path:'oModelDisplay>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />
+                                <VBox>
+                                    <DatePicker
+                                        displayFormat="dd/MM/yyyy"
+                                        navigate="onNavEndDtDspCnd1"
+                                        editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],formatter:'.formatter.fnEndDateContion1Display'}"
+                                        minDate="{oModelDisplay>StartDate}"
+                                        change="onEndDateCndtDisplay"
+                                        width="50%"
+                                        dateValue="{oModelDisplay>EndDate}"
+                                        placeholder="DD/MM/yyyy"
+                                        required="true"
+                                    />
                                 </VBox>
                                 <VBox visible="{= ${InputType}===0 }">
                                     <Label text="{path:'oModelDisplay>RequiredVolume',formatter:'.formatter.fmtCheckNull'}" />
@@ -355,14 +502,14 @@
                 <Title titleStyle="H4" text="{i18n>Condition2ProdValue}" class="sapUiMediumMarginTop" />
                 <RadioButtonGroup editable="false" columns="2" select=".onRbConditions1" selectedIndex="{= ${OfferConditions/IsProductValueCondition} === false ? 0:1}">
                     <buttons>
-                        <RadioButton text="{i18n>No}"/>
-                        <RadioButton text="{i18n>Yes}"/>
+                        <RadioButton text="{i18n>No}" />
+                        <RadioButton text="{i18n>Yes}" />
                     </buttons>
                 </RadioButtonGroup>
                 <Table id="Table6" visible="{OfferConditions/IsProductValueCondition}" items="{path: 'oModelControl2>/Table/Table6',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="{i18n>ProuctValueCondition}"/>
+                            <Title text="{i18n>ProuctValueCondition}" />
                             <ToolbarSpacer />
                             <!-- <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCondition2('add')"/> -->
                         </Toolbar>
@@ -390,10 +537,10 @@
                                 </items>
                             </Select>
                         </VBox> -->
-                                <VBox >
+                                <VBox>
                                     <Label text="{path:'oModelControl2>Product/ProductName'}" />
                                 </VBox>
-                                <VBox >
+                                <VBox>
                                     <Label text="{path:'oModelControl2>Percentage',formatter:'.formatter.fmtCheckNull'}" />
                                 </VBox>
                             </cells>
@@ -407,14 +554,14 @@
                 <Title titleStyle="H4" text="{i18n>Condotion3redemptionCycle}" class="sapUiMediumMarginTop" />
                 <RadioButtonGroup editable="false" columns="2" select=".onRbConditions1" selectedIndex="{= ${OfferConditions/IsRedemptionCycleCondition} === false ? 0:1}">
                     <buttons>
-                        <RadioButton text="{i18n>No}"/>
-                        <RadioButton text="{i18n>Yes}"/>
+                        <RadioButton text="{i18n>No}" />
+                        <RadioButton text="{i18n>Yes}" />
                     </buttons>
                 </RadioButtonGroup>
                 <Table id="Table7" visible="{OfferConditions/IsRedemptionCycleCondition}" items="{path: 'oModelControl2>/Table/Table7',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" busyIndicatorDelay="{oModelView>/tableBusyDelay}">
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="{i18n>RedemptionCycle}"/>
+                            <Title text="{i18n>RedemptionCycle}" />
                             <ToolbarSpacer />
                         </Toolbar>
                     </headerToolbar>
@@ -439,34 +586,34 @@
                 </Table>
             </items>
         </VBox>
-         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
-            <Title titleStyle="H3" text="4. {i18n>formApplicableLbl18}"/>
+        <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
+            <Title titleStyle="H3" text="4. {i18n>formApplicableLbl18}" />
         </Toolbar>
-        <RadioButtonGroup columns="3" select="" selectedIndex="{oModelDisplay>/ContributionCondition}"  editable="false">
-                        <buttons>
-                            <RadioButton text="{i18n>DefaultCondLabel}"/>
-                            <RadioButton text="{i18n>ConditionLabel1}"/>
-                            <RadioButton text="{i18n>ConditionLabel2}"/>
-                        </buttons>
+        <RadioButtonGroup columns="3" select="" selectedIndex="{oModelDisplay>/ContributionCondition}" editable="false">
+            <buttons>
+                <RadioButton text="{i18n>DefaultCondLabel}" />
+                <RadioButton text="{i18n>ConditionLabel1}" />
+                <RadioButton text="{i18n>ConditionLabel2}" />
+            </buttons>
         </RadioButtonGroup>
         <VBox visible="{=${oModelDisplay>/ContributionCondition}!==0}">
-        <VBox visible="{=${oModelDisplay>/ContributionType}===0}">
-             <Table id="TableContri" items="{path: 'oModelControl2>/Table/Table9',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===0}">
-            <headerToolbar>
-                <Toolbar>
-                    <!-- <Title text="{i18n>Conditions}"/> -->
-                    
-                     <RadioButtonGroup columns="2" select="" selectedIndex="{oModelDisplay>/ContributionType}" editable="false">
-                        <buttons>
-                            <RadioButton text="{i18n>SeperateCndtn}"/>
-                            <RadioButton text="{i18n>CombinationCndtn}"/>
-                        </buttons>
-                    </RadioButtonGroup>
-                    <ToolbarSpacer />
-                    <!-- <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCndtnV1('add')"/> -->
-                </Toolbar>
-            </headerToolbar>
-            <!-- <infoToolbar>
+            <VBox visible="{=${oModelDisplay>/ContributionType}===0}">
+                <Table id="TableContri" items="{path: 'oModelControl2>/Table/Table9',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===0}">
+                    <headerToolbar>
+                        <Toolbar>
+                            <!-- <Title text="{i18n>Conditions}"/> -->
+
+                            <RadioButtonGroup columns="2" select="" selectedIndex="{oModelDisplay>/ContributionType}" editable="false">
+                                <buttons>
+                                    <RadioButton text="{i18n>SeperateCndtn}" />
+                                    <RadioButton text="{i18n>CombinationCndtn}" />
+                                </buttons>
+                            </RadioButtonGroup>
+                            <ToolbarSpacer />
+                            <!-- <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCndtnV1('add')"/> -->
+                        </Toolbar>
+                    </headerToolbar>
+                    <!-- <infoToolbar>
 					<OverflowToolbar >
                     <Label  text="{i18n>Slab}"/>
                 <RadioButtonGroup columns="2" select="" selectedIndex="{oModelDisplay>/InputType}" editable="false">
@@ -477,81 +624,74 @@
                     </RadioButtonGroup>
 				</OverflowToolbar>
 				</infoToolbar> -->
-            <columns>
-                 <Column>
-                 <VBox>
-                  <Text text="{i18n>Product}" visible="{=${oModelDisplay>/ContributionCondition}===1}"/>
-                   <Text text="{i18n>Pack}" visible="{=${oModelDisplay>/ContributionCondition}===2}"/>
-                 </VBox>
-                   
-                </Column>
-               
-                <Column>
-                    <Label text="{i18n>Min}" />
-                </Column>
-                <Column>
-                    <Text text="{i18n>Max}" />
-                </Column>
-                <!-- <Column>
+                    <columns>
+                        <Column>
+                            <VBox>
+                                <Text text="{i18n>Product}" visible="{=${oModelDisplay>/ContributionCondition}===1}" />
+                                <Text text="{i18n>Pack}" visible="{=${oModelDisplay>/ContributionCondition}===2}" />
+                            </VBox>
+                        </Column>
+
+                        <Column>
+                            <Label text="{i18n>Min}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>Max}" />
+                        </Column>
+                        <!-- <Column>
                     <Text text="{i18n>tblColAction}" />
                 </Column> -->
-                
-            </columns>
-            <items>
-                <ColumnListItem press="onListItemPress">
-                    <cells>
-                         <VBox >
-                            
-                            <VBox visible="{=${oModelDisplay>/ContributionCondition}===1}">
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Product/ProductName'}" />
-                             <!-- <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl2>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
-                            </VBox>
-                            
-                            <VBox visible="{=${oModelDisplay>/ContributionCondition}===2}">
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Pack/Description'}" />
-                            <!-- <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl2>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
-                            </VBox>
-                           
-                            
-                        </VBox>
-                        
-                        <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>MinPercentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl2>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
-                        </VBox>
-                        <VBox >
-                            <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>MaxPercentage',formatter:'.formatter.fmtCheckNull'}" />
-                            <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl2>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
-                        </VBox>
-                        
-                        
-                        <!-- <HBox>
+                    </columns>
+                    <items>
+                        <ColumnListItem press="onListItemPress">
+                            <cells>
+                                <VBox>
+                                    <VBox visible="{=${oModelDisplay>/ContributionCondition}===1}">
+                                        <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Product/ProductName'}" />
+                                        <!-- <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl2>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
+                                    </VBox>
+
+                                    <VBox visible="{=${oModelDisplay>/ContributionCondition}===2}">
+                                        <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Pack/Description'}" />
+                                        <!-- <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".handlePackValueHelp2" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl2>SkuCode',formatter:'.formatter.fmtGetPackName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
+                                    </VBox>
+                                </VBox>
+
+                                <VBox>
+                                    <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>MinPercentage',formatter:'.formatter.fmtCheckNull'}" />
+                                    <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl2>MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
+                                </VBox>
+                                <VBox>
+                                    <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>MaxPercentage',formatter:'.formatter.fmtCheckNull'}" />
+                                    <!-- <Input visible="{= ${oModelControl>editable} === true }" type="Number" placeholder="{i18n>placeHolder3}" width="100%" value="{path:'oModelControl2>MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" valueStateText="Kindly Enter a Valid Number not starting with 0" /> -->
+                                </VBox>
+
+                                <!-- <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressCndtnV1"></Button>
                             <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCndtn1"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCndtn"></Button>
                         </HBox> -->
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-        
-        </VBox>
-        <VBox  visible="{=${oModelDisplay>/ContributionType}===1}">
-             <Table id="TableContri2" items="{path: 'oModelControl2>/Table/Table10',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
-            <headerToolbar>
-                <Toolbar>
-                    <!-- <Title text="{i18n>Conditions}"/> -->
-                    <RadioButtonGroup columns="2" select="" selectedIndex="{oModelDisplay>/ContributionType}"  editable="false">
-                        <buttons>
-                            <RadioButton text="{i18n>SeperateCndtn}"/>
-                            <RadioButton text="{i18n>CombinationCndtn}"/>
-                        </buttons>
-                    </RadioButtonGroup>
-                    <ToolbarSpacer />
-                    <!-- <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCndtnV2('add')"/> -->
-                </Toolbar>
-            </headerToolbar>
-            <!-- <infoToolbar>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+            <VBox visible="{=${oModelDisplay>/ContributionType}===1}">
+                <Table id="TableContri2" items="{path: 'oModelControl2>/Table/Table10',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelView>/tableBusyDelay}" visible="{=${oModelView>/ContributionType}===1}">
+                    <headerToolbar>
+                        <Toolbar>
+                            <!-- <Title text="{i18n>Conditions}"/> -->
+                            <RadioButtonGroup columns="2" select="" selectedIndex="{oModelDisplay>/ContributionType}" editable="false">
+                                <buttons>
+                                    <RadioButton text="{i18n>SeperateCndtn}" />
+                                    <RadioButton text="{i18n>CombinationCndtn}" />
+                                </buttons>
+                            </RadioButtonGroup>
+                            <ToolbarSpacer />
+                            <!-- <Button icon="sap-icon://add" text="{i18n>Add}" tooltip="{i18n>Add}" type="Emphasized" press="onPressAddCndtnV2('add')"/> -->
+                        </Toolbar>
+                    </headerToolbar>
+                    <!-- <infoToolbar>
 					<OverflowToolbar >
                     <Label  text="{i18n>Slab}"/>
                 <RadioButtonGroup columns="2" select="" selectedIndex="{oModelDisplay>/InputType}"  editable="false">
@@ -562,59 +702,46 @@
                     </RadioButtonGroup>
 				</OverflowToolbar>
 				</infoToolbar> -->
-            <columns>
-                <Column>
-                  <VBox>
-                  <Text text="{i18n>Product}" visible="{=${oModelDisplay>/ContributionCondition}===1}"/>
-                   <Text text="{i18n>Pack}" visible="{=${oModelDisplay>/ContributionCondition}===2}"/>
-                 </VBox>
-                </Column>
-               
-                <!-- <Column>
+                    <columns>
+                        <Column>
+                            <VBox>
+                                <Text text="{i18n>Product}" visible="{=${oModelDisplay>/ContributionCondition}===1}" />
+                                <Text text="{i18n>Pack}" visible="{=${oModelDisplay>/ContributionCondition}===2}" />
+                            </VBox>
+                        </Column>
+
+                        <!-- <Column>
                     <Text text="{i18n>tblColAction}" />
                 </Column> -->
-                
-            </columns>
-            <items>
-                <ColumnListItem press="onListItemPress">
-                    <cells>
-                        
-                          <VBox>
-                          <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Product/ProductName'}" />
-                          <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Pack/Description'}" />
-                            <!-- <VBox>
+                    </columns>
+                    <items>
+                        <ColumnListItem press="onListItemPress">
+                            <cells>
+                                <VBox>
+                                    <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Product/ProductName'}" />
+                                    <Label visible="{= ${oModelControl>editable} !== true  }" text="{path:'oModelControl2>Pack/Description'}" />
+                                    <!-- <VBox>
                              <Input visible="{= ${oModelControl>editable} === true }" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onValueHelpProductsTable3" placeholder="{i18n>placeHolder3}"  value="{path:'oModelControl>ProductCode',formatter:'.formatter.fmtGetProductName'}" valueStateText="Kindly Enter a Valid Number not starting with 0" />
                             </VBox> -->
-                             </VBox>
-                      
-                        
-                        
-                        <!-- <HBox>
+                                </VBox>
+
+                                <!-- <HBox>
                             <Button visible="{= ${oModelControl>editable} !== true }" icon="sap-icon://edit" tooltip="{i18n>Edit}" type="Transparent" press="onPressCndtnV1"></Button>
                             <Button visible="{= ${oModelControl>editable} === true }" text="{i18n>Save}" tooltip="{i18n>Save}" type="Transparent" press="onPressSaveCndtn2"></Button>
                             <Button icon="sap-icon://delete" type="Transparent" tooltip="{i18n>Delete}" press="onRemovedCndtn2"></Button>
                         </HBox> -->
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-         <HBox visible="{=${oModelDisplay>/ContributionType}===1}" class="sapUiSmallMarginBegin">
-        <Input
-            editable="false"
-			value="{path:'MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
-			description="{i18n>Min}"
-			width="300px"/>
-            <Input
-            editable="false"
-			value="{path:'MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }"
-			description="{i18n>Max}"
-			width="300px"/>
-            
-        </HBox>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <HBox visible="{=${oModelDisplay>/ContributionType}===1}" class="sapUiSmallMarginBegin">
+                    <Input editable="false" value="{path:'MinPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" description="{i18n>Min}" width="300px" />
+                    <Input editable="false" value="{path:'MaxPercentage',type: 'sap.ui.model.type.String',constraints:{search:'^[1-9][0-9]*$',minLength:1,maxLength:6} }" description="{i18n>Max}" width="300px" />
+                </HBox>
+            </VBox>
         </VBox>
-       </VBox>
         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
-            <Title titleStyle="H3" text="5. {i18n>ApplicablePainters}"/>
+            <Title titleStyle="H3" text="5. {i18n>ApplicablePainters}" />
         </Toolbar>
         <f:Form editable="false">
             <f:layout>
@@ -623,9 +750,9 @@
             <f:toolbar>
                 <Toolbar>
                     <RadioButtonGroup editable="false" selectedIndex="{oModelControl2>/Rbtn/AppPainter}" columns="3" select="onRbAppPainter">
-                        <RadioButton text="{i18n>formApplicableLbl1}"/>
-                        <RadioButton text="{i18n>formApplicableLbl2}"/>
-                        <RadioButton text="{i18n>formApplicableLbl16}"/>
+                        <RadioButton text="{i18n>formApplicableLbl1}" />
+                        <RadioButton text="{i18n>formApplicableLbl2}" />
+                        <RadioButton text="{i18n>formApplicableLbl16}" />
                     </RadioButtonGroup>
                 </Toolbar>
             </f:toolbar>
@@ -636,7 +763,7 @@
                             <f:fields>
                                 <MultiInput editable="false" tokens="{oModelControl2>/MultiCombo/Painters}">
                                     <tokens>
-                                        <Token editable="false" text="{oModelControl2>PainterName}" key="{oModelControl2>PainterId}"/>
+                                        <Token editable="false" text="{oModelControl2>PainterName}" key="{oModelControl2>PainterId}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -648,21 +775,20 @@
                         <f:FormElement label="{i18n>formApplicableLbl15}" visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                             <f:fields>
                                 <MultiComboBox editable="false" id="PainterType" selectedKeys="{oModelControl2>/MultiCombo/PainterType}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPainterTypeSet'}">
-                                    <core:Item text="{PainterType}" key="{Id}"/>
+                                    <core:Item text="{PainterType}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl3}" visible="{= ${oModelControl2>/OfferType/ApplicablePainters} &amp;&amp; ${oModelControl2>/Rbtn/AppPainter}===1 }">
                             <f:fields>
                                 <MultiComboBox editable="false" selectedKeys="{oModelControl2>/MultiCombo/ArcheTypes}" id="ArcheTypes" placeholder="{i18n>placeHolder1}" items="{path:'/MasterArcheTypeSet'}">
-                                    <core:Item text="{ArcheType}" key="{Id}"/>
+                                    <core:Item text="{ArcheType}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>GetPainterCount}" visible="{= ${oModelControl2>/Rbtn/AppPainter}!== 2 }">
                             <f:fields>
-                                <Text text ="{path:'ApplicablePainterCount',formatter:'.formatter.fmtCheckNull2'}">
-                                </Text>
+                                <Text text="{path:'ApplicablePainterCount',formatter:'.formatter.fmtCheckNull2'}" />
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
@@ -672,7 +798,7 @@
                         <f:FormElement label="{i18n>formApplicableLbl4}">
                             <f:fields>
                                 <MultiComboBox editable="false" selectedKeys="{oModelControl2>/MultiCombo/Potential}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterPotentialSet'}">
-                                    <core:Item text="{Potential}" key="{Id}"/>
+                                    <core:Item text="{Potential}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -693,38 +819,38 @@
                         <f:FormElement label="{i18n>formRegionLbl1}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/Zones}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{oModelControl2>/MultiEnabled/Zones}" id="idZones" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl2>/MultiCombo/Zones}" items="{path:'/MasterZoneSet' }">
-                                    <core:Item text="{Id}" key="{Id}"/>
+                                    <core:Item text="{Id}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl2}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/Divisions}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{oModelControl2>/MultiEnabled/Divisions}" id="idDivisions" placeholder="{i18n>placeHolder1}" selectedKeys="{oModelControl2>/MultiCombo/Divisions}" items="{/MasterDivisionSet}">
-                                    <core:Item text="{Id}" key="{Id}"/>
+                                    <core:Item text="{Id}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formRegionLbl3}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/Depots}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -732,7 +858,7 @@
                             <f:fields>
                                 <MultiInput editable="false" visible="{oModelControl2>/MultiEnabled/Depots}" placeholder="{i18n>placeHolder1}" id="idDepots" valueHelpOnly="true" tokens="{path:'oModelControl2>/MultiCombo/Depots',templateShareable:false}" valueHelpRequest="onDepotValueHelpOpen">
                                     <tokens>
-                                        <Token editable="false" text="{oModelControl2>DepotId}" key="{oModelControl2>DepotId}"/>
+                                        <Token editable="false" text="{oModelControl2>DepotId}" key="{oModelControl2>DepotId}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -743,41 +869,41 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>formDateRangeFrom}">
                             <f:fields>
-                                <Text text="{path:'PurchaseStartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
+                                <Text text="{path:'PurchaseStartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formDateRangeTo}">
                             <f:fields>
-                                <Text text="{path:'PurchaseEndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                                <Text text="{path:'PurchaseEndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Buyer {i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PCat2}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/PCat2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/PCat2'}">
-                                    <core:Item text="{Category}" key="{Id}"/>
+                                    <core:Item text="{Category}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Buyer {i18n>formApplicableLbl8}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PClass2}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/PClass2}===1 }" required="false" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/PClass2'}">
-                                    <core:Item text="{Classification}" key="{Id}"/>
+                                    <core:Item text="{Classification}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -788,19 +914,19 @@
                         <f:FormElement label="{i18n>formBuyerProducts}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd2}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <!-- <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppProd2}===1 }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppProd2'}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductSet' }">
                                     <core:Item text="{ProductName}" key="{Id}"/>
                                 </MultiComboBox> -->
                                 <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd2}===1}" valueHelpOnly="true" id="AppProd2" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl2>/MultiCombo/AppProd2}">
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -808,8 +934,8 @@
                         <f:FormElement label="{i18n>formBuyerPacks}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppPacks2}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -818,9 +944,18 @@
                                 <!-- <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/AppPacks2}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/AppPacks2'}">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox> -->
-                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks2}===1}" valueHelpOnly="true" id="AppPacks2" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl2>/MultiCombo/AppPacks2}">
+                                <MultiInput
+                                    editable="false"
+                                    placeholder="{i18n>placeHolder1}"
+                                    tokenUpdate="onPackTokenUpdate"
+                                    visible="{= ${oModelControl2>/Rbtn/AppPacks2}===1}"
+                                    valueHelpOnly="true"
+                                    id="AppPacks2"
+                                    valueHelpRequest="handlePackValueHelp"
+                                    tokens="{oModelControl2>/MultiCombo/AppPacks2}"
+                                >
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -828,30 +963,30 @@
                         <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PCat3}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/PCat3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/PCat3'}">
-                                    <core:Item text="{Category}" key="{Id}"/>
+                                    <core:Item text="{Category}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formNonBuyer} {i18n>formApplicableLbl8}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PClass3}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{= ${oModelControl2>/Rbtn/PClass3}===1 }" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectedKeys="{path:'oModelControl2>/MultiCombo/PClass3'}">
-                                    <core:Item text="{Classification}" key="{Id}"/>
+                                    <core:Item text="{Classification}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -862,8 +997,8 @@
                         <f:FormElement label="{i18n>formNon} {i18n>formBuyerProducts}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd3}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -874,7 +1009,7 @@
                                 </MultiComboBox> -->
                                 <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd3}===1}" valueHelpOnly="true" id="AppProd3" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl2>/MultiCombo/AppProd3}">
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -882,16 +1017,25 @@
                         <f:FormElement label="{i18n>formNon} {i18n>formBuyerPacks}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppPacks3}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement>
                             <f:fields>
-                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks3}===1}" valueHelpOnly="true" id="AppPacks3" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl2>/MultiCombo/AppPacks3}">
+                                <MultiInput
+                                    editable="false"
+                                    placeholder="{i18n>placeHolder1}"
+                                    tokenUpdate="onPackTokenUpdate"
+                                    visible="{= ${oModelControl2>/Rbtn/AppPacks3}===1}"
+                                    valueHelpOnly="true"
+                                    id="AppPacks3"
+                                    valueHelpRequest="handlePackValueHelp"
+                                    tokens="{oModelControl2>/MultiCombo/AppPacks3}"
+                                >
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -901,9 +1045,9 @@
             </f:formContainers>
         </f:Form>
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
-            <Title titleStyle="H3" text="6. {i18n>formBonusReward}"/>
+            <Title titleStyle="H3" text="6. {i18n>formBonusReward}" />
         </Toolbar>
-        <MessageStrip visible="{= !${oModelControl2>/OfferType/AdditionalReward} }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/>
+        <MessageStrip visible="{= !${oModelControl2>/OfferType/AdditionalReward} }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true" />
         <f:Form editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
@@ -913,29 +1057,29 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>Description}">
                             <f:fields>
-                                <Text text="{BonusDescription}"/>
+                                <Text text="{BonusDescription}" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formBonusRewardRatio}" visible="{= ${OfferTypeId}=== 4}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" selectedIndex="{oModelControl2>/Rbtn/BRewards}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableLbl7}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl>/Rbtn/PCat4}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="">
                             <f:fields>
                                 <MultiComboBox editable="false" id="PCat4" visible="{oModelControl2>/MultiEnabled/PCat4}" selectedKeys="{path:'oModelControl2>/MultiCombo/PCat4' }" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductCategorySet' }">
-                                    <core:Item text="{Category}" key="{Id}"/>
+                                    <core:Item text="{Category}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
@@ -946,23 +1090,23 @@
                         <f:FormElement label="{i18n>formApplicableLbl8}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/PClass4}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement >
+                        <f:FormElement>
                             <f:fields>
                                 <MultiComboBox editable="false" visible="{oModelControl2>/MultiEnabled/PClass4}" id="PClass4" selectedKeys="{oModelControl2>/MultiCombo/PClass4}" placeholder="{i18n>placeHolder1}" items="{path:'/MasterProductClassificationSet' }" selectionFinish="onBRAppDropChange">
-                                    <core:Item text="{Classification}" key="{Id}"/>
+                                    <core:Item text="{Classification}" key="{Id}" />
                                 </MultiComboBox>
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="{i18n>formApplicableProducts2}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppProd4}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -970,7 +1114,7 @@
                             <f:fields>
                                 <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onProdTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppProd4}===1}" valueHelpOnly="true" id="AppProd4" valueHelpRequest="handleProdValueHelp" tokens="{oModelControl2>/MultiCombo/AppProd4}">
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -978,8 +1122,8 @@
                         <f:FormElement label="{i18n>formApplicableLbl9}">
                             <f:fields>
                                 <RadioButtonGroup editable="false" columns="2" select="onRbChnageMain" selectedIndex="{oModelControl2>/Rbtn/AppPacks4}">
-                                    <RadioButton text="{i18n>All}"/>
-                                    <RadioButton text="{i18n>Specific}"/>
+                                    <RadioButton text="{i18n>All}" />
+                                    <RadioButton text="{i18n>Specific}" />
                                 </RadioButtonGroup>
                             </f:fields>
                         </f:FormElement>
@@ -988,9 +1132,18 @@
                                 <!-- <MultiComboBox editable="false" id="AppPacks4" visible="{oModelControl2>/MultiEnabled/AppPacks4}" selectedKeys="{oModelControl2>/MultiCombo/AppPacks4}" selectionFinish="onBRAppDropChange" placeholder="{i18n>placeHolder1}" items="{path:'/MasterRepProductSkuSet' }">
                                     <core:Item text="{Description}" key="{SkuCode}"/>
                                 </MultiComboBox> -->
-                                <MultiInput editable="false" placeholder="{i18n>placeHolder1}" tokenUpdate="onPackTokenUpdate" visible="{= ${oModelControl2>/Rbtn/AppPacks4}===1}" valueHelpOnly="true" id="AppPacks4" valueHelpRequest="handlePackValueHelp" tokens="{oModelControl2>/MultiCombo/AppPacks4}">
+                                <MultiInput
+                                    editable="false"
+                                    placeholder="{i18n>placeHolder1}"
+                                    tokenUpdate="onPackTokenUpdate"
+                                    visible="{= ${oModelControl2>/Rbtn/AppPacks4}===1}"
+                                    valueHelpOnly="true"
+                                    id="AppPacks4"
+                                    valueHelpRequest="handlePackValueHelp"
+                                    tokens="{oModelControl2>/MultiCombo/AppPacks4}"
+                                >
                                     <tokens>
-                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}"/>
+                                        <Token text="{oModelControl2>Name}" key="{oModelControl2>Id}" />
                                     </tokens>
                                 </MultiInput>
                             </f:fields>
@@ -1035,14 +1188,23 @@
                 </f:FormContainer> -->
             </f:formContainers>
         </f:Form>
-        <Table id="Table3" visible="{= ${oModelControl2>/Rbtn/BRewards}=== 0 &amp;&amp; ${oModelControl2>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table3',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelControl2>/tableBusyDelay}">
+        <Table
+            id="Table3"
+            visible="{= ${oModelControl2>/Rbtn/BRewards}=== 0 &amp;&amp; ${oModelControl2>/OfferType/AdditionalReward}===true }"
+            class="sapUiMediumMarginTop"
+            width="auto"
+            items="{path: 'oModelControl2>/Table/Table3',  templateShareable:false}"
+            noDataText="{i18n>tableNoDataText}"
+            growingScrollToLoad="false"
+            busyIndicatorDelay="{oModelControl2>/tableBusyDelay}"
+        >
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
                     <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume2" selectedIndex="{BonusInputType}">
                         <buttons>
-                            <RadioButton text="{i18n>Table3Label1}"/>
-                            <RadioButton text="{i18n>BonusPercentage}"/>
+                            <RadioButton text="{i18n>Table3Label1}" />
+                            <RadioButton text="{i18n>BonusPercentage}" />
                         </buttons>
                     </RadioButtonGroup>
                 </Toolbar>
@@ -1064,22 +1226,31 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
-                        <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
-                        <Text text="{oModelControl2>BonusPoints}"/>
+                        <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}" />
+                        <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}" />
+                        <Text text="{oModelControl2>BonusPoints}" />
                         <Text text="{oModelControl2>BonusPercentage}" />
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-        <Table id="Table4" visible="{= ${oModelControl2>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl2>/OfferType/AdditionalReward}===true }" class="sapUiMediumMarginTop" width="auto" items="{path: 'oModelControl2>/Table/Table4',  templateShareable:false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false" busyIndicatorDelay="{oModelContro2>/tableBusyDelay}">
+        <Table
+            id="Table4"
+            visible="{= ${oModelControl2>/Rbtn/BRewards}=== 1 &amp;&amp; ${oModelControl2>/OfferType/AdditionalReward}===true }"
+            class="sapUiMediumMarginTop"
+            width="auto"
+            items="{path: 'oModelControl2>/Table/Table4',  templateShareable:false}"
+            noDataText="{i18n>tableNoDataText}"
+            growingScrollToLoad="false"
+            busyIndicatorDelay="{oModelContro2>/tableBusyDelay}"
+        >
             <headerToolbar>
                 <Toolbar>
                     <Title text="{i18n>formBonusRewardRatio}" />
                     <RadioButtonGroup editable="false" columns="2" select=".onRbRRDialogVolume2" selectedIndex="{BonusInputType}">
                         <buttons>
-                            <RadioButton text="{i18n>Table3Label1}"/>
-                            <RadioButton text="{i18n>BonusPercentage}"/>
+                            <RadioButton text="{i18n>Table3Label1}" />
+                            <RadioButton text="{i18n>BonusPercentage}" />
                         </buttons>
                     </RadioButtonGroup>
                 </Toolbar>
@@ -1104,12 +1275,12 @@
             <items>
                 <ColumnListItem press="onListItemPress">
                     <cells>
-                        <VBox >
+                        <VBox>
                             <Label visible="{= ${oModelControl2>/Rbtn/AppPacks4}=== 0}" text="{oModelControl2>Product/ProductName}" />
                             <Label visible="{= ${oModelControl2>/Rbtn/AppPacks4}=== 1}" text="{oModelControl2>Pack/Description}" />
                         </VBox>
-                        <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
-                        <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}"/>
+                        <Text text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />
+                        <Text text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true}}" />
                         <Text text="{oModelControl2>BonusPoints}" />
                         <Text text="{oModelControl2>BonusPercentage}" />
                     </cells>
@@ -1117,7 +1288,7 @@
             </items>
         </Table>
         <Toolbar class="sapUiLargeMarginTop sapUiMediumMarginBottom">
-            <Title titleStyle="H3" text="7. {i18n>AdditionalInformation}"/>
+            <Title titleStyle="H3" text="7. {i18n>AdditionalInformation}" />
         </Toolbar>
         <!-- <MessageStrip visible="{= ${OfferTypeId}!==1 }" class="sapUiSmallMarginBottom" text="{i18n>Meesage1}" showIcon="true"/> -->
         <VBox>
@@ -1125,8 +1296,8 @@
                 <!-- <Title titleStyle="H4" text="{i18n>Condotion1EarnedPoints}" class="sapUiMediumMarginTop" /> -->
                 <RadioButtonGroup editable="false" columns="2" select="onRbRRDialogAddInfo" selectedIndex="{= ${IsSpecificAchieverCount} === false ? 0 : 1 }">
                     <buttons>
-                        <RadioButton text="{i18n>All}"/>
-                        <RadioButton text="{i18n>SpecificPaintercount}"/>
+                        <RadioButton text="{i18n>All}" />
+                        <RadioButton text="{i18n>SpecificPaintercount}" />
                     </buttons>
                 </RadioButtonGroup>
                 <Table id="tableId" visible="{IsSpecificAchieverCount}" items="{path: 'oModelControl2>/Table/Table8',  templateShareable:false}" width="auto" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
@@ -1140,7 +1311,7 @@
                     <columns>
                         <!-- <Column visible="{= ${oModelView>/InputType}===0 }"> -->
                         <Column>
-                            <Label text="{i18n>tblColStartDate}" visible="true" required="true"/>
+                            <Label text="{i18n>tblColStartDate}" visible="true" required="true" />
                         </Column>
                         <Column>
                             <Label text="{i18n>EndDate}" />
@@ -1158,9 +1329,19 @@
                     <items>
                         <ColumnListItem>
                             <cells>
-                                <Label text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }"/>
- <DatePicker displayFormat="dd/MM/yyyy" navigate="onNavEndDtDspCnd1" editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],
-									formatter:'.formatter.fnEndDateContion1Display'}" minDate="{oModelControl2>StartDate}" change="onEndDateCndtAddInfo" width="50%" dateValue="{oModelControl2>EndDate}" placeholder="DD/MM/yyyy" required="true"/>
+                                <Label text="{path:'oModelControl2>StartDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" />
+                                <DatePicker
+                                    displayFormat="dd/MM/yyyy"
+                                    navigate="onNavEndDtDspCnd1"
+                                    editable="{parts:['OfferStatus','oModelControl3>/LoggedInUser/UserTypeId'],
+									formatter:'.formatter.fnEndDateContion1Display'}"
+                                    minDate="{oModelControl2>StartDate}"
+                                    change="onEndDateCndtAddInfo"
+                                    width="50%"
+                                    dateValue="{oModelControl2>EndDate}"
+                                    placeholder="DD/MM/yyyy"
+                                    required="true"
+                                />
                                 <!-- <Label text="{path:'oModelControl2>EndDate',type:'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', strictParsing: true} }" /> -->
                                 <Label text="{path:'oModelControl2>AchieverCount'}" />
                                 <Label text="{oModelDisplay>/AchievedPainterCount}" />
@@ -1171,7 +1352,7 @@
             </items>
         </VBox>
 
-         <f:Form id="FormDisplay2" editable="false">
+        <f:Form id="FormDisplay2" editable="false">
             <f:layout>
                 <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false" />
             </f:layout>
@@ -1180,13 +1361,12 @@
                     <f:formElements>
                         <f:FormElement label="{i18n>NoOfRedemptionAllowed}">
                             <f:fields>
-                                <Text text="{path:'oModelDisplay>/RedemptionCycle'}"/>
+                                <Text text="{path:'oModelDisplay>/RedemptionCycle'}" />
                             </f:fields>
                         </f:FormElement>
-                         </f:formElements>
+                    </f:formElements>
                 </f:FormContainer>
-                </f:formContainers>
+            </f:formContainers>
         </f:Form>
     </VBox>
-    
 </core:FragmentDefinition>
