@@ -191,8 +191,9 @@
                         <l:GridData linebreak="true" />
                     </layoutData>
                 </VBox>
-                <Button text="Add more" press="onPressAddMore" />
+                
             </VBox>
+            <Button text="Add more" press="onPressAddMore" />
         </l:Grid>
     </VBox>
 
