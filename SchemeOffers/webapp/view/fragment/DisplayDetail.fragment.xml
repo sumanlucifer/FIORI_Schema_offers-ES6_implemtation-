@@ -93,7 +93,7 @@
             </f:formContainers>
         </f:Form> 
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
-            <Title titleStyle="H1" text="{i18n>OfferImage}"/>
+            <Title text="{i18n>OfferImage}"/>
              <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl2>/Table/Table11', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
             <headerToolbar>
                 <Toolbar>
@@ -123,7 +123,7 @@
                         <VBox>
                             <Select
                                 forceSelection="false"
-                                selectedKey="{oModelControl>LanguageCode}"
+                                selectedKey="{oModelControl2>LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
                                                                 sorter: { path: 'Id' },
@@ -158,7 +158,7 @@
                             </FlexBox>
                         </VBox>
                         <VBox>
-                            <Text text="{oModelControl>MediaName}" />
+                            <Text text="{oModelControl2>MediaName}" />
                         </VBox>
                         <HBox>
                             <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
