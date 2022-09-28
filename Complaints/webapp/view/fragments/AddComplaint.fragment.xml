@@ -148,23 +148,19 @@
                     <VBox>
                         <Label class="sapUiSmallMarginTopBottom" text="Product {oModelView>ProductNum}" design="Bold" />
                         <VBox>
-                            <HBox>
-                                <Label text="{i18n>LblCategory}" required="true" />
-                                <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
-                                    <core:Item key="{Id}" text="{Category}" />
-                                </ComboBox>
-                            </HBox>
-                            <!-- <layoutData>
+                            <Label text="{i18n>LblCategory}" required="true" />
+                            <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
+                                <core:Item key="{Id}" text="{Category}" />
+                            </ComboBox>
+                            <layoutData>
                                 <l:GridData linebreak="true" />
                             </layoutData>
                         </VBox>
-                        <VBox> -->
-                            <HBox>
-                                <Label text="{i18n>LblProduct}" required="true" />
-                                <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
-                                    <core:Item key="{Id}" text="{ProductName}" />
-                                </ComboBox>
-                            </HBox>
+                        <VBox>
+                            <Label text="{i18n>LblProduct}" required="true" />
+                            <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                                <core:Item key="{Id}" text="{ProductName}" />
+                            </ComboBox>
                         </VBox>
                         <VBox>
                             <Label required="true" text="{i18n>LblPack}" />
@@ -191,14 +187,8 @@
                     </VBox>
                 </items>
             </VBox>
-
-            <VBox >
-                <FlexBox alignItems="End">
-                    <Button text="Add more" press="onPressAddMore" />
-                </FlexBox>
-            </VBox>
-            
+            <Button text="Add more" press="onPressAddMore" />
         </l:Grid>
     </VBox>
-</core:FragmentDefinition>
 
+</core:FragmentDefinition>
