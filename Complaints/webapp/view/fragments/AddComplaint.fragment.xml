@@ -146,6 +146,7 @@
             <VBox items="{oModelView>/addRewardPoint}">
                 <items>
                     <VBox>
+                        <Label text="Product {oModelView>productNum}" design="Bold" />
                         <VBox>
                             <Label text="{i18n>LblCategory}" required="true" />
                             <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">

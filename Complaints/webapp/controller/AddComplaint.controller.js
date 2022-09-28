@@ -100,6 +100,7 @@ sap.ui.define(
                             Name: "",
                         },
                         addRewardPoint:[{
+                            "productNum": 1,
                             "CategoryCode": "",
                             "ProductCode": "",
                             "PainterComplainProducts": {
@@ -663,9 +664,11 @@ sap.ui.define(
                     var oModel = this.getView().getModel("oModelView");
                     var oFamiDtlMdl = oModel.getProperty("/addRewardPoint");
                     var bFlag = true;
+                    var productNum = oModel.getProperty("/addRewardPoint/productNum") +1;
                     
                     if (bFlag == true) {
                         oFamiDtlMdl.push({
+                            "productNum": productNum, 
                             "CategoryCode": "",
                             "ProductCode": "",
                             "PainterComplainProducts": {
