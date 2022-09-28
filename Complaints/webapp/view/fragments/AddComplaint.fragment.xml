@@ -149,7 +149,7 @@
                     <!-- Binded name property to display validation error  -->
                     <!-- <ComboBox width="100%" change="filterProducts"   editable="{=  ${ResolutionId} === null }" -->
                     <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxCategoryType' }" -->
-                    <ComboBox width="100%" change="filterProducts" selectedKey="{oModelControl>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
+                    <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
                         <core:Item key="{Id}" text="{Category}" />
                     </ComboBox>
                     <layoutData>
@@ -161,7 +161,7 @@
                     <!-- <ComboBox id="idProduct" width="100%" change="filterPacks"  editable="{= ${oModelControl>/CategoryCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"   -->
                     <!-- editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtProductCmbx' }"  -->
 
-                    <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelControl>/ProductCode}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                    <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>/ProductCode}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
                         <core:Item key="{Id}" text="{ProductName}" />
                     </ComboBox>
                 </VBox>
@@ -192,8 +192,8 @@
                     </layoutData>
                 </VBox>
                 <Button text="Add more" press="onPressAddMore" />
-            </l:Grid>
-        </VBox>
+            </VBox>
+        </l:Grid>
     </VBox>
 
     <!-- <VBox width="100%"> -->

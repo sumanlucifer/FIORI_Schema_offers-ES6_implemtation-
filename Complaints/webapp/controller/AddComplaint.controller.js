@@ -652,6 +652,22 @@ sap.ui.define(
                 onExit: function () { },
                 onPressAddMore: function() {
                     debugger;
+                    var oModel = this.getView().getModel("oModelView");
+                    var oFamiDtlMdl = oModel.getProperty("/addRewardPoint");
+                    var bFlag = true;
+                    
+                    if (bFlag == true) {
+                        oFamiDtlMdl.push({
+                            ProductCode: "",
+                            PainterComplainProducts: {
+                                ProductSKUCode:"",
+                                ProductQuantity:"",
+                                Points: "",
+                            },
+                        });
+
+                        //relvalue and editable properties are added here and will be removed in the postsave function
+                    }
                 }
             }
         );
