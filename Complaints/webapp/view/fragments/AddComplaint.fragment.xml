@@ -167,6 +167,15 @@
                                 <core:Item key="{SkuCode}" text="{Description}" />
                             </ComboBox>
                         </VBox>
+                        <VBox>
+                            <Label required="true" text="{i18n>LblQuantity}" />
+                            <ComboBox change="onPointsChange" selectedKey="{path:'oModelView>PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}">
+                                <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
+                            </ComboBox>
+                            <layoutData>
+                                <l:GridData linebreak="true" />
+                            </layoutData>
+                        </VBox>
                     </VBox>
                     <!-- <VBox>
                         <Label text="{i18n>LblCategory}" required="true" />
