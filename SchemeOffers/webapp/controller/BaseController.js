@@ -880,7 +880,7 @@ sap.ui.define(
             },
 
             onAddProductPack: function () {
-              
+
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl").getProperty("/Table/Table11");
 
@@ -925,15 +925,90 @@ sap.ui.define(
             },
 
 
+            // onDeleteFile: function (oEvent) {
+            //     debugger;
+            //     this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
+            //     var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("oModelControl").getPath().split("/")[3]);
+            //     var aTableData1 = this.getViewModel("oModelControl").getProperty("/");
+            //     var aTableData = this.getViewModel("oModelControl").getProperty("/Table/Table11");
+            //     aTableData.splice(iRowNumberToDelete, 1);
+            //     this.getView().getModel("oModelControl").refresh();
+            // },
+
             onDeleteFile: function (oEvent) {
-                debugger;
-                this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
-                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("oModelControl").getPath().split("/")[3]);
-                var aTableData1 = this.getViewModel("oModelControl").getProperty("/");
-                var aTableData = this.getViewModel("oModelControl").getProperty("/Table/Table11");
-                aTableData.splice(iRowNumberToDelete, 1);
-                this.getView().getModel("oModelControl").refresh();
+
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                //oModel.setProperty("bNew", true);
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath()
+                    .split("/");
+                var aCatalogue = oModel.getProperty("/Table/Table11");
+                var othat = this;
+                MessageBox.confirm(
+                    "Kindly confirm to delete the file.",
+                    {
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                othat.onPressRemoveCatalogue(sPath, aCatalogue);
+                            }
+                        },
+                    }
+                );
             },
+
+            onPressRemoveCatalogue: function (sPath, aCatalogue) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+
+                var index = parseInt(sPath[sPath.length - 1]);
+                var delItems = [];
+                var property = this._property;
+
+                // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                //To DO promises for sync
+                for (var i = 0; i <= aCatalogue.length; i++) {
+
+                    if (i == index) {
+                        delItems = aCatalogue[i];
+                        if (delItems.MediaName != null) {
+                            oModel.setProperty("/bBusy", true);
+                            jQuery.ajax({
+                                method: "DELETE",
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + property + "/$value?doc_type=banner&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                // data: delItems,
+                                success: function (data) {
+                                    // aCatalogue.splice(i);
+                                    oModel.setProperty("/bBusy", false);
+                                    aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                                    var sMessage = "Catalogue Deleted!";
+                                    MessageToast.show(sMessage);
+                                    oModel.refresh(true);
+
+                                },
+                                error: function () { },
+                            })
+
+                        }
+                        else {
+                            aCatalogue.splice(i);
+                        }
+                    }
+
+
+                };
+
+
+                oModel.refresh(true);
+            },
+
 
             onAddPamphlet: function () {
                 var oView = this.getView();

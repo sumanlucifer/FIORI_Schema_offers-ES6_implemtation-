@@ -1,4 +1,9 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core">
+<core:FragmentDefinition 
+xmlns="sap.m"
+ xmlns:l="sap.ui.layout" 
+xmlns:f="sap.ui.layout.form"
+ xmlns:u="sap.ui.unified" 
+ xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="1. {i18n>BasicInformation}" />
@@ -134,7 +139,7 @@
                 </headerToolbar>
                 <columns>
                     <Column>
-                        <Label text="{i18n>selectLanguage}" required="true" />
+                        <Label text="{i18n>selectLanguage}" required="false" />
                     </Column>
                     <Column>
                         <Text text="{i18n>uploadImage}" />

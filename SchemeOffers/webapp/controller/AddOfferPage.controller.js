@@ -562,7 +562,7 @@ sap.ui.define(
                                                     //     c7 = othat._UploadFile(oData, bFileFlag);
                                                     // });
                                                     // added by deepanjali                                                     
-                                                     c6.then(function (oData) {
+                                                    c6.then(function (oData) {
                                                         c7 = othat._uploadbanner(oData);
                                                     });
                                                 })
