@@ -1,9 +1,4 @@
-<core:FragmentDefinition 
-xmlns="sap.m"
- xmlns:l="sap.ui.layout" 
-xmlns:f="sap.ui.layout.form"
- xmlns:u="sap.ui.unified" 
- xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="1. {i18n>BasicInformation}" />
@@ -141,9 +136,9 @@ xmlns:f="sap.ui.layout.form"
                     <Column>
                         <Label text="{i18n>selectLanguage}" required="false" />
                     </Column>
-                    <Column>
+                    <!-- <Column>
                         <Text text="{i18n>uploadImage}" />
-                    </Column>
+                    </Column> -->
                     <Column>
                         <Text text="{i18n>medianame}" />
                     </Column>
@@ -157,6 +152,7 @@ xmlns:f="sap.ui.layout.form"
                         <cells>
                             <VBox>
                                 <Select
+                                    editable="false"
                                     forceSelection="false"
                                     selectedKey="{oModelControl2>LanguageCode}"
                                     items="{
@@ -168,7 +164,7 @@ xmlns:f="sap.ui.layout.form"
                                     <core:Item key="{LanguageCode}" text="{Language}" />
                                 </Select>
                             </VBox>
-                            <VBox>
+                            <!-- <VBox>
                                 <FlexBox>
                                     <VBox>
                                         <u:FileUploader
@@ -191,14 +187,18 @@ xmlns:f="sap.ui.layout.form"
                                         </HBox>
                                     </VBox>
                                 </FlexBox>
-                            </VBox>
+                            </VBox> -->
                             <VBox>
                                 <Text text="{oModelControl2>MediaName}" />
                             </VBox>
                             <HBox>
+                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPdf" class="sapUiTinyMarginEnd" />
+                            </HBox>
+
+                            <!-- <HBox>
                                 <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
                                 <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
-                            </HBox>
+                            </HBox> -->
                         </cells>
                     </ColumnListItem>
                 </items>
