@@ -11,6 +11,8 @@ sap.ui.define(
         "sap/m/MessageBox",
         "sap/m/MessageToast",
         "sap/m/Avatar",
+        "jquery.sap.global",
+        "sap/m/library",
         "sap/ui/core/ValueState",
         "sap/ui/core/util/Export",
         "sap/ui/core/util/ExportTypeCSV",
@@ -2523,6 +2525,21 @@ sap.ui.define(
                 //console.log(sSource)
                 sap.m.URLHelper.redirect(sSource, true);
             },
+            // added by deepanjali start 
+            openPdf: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+                var sOfferId = oView
+                    .getModel("oModelControl3")
+                    .getProperty("/OfferId");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl2");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sOfferId + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+                sap.m.URLHelper.redirect(sSource, true);
+
+
+
+            },
+            // added by deepanjali end
             exportExcel: function () {
                 var oExport = new Export({
                     // Type that will be used to generate the content. Own ExportType's can be created to support other formats
