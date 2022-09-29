@@ -112,8 +112,8 @@
                 <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 90  }"  value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
                 
                 <!--Resolution Details-->
+                <core:Title text="{i18n>TtlResolutionDetails}" />
                 <VBox visible="{= ${oModelControl>/resolutionDetail}}">
-                    <core:Title text="{i18n>TtlResolutionDetails}" />
                     <VBox renderType="Bare">
                         <Label text="{i18n>ResolutionType}" required="true" />
                         <Text text="{i18n>TxtResolution}" />
