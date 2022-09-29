@@ -187,12 +187,11 @@
                     </VBox>
                 </items>
             </VBox>
-            
         </l:Grid>
-        <VBox visible="{= ${oModelControl>/resolutionDetail}}">
-                <FlexBox alignItems="End" >
-                    <Button text="Add more" press="onPressAddMore" />
-                </FlexBox>
+        <VBox class="sapUiSmallMargin" visible="{= ${oModelControl>/resolutionDetail}}">
+            <FlexBox height="100px" alignItems="End" justifyContent="End">
+                <Button text="Add more" press="onPressAddMore" />
+            </FlexBox>
         </VBox>
     </VBox>
 </core:FragmentDefinition>
