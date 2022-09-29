@@ -190,9 +190,9 @@
         </l:Grid>
     </VBox>
     <VBox>
-        <Flexbox alignItems="End" >
-        <Button text="Add more" press="onPressAddMore" />
-        </Flexbox>
+        <FlexBox alignItems="End" >
+            <Button text="Add more" press="onPressAddMore" />
+        </FlexBox>
     </VBox>
 
 </core:FragmentDefinition>
