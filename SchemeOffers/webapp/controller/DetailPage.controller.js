@@ -81,7 +81,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,MediaList";
+                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,BannerMediaList,PamphletMediaList";
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/OfferSet(" + oProp + ")",
@@ -509,7 +509,7 @@ sap.ui.define(
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                    "OfferBonusRewardRatio/Product,MediaList,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferContributionRatio/Product,OfferContributionRatio/Pack";
+                    "OfferBonusRewardRatio/Product,BannerMediaList,PamphletMediaList,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                 return new Promise((resolve, reject) => {
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
