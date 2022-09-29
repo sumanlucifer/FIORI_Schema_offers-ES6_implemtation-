@@ -187,12 +187,11 @@
                     </VBox>
                 </items>
             </VBox>
+            <VBox visible="{= ${oModelControl>/resolutionDetail}}">
+                <FlexBox alignItems="End" >
+                    <Button text="Add more" press="onPressAddMore" />
+                </FlexBox>
+            </VBox>
         </l:Grid>
     </VBox>
-    <VBox>
-        <FlexBox alignItems="End" >
-            <Button text="Add more" press="onPressAddMore" />
-        </FlexBox>
-    </VBox>
-
 </core:FragmentDefinition>
