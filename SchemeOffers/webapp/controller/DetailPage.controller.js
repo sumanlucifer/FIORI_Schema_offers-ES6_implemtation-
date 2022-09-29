@@ -71,6 +71,7 @@ sap.ui.define(
                 });
             },
             _onObjectMatched: function (oEvent) {
+                debugger;
                 var oProp = window.decodeURIComponent(
                     oEvent.getParameter("arguments").prop
                 );
@@ -78,7 +79,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails";
+                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,MediaList";
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/OfferSet(" + oProp + ")",
