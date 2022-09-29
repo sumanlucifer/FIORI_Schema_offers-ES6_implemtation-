@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:semantic="sap.f.semantic" xmlns:uxap="sap.uxap" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core">
     <VBox class="sapUiSmallMargin">
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="1. {i18n>BasicInformation}" />
@@ -123,12 +123,13 @@
         </f:Form>
         <VBox>
             <Label design="Bold" text="{i18n>OfferImage}" required="false" />
-              <Table id="idPdf" width="auto" busyIndicatorDelay="0" items="{path: 'oModelControl2>/Table/Table11', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+
+            <Table id="idPdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl2>/Table/Table11', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <!-- <Title text="{i18n>catalogues}" /> -->
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" press="onAddProductPack" type="Emphasized" text="AddP" />
+                        <!-- <Button icon="sap-icon://add" press="onAddProductPack" type="Emphasized" text="AddP" /> -->
                     </Toolbar>
                 </headerToolbar>
                 <columns>
@@ -151,8 +152,8 @@
                         <cells>
                             <VBox>
                                 <Select
-                                    editable="false"
                                     forceSelection="false"
+                                    editable="false"
                                     selectedKey="{oModelControl2>LanguageCode}"
                                     items="{
                                                                 path: '/MasterLanguageSet',
@@ -192,12 +193,8 @@
                             </VBox>
                             <HBox>
                                 <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPdf" class="sapUiTinyMarginEnd" />
+                                <!-- <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" /> -->
                             </HBox>
-
-                            <!-- <HBox>
-                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
-                                <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
-                            </HBox> -->
                         </cells>
                     </ColumnListItem>
                 </items>
