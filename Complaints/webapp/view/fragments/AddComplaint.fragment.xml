@@ -140,13 +140,13 @@
             </VBox>
         </l:Grid>
 
+        <Label class="sapUiSmallMargin" visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
         <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
-            <Label text="{i18n>TtlRewardPointDetails}" design="Bold" />
             <!-- Below fields are editable if Resolution ID is null -->
             <VBox items="{oModelView>/addRewardPoint}">
                 <items>
-                    <VBox>
-                        <Label text="Product {oModelView>ProductNum}" design="Bold" />
+                    <VBox width="100%">
+                        <Label class="sapUiSmallMarginTopBottom" text="Product {oModelView>ProductNum}" design="Bold" />
                         <VBox>
                             <Label text="{i18n>LblCategory}" required="true" />
                             <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
@@ -187,8 +187,11 @@
                     </VBox>
                 </items>
             </VBox>
-            <Button text="Add more" press="onPressAddMore" />
         </l:Grid>
+        <VBox class="sapUiSmallMargin" visible="{= ${oModelControl>/resolutionDetail}}">
+            <FlexBox height="100px" alignItems="End" justifyContent="End">
+                <Button text="Add more" press="onPressAddMore" />
+            </FlexBox>
+        </VBox>
     </VBox>
-
 </core:FragmentDefinition>
