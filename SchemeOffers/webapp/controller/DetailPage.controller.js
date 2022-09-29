@@ -507,7 +507,7 @@ sap.ui.define(
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                    "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferContributionRatio/Product,OfferContributionRatio/Pack";
+                    "OfferBonusRewardRatio/Product,MediaList,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                 return new Promise((resolve, reject) => {
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
@@ -530,27 +530,14 @@ sap.ui.define(
                 var oModelControl2 = oView.getModel("oModelControl2");
                 var Table1 = [],
                     Table2 = [];
+                var Table11 = [];
                 if (oData["OfferRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
                         "/Table/Table2",
                         oData["OfferRewardRatio"]["results"]
                     );
                 }
-                // if (oData["IsSpecificApplicablePack"] === false) {
-                //     if (oData["OfferRewardRatio"]["results"].length > 0) {
-                //         oModelControl2.setProperty(
-                //             "/Table/Table2",
-                //             oData["OfferRewardRatio"]["results"]
-                //         );
-                //     }
-                // } else {
-                //     if (oData["OfferRewardRatio"]["results"].length > 0) {
-                //         oModelControl2.setProperty(
-                //             "/Table/Table2",
-                //             oData["OfferRewardRatio"]["results"]
-                //         );
-                //     }
-                // }
+
                 if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
                         "/Table/Table3",
@@ -597,13 +584,14 @@ sap.ui.define(
                         oData["OfferAchiever"]["results"]
                     );
                 }
-                //deleted painters
-                // if (oData["OfferDeselectedPainter"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/TableDelPainters",
-                //         oData["OfferDeselectedPainter"]["results"]
-                //     );
-                // }
+                /// added by deepanjali start ///
+                if (oData["MediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["MediaList"]["results"]
+                    );
+                }
+                /// added by deepanjali end ///
                 if (oData["OfferContributionRatio"]["results"].length > 0) {
                     if (oData["ContributionType"] === 0) {
                         console.log("table9")
