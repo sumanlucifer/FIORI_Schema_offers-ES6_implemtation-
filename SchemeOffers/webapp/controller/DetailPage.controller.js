@@ -587,10 +587,10 @@ sap.ui.define(
                     );
                 }
                 /// added by deepanjali start ///
-                if (oData["MediaList"]["results"].length > 0) {
+                if (oData["BannerMediaList"]["results"].length > 0) {
                     oModelControl2.setProperty(
                         "/Table/Table11",
-                        oData["MediaList"]["results"]
+                        oData["BannerMediaList"]["results"]
                     );
                 }
                 /// added by deepanjali end ///
@@ -2526,19 +2526,19 @@ sap.ui.define(
                 sap.m.URLHelper.redirect(sSource, true);
             },
             // added by deepanjali start 
-            openPdf: function (oEvent) {
-                debugger;
-                var oView = this.getView();
-                var sOfferId = oView
-                    .getModel("oModelControl3")
-                    .getProperty("/OfferId");
-                var oContext = oEvent.getSource().getBindingContext("oModelControl2");
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sOfferId + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
-                sap.m.URLHelper.redirect(sSource, true);
+            // openPdf: function (oEvent) {
+            //     debugger;
+            //     var oView = this.getView();
+            //     var sOfferId = oView
+            //         .getModel("oModelControl3")
+            //         .getProperty("/OfferId");
+            //     var oContext = oEvent.getSource().getBindingContext("oModelControl2");
+            //     var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sOfferId + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+            //     sap.m.URLHelper.redirect(sSource, true);
 
 
 
-            },
+            // },
             // added by deepanjali end
             exportExcel: function () {
                 var oExport = new Export({
