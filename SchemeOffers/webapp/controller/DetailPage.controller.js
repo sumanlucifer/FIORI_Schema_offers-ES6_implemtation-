@@ -11,6 +11,8 @@ sap.ui.define(
         "sap/m/MessageBox",
         "sap/m/MessageToast",
         "sap/m/Avatar",
+        "jquery.sap.global",
+        "sap/m/library",
         "sap/ui/core/ValueState",
         "sap/ui/core/util/Export",
         "sap/ui/core/util/ExportTypeCSV",
@@ -71,6 +73,7 @@ sap.ui.define(
                 });
             },
             _onObjectMatched: function (oEvent) {
+                debugger;
                 var oProp = window.decodeURIComponent(
                     oEvent.getParameter("arguments").prop
                 );
@@ -78,7 +81,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails";
+                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,MediaList";
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/OfferSet(" + oProp + ")",
@@ -506,7 +509,7 @@ sap.ui.define(
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
-                    "OfferBonusRewardRatio/Product,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferContributionRatio/Product,OfferContributionRatio/Pack";
+                    "OfferBonusRewardRatio/Product,MediaList,OfferBonusRewardRatio/Pack,OfferSpecificPainter/Painter,ParentOffer,OfferConditions,OfferEarnedPointsCondition,OfferProductValueCondition/Product,OfferRedemptionCycleCondition,OfferAchiever,OfferContributionRatio/Product,OfferContributionRatio/Pack";
                 return new Promise((resolve, reject) => {
                     oView.getModel().read("/" + sPath, {
                         urlParameters: {
@@ -529,27 +532,14 @@ sap.ui.define(
                 var oModelControl2 = oView.getModel("oModelControl2");
                 var Table1 = [],
                     Table2 = [];
+                var Table11 = [];
                 if (oData["OfferRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
                         "/Table/Table2",
                         oData["OfferRewardRatio"]["results"]
                     );
                 }
-                // if (oData["IsSpecificApplicablePack"] === false) {
-                //     if (oData["OfferRewardRatio"]["results"].length > 0) {
-                //         oModelControl2.setProperty(
-                //             "/Table/Table2",
-                //             oData["OfferRewardRatio"]["results"]
-                //         );
-                //     }
-                // } else {
-                //     if (oData["OfferRewardRatio"]["results"].length > 0) {
-                //         oModelControl2.setProperty(
-                //             "/Table/Table2",
-                //             oData["OfferRewardRatio"]["results"]
-                //         );
-                //     }
-                // }
+
                 if (oData["OfferBonusRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
                         "/Table/Table3",
@@ -596,13 +586,14 @@ sap.ui.define(
                         oData["OfferAchiever"]["results"]
                     );
                 }
-                //deleted painters
-                // if (oData["OfferDeselectedPainter"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/TableDelPainters",
-                //         oData["OfferDeselectedPainter"]["results"]
-                //     );
-                // }
+                /// added by deepanjali start ///
+                if (oData["MediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["MediaList"]["results"]
+                    );
+                }
+                /// added by deepanjali end ///
                 if (oData["OfferContributionRatio"]["results"].length > 0) {
                     if (oData["ContributionType"] === 0) {
                         console.log("table9")
@@ -2534,6 +2525,21 @@ sap.ui.define(
                 //console.log(sSource)
                 sap.m.URLHelper.redirect(sSource, true);
             },
+            // added by deepanjali start 
+            openPdf: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+                var sOfferId = oView
+                    .getModel("oModelControl3")
+                    .getProperty("/OfferId");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl2");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + sOfferId + "/$value?doc_type=pdf&file_name=" + oContext.getProperty("MediaName") + "&language_code=" + oContext.getProperty("LanguageCode");
+                sap.m.URLHelper.redirect(sSource, true);
+
+
+
+            },
+            // added by deepanjali end
             exportExcel: function () {
                 var oExport = new Export({
                     // Type that will be used to generate the content. Own ExportType's can be created to support other formats
