@@ -563,7 +563,7 @@ sap.ui.define(
                                                     // });
                                                     // added by deepanjali                                                     
                                                     c6.then(function (oData) {
-                                                        c7 = othat._uploadbanner(oData);
+                                                        c7 = othat._uploadBanner(oData);
                                                     });
                                                 })
                                             })
@@ -598,7 +598,7 @@ sap.ui.define(
             },
 
             // added by deepanjali start
-            _uploadbanner: function (oData) {
+            _uploadBanner: function (oData) {
                 debugger;
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
@@ -617,6 +617,34 @@ sap.ui.define(
                     jQuery.ajax({
                         method: "PUT",
                         url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
+
+                        },
+                        error: function () { },
+                    })
+
+                });
+
+            },
+
+            _uploadPhamplet: function (oData) {
+                debugger;
+                var oView = this.getView();
+                var oModel = this.getComponentModel();
+                var oModel = this.getView().getModel("oModelControl");
+                var phamplet = oModel.getProperty("/Table/Table12");
+
+                //To DO promises for sync
+                // var that=this;
+                phamplet.forEach(function (ele) {
+                    //  var isValid= that.checkFileName(ele.fileName);
+                    jQuery.ajax({
+                        method: "PUT",
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                         cache: false,
                         contentType: false,
                         processData: false,
