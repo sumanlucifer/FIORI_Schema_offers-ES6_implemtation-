@@ -1370,7 +1370,9 @@ sap.ui.define(
                         Table7: [],
                         Table8: [],
                         Table9: [],
-                        Table10: []
+                        Table10: [],
+                        Table11: [],
+                        Table12: []
                     },
                     oData: {
                         Products: [],
@@ -1457,6 +1459,18 @@ sap.ui.define(
                     oModelControl2.setProperty(
                         "/Table/Table2",
                         oData["OfferRewardRatio"]["results"]
+                    );
+                }
+                if (oData["BannerMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["BannerMediaList"]["results"]
+                    );
+                }
+                if (oData["PamphletMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table12",
+                        oData["PamphletMediaList"]["results"]
                     );
                 }
                 // if (oData["IsSpecificApplicablePack"] === false) {
