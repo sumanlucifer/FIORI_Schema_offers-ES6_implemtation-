@@ -1830,16 +1830,20 @@ sap.ui.define(
                 var bTableCondition4 = this._CheckTableCondition4();
                 var bTableCondition5 = this._CheckTableCondition5();
                 var bTableCondition6 = this._CheckTableCondition6();
-                var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                // commented by deepanjali
+                // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                // commented by deepanjali
                 var bFileFlag = false;
                 if (bFlagValidate == false) {
                     MessageToast.show("Kindly Input All the Mandatory(*) fields.");
                     return;
                 }
+                // commented by deepanjali
                 //check if it has file
-                if (sFile !== undefined) {
-                    bFileFlag = true;
-                }
+                // if (sFile !== undefined) {
+                //     bFileFlag = true;
+                // }
+                // commented by deepanjali
                 if (!aTableValidation[0]) {
                     MessageToast.show(aTableValidation[1]);
                     return;

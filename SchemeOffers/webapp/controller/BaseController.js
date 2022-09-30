@@ -987,9 +987,9 @@ sap.ui.define(
 
                 var index = parseInt(sPath[sPath.length - 1]);
                 var delItems = [];
-                var property = this._property;
 
-                // aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+
                 //To DO promises for sync
                 for (var i = 0; i <= aCatalogue.length; i++) {
 
@@ -999,7 +999,7 @@ sap.ui.define(
                             oModel.setProperty("/bBusy", true);
                             jQuery.ajax({
                                 method: "DELETE",
-                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + property + "/$value?doc_type=banner&file_name=" + delItems.MediaName + "&language_code=" + delItems.LanguageCode,
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
                                 cache: false,
                                 contentType: false,
                                 processData: false,
