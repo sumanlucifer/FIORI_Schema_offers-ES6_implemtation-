@@ -561,8 +561,9 @@ sap.ui.define(
                                                     // added by deepanjali                                                     
                                                     c6.then(function (oData) {
                                                         c7 = othat._uploadBanner(oData);
+                                                          othat._uploadPhamplet(oData);
                                                     }).then(function (oData) {
-                                                        c8 = othat._uploadPhamplet(oData);
+                                                        // c8 = othat._uploadPhamplet(oData);
                                                     
                                                 })
 
