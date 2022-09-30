@@ -541,7 +541,7 @@ sap.ui.define(
                 }
                 if (oData["PamphletMediaList"]["results"].length > 0) {
                     oModelControl2.setProperty(
-                        "/Table/Table11",
+                        "/Table/Table12",
                         oData["PamphletMediaList"]["results"]
                     );
                 }
