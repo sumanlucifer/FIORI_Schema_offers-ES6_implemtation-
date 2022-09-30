@@ -530,6 +530,7 @@ sap.ui.define(
 
 
             _postDataToSave: function (bFileFlag) {
+                debugger;
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7, c8;
                 var othat = this;
 
@@ -557,169 +558,165 @@ sap.ui.define(
                                                 c5A = othat._CreateWorkFlowData(oPayLoad);
                                                 c5A.then(function () {
                                                     c6 = othat._CreateOffer(oPayLoad);
-                                                    // commented by deepanjali                                                     
-                                                    // c6.then(function (oData) {
-                                                    //     c7 = othat._UploadFile(oData, bFileFlag);
-                                                    // });
                                                     // added by deepanjali                                                     
                                                     c6.then(function (oData) {
                                                         c7 = othat._uploadBanner(oData);
-                                                        c7.then(function (oData) {
-                                                            c8 = othat._uploadPhamplet(oData);
-                                                        });
-                                                    })
-
+                                                    }).then(function (oData) {
+                                                        c8 = othat._uploadPhamplet(oData);
+                                                    });
                                                 })
+
                                             })
-                                        });
+                                        })
                                     });
                                 });
                             });
                         });
-                    })
-                });
-            },
-            _CreateOffer: function (oPayLoad) {
-                //console.log(oPayLoad);
-                var promise = jQuery.Deferred();
-                var othat = this;
-                var oView = this.getView();
-                var oDataModel = oView.getModel();
-                //console.log(oPayLoad);
-                return new Promise((resolve, reject) => {
-                    oDataModel.create("/OfferSet", oPayLoad, {
-                        success: function (data) {
-                            MessageToast.show("Offer Successfully Created.");
-                            othat._navToHome();
-                            resolve(data);
-                        },
-                        error: function (data) {
-                            MessageToast.show("Error In Creating the Schemes.");
-                            reject(data);
-                        },
                     });
-                });
-            },
+                })
+            });
+    },
+    _CreateOffer: function (oPayLoad) {
+        //console.log(oPayLoad);
+        var promise = jQuery.Deferred();
+        var othat = this;
+        var oView = this.getView();
+        var oDataModel = oView.getModel();
+        //console.log(oPayLoad);
+        return new Promise((resolve, reject) => {
+            oDataModel.create("/OfferSet", oPayLoad, {
+                success: function (data) {
+                    MessageToast.show("Offer Successfully Created.");
+                    othat._navToHome();
+                    resolve(data);
+                },
+                error: function (data) {
+                    MessageToast.show("Error In Creating the Schemes.");
+                    reject(data);
+                },
+            });
+        });
+    },
 
-            // added by deepanjali start
-            _uploadBanner: function (oData) {
+    // added by deepanjali start
+    _uploadBanner: function (oData) {
 
-                var oView = this.getView();
-                var oModel = this.getComponentModel();
-                var oModel = this.getView().getModel("oModelControl");
-                var catalogue = oModel.getProperty("/Table/Table11");
-                var oWizardView = oView.byId("wizardViewBranching");
-                var file = oWizardView.byId("idFileUpload");
-                var fileUploader;
-                var sServiceUrl = this.getOwnerComponent(this)
-                    .getManifestObject()
-                    .getEntry("/sap.app").dataSources.mainService.uri;
-                //To DO promises for sync
-                // var that=this;
-                catalogue.forEach(function (ele) {
-                    //  var isValid= that.checkFileName(ele.fileName);
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: ele.file,
-                        success: function (data) {
+        var oView = this.getView();
+        var oModel = this.getComponentModel();
+        var oModel = this.getView().getModel("oModelControl");
+        var catalogue = oModel.getProperty("/Table/Table11");
+        var oWizardView = oView.byId("wizardViewBranching");
+        var file = oWizardView.byId("idFileUpload");
+        var fileUploader;
+        var sServiceUrl = this.getOwnerComponent(this)
+            .getManifestObject()
+            .getEntry("/sap.app").dataSources.mainService.uri;
+        //To DO promises for sync
+        // var that=this;
+        catalogue.forEach(function (ele) {
+            //  var isValid= that.checkFileName(ele.fileName);
+            jQuery.ajax({
+                method: "PUT",
+                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: ele.file,
+                success: function (data) {
 
-                        },
-                        error: function () { },
-                    })
+                },
+                error: function () { },
+            })
 
-                });
+        });
 
-            },
+    },
 
-            _uploadPhamplet: function (oData) {
-                debugger;
-                var oView = this.getView();
-                var oModel = this.getComponentModel();
-                var oModel = this.getView().getModel("oModelControl");
-                var phamplet = oModel.getProperty("/Table/Table12");
+    _uploadPhamplet: function (oData) {
+        debugger;
+        var oView = this.getView();
+        var oModel = this.getComponentModel();
+        var oModel = this.getView().getModel("oModelControl");
+        var phamplet = oModel.getProperty("/Table/Table12");
 
-                //To DO promises for sync
-                // var that=this;
-                phamplet.forEach(function (ele) {
-                    //  var isValid= that.checkFileName(ele.fileName);
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: ele.file,
-                        success: function (data) {
+        //To DO promises for sync
+        // var that=this;
+        phamplet.forEach(function (ele) {
+            //  var isValid= that.checkFileName(ele.fileName);
+            jQuery.ajax({
+                method: "PUT",
+                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: ele.file,
+                success: function (data) {
 
-                        },
-                        error: function () { },
-                    })
+                },
+                error: function () { },
+            })
 
-                });
+        });
 
-            },
-            // added by deepanjali end
-            _UploadFile: function (mParam1, mParam2) {
-                var promise = jQuery.Deferred();
-                if (!mParam2) {
-                    //console.log("no image uploaded")
-                    promise.resolve();
-                    return promise;
-                }
-                var oView = this.getView();
-                var oWizardView = oView.byId("wizardViewBranching");
-                var oFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
-                var sServiceUrl = this.getOwnerComponent(this)
-                    .getManifestObject()
-                    .getEntry("/sap.app").dataSources.mainService.uri;
+    },
+    // added by deepanjali end
+    _UploadFile: function (mParam1, mParam2) {
+        var promise = jQuery.Deferred();
+        if (!mParam2) {
+            //console.log("no image uploaded")
+            promise.resolve();
+            return promise;
+        }
+        var oView = this.getView();
+        var oWizardView = oView.byId("wizardViewBranching");
+        var oFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+        var sServiceUrl = this.getOwnerComponent(this)
+            .getManifestObject()
+            .getEntry("/sap.app").dataSources.mainService.uri;
 
-                var data = mParam1;
-                var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value";
-                new Promise((resolve, reject) => {
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: sUrl,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: oFile,
-                        success: function (data) {
-                            resolve();
-                        },
-                        error: function () {
-                            resolve();
-                        },
-                    });
-                });
-            },
+        var data = mParam1;
+        var sUrl = "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value";
+        new Promise((resolve, reject) => {
+            jQuery.ajax({
+                method: "PUT",
+                url: sUrl,
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: oFile,
+                success: function (data) {
+                    resolve();
+                },
+                error: function () {
+                    resolve();
+                },
+            });
+        });
+    },
 
-            _NavBack: function () { },
+    _NavBack: function () { },
 
-            _RemoveEmptyValue: function (mParam) {
-                var obj = Object.assign({}, mParam);
-                // remove string values
-                var oNew = Object.entries(obj).reduce(
-                    (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
-                );
-                // remove the null values
-                var oNew2 = Object.entries(oNew).reduce(
-                    (a, [k, v]) => (v === null ? a : ((a[k] = v), a)), {}
-                );
+    _RemoveEmptyValue: function (mParam) {
+        var obj = Object.assign({}, mParam);
+        // remove string values
+        var oNew = Object.entries(obj).reduce(
+            (a, [k, v]) => (v === "" ? a : ((a[k] = v), a)), {}
+        );
+        // remove the null values
+        var oNew2 = Object.entries(oNew).reduce(
+            (a, [k, v]) => (v === null ? a : ((a[k] = v), a)), {}
+        );
 
-                return oNew2;
-            },
-            onUploadFileTypeMis: function () {
-                MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
-            },
-            onExit: function () {
+        return oNew2;
+    },
+    onUploadFileTypeMis: function () {
+        MessageToast.show("Kindly upload a file of type jpg,jpeg,png");
+    },
+    onExit: function () {
 
-            },
+    },
 
         }
-        );
+);
     }
 );
