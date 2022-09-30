@@ -563,7 +563,7 @@ sap.ui.define(
                                                         c7 = othat._uploadBanner(oData);
                                                     }).then(function (oData) {
                                                         c8 = othat._uploadPhamplet(oData);
-                                                    });
+                                                    
                                                 })
 
                                             })
