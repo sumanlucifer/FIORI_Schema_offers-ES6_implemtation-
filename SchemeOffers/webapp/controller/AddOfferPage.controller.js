@@ -566,7 +566,7 @@ sap.ui.define(
                                                         c7 = othat._uploadBanner(oData);
                                                         c7.then(function (oData) {
                                                             c8 = othat._uploadPhamplet(oData);
-                                                        })
+                                                        });
                                                     })
 
                                                 })
@@ -603,7 +603,7 @@ sap.ui.define(
 
             // added by deepanjali start
             _uploadBanner: function (oData) {
-                debugger;
+
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
