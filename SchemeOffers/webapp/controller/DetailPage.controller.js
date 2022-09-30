@@ -79,7 +79,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,BannerMediaList";
+                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,BannerMediaList,PamphletMediaList";
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/OfferSet(" + oProp + ")",
@@ -503,7 +503,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,BannerMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
+                    "OfferZone,BannerMediaList,PamphletMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
@@ -537,6 +537,12 @@ sap.ui.define(
                     oModelControl2.setProperty(
                         "/Table/Table11",
                         oData["BannerMediaList"]["results"]
+                    );
+                }
+                if (oData["PamphletMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["PamphletMediaList"]["results"]
                     );
                 }
                 // added by deepanjali end
@@ -1197,7 +1203,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,BannerMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
+                    "OfferZone,BannerMediaList,PamphletMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
