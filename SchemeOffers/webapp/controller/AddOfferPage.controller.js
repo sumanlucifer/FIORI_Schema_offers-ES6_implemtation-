@@ -530,7 +530,7 @@ sap.ui.define(
 
 
             _postDataToSave: function (bFileFlag) {
-                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7;
+                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7, c8;
                 var othat = this;
 
                 c1 = othat._CreatePayloadPart1();
@@ -564,7 +564,11 @@ sap.ui.define(
                                                     // added by deepanjali                                                     
                                                     c6.then(function (oData) {
                                                         c7 = othat._uploadBanner(oData);
-                                                    });
+                                                        c7.then(function (oData) {
+                                                            c8 = othat._uploadPhamplet(oData);
+                                                        })
+                                                    })
+
                                                 })
                                             })
                                         });
