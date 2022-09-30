@@ -525,7 +525,7 @@ sap.ui.define(
                 });
             },
             _setViewData2: function (oData) {
-                debugger;
+
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModelControl2 = oView.getModel("oModelControl2");
@@ -2549,12 +2549,22 @@ sap.ui.define(
             },
             // added by deepanjali start
             openPdf: function (oEvent) {
-                debugger;
+
                 var oView = this.getView();
 
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl2");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
+
+                sap.m.URLHelper.redirect(sSource, true);
+            },
+            openPamdf: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl2");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
 
                 sap.m.URLHelper.redirect(sSource, true);
             },

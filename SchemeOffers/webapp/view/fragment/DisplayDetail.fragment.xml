@@ -121,6 +121,7 @@
                 </f:FormContainer> -->
             </f:formContainers>
         </f:Form>
+        <!-- added by deepanjali start -->
         <VBox>
             <Label design="Bold" text="{i18n>OfferImage}" required="false" />
 
@@ -200,6 +201,86 @@
                 </items>
             </Table>
         </VBox>
+        <VBox>
+            <Label design="Bold" text="{i18n>OfferImage}" required="false" />
+
+            <Table id="idPamdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl2>/Table/Table12', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+                <headerToolbar>
+                    <Toolbar>
+                        <!-- <Title text="{i18n>catalogues}" /> -->
+                        <ToolbarSpacer />
+                        <!-- <Button icon="sap-icon://add" press="onAddProductPack" type="Emphasized" text="AddP" /> -->
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Label text="{i18n>selectLanguage}" required="false" />
+                    </Column>
+                    <!-- <Column>
+                        <Text text="{i18n>uploadImage}" />
+                    </Column> -->
+                    <Column>
+                        <Text text="{i18n>medianame}" />
+                    </Column>
+
+                    <Column width="10%">
+                        <Text text="{i18n>Action}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <VBox>
+                                <Select
+                                    forceSelection="false"
+                                    editable="false"
+                                    selectedKey="{oModelControl2>LanguageCode}"
+                                    items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                                >
+                                    <core:Item key="{LanguageCode}" text="{Language}" />
+                                </Select>
+                            </VBox>
+                            <!-- <VBox>
+                                <FlexBox>
+                                    <VBox>
+                                        <u:FileUploader
+                                            id="idFormToolPdfUploader"
+                                            name="formToolPdfUploader"
+                                            class="sapUiSmallMarginTop"
+                                            tooltip="{i18n>fileUploaderTooltip}"
+                                            change="onChangePdf"
+                                            typeMissmatch="onUploadMisMatch"
+                                            fileType="jpg,jpeg,png"
+                                            useMultipart="false"
+                                            sendXHR="true"
+                                            maximumFileSize="2.1"
+                                            fileSizeExceed="onFileSizeExceed"
+                                            uploadComplete="handleUploadCompletePdf"
+                                        />
+                                        <HBox>
+                                            <ObjectAttribute class="sapUiTinyMarginTop sapUiTinyMarginStart sapUiTinyMarginEnd" title="File Type" text=".image/png" />
+                                            <ObjectAttribute class="sapUiTinyMarginTop" title="Max Size" text="2 MB" />
+                                        </HBox>
+                                    </VBox>
+                                </FlexBox>
+                            </VBox> -->
+                            <VBox>
+                                <Text text="{oModelControl2>MediaName}" />
+                            </VBox>
+                            <HBox>
+                                <Button id="pdfpmBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPamdf" class="sapUiTinyMarginEnd" />
+                                <!-- <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" /> -->
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+        <!-- added by deepanjali end -->
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="2. {i18n>ApplicableProducts}" />
         </Toolbar>
