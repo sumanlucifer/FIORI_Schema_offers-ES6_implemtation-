@@ -1,8 +1,4 @@
-<core:FragmentDefinition xmlns="sap.m" 
-xmlns:l="sap.ui.layout" 
-xmlns:u="sap.ui.unified" 
-xmlns:f="sap.ui.layout.form" 
-xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <f:Form editable="true">
         <f:layout>
             <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
@@ -163,6 +159,7 @@ xmlns:core="sap.ui.core">
             </f:FormContainer> -->
         </f:formContainers>
     </f:Form>
+    <!-- added by deepanjali start  -->
     <VBox>
         <Label design="Bold" text="{i18n>OfferImage}" required="false" />
         <Text text="{i18n>FileUploadMessage}" />
@@ -241,7 +238,8 @@ xmlns:core="sap.ui.core">
             </items>
         </Table>
     </VBox>
-     <VBox class="sapUiMediumMarginTop">
+
+    <VBox class="sapUiMediumMarginTop">
         <Label design="Bold" text="{i18n>PamphletImage}" required="false" />
         <Text text="{i18n>FileUploadMessage}" />
         <Table id="idpampletPdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl>/Table/Table12', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
@@ -319,4 +317,5 @@ xmlns:core="sap.ui.core">
             </items>
         </Table>
     </VBox>
+     <!-- added by deepanjali end  -->
 </core:FragmentDefinition>

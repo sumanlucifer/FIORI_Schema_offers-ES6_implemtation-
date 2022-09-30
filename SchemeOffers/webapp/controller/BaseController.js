@@ -878,7 +878,7 @@ sap.ui.define(
                     oModel.refresh();
                 }
             },
-
+            // added by deepanjali start 
             onAddProductPack: function () {
 
                 var oView = this.getView();
@@ -890,6 +890,17 @@ sap.ui.define(
                     fileName: ""
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);
+            },
+            onAddPamphlet: function () {
+                var oView = this.getView();
+                var oPamphletModel = oView.getModel("oModelControl").getProperty("/Table/Table12");
+
+                oPamphletModel.push({
+                    LanguageCode: "",
+                    file: null,
+                    fileName: ""
+                });
+                oView.getModel("oModelControl").setProperty("/Table/Table12", oPamphletModel);
             },
 
             onChangePdf: function (oEvent) {
@@ -911,6 +922,26 @@ sap.ui.define(
 
                 }
             },
+
+            onChangePamPdf: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+                var oContext = oEvent.getSource().getBindingContext("oModelControl");
+
+                if (oEvent.getParameter("files").length > 0) {
+                    var imagename = oEvent.getParameter("files")[0].name;
+                    oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
+                    oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
+                    oView.getModel("oModelControl").setProperty("New", true, oContext);
+
+                    var isValid = this.checkFileName(imagename);
+                    if (!isValid) {
+                        MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
+                    }
+
+
+                }
+            },
             checkFileName: function (fileName) {
                 var isValid = false;
                 var regex = /[~`!@#$%^&()_={}[\]:;,<>+\/?-]/;
@@ -923,17 +954,6 @@ sap.ui.define(
                 }
 
             },
-
-
-            // onDeleteFile: function (oEvent) {
-            //     debugger;
-            //     this.packingListObj = oEvent.getSource().getBindingContext("oModelControl").getObject();
-            //     var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("oModelControl").getPath().split("/")[3]);
-            //     var aTableData1 = this.getViewModel("oModelControl").getProperty("/");
-            //     var aTableData = this.getViewModel("oModelControl").getProperty("/Table/Table11");
-            //     aTableData.splice(iRowNumberToDelete, 1);
-            //     this.getView().getModel("oModelControl").refresh();
-            // },
 
             onDeleteFile: function (oEvent) {
                 debugger;
@@ -1008,19 +1028,9 @@ sap.ui.define(
 
                 oModel.refresh(true);
             },
+            // added by deepanjali end 
 
 
-            onAddPamphlet: function () {
-                var oView = this.getView();
-                var oPamphletModel = oView.getModel("oModelControl").getProperty("/Table/Table12");
-
-                oPamphletModel.push({
-                    LanguageCode: "",
-                    file: null,
-                    fileName: ""
-                });
-                oView.getModel("oModelControl").setProperty("/Table/Table12", oPamphletModel);
-            },
             onSaveGenericBonusReward: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
