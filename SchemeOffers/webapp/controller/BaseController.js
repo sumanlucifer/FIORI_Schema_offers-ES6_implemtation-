@@ -1022,7 +1022,7 @@ sap.ui.define(
                             oModel.setProperty("/bBusy", true);
                             jQuery.ajax({
                                 method: "DELETE",
-                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + delItems.LanguageCode,
                                 cache: false,
                                 contentType: false,
                                 processData: false,
