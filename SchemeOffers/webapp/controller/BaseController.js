@@ -980,7 +980,77 @@ sap.ui.define(
                     }
                 );
             },
+            onPhampDeleteFile: function (oEvent) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                //oModel.setProperty("bNew", true);
+                var sPath = oEvent
+                    .getSource()
+                    .getBindingContext("oModelControl")
+                    .getPath()
+                    .split("/");
+                var aPamplet = oModel.getProperty("/Table/Table12");
+                var othat = this;
+                MessageBox.confirm(
+                    "Kindly confirm to delete the file.",
+                    {
+                        actions: [MessageBox.Action.CLOSE, MessageBox.Action.OK],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction == "OK") {
+                                othat.onPressRemovepamplet(sPath, aPamplet);
+                            }
+                        },
+                    }
+                );
+            },
+            onPressRemovepamplet: function (sPath, aPamplet) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
 
+                var index = parseInt(sPath[sPath.length - 1]);
+                var delItems = [];
+
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+
+                //To DO promises for sync
+                for (var i = 0; i <= aPamplet.length; i++) {
+
+                    if (i == index) {
+                        delItems = aPamplet[i];
+                        if (delItems.MediaName != null) {
+                            oModel.setProperty("/bBusy", true);
+                            jQuery.ajax({
+                                method: "DELETE",
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                // data: delItems,
+                                success: function (data) {
+                                    // aCatalogue.splice(i);
+                                    oModel.setProperty("/bBusy", false);
+                                    aPamplet.splice(parseInt(sPath[sPath.length - 1]), 1);
+                                    var sMessage = "Pamplet Deleted!";
+                                    MessageToast.show(sMessage);
+                                    oModel.refresh(true);
+
+                                },
+                                error: function () { },
+                            })
+
+                        }
+                        else {
+                            aPamplet.splice(i);
+                        }
+                    }
+
+
+                };
+
+
+                oModel.refresh(true);
+            },
             onPressRemoveCatalogue: function (sPath, aCatalogue) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -1008,7 +1078,7 @@ sap.ui.define(
                                     // aCatalogue.splice(i);
                                     oModel.setProperty("/bBusy", false);
                                     aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
-                                    var sMessage = "Catalogue Deleted!";
+                                    var sMessage = "Banner Deleted!";
                                     MessageToast.show(sMessage);
                                     oModel.refresh(true);
 
