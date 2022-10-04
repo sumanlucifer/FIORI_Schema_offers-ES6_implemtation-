@@ -359,7 +359,7 @@ sap.ui.define(
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelControl2");
                 var othat = this;
-                var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9;
+                var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9,c10;
                 var oView = this.getView();
                 c1 = this._loadEditProfile("Display");
                 c1.then(function () {
@@ -1203,7 +1203,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,BannerMediaList,PamphletMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
+                    "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
