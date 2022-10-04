@@ -533,18 +533,18 @@ sap.ui.define(
                     Table2 = [];
 
                 // added by deepanjali strat
-                if (oData["BannerMediaList"]["results"].length > 0) {
-                    oModelControl2.setProperty(
-                        "/Table/Table11",
-                        oData["BannerMediaList"]["results"]
-                    );
-                }
-                if (oData["PamphletMediaList"]["results"].length > 0) {
-                    oModelControl2.setProperty(
-                        "/Table/Table12",
-                        oData["PamphletMediaList"]["results"]
-                    );
-                }
+                // if (oData["BannerMediaList"]["results"].length > 0) {
+                //     oModelControl2.setProperty(
+                //         "/Table/Table11",
+                //         oData["BannerMediaList"]["results"]
+                //     );
+                // }
+                // if (oData["PamphletMediaList"]["results"].length > 0) {
+                //     oModelControl2.setProperty(
+                //         "/Table/Table12",
+                //         oData["PamphletMediaList"]["results"]
+                //     );
+                // }
                 // added by deepanjali end
                 if (oData["OfferRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
