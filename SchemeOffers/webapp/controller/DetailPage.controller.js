@@ -359,7 +359,7 @@ sap.ui.define(
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelControl2");
                 var othat = this;
-                var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9,c10;
+                var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9, c10;
                 var oView = this.getView();
                 c1 = this._loadEditProfile("Display");
                 c1.then(function () {
@@ -533,18 +533,18 @@ sap.ui.define(
                     Table2 = [];
 
                 // added by deepanjali strat
-                // if (oData["BannerMediaList"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/Table11",
-                //         oData["BannerMediaList"]["results"]
-                //     );
-                // }
-                // if (oData["PamphletMediaList"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/Table12",
-                //         oData["PamphletMediaList"]["results"]
-                //     );
-                // }
+                if (oData["BannerMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["BannerMediaList"]["results"]
+                    );
+                }
+                if (oData["PamphletMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table12",
+                        oData["PamphletMediaList"]["results"]
+                    );
+                }
                 // added by deepanjali end
                 if (oData["OfferRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
@@ -1461,18 +1461,20 @@ sap.ui.define(
                         oData["OfferRewardRatio"]["results"]
                     );
                 }
-                if (oData["BannerMediaList"]["results"].length > 0) {
-                    oModelControl2.setProperty(
-                        "/Table/Table11",
-                        oData["BannerMediaList"]["results"]
-                    );
-                }
-                if (oData["PamphletMediaList"]["results"].length > 0) {
-                    oModelControl2.setProperty(
-                        "/Table/Table12",
-                        oData["PamphletMediaList"]["results"]
-                    );
-                }
+                /// commented by deepanjali start//
+                // if (oData["BannerMediaList"]["results"].length > 0) {
+                //     oModelControl2.setProperty(
+                //         "/Table/Table11",
+                //         oData["BannerMediaList"]["results"]
+                //     );
+                // }
+                // if (oData["PamphletMediaList"]["results"].length > 0) {
+                //     oModelControl2.setProperty(
+                //         "/Table/Table12",
+                //         oData["PamphletMediaList"]["results"]
+                //     );
+                // }
+                /// commented by deepanjali end//
                 // if (oData["IsSpecificApplicablePack"] === false) {
                 //     if (oData["OfferRewardRatio"]["results"].length > 0) {
                 //         oModelControl2.setProperty(
