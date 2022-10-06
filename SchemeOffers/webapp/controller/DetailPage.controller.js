@@ -79,7 +79,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails";
+                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,PamphletMediaList,BannerMediaList";
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/OfferSet(" + oProp + ")",
@@ -91,7 +91,7 @@ sap.ui.define(
                 this._SetDisplayData(oProp, sMode);
             },
             _SetDisplayData: function (oProp, sMode) {
-                debugger;
+
                 var oView = this.getView();
                 var oData = {
                     ImageUploaded: "", // Have to check again,
@@ -504,7 +504,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
+                    "OfferZone,PamphletMediaList,BannerMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
@@ -534,18 +534,18 @@ sap.ui.define(
                     Table2 = [];
 
                 // added by deepanjali strat
-                // if (oData["BannerMediaList"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/Table11",
-                //         oData["BannerMediaList"]["results"]
-                //     );
-                // }
-                // if (oData["PamphletMediaList"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/Table12",
-                //         oData["PamphletMediaList"]["results"]
-                //     );
-                // }
+                if (oData["BannerMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["BannerMediaList"]["results"]
+                    );
+                }
+                if (oData["PamphletMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table12",
+                        oData["PamphletMediaList"]["results"]
+                    );
+                }
                 // added by deepanjali end
                 if (oData["OfferRewardRatio"]["results"].length > 0) {
                     oModelControl2.setProperty(
@@ -902,6 +902,7 @@ sap.ui.define(
                 return promise;
             },
             handleEditPress: function () {
+                debugger;
                 this._toggleButtonsAndView(true);
                 var oView = this.getView();
                 var oCtrl2Model = oView.getModel("oModelControl3");
@@ -1204,7 +1205,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
+                    "OfferZone,PamphletMediaList,BannerMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
