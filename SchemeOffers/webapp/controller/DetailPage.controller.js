@@ -1464,18 +1464,18 @@ sap.ui.define(
                     );
                 }
                 /// commented by deepanjali start//
-                // if (oData["BannerMediaList"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/Table11",
-                //         oData["BannerMediaList"]["results"]
-                //     );
-                // }
-                // if (oData["PamphletMediaList"]["results"].length > 0) {
-                //     oModelControl2.setProperty(
-                //         "/Table/Table12",
-                //         oData["PamphletMediaList"]["results"]
-                //     );
-                // }
+                if (oData["BannerMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table11",
+                        oData["BannerMediaList"]["results"]
+                    );
+                }
+                if (oData["PamphletMediaList"]["results"].length > 0) {
+                    oModelControl2.setProperty(
+                        "/Table/Table12",
+                        oData["PamphletMediaList"]["results"]
+                    );
+                }
                 /// commented by deepanjali end//
                 // if (oData["IsSpecificApplicablePack"] === false) {
                 //     if (oData["OfferRewardRatio"]["results"].length > 0) {
