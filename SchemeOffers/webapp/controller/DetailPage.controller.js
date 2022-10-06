@@ -91,6 +91,7 @@ sap.ui.define(
                 this._SetDisplayData(oProp, sMode);
             },
             _SetDisplayData: function (oProp, sMode) {
+                debugger;
                 var oView = this.getView();
                 var oData = {
                     ImageUploaded: "", // Have to check again,
