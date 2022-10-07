@@ -4312,10 +4312,10 @@ sap.ui.define(
             _CheckExpandPainter: function (oPayload) {
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
-                if (oModelControl.getProperty("/mode") === "edit") {
+                // if (oModelControl.getProperty("/mode") === "edit") {
                     delete oPayload.BannerMediaList;
                     delete oPayload.PamphletMediaList;
-             }
+                // }
                 var promise = jQuery.Deferred();
                 if (oPayload.hasOwnProperty("OfferSpecificPainter")) {
                     if (oPayload["OfferSpecificPainter"].hasOwnProperty("results")) {
