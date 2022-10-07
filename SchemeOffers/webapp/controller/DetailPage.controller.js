@@ -2419,6 +2419,7 @@ sap.ui.define(
                 oSrc.data("dataValue", sValue);
             },
             onDetailPageSave: function () {
+                debugger;
                 var oView = this.getView();
                 var oValidate = new Validator();
                 var oForm = oView.byId("FormDisplay");
@@ -2508,6 +2509,7 @@ sap.ui.define(
                 this._postPublishSave();
             },
             _postPublishSave: function () {
+                debugger;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var publishData = oModelView.getData();
