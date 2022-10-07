@@ -4310,6 +4310,12 @@ sap.ui.define(
                 return promise;
             },
             _CheckExpandPainter: function (oPayload) {
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl");
+                if (oModelControl.getProperty("/mode") === "edit") {
+                    delete oPayload.BannerMediaList;
+                    delete oPayload.PamphletMediaList;
+             }
                 var promise = jQuery.Deferred();
                 if (oPayload.hasOwnProperty("OfferSpecificPainter")) {
                     if (oPayload["OfferSpecificPainter"].hasOwnProperty("results")) {
@@ -4487,8 +4493,7 @@ sap.ui.define(
                     aDataDivision = [];
                 var aDataPainter = [];
                 if (oModelControl.getProperty("/mode") === "edit") {
-                    delete oModelViewData.BannerMediaList;
-                    delete oModelViewData.PamphletMediaList;
+
                     aDataPCat1 =
                         oModelViewData["OfferApplicableProductCategory"]["results"];
                     aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];

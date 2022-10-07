@@ -1940,6 +1940,7 @@ sap.ui.define(
                 });
             },
             _UpdateOffer: function (oPayLoad) {
+                debugger;
                 var promise = jQuery.Deferred();
                 var othat = this;
                 var oView = this.getView();
@@ -2429,6 +2430,7 @@ sap.ui.define(
                 this._postDetailSave();
             },
             _postDetailSave: function () {
+                debugger;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var oModelControl2 = oView.getModel("oModelControl2");
