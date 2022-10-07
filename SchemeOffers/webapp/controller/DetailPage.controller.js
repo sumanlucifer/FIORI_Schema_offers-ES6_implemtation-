@@ -1893,7 +1893,8 @@ sap.ui.define(
             //     return [true, ""]
             // },
             _postDataToSave: function (bFileFlag) {
-                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7;
+                debugger;
+                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7, c8;
                 var othat = this;
                 c1 = othat._CreatePayloadPart1();
                 //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger;s
@@ -1926,7 +1927,7 @@ sap.ui.define(
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
                                                             c7 = othat._uploadBanner(oPayLoad);
                                                             othat._uploadPhamplet(oPayLoad);
-                                                            c7.then(function (data) {
+                                                            c8.then(function (data) {
                                                                 othat.handleCancelPress(data);
                                                             });
                                                         });
@@ -1996,6 +1997,7 @@ sap.ui.define(
             },
             // added by deepanjali start //
             _uploadBanner: function (oData) {
+                debugger;
 
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
