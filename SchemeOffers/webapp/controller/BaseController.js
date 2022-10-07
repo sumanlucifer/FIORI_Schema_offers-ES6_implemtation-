@@ -4487,6 +4487,8 @@ sap.ui.define(
                     aDataDivision = [];
                 var aDataPainter = [];
                 if (oModelControl.getProperty("/mode") === "edit") {
+                    delete oModelViewData.BannerMediaList;
+                    delete oModelViewData.PamphletMediaList;
                     aDataPCat1 =
                         oModelViewData["OfferApplicableProductCategory"]["results"];
                     aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];
