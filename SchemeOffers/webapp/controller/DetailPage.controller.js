@@ -1926,7 +1926,7 @@ sap.ui.define(
                                                         c6.then(function (oPayLoad) {
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
                                                             c7 = othat._updateBanner(oPayLoad);
-                                                            othat._updatePhamplet(oPayLoad);
+                                                            othat._uploadPhamplet(oPayLoad);
                                                             c7.then(function (data) {
                                                                 othat.handleCancelPress(data);
                                                             });
@@ -1996,7 +1996,7 @@ sap.ui.define(
                 });
             },
             // added by deepanjali start //
-            _updateBanner: function (oPayLoad) {
+            _updateBanner: function (mParam1, mParam2) {
                 debugger;
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
@@ -2009,7 +2009,7 @@ sap.ui.define(
                     if (ele.bNew) {
                         jQuery.ajax({
                             method: "PUT",
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&language_code=" + ele.LanguageCode,
                             cache: false,
                             contentType: false,
                             processData: false,
@@ -2023,7 +2023,7 @@ sap.ui.define(
                 });
 
             },
-            _updatePhamplet: function (oData) {
+            _uploadPhamplet: function (oData) {
                 debugger;
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
