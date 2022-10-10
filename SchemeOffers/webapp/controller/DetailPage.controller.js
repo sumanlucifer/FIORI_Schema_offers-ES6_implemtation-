@@ -1925,8 +1925,8 @@ sap.ui.define(
                                                         c6 = othat._UpdateOffer(oPayLoad);
                                                         c6.then(function (oPayLoad) {
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                                                            c7 = othat._uploadBanner(oPayLoad);
-                                                            othat._uploadPhamplet(oPayLoad);
+                                                            c7 = othat._updateBanner(oPayLoad);
+                                                            othat._updatePhamplet(oPayLoad);
                                                             c7.then(function (data) {
                                                                 othat.handleCancelPress(data);
                                                             });
@@ -1996,16 +1996,9 @@ sap.ui.define(
                 });
             },
             // added by deepanjali start //
-            _uploadBanner: function (mParam1, mParam2) {
+            _updateBanner: function (odata) {
                 debugger;
-                var promise = jQuery.Deferred();
-                if (!mParam2) {
-                    promise.resolve();
-                    return promise;
-                }
-
                 var oView = this.getView();
-                var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
                 var data = oView.getModel("oModelView").getData();
@@ -2013,24 +2006,24 @@ sap.ui.define(
                 //To DO promises for sync
                 // var that=this;
                 catalogue.forEach(function (ele) {
-                    //  var isValid= that.checkFileName(ele.fileName);
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: ele.file,
-                        success: function (data) {
+                    if (ele.bNew) {
+                        jQuery.ajax({
+                            method: "PUT",
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: ele.file,
+                            success: function (data) {
 
-                        },
-                        error: function () { },
-                    })
-
+                            },
+                            error: function () { },
+                        })
+                    }
                 });
 
             },
-            _uploadPhamplet: function (oData) {
+            _updatePhamplet: function (oData) {
                 debugger;
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
