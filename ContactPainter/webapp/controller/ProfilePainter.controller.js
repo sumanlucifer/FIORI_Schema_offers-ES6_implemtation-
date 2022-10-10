@@ -4612,7 +4612,7 @@ sap.ui.define(
                 });
             },
             onBindTblDGAList: function (oEvent) {
-                var oView = this.getView();
+                var oView = this.getView().getModel("DGAModel");
                 var oDGAModel = this.getView().getBindingContext().getObject("Id");
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 oBindingParams.parameters["expand"] = "DGA, DGADetails, LeadServiceType, State,AssignedContractors,LeadStatus, Depot, PaintingReqSlab, LeadSource,Dealer";
