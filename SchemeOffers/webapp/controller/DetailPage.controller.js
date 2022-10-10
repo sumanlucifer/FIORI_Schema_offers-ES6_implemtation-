@@ -79,7 +79,7 @@ sap.ui.define(
                     oEvent.getParameter("arguments").mode
                 );
                 var oView = this.getView();
-                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,BannerMediaList,PamphletMediaList";
+                var sExpandParam = "OfferType,CreatedByDetails,UpdatedByDetails,PamphletMediaList,BannerMediaList";
                 if (oProp.trim() !== "") {
                     oView.bindElement({
                         path: "/OfferSet(" + oProp + ")",
@@ -91,6 +91,7 @@ sap.ui.define(
                 this._SetDisplayData(oProp, sMode);
             },
             _SetDisplayData: function (oProp, sMode) {
+
                 var oView = this.getView();
                 var oData = {
                     ImageUploaded: "", // Have to check again,
@@ -359,7 +360,7 @@ sap.ui.define(
                 var oModel = new JSONModel(oData);
                 this.getView().setModel(oModel, "oModelControl2");
                 var othat = this;
-                var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9;
+                var c1, c1b, c1c, c2, c2b, c3, c4, c5, c6, c7, c7B, c8, c9, c10;
                 var oView = this.getView();
                 c1 = this._loadEditProfile("Display");
                 c1.then(function () {
@@ -503,7 +504,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,BannerMediaList,PamphletMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
+                    "OfferZone,PamphletMediaList,BannerMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
@@ -901,6 +902,7 @@ sap.ui.define(
                 return promise;
             },
             handleEditPress: function () {
+                debugger;
                 this._toggleButtonsAndView(true);
                 var oView = this.getView();
                 var oCtrl2Model = oView.getModel("oModelControl3");
@@ -1203,7 +1205,7 @@ sap.ui.define(
                 var sPath = oModelControl2.getProperty("/bindProp");
                 var othat = this;
                 var exPand =
-                    "OfferZone,BannerMediaList,PamphletMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
+                    "OfferZone,PamphletMediaList,BannerMediaList,OfferDepot,OfferDivision,OfferApplicableProductCategory,OfferApplicableProductClassification,OfferApplicableProduct/Product,OfferApplicablePack/Pack,OfferRewardRatio/RewardGift," +
                     "OfferPainterType,OfferPainterArcheType,OfferPainterPotential,OfferBuyerProductCategory,OfferBuyerProductClassification,OfferBuyerProduct/Product,OfferBuyerPack/Pack,OfferNonBuyerProductCategory," +
                     "OfferNonBuyerProductClassification,OfferNonBuyerProduct/Product,OfferNonBuyerPack/Pack," +
                     "OfferBonusProductCategory,OfferBonusProductClassification,OfferBonusProduct/Product,OfferBonusPack/Pack," +
@@ -1461,6 +1463,7 @@ sap.ui.define(
                         oData["OfferRewardRatio"]["results"]
                     );
                 }
+                /// commented by deepanjali start//
                 if (oData["BannerMediaList"]["results"].length > 0) {
                     oModelControl2.setProperty(
                         "/Table/Table11",
@@ -1473,6 +1476,7 @@ sap.ui.define(
                         oData["PamphletMediaList"]["results"]
                     );
                 }
+                /// commented by deepanjali end//
                 // if (oData["IsSpecificApplicablePack"] === false) {
                 //     if (oData["OfferRewardRatio"]["results"].length > 0) {
                 //         oModelControl2.setProperty(
@@ -1889,7 +1893,8 @@ sap.ui.define(
             //     return [true, ""]
             // },
             _postDataToSave: function (bFileFlag) {
-                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7;
+                debugger;
+                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7, c8;
                 var othat = this;
                 c1 = othat._CreatePayloadPart1();
                 //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger;s
@@ -1919,8 +1924,10 @@ sap.ui.define(
                                                     c5B.then(function () {
                                                         c6 = othat._UpdateOffer(oPayLoad);
                                                         c6.then(function (oPayLoad) {
-                                                            c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                                                            c7.then(function (data) {
+                                                            // c7 = othat._UploadFile(oPayLoad, bFileFlag);
+                                                            c7 = othat._uploadBanner(oPayLoad);
+                                                            othat._uploadPhamplet(oPayLoad);
+                                                            c8.then(function (data) {
                                                                 othat.handleCancelPress(data);
                                                             });
                                                         });
@@ -1936,6 +1943,7 @@ sap.ui.define(
                 });
             },
             _UpdateOffer: function (oPayLoad) {
+                debugger;
                 var promise = jQuery.Deferred();
                 var othat = this;
                 var oView = this.getView();
@@ -1987,6 +1995,69 @@ sap.ui.define(
                     });
                 });
             },
+            // added by deepanjali start //
+            _uploadBanner: function (oData) {
+                debugger;
+
+                var oView = this.getView();
+                var oModel = this.getComponentModel();
+                var oModel = this.getView().getModel("oModelControl");
+                var catalogue = oModel.getProperty("/Table/Table11");
+                var oWizardView = oView.byId("wizardViewBranching");
+                var file = oWizardView.byId("idFileUpload");
+                var fileUploader;
+                var sServiceUrl = this.getOwnerComponent(this)
+                    .getManifestObject()
+                    .getEntry("/sap.app").dataSources.mainService.uri;
+                //To DO promises for sync
+                // var that=this;
+                catalogue.forEach(function (ele) {
+                    //  var isValid= that.checkFileName(ele.fileName);
+                    jQuery.ajax({
+                        method: "PUT",
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
+
+                        },
+                        error: function () { },
+                    })
+
+                });
+
+            },
+            _uploadPhamplet: function (oData) {
+                debugger;
+                var oView = this.getView();
+                var oModel = this.getComponentModel();
+                var oModel = this.getView().getModel("oModelControl");
+                var phamplet = oModel.getProperty("/Table/Table12");
+
+                //To DO promises for sync
+                // var that=this;
+                phamplet.forEach(function (ele) {
+                    //  var isValid= that.checkFileName(ele.fileName);
+                    jQuery.ajax({
+                        method: "PUT",
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: ele.file,
+                        success: function (data) {
+
+                        },
+                        error: function () { },
+                    })
+
+                });
+
+            },
+
+            // added by deepanjali end //
             _RemoveEmptyValue: function (mParam) {
                 var obj = Object.assign({}, mParam);
                 // remove string values
@@ -2414,6 +2485,7 @@ sap.ui.define(
                 oSrc.data("dataValue", sValue);
             },
             onDetailPageSave: function () {
+                debugger;
                 var oView = this.getView();
                 var oValidate = new Validator();
                 var oForm = oView.byId("FormDisplay");
@@ -2425,6 +2497,7 @@ sap.ui.define(
                 this._postDetailSave();
             },
             _postDetailSave: function () {
+                debugger;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var oModelControl2 = oView.getModel("oModelControl2");
@@ -2502,6 +2575,7 @@ sap.ui.define(
                 this._postPublishSave();
             },
             _postPublishSave: function () {
+                debugger;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var publishData = oModelView.getData();

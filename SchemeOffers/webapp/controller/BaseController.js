@@ -1022,7 +1022,7 @@ sap.ui.define(
                             oModel.setProperty("/bBusy", true);
                             jQuery.ajax({
                                 method: "DELETE",
-                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + delItems.LanguageCode,
                                 cache: false,
                                 contentType: false,
                                 processData: false,
@@ -4310,6 +4310,12 @@ sap.ui.define(
                 return promise;
             },
             _CheckExpandPainter: function (oPayload) {
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl");
+                // if (oModelControl.getProperty("/mode") === "edit") {
+                    delete oPayload.BannerMediaList;
+                    delete oPayload.PamphletMediaList;
+                // }
                 var promise = jQuery.Deferred();
                 if (oPayload.hasOwnProperty("OfferSpecificPainter")) {
                     if (oPayload["OfferSpecificPainter"].hasOwnProperty("results")) {
@@ -4429,6 +4435,7 @@ sap.ui.define(
             },
             // postdata
             _CreatePayloadPart3: function (oPayLoad) {
+                debugger;
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
@@ -4486,6 +4493,7 @@ sap.ui.define(
                     aDataDivision = [];
                 var aDataPainter = [];
                 if (oModelControl.getProperty("/mode") === "edit") {
+
                     aDataPCat1 =
                         oModelViewData["OfferApplicableProductCategory"]["results"];
                     aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];
