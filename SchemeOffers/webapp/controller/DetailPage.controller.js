@@ -902,7 +902,7 @@ sap.ui.define(
                 return promise;
             },
             handleEditPress: function () {
-                debugger;
+
                 this._toggleButtonsAndView(true);
                 var oView = this.getView();
                 var oCtrl2Model = oView.getModel("oModelControl3");
@@ -1926,7 +1926,7 @@ sap.ui.define(
                                                         c6.then(function (oPayLoad) {
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
                                                             c7 = othat._updateBanner(oPayLoad);
-                                                            othat._uploadPhamplet(oPayLoad);
+                                                            othat._updatePhamplet(oPayLoad);
                                                             c7.then(function (data) {
                                                                 othat.handleCancelPress(data);
                                                             });
@@ -1998,6 +1998,11 @@ sap.ui.define(
             // added by deepanjali start //
             _updateBanner: function (mParam1, mParam2) {
                 debugger;
+                var promise = jQuery.Deferred();
+                if (!mParam2) {
+                    promise.resolve();
+                    return promise;
+                }
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
@@ -2023,31 +2028,35 @@ sap.ui.define(
                 });
 
             },
-            _uploadPhamplet: function (oData) {
+            _updatePhamplet: function (mParam3, mParam4) {
                 debugger;
+                var promise = jQuery.Deferred();
+                if (!mParam4) {
+                    promise.resolve();
+                    return promise;
+                }
                 var oView = this.getView();
-                var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
                 var phamplet = oModel.getProperty("/Table/Table12");
-
+                var data = oView.getModel("oModelView").getData();
                 //To DO promises for sync
                 // var that=this;
                 phamplet.forEach(function (ele) {
-                    //  var isValid= that.checkFileName(ele.fileName);
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: ele.file,
-                        success: function (data) {
+                    if (ele.New) {
+                        jQuery.ajax({
+                            method: "PUT",
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data.Id + ")/$value?doc_type=pamphlet&language_code=" + ele.LanguageCode,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: ele.file,
+                            success: function (data) {
 
-                        },
-                        error: function () { },
-                    })
+                            },
+                            error: function () { },
+                        })
 
-                });
+                    });
 
             },
 
