@@ -602,6 +602,7 @@ sap.ui.define(
 
             // added by deepanjali start
             _uploadBanner: function (oData) {
+                debugger;
 
                 var oView = this.getView();
                 var oModel = this.getComponentModel();

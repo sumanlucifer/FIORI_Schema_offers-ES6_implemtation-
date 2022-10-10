@@ -904,7 +904,7 @@ sap.ui.define(
             },
 
             onChangePdf: function (oEvent) {
-                debugger;
+              
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
 

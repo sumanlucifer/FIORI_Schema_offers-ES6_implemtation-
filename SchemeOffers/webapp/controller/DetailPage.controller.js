@@ -1894,7 +1894,7 @@ sap.ui.define(
             // },
             _postDataToSave: function (bFileFlag) {
                 debugger;
-                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7, c8;
+                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7;
                 var othat = this;
                 c1 = othat._CreatePayloadPart1();
                 //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger;s
@@ -1925,9 +1925,9 @@ sap.ui.define(
                                                         c6 = othat._UpdateOffer(oPayLoad);
                                                         c6.then(function (oPayLoad) {
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
-                                                            c7 = othat._uploadBanner(oPayLoad);
-                                                            othat._uploadPhamplet(oPayLoad);
-                                                            c8.then(function (data) {
+                                                            c7 = othat._updateBanner(oPayLoad);
+                                                            othat._updatePhamplet(oPayLoad);
+                                                            c7.then(function (data) {
                                                                 othat.handleCancelPress(data);
                                                             });
                                                         });
@@ -1996,40 +1996,34 @@ sap.ui.define(
                 });
             },
             // added by deepanjali start //
-            _uploadBanner: function (oData) {
+            _updateBanner: function (oPayLoad) {
                 debugger;
-
                 var oView = this.getView();
-                var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
-                var oWizardView = oView.byId("wizardViewBranching");
-                var file = oWizardView.byId("idFileUpload");
-                var fileUploader;
-                var sServiceUrl = this.getOwnerComponent(this)
-                    .getManifestObject()
-                    .getEntry("/sap.app").dataSources.mainService.uri;
+                var data = oView.getModel("oModelView").getData();
+
                 //To DO promises for sync
                 // var that=this;
                 catalogue.forEach(function (ele) {
-                    //  var isValid= that.checkFileName(ele.fileName);
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: ele.file,
-                        success: function (data) {
+                    if (ele.bNew) {
+                        jQuery.ajax({
+                            method: "PUT",
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: ele.file,
+                            success: function (data) {
 
-                        },
-                        error: function () { },
-                    })
-
+                            },
+                            error: function () { },
+                        })
+                    }
                 });
 
             },
-            _uploadPhamplet: function (oData) {
+            _updatePhamplet: function (oData) {
                 debugger;
                 var oView = this.getView();
                 var oModel = this.getComponentModel();

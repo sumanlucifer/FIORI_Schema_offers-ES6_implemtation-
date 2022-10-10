@@ -20,7 +20,7 @@
                                 <Text text="{path:'StartDate',formatter:'.formatter.fmtDate2'}" />
                             </f:fields>
                         </f:FormElement>
-                        <f:FormElement label="{i18n>Attachment}" visible="{= !${oModelControl2>/ImageLoaded} }">
+                        <!-- <f:FormElement label="{i18n>Attachment}" visible="{= !${oModelControl2>/ImageLoaded} }">
                             <f:fields>
                                 <Text text="{i18n>NoAttachmentFound}" />
                             </f:fields>
@@ -29,7 +29,7 @@
                             <f:fields>
                                 <Link text="{i18n>ViewAttachment}" press="onViewAttachment" />
                             </f:fields>
-                        </f:FormElement>
+                        </f:FormElement> -->
                     </f:formElements>
                 </f:FormContainer>
                 <f:FormContainer title="  " visible="{oModelControl2>/OfferType/BasicInformation}">
