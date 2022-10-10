@@ -1996,7 +1996,7 @@ sap.ui.define(
                 });
             },
             // added by deepanjali start //
-            _updateBanner: function (odata) {
+            _updateBanner: function (oPayLoad) {
                 debugger;
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
