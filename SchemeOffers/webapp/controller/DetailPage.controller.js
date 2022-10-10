@@ -1943,7 +1943,7 @@ sap.ui.define(
                 });
             },
             _UpdateOffer: function (oPayLoad) {
-             
+                debugger;
                 var promise = jQuery.Deferred();
                 var othat = this;
                 var oView = this.getView();
@@ -2026,6 +2026,7 @@ sap.ui.define(
             },
             _updatePhamplet: function (mParam3, mParam4) {
                 debugger;
+
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
                 var phamplet = oModel.getProperty("/Table/Table12");
@@ -2479,7 +2480,7 @@ sap.ui.define(
                 oSrc.data("dataValue", sValue);
             },
             onDetailPageSave: function () {
-             \
+                debugger;
                 var oView = this.getView();
                 var oValidate = new Validator();
                 var oForm = oView.byId("FormDisplay");
@@ -2491,7 +2492,7 @@ sap.ui.define(
                 this._postDetailSave();
             },
             _postDetailSave: function () {
-          \
+                debugger;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var oModelControl2 = oView.getModel("oModelControl2");
@@ -2569,7 +2570,7 @@ sap.ui.define(
                 this._postPublishSave();
             },
             _postPublishSave: function () {
-             
+                debugger;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var publishData = oModelView.getData();
@@ -2651,7 +2652,7 @@ sap.ui.define(
                 sap.m.URLHelper.redirect(sSource, true);
             },
             openPamdf: function (oEvent) {
-          
+                debugger;
                 var oView = this.getView();
 
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
