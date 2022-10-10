@@ -6,7 +6,7 @@
         initialNoDataText="{i18n>tableNoDataText}"
         width="100%"
         editable="false"
-        entitySet="{DGAModel>Leads}"
+        entitySet="Leads"
         beforeRebindTable="onBindTblDGAList"
         tableType="ResponsiveTable"
         showRowCount="true"
