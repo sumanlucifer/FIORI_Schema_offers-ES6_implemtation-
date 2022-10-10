@@ -1996,26 +1996,27 @@ sap.ui.define(
                 });
             },
             // added by deepanjali start //
-            _uploadBanner: function (oData) {
+            _uploadBanner: function (mParam1, mParam2) {
                 debugger;
+                var promise = jQuery.Deferred();
+                if (!mParam2) {
+                    promise.resolve();
+                    return promise;
+                }
 
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
-                var oWizardView = oView.byId("wizardViewBranching");
-                var file = oWizardView.byId("idFileUpload");
-                var fileUploader;
-                var sServiceUrl = this.getOwnerComponent(this)
-                    .getManifestObject()
-                    .getEntry("/sap.app").dataSources.mainService.uri;
+                var data = oView.getModel("oModelView").getData();
+
                 //To DO promises for sync
                 // var that=this;
                 catalogue.forEach(function (ele) {
                     //  var isValid= that.checkFileName(ele.fileName);
                     jQuery.ajax({
                         method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                         cache: false,
                         contentType: false,
                         processData: false,
