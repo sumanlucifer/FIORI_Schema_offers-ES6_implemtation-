@@ -44,7 +44,7 @@
                         <f:fields>
                             <Select
                                 forceSelection="false"
-                                selectedKey="{oModelControl>LanguageCode}"
+                                selectedKey="{oModelControl>/LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
                                                                 sorter: { path: 'Id' },
@@ -271,7 +271,7 @@
                         <VBox>
                             <Select
                                 forceSelection="false"
-                                selectedKey="{oModelControl>/LanguageCode}"
+                                selectedKey="{oModelControl>LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
                                                                 sorter: { path: 'Id' },
