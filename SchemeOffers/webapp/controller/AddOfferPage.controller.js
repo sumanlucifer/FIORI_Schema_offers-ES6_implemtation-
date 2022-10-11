@@ -663,6 +663,7 @@ sap.ui.define(
 
             },
             openPdf: function (oEvent) {
+                debugger;
                 var oView = this.getView();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
@@ -671,7 +672,7 @@ sap.ui.define(
                 sap.m.URLHelper.redirect(sSource, true);
             },
             openPamdf: function (oEvent) {
-
+                debugger;
                 var oView = this.getView();
 
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
