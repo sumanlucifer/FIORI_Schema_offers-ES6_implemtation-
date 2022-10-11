@@ -434,9 +434,7 @@ sap.ui.define(
                 //oSteps.setShowNextButton(false);
             },
 
-
-
-            _getFormFragment: function (sFragmentName) {
+             _getFormFragment: function (sFragmentName) {
                 var oView = this.getView();
                 var othat = this;
                 // if (!this._formFragments) {
@@ -459,7 +457,6 @@ sap.ui.define(
             onPressCancel: function () {
                 this._navToHome();
             },
-
             onPressSave: function () {
                 var oView = this.getView();
                 var oValidate = new Validator();
@@ -534,12 +531,9 @@ sap.ui.define(
 
             },
 
-
             _postDataToSave: function (bFileFlag) {
-                debugger;
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7, c8;
                 var othat = this;
-
                 c1 = othat._CreatePayloadPart1();
                 //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger;s
                 // Create the Payload 2 in this we set the Bolean Values of All/Specific to the respective backend fields;
@@ -584,7 +578,6 @@ sap.ui.define(
                 });
             },
             _CreateOffer: function (oPayLoad) {
-                debugger;
                 //console.log(oPayLoad);
                 var promise = jQuery.Deferred();
                 var othat = this;
@@ -608,8 +601,6 @@ sap.ui.define(
 
             // added by deepanjali start
             _uploadBanner: function (oData) {
-                debugger;
-
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
@@ -642,7 +633,6 @@ sap.ui.define(
             },
 
             _uploadPhamplet: function (oData) {
-                debugger;
                 var oView = this.getView();
                 var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
@@ -668,7 +658,6 @@ sap.ui.define(
                 });
 
             },
-
 
             // added by deepanjali end
             _UploadFile: function (mParam1, mParam2) {

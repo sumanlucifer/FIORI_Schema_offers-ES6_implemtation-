@@ -87,7 +87,7 @@ sap.ui.define(
                 this._navToHome();
             },
             onFileUploadChange: function (oEvent) {
-                debugger;
+
                 //console.log(oEvent);
                 var oFileUploder = oEvent.getSource();
                 if (oEvent.getParameter("newValue")) {
@@ -95,7 +95,7 @@ sap.ui.define(
                 }
             },
             _verifyImages: function (files, oFileUploder) {
-                debugger;
+
                 var file = files; //I'm doing just for one element (Iterato over it and do for many)
                 var obj = this; // to get access of the methods inside the other functions
                 var reader = new FileReader();
@@ -924,7 +924,6 @@ sap.ui.define(
             },
 
             onChangePamPdf: function (oEvent) {
-                debugger;
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
 
@@ -956,7 +955,7 @@ sap.ui.define(
             },
 
             onDeleteFile: function (oEvent) {
-                debugger;
+
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 //oModel.setProperty("bNew", true);
@@ -1100,7 +1099,7 @@ sap.ui.define(
             },
 
             openPdf: function (oEvent) {
-              
+
                 var oView = this.getView();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
@@ -1109,7 +1108,7 @@ sap.ui.define(
                 sap.m.URLHelper.redirect(sSource, true);
             },
             openPamdf: function (oEvent) {
-                debugger;
+
                 var oView = this.getView();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
@@ -4454,7 +4453,7 @@ sap.ui.define(
             },
             // postdata
             _CreatePayloadPart3: function (oPayLoad) {
-                debugger;
+
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
