@@ -87,6 +87,9 @@ sap.ui.define(
                     modeEdit: false,
                     mode: "add",
                     StartDate: "",
+                    // added by deepanjali start
+                    LanguageCode: "",
+                    // added by deepanjali end
                     EndDate: "",
                     MinDate: new Date(),
                     LoggedInUser: {},
