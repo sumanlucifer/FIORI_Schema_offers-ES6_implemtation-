@@ -309,7 +309,7 @@
                             <Text text="{oModelControl>MediaName}" />
                         </VBox>
                         <HBox>
-                            <Button id="pdfphamBtn" icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode}==='edit'}" press="openphamPdf" class="sapUiTinyMarginEnd" />
+                            <Button id="pdfphamBtn" icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode}==='edit'}" press="openPamdf" class="sapUiTinyMarginEnd" />
                             <Button icon="sap-icon://delete" press="onPhampDeleteFile" type="Transparent" tooltip="Delete" />
                         </HBox>
                     </cells>
