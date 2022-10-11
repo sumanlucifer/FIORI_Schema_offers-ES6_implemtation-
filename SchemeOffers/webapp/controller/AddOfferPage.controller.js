@@ -315,6 +315,9 @@ sap.ui.define(
                     Description: "",
                     Criteria: "",
                     StartDate: null,
+                    // added by deepanjali start
+                    LanguageCode: "",
+                    // added by deepanjali end
                     EndDate: null,
                     IsSpecificZone: false,
                     IsSpecificDivision: false,
