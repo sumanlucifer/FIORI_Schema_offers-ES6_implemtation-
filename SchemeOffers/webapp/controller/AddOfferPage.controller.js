@@ -662,25 +662,7 @@ sap.ui.define(
                 });
 
             },
-            openPdf: function (oEvent) {
-                debugger;
-                var oView = this.getView();
-                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                var oContext = oEvent.getSource().getBindingContext("oModelControl");
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
 
-                sap.m.URLHelper.redirect(sSource, true);
-            },
-            openPamdf: function (oEvent) {
-                debugger;
-                var oView = this.getView();
-
-                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                var oContext = oEvent.getSource().getBindingContext("oModelControl");
-                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
-
-                sap.m.URLHelper.redirect(sSource, true);
-            },
 
             // added by deepanjali end
             _UploadFile: function (mParam1, mParam2) {

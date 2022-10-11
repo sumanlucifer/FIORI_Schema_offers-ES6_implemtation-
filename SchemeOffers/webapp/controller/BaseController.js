@@ -904,7 +904,7 @@ sap.ui.define(
             },
 
             onChangePdf: function (oEvent) {
-              
+
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
 
@@ -1097,6 +1097,26 @@ sap.ui.define(
 
 
                 oModel.refresh(true);
+            },
+
+            openPdf: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
+
+                sap.m.URLHelper.redirect(sSource, true);
+            },
+            openPamdf: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
+
+                sap.m.URLHelper.redirect(sSource, true);
             },
             // added by deepanjali end 
 
@@ -4313,8 +4333,8 @@ sap.ui.define(
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
                 // if (oModelControl.getProperty("/mode") === "edit") {
-                    delete oPayload.BannerMediaList;
-                    delete oPayload.PamphletMediaList;
+                delete oPayload.BannerMediaList;
+                delete oPayload.PamphletMediaList;
                 // }
                 var promise = jQuery.Deferred();
                 if (oPayload.hasOwnProperty("OfferSpecificPainter")) {
