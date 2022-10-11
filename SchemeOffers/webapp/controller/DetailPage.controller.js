@@ -2012,7 +2012,7 @@ sap.ui.define(
                     if (ele.bNew) {
                         jQuery.ajax({
                             method: "PUT",
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&language_code=" + ele.LanguageCode,
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data["Id"] + ")/$value?doc_type=banner&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                             cache: false,
                             contentType: false,
                             processData: false,
@@ -2039,7 +2039,7 @@ sap.ui.define(
                     if (ele.New) {
                         jQuery.ajax({
                             method: "PUT",
-                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data.Id + ")/$value?doc_type=pamphlet&language_code=" + ele.LanguageCode,
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
                             cache: false,
                             contentType: false,
                             processData: false,

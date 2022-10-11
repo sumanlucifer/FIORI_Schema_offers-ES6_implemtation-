@@ -62,11 +62,11 @@
                             <Text text="{i18n>FileUploadMessage}" />
                         </f:fields>
                     </f:FormElement> -->
-                    <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
+                    <!-- <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
                         <f:fields>
                             <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
                         </f:fields>
-                    </f:FormElement>
+                    </f:FormElement> -->
                 </f:formElements>
             </f:FormContainer>
 
