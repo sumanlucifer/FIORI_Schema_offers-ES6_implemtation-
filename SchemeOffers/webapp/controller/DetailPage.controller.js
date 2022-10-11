@@ -1926,7 +1926,7 @@ sap.ui.define(
                                                         c6.then(function (oPayLoad) {
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
                                                             c7 = othat._updateBanner(oPayLoad);
-                                                                othat._updatePhamplet(oPayLoad);
+                                                            othat._updatePhamplet(oPayLoad);
                                                             // c7.then(function (data) {
                                                             //   othat.handleCancelPress(data);
                                                             // });
@@ -2494,7 +2494,7 @@ sap.ui.define(
                 this._postDetailSave();
             },
             _postDetailSave: function () {
-                debugger;
+
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var oModelControl2 = oView.getModel("oModelControl2");
@@ -2644,9 +2644,7 @@ sap.ui.define(
             },
             // added by deepanjali start
             openPdf: function (oEvent) {
-
                 var oView = this.getView();
-
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl2");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
@@ -2654,9 +2652,7 @@ sap.ui.define(
                 sap.m.URLHelper.redirect(sSource, true);
             },
             openPamdf: function (oEvent) {
-                debugger;
                 var oView = this.getView();
-
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl2");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
