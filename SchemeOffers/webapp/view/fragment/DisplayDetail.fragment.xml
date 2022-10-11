@@ -193,7 +193,7 @@
                                 <Text text="{oModelControl2>MediaName}" />
                             </VBox>
                             <HBox>
-                                <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPdf" class="sapUiTinyMarginEnd" />
+                                <Button id="pdfBtn" icon="sap-icon://attachment-photo" type="Transparent" press="openPdf" class="sapUiTinyMarginEnd" />
                                 <!-- <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" /> -->
                             </HBox>
                         </cells>
@@ -272,7 +272,7 @@
                                 <Text text="{oModelControl2>MediaName}" />
                             </VBox>
                             <HBox>
-                                <Button id="pdfpmBtn" icon="sap-icon://pdf-attachment" type="Transparent" press="openPamdf" class="sapUiTinyMarginEnd" />
+                                <Button id="pdfpmBtn" icon="sap-icon://attachment-photo" type="Transparent" press="openPamdf" class="sapUiTinyMarginEnd" />
                                 <!-- <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" /> -->
                             </HBox>
                         </cells>
