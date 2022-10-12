@@ -890,6 +890,7 @@ sap.ui.define(
                     fileName: ""
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);
+                
             },
             onAddPamphlet: function () {
                 var oView = this.getView();
