@@ -89,7 +89,7 @@ sap.ui.define(
                     StartDate: "",
                     // added by deepanjali start
                     LanguageCode: "",
-                    languageDDVisible:true,
+                    languageDDVisible: false,
                     // added by deepanjali end
                     EndDate: "",
                     MinDate: new Date(),
@@ -318,7 +318,6 @@ sap.ui.define(
                     StartDate: null,
                     // added by deepanjali start
                     LanguageCode: "",
-                    languageDDVisible:true,
                     // added by deepanjali end
                     EndDate: null,
                     IsSpecificZone: false,
@@ -436,7 +435,7 @@ sap.ui.define(
                 //oSteps.setShowNextButton(false);
             },
 
-             _getFormFragment: function (sFragmentName) {
+            _getFormFragment: function (sFragmentName) {
                 var oView = this.getView();
                 var othat = this;
                 // if (!this._formFragments) {
