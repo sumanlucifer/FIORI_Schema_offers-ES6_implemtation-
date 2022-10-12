@@ -318,6 +318,7 @@ sap.ui.define(
                     StartDate: null,
                     // added by deepanjali start
                     LanguageCode: "",
+                    languageDDVisible:true,
                     // added by deepanjali end
                     EndDate: null,
                     IsSpecificZone: false,
