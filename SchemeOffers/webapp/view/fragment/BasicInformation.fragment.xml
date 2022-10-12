@@ -192,6 +192,7 @@
                         <VBox>
                             <Select
                                 forceSelection="false"
+                                enabled="{= !${oModelControl>/mode}==='edit'}"
                                 selectedKey="{oModelControl>LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
@@ -271,6 +272,7 @@
                         <VBox>
                             <Select
                                 forceSelection="false"
+                                enabled="{= !${oModelControl>/mode}==='edit'}"
                                 selectedKey="{oModelControl>LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
