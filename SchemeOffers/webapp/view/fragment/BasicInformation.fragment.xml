@@ -44,7 +44,7 @@
                         <f:fields>
                             <Select
                                 forceSelection="false"
-                                selectedKey="{oModelControl>LanguageCode}"
+                                selectedKey="{oModelControl>/LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
                                                                 sorter: { path: 'Id' },
@@ -62,11 +62,11 @@
                             <Text text="{i18n>FileUploadMessage}" />
                         </f:fields>
                     </f:FormElement> -->
-                    <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
+                    <!-- <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
                         <f:fields>
                             <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
                         </f:fields>
-                    </f:FormElement>
+                    </f:FormElement> -->
                 </f:formElements>
             </f:FormContainer>
 
@@ -230,7 +230,7 @@
                             <Text text="{oModelControl>MediaName}" />
                         </VBox>
                         <HBox>
-                            <Button id="pdfBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openPdf" class="sapUiTinyMarginEnd" />
+                            <Button id="pdfBtn" icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode}==='edit'}" press="openPdf" class="sapUiTinyMarginEnd" />
                             <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
                         </HBox>
                     </cells>
@@ -309,7 +309,7 @@
                             <Text text="{oModelControl>MediaName}" />
                         </VBox>
                         <HBox>
-                            <Button id="pdfphamBtn" icon="sap-icon://pdf-attachment" type="Transparent" visible="false" press="openphamPdf" class="sapUiTinyMarginEnd" />
+                            <Button id="pdfphamBtn" icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode}==='edit'}" press="openPamdf" class="sapUiTinyMarginEnd" />
                             <Button icon="sap-icon://delete" press="onPhampDeleteFile" type="Transparent" tooltip="Delete" />
                         </HBox>
                     </cells>
@@ -317,5 +317,5 @@
             </items>
         </Table>
     </VBox>
-     <!-- added by deepanjali end  -->
+    <!-- added by deepanjali end  -->
 </core:FragmentDefinition>

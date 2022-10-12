@@ -87,7 +87,7 @@ sap.ui.define(
                 this._navToHome();
             },
             onFileUploadChange: function (oEvent) {
-                debugger;
+
                 //console.log(oEvent);
                 var oFileUploder = oEvent.getSource();
                 if (oEvent.getParameter("newValue")) {
@@ -95,7 +95,7 @@ sap.ui.define(
                 }
             },
             _verifyImages: function (files, oFileUploder) {
-                debugger;
+
                 var file = files; //I'm doing just for one element (Iterato over it and do for many)
                 var obj = this; // to get access of the methods inside the other functions
                 var reader = new FileReader();
@@ -904,7 +904,7 @@ sap.ui.define(
             },
 
             onChangePdf: function (oEvent) {
-              
+
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
 
@@ -924,7 +924,6 @@ sap.ui.define(
             },
 
             onChangePamPdf: function (oEvent) {
-                debugger;
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
 
@@ -956,7 +955,7 @@ sap.ui.define(
             },
 
             onDeleteFile: function (oEvent) {
-                debugger;
+
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 //oModel.setProperty("bNew", true);
@@ -1097,6 +1096,25 @@ sap.ui.define(
 
 
                 oModel.refresh(true);
+            },
+
+            openPdf: function (oEvent) {
+
+                var oView = this.getView();
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
+
+                sap.m.URLHelper.redirect(sSource, true);
+            },
+            openPamdf: function (oEvent) {
+
+                var oView = this.getView();
+                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                var oContext = oEvent.getSource().getBindingContext("oModelControl");
+                var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
+
+                sap.m.URLHelper.redirect(sSource, true);
             },
             // added by deepanjali end 
 
@@ -4313,8 +4331,8 @@ sap.ui.define(
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
                 // if (oModelControl.getProperty("/mode") === "edit") {
-                    delete oPayload.BannerMediaList;
-                    delete oPayload.PamphletMediaList;
+                delete oPayload.BannerMediaList;
+                delete oPayload.PamphletMediaList;
                 // }
                 var promise = jQuery.Deferred();
                 if (oPayload.hasOwnProperty("OfferSpecificPainter")) {
@@ -4435,7 +4453,7 @@ sap.ui.define(
             },
             // postdata
             _CreatePayloadPart3: function (oPayLoad) {
-                debugger;
+
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");

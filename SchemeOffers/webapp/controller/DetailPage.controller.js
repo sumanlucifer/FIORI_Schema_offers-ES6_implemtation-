@@ -902,7 +902,7 @@ sap.ui.define(
                 return promise;
             },
             handleEditPress: function () {
-                debugger;
+
                 this._toggleButtonsAndView(true);
                 var oView = this.getView();
                 var oCtrl2Model = oView.getModel("oModelControl3");
@@ -1894,7 +1894,7 @@ sap.ui.define(
             // },
             _postDataToSave: function (bFileFlag) {
                 debugger;
-                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7;
+                var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7, c8;
                 var othat = this;
                 c1 = othat._CreatePayloadPart1();
                 //Create PayLoadPart1 Removing the 1.empty values 2. Converting the Values into Ineger;s
@@ -1927,10 +1927,12 @@ sap.ui.define(
                                                             // c7 = othat._UploadFile(oPayLoad, bFileFlag);
                                                             c7 = othat._updateBanner(oPayLoad);
                                                             othat._updatePhamplet(oPayLoad);
-                                                            c7.then(function (data) {
-                                                                othat.handleCancelPress(data);
-                                                            });
-                                                        });
+                                                            // c7.then(function (data) {
+                                                            //   othat.handleCancelPress(data);
+                                                            // });
+                                                        }).then(function (data) {
+                                                            othat.handleCancelPress(data);
+                                                        })
                                                     });
                                                 });
                                             })
@@ -1996,8 +1998,9 @@ sap.ui.define(
                 });
             },
             // added by deepanjali start //
-            _updateBanner: function (oPayLoad) {
+            _updateBanner: function (mParam1, mParam2) {
                 debugger;
+
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
                 var catalogue = oModel.getProperty("/Table/Table11");
@@ -2023,30 +2026,30 @@ sap.ui.define(
                 });
 
             },
-            _updatePhamplet: function (oData) {
+            _updatePhamplet: function (mParam3, mParam4) {
                 debugger;
+
                 var oView = this.getView();
-                var oModel = this.getComponentModel();
                 var oModel = this.getView().getModel("oModelControl");
                 var phamplet = oModel.getProperty("/Table/Table12");
-
+                var data = oView.getModel("oModelView").getData();
                 //To DO promises for sync
                 // var that=this;
                 phamplet.forEach(function (ele) {
-                    //  var isValid= that.checkFileName(ele.fileName);
-                    jQuery.ajax({
-                        method: "PUT",
-                        url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oData.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: ele.file,
-                        success: function (data) {
+                    if (ele.New) {
+                        jQuery.ajax({
+                            method: "PUT",
+                            url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: ele.file,
+                            success: function (data) {
 
-                        },
-                        error: function () { },
-                    })
-
+                            },
+                            error: function () { },
+                        })
+                    }
                 });
 
             },
@@ -2491,7 +2494,7 @@ sap.ui.define(
                 this._postDetailSave();
             },
             _postDetailSave: function () {
-                debugger;
+
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var oModelControl2 = oView.getModel("oModelControl2");
@@ -2641,9 +2644,7 @@ sap.ui.define(
             },
             // added by deepanjali start
             openPdf: function (oEvent) {
-
                 var oView = this.getView();
-
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl2");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
@@ -2651,9 +2652,7 @@ sap.ui.define(
                 sap.m.URLHelper.redirect(sSource, true);
             },
             openPamdf: function (oEvent) {
-                debugger;
                 var oView = this.getView();
-
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl2");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
