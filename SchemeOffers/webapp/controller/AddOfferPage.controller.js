@@ -86,10 +86,10 @@ sap.ui.define(
                     RedemptionCycle: [],
                     modeEdit: false,
                     mode: "add",
-                    languagedDDVisible:true,
                     StartDate: "",
                     // added by deepanjali start
                     LanguageCode: "",
+                    languageDDVisible:true,
                     // added by deepanjali end
                     EndDate: "",
                     MinDate: new Date(),
