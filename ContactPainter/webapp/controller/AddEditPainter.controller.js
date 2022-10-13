@@ -209,6 +209,7 @@ sap.ui.define(
                     this.getView().getModel().resetChanges();
                     //used to intialize the message class for displaying the messages
                 },
+                //KYC verification
                 _CheckTheKyc: function () {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
