@@ -1999,7 +1999,7 @@ sap.ui.define(
             },
             // added by deepanjali start //
             _updateBanner: function (mParam1, mParam2) {
-                debugger;
+
 
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
@@ -2027,7 +2027,7 @@ sap.ui.define(
 
             },
             _updatePhamplet: function (mParam3, mParam4) {
-                debugger;
+
 
                 var oView = this.getView();
                 var oModel = this.getView().getModel("oModelControl");
@@ -2036,7 +2036,7 @@ sap.ui.define(
                 //To DO promises for sync
                 // var that=this;
                 phamplet.forEach(function (ele) {
-                    if (ele.New) {
+                    if (ele.pNew) {
                         jQuery.ajax({
                             method: "PUT",
                             url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + data.Id + ")/$value?doc_type=pamphlet&file_name=" + ele.fileName + "&language_code=" + ele.LanguageCode,

@@ -202,7 +202,7 @@
             </Table>
         </VBox>
         <VBox>
-            <Label design="Bold" text="{i18n>OfferImage}" required="false" />
+            <Label design="Bold" text="{i18n>PamphletImage}" required="false" />
 
             <Table id="idPamdf" width="auto" busyIndicatorDelay="0" busy="{oModelControl>/bBusy}" items="{path: 'oModelControl2>/Table/Table12', templateShareable: false}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>

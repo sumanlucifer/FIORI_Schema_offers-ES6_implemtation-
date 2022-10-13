@@ -89,7 +89,7 @@ sap.ui.define(
                     StartDate: "",
                     // added by deepanjali start
                     LanguageCode: "",
-                    languageDDVisible: true,
+                    // languageDDVisible: true,
                     // added by deepanjali end
                     EndDate: "",
                     MinDate: new Date(),

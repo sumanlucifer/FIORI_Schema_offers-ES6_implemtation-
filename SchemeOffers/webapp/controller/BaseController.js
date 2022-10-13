@@ -888,9 +888,10 @@ sap.ui.define(
                     LanguageCode: "",
                     file: null,
                     fileName: ""
+                   
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);
-                
+
             },
             onAddPamphlet: function () {
                 var oView = this.getView();
@@ -914,6 +915,7 @@ sap.ui.define(
                     oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     oView.getModel("oModelControl").setProperty("bNew", true, oContext);
+                  
 
                     var isValid = this.checkFileName(pdfname);
                     if (!isValid) {
@@ -932,7 +934,7 @@ sap.ui.define(
                     var imagename = oEvent.getParameter("files")[0].name;
                     oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
-                    oView.getModel("oModelControl").setProperty("New", true, oContext);
+                    oView.getModel("oModelControl").setProperty("pNew", true, oContext);
 
                     var isValid = this.checkFileName(imagename);
                     if (!isValid) {

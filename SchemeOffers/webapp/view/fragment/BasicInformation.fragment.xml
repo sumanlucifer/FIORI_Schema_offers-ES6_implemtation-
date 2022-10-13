@@ -191,8 +191,21 @@
                     <cells>
                         <VBox>
                             <Select
+                                visible="{= ${oModelControl>/mode}==='edit'}"
                                 forceSelection="false"
-                                editable="{= !${oModelControl>/mode}==='edit'|| !${oModelControl.length>0}}"
+                                enabled="{= ${oModelControl>/mode} === 'edit'  &amp;&amp; ${oModelControl>LanguageCode} === ''  }"
+                                selectedKey="{oModelControl>LanguageCode}"
+                                items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                            >
+                                <core:Item key="{LanguageCode}" text="{Language}" />
+                            </Select>
+                            <Select
+                                visible="{= ${oModelControl>/mode}==='add'}"
+                                forceSelection="false"
                                 selectedKey="{oModelControl>LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
@@ -203,6 +216,7 @@
                                 <core:Item key="{LanguageCode}" text="{Language}" />
                             </Select>
                         </VBox>
+
                         <VBox>
                             <FlexBox>
                                 <VBox>
@@ -231,7 +245,8 @@
                             <Text text="{oModelControl>MediaName}" />
                         </VBox>
                         <HBox>
-                            <Button id="pdfBtn" icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode}==='edit'}" press="openPdf" class="sapUiTinyMarginEnd" />
+                            <Button icon="sap-icon://attachment-photo" type="Transparent" enabled="{= ${oModelControl>bNew} !== true}" visible="{= ${oModelControl>/mode} === 'edit'  &amp;&amp; ${oModelControl>file} !== null}" press="openPdf" class="sapUiTinyMarginEnd" />
+                            <Button icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode} === 'add'  &amp;&amp; ${oModelControl>MediaName} === ''}" press="openPdf" class="sapUiTinyMarginEnd" />
                             <Button icon="sap-icon://delete" press="onDeleteFile" type="Transparent" tooltip="Delete" />
                         </HBox>
                     </cells>
@@ -271,8 +286,21 @@
                     <cells>
                         <VBox>
                             <Select
+                                visible="{= ${oModelControl>/mode}==='edit'}"
                                 forceSelection="false"
-                                editable="{= !${oModelControl>/mode}==='edit' }"
+                                enabled="{= ${oModelControl>/mode} === 'edit'  &amp;&amp; ${oModelControl>LanguageCode} === ''  }"
+                                selectedKey="{oModelControl>LanguageCode}"
+                                items="{
+                                                                path: '/MasterLanguageSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                            >
+                                <core:Item key="{LanguageCode}" text="{Language}" />
+                            </Select>
+                            <Select
+                                visible="{= ${oModelControl>/mode}==='add'}"
+                                forceSelection="false"
                                 selectedKey="{oModelControl>LanguageCode}"
                                 items="{
                                                                 path: '/MasterLanguageSet',
@@ -311,7 +339,8 @@
                             <Text text="{oModelControl>MediaName}" />
                         </VBox>
                         <HBox>
-                            <Button id="pdfphamBtn" icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode}==='edit'}" press="openPamdf" class="sapUiTinyMarginEnd" />
+                            <Button icon="sap-icon://attachment-photo" type="Transparent" enabled="{= ${oModelControl>pNew} !== true}" visible="{= ${oModelControl>/mode} === 'edit'  &amp;&amp; ${oModelControl>file} !== null}" press="openPamdf" class="sapUiTinyMarginEnd" />
+                            <Button icon="sap-icon://attachment-photo" type="Transparent" visible="{= ${oModelControl>/mode} === 'add'  &amp;&amp; ${oModelControl>MediaName} === ''}" press="openPamdf" class="sapUiTinyMarginEnd" />
                             <Button icon="sap-icon://delete" press="onPhampDeleteFile" type="Transparent" tooltip="Delete" />
                         </HBox>
                     </cells>
