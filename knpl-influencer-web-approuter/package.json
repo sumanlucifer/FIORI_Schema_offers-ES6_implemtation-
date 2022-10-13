@@ -5,7 +5,7 @@
 		"@sap/approuter": "^9.4.0"
 	},
 	"devDependencies": {
-		"@sap/html5-repo-mock": "^1.8.0"
+		"@sap/html5-repo-mock": "^2.1.0"
 	},
 	"scripts": {
 		"start": "node node_modules/@sap/approuter/approuter.js",
