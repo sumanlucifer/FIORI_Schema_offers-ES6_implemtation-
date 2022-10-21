@@ -96,6 +96,7 @@ sap.ui.define(
                     .attachMatched(this._onRouteMatched, this);
             },
             _onRouteMatched: function (oEvent) {
+
                 var oProp = window.decodeURIComponent(
                     oEvent.getParameter("arguments").prop
                 );
@@ -109,6 +110,18 @@ sap.ui.define(
                         parameters: {
                             expand: sExpandParam,
                         },
+                        events: {
+
+                            dataRequested: function () {
+
+                            }.bind(this),
+                            dataReceived: function (oEvent) {
+                                var kycID = oEvent.getParameter("data").PainterKycDetails.Id;
+                                var bankID = oEvent.getParameter("data").PainterBankDetails.Id;
+                                this.getView().getModel("oModelControl2").setProperty("/kycID", kycID);
+                                this.getView().getModel("oModelControl2").setProperty("/bankID", bankID);
+                            }.bind(this)
+                        }
                     });
                 }
                 this._initData(oProp);
@@ -169,6 +182,11 @@ sap.ui.define(
                         RejectRemark: ""
                     },
                     RejectRemark1: "",
+                    // added by deepanjali start
+                    Comment: "",
+                    RejectionReasonTypeId: "",
+                    kycId: "",
+                    // added by deepanjali end
                     resourcePath: "com.knpl.pragati.ContactPainter"
                 };
                 var oView = this.getView();
@@ -228,6 +246,27 @@ sap.ui.define(
                     this._NameChangeHistoryDialog.open();
                 }
             },
+            // added by deepanjali start
+            onIconReasonHistoryPress: function () {
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl2");
+                if (!this._ReasonChangeHistoryDialog) {
+                    Fragment.load({
+                        controller: this,
+                        name: oModelControl.getProperty("/resourcePath") + ".view.fragments.DialogHistoryReasonChange",
+                        id: oView.getId()
+                    }).then(function (oControl) {
+                        this._ReasonChangeHistoryDialog = oControl;
+                        oView.addDependent(this._ReasonChangeHistoryDialog);
+                        this._ReasonChangeHistoryDialog.open();
+
+
+                    }.bind(this))
+                } else {
+                    this._ReasonChangeHistoryDialog.open();
+                }
+            },
+            // added by deepanjali end
             onIconMobileHistoryPress: function () {
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl2");
@@ -313,10 +352,7 @@ sap.ui.define(
             onBeforeNameChangeHistory: function (oEvent) {
                 console.log("method trigerred");
                 var oView = this.getView();
-                var sComplainCode = oView
-                    .getModel("oModelControl2")
-                    .getProperty("/PainterId");
-
+                var sComplainCode = oView.getModel("oModelControl2").getProperty("/PainterId");
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 oBindingParams.parameters["expand"] = "UpdatedByDetails";
                 var oFilter = new Filter(
@@ -324,11 +360,42 @@ sap.ui.define(
                     FilterOperator.EQ,
                     sComplainCode,
                 );
-
                 oBindingParams.filters.push(oFilter);
                 oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
 
             },
+            // added by deepanjali start
+            onBeforeReasonChangeHistory: function (oEvent) {
+
+                console.log("method trigerred");
+                var oView = this.getView();
+                var sComplainCode = oView.getModel("oModelControl2").getProperty("/kycID");
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                oBindingParams.parameters["expand"] = "UpdatedByDetails,PainterKycDetails";
+                var oFilter = new Filter(
+                    "KycId",
+                    FilterOperator.EQ,
+                    sComplainCode,
+                );
+                oBindingParams.filters.push(oFilter);
+                oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+
+            },
+            onBeforeResnChngeBnkHistory: function (oEvent) {
+                console.log("method trigerred");
+                var oView = this.getView();
+                var sComplainCode = oView.getModel("oModelControl2").getProperty("/bankID");
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                oBindingParams.parameters["expand"] = "UpdatedByDetails,PainterBankDetails";
+                var oFilter = new Filter(
+                    "BankDetailsId",
+                    FilterOperator.EQ,
+                    sComplainCode,
+                );
+                oBindingParams.filters.push(oFilter);
+                oBindingParams.sorter.push(new Sorter("UpdatedAt", true));
+            },
+            // added by deepanjali end
             onBeforeMobileChangeHistory: function (oEvent) {
                 console.log("method trigerred");
                 var oView = this.getView();
@@ -906,6 +973,7 @@ sap.ui.define(
                     InitialKycDocType: "", //Aditya Chnage
                     InitialKycStatus: "", //Aditya Chnage
                     InitialGovtId: "", //Aditya Chnage
+                    KycId: "",//Deepanjali Chnage
                     InitialIfsc: "",
                     InitialAcTypeId: "",
                     InitialBankHoldName: "",
@@ -2208,22 +2276,42 @@ sap.ui.define(
                 }
             },
             onRbBankStatus: function (oEvent) {
-                /*Aditya changes start*/
+                /*Deepanjali changes start*/
                 var oView = this.getView();
-                var othat = this;
                 var oModelView = oView.getModel("oModelView");
-                var statusText = oEvent.getSource().getProperty('text');
-
-                function onYes() {
-                    othat.onReject(statusText);
+                var othat = this;
+                if (!this.oRejKYcDialog) {
+                    Fragment.load({
+                        type: "XML",
+                        controller: othat,
+                        name: "com.knpl.pragati.ContactPainter.view.fragments.RejectReason"
+                    }).then(function (oDialog) {
+                        othat.oRejKYcDialog = oDialog;
+                        othat.getView().addDependent(oDialog);
+                        oDialog.open();
+                    }.bind(othat));
+                } else {
+                    this.oRejKYcDialog.open();
                 }
-                this.showWarning("Do you want to " + " " + statusText + "?", onYes);
+                /*Deepanjali changes end*/
+
+                // /*Aditya changes start*/
+                // var oView = this.getView();
+                // var othat = this;
+                // var oModelView = oView.getModel("oModelView");
+                // var statusText = oEvent.getSource().getProperty('text');
+
+                // function onYes() {
+                //     othat.onReject(statusText);
+                // }
+                // this.showWarning("Do you want to " + " " + statusText + "?", onYes);
                 /*Aditya changes end*/
             },
             onReject: function (statusText) {
                 var oView = this.getView();
                 var othat = this;
                 var oModelView = oView.getModel("oModelView");
+                var oModelControl = oView.getModel("oModelControl2");
                 if (statusText == 'Approve') {
                     oModelView.setProperty("/PainterBankDetails/Status", "APPROVED");
                     var oData = this.getView().getModel("oModelView").getData();
@@ -2244,8 +2332,12 @@ sap.ui.define(
                     var sBankId = oData["PainterBankDetails"]["Id"];
                     var sPath = "/PainterBankDetailsSet(" + sBankId + ")" + "/Status";
                     var sStatus = oModelView.getProperty("/PainterBankDetails/Status");
+                    var srejId = oModelControl.getProperty("/RejectionReasonTypeId");
+                    var scomment = oModelControl.getProperty("/Comment");
                     this.getView().getModel().update(sPath, {
-                        Status: sStatus
+                        Status: sStatus,
+                        RejectionReasonTypeId: parseInt(srejId),
+                        Comment: scomment
                     }, {
                         success: function () {
                             othat.handleCancelPress();
@@ -2254,9 +2346,11 @@ sap.ui.define(
                     });
                 }
             },
-            onRejectKYC: function (statusText) {
+            onRejectKYC: function (statusText, pkycSet, pkycPro) {
+                debugger;
                 var oView = this.getView();
                 var othat = this;
+                var oModelControl = oView.getModel("oModelControl2");
                 var oModelView = oView.getModel("oModelView");
                 if (statusText == 'Approve') {
                     oModelView.setProperty("/PainterKycDetails/Status", "APPROVED");
@@ -2264,11 +2358,13 @@ sap.ui.define(
                     var sBankId = oData["PainterKycDetails"]["Id"];
                     var sPath = "/PainterKycDetailsSet(" + sBankId + ")" + "/Status";
                     var sStatus = oModelView.getProperty("/PainterKycDetails/Status");
+
                     this.getView().getModel().update(sPath, {
                         Status: sStatus
                     }, {
                         success: function () {
                             othat.handleCancelPress();
+
                         },
                         error: function (a) { },
                     });
@@ -2278,28 +2374,63 @@ sap.ui.define(
                     var sBankId = oData["PainterKycDetails"]["Id"];
                     var sPath = "/PainterKycDetailsSet(" + sBankId + ")" + "/Status";
                     var sStatus = oModelView.getProperty("/PainterKycDetails/Status");
+                    var srejId = oModelControl.getProperty("/RejectionReasonTypeId");
+
+                    var scomment = oModelControl.getProperty("/Comment");
                     this.getView().getModel().update(sPath, {
-                        Status: sStatus
+                        Status: sStatus,
+                        RejectionReasonTypeId: parseInt(srejId),
+                        Comment: scomment
+
                     }, {
                         success: function () {
                             othat.handleCancelPress();
+                            othat.onDialogCloseNew();
+                            othat._showMessageToast("mTexts");
+                            oModelControl.setProperty("/Comment", " ");
+                            oModelControl.setProperty("/RejectionReasonTypeId", " ")
+
                         },
                         error: function (a) { },
                     });
                 }
             },
             onRbKycStatus: function (oEvent) {
-                /*Aditya changes start*/
+                /*Deepanjali changes start*/
                 var oView = this.getView();
-                var othat = this;
                 var oModelView = oView.getModel("oModelView");
-                var statusText = oEvent.getSource().getProperty('text');
-
-                function onYes() {
-                    othat.onRejectKYC(statusText);
+                var othat = this;
+                if (!this.oRejKYcDialog) {
+                    Fragment.load({
+                        type: "XML",
+                        controller: othat,
+                        name: "com.knpl.pragati.ContactPainter.view.fragments.RejectReason"
+                    }).then(function (oDialog) {
+                        othat.oRejKYcDialog = oDialog;
+                        othat.getView().addDependent(oDialog);
+                        oDialog.open();
+                    }.bind(othat));
+                } else {
+                    this.oRejKYcDialog.open();
                 }
-                this.showWarning("Do you want to " + " " + statusText + "?", onYes);
-                /*Aditya changes end*/
+                /*Deepanjali changes end*/
+
+
+            },
+            onRejectSubmit: function (oEvent) {
+                var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl2");
+                var srejId = oModelControl.getProperty("/RejectionReasonTypeId");
+                if (srejId.length <= 0) {
+                    this._showMessageToast("Message13");
+                    return false;
+                }
+                var statusText = oEvent.getSource().getProperty('text');
+                statusText = statusText === "Submit" ? "Reject" : statusText;
+                var othat = this;
+                debugger;
+                // var rejection = pkycSet ? pkycSet : pkycSet
+                othat.onRejectKYC(statusText);
             },
             onKycView: function (oEvent) {
                 var oButton = oEvent.getSource();

@@ -1,63 +1,119 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" >
+<core:FragmentDefinition
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
     <VBox width="100%">
         <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="{i18n>KycDetails}"/>
-                <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="{i18n>NotSubmitted}" state="Error"/>
-                <ObjectStatus visible="{= ${PainterKycDetails} !== null}" text="{path:'PainterKycDetails/Status'}" state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined  || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined }"/>
-                <ToolbarSpacer/>
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{i18n>KycDetails}" />
+                    <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="{i18n>NotSubmitted}" state="Error" />
+                    <ObjectStatus
+                        visible="{= ${PainterKycDetails} !== null}"
+                        text="{path:'PainterKycDetails/Status'}"
+                        state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined  || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined }"
+                    />
+                    <ToolbarSpacer />
                     <FlexBox visible="{=${PainterKycDetails/Status} !== 'INPROGRESS'}">
-                        <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed', formatter:'.formatter.fmtEnableAccess1'}"  visible="{=!${oModelControl>/EditKycButton}}" text="{i18n>Edit}" type="Emphasized" press=".onEditKycFields"/>
-                        <Button visible="{=${oModelControl>/EditKycButton}}" text="{i18n>Cancel}" press="onEditCancelKycFields"/>
+                        <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed', formatter:'.formatter.fmtEnableAccess1'}" visible="{=!${oModelControl>/EditKycButton}}" text="{i18n>Edit}" type="Emphasized" press=".onEditKycFields" />
+                        <Button visible="{=${oModelControl>/EditKycButton}}" text="{i18n>Cancel}" press="onEditCancelKycFields" />
                     </FlexBox>
-            </OverflowToolbar>
-		</headerToolbar>
-		<content>
-            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
-                <f:content>
-                <core:Title text=""/>
-                <Label text="{i18n>SelectedKYCDocument}" required="{=${oModelControl>/EditKyc}}"/>
-                <FlexBox >
-                <ComboBox id="idKycEditComboNotNull" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}"  visible="{= ${PainterKycDetails} !== null }" change="onKycChange"  items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
-                    <items>
-                        <core:Item text="{KycType}" key="{Id}"></core:Item>
-                    </items>
-                </ComboBox>
-                <ComboBox  id="idKycEditCombo" required="{=${oModelControl>/EditKyc}}"  editable="{=${oModelControl>/EditKyc}}"  visible="{= ${PainterKycDetails} === null}" change="onKycChangeEdit"  items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }" >
-                    <items>
-                        <core:Item text="{KycType}" key="{Id}"></core:Item>
-                    </items>
-                </ComboBox>
-                </FlexBox>
-                <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} !== null }"/>
-                <Input  id="kycIdNo" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc" visible="{= ${PainterKycDetails} !== null }" value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]'} }" />
-                <Label text="{path:'oModelControl>/KycLabel',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} === null}"/>
-                <Input id="kycIdNoEdit" editable="{=${oModelControl>/EditKyc}}" required="{=${oModelControl>/EditKyc}}" change="onEditFieldKyc"  value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]' } }" visible="{= ${PainterKycDetails} === null}"/>
-                <!-- <Input change="onEditFieldKyc" editable="{=${oModelControl>/EditKyc}}" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" /> -->
-                <core:Title text=""/>
-                <!-- <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" /> -->
-                <Label class="sapUiTinyMarginBegin" text="KYC Documents"/>
-                <FlexBox >
-                <Button visible="{= ${PainterKycDetails} === null? false: true }" type="Emphasized" text="View" press="onKycView"/>
-                <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDocButton} }" type="Emphasized" text="Update Document"  press="onAddKycDoc" />
-                <!-- <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDoc} }" text="Cancel" press="onCancelKycDoc" /> -->
-                </FlexBox>
-                <Label text="" visible="{=${oModelControl>/AddKycDoc}}" />
-                <UploadCollection typeMissmatch="onUploadFileTypeMis"  fileType="jpg,jpeg,png" id="idUploadCollection" visible="{=${oModelControl>/AddKycDoc}}" maximumFilenameLength="55" maximumFileSize="10" multiple="false" sameFilenameAllowed="true" instantUpload="false" noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" />
-                <Label text="" visible="{=${oModelControl>/AddKycDoc}}" ></Label>
-                <Text visible="{=${oModelControl>/AddKycDoc}}" text="{i18n>FileUploadMessage}"/>
-            </f:content>
-        </f:SimpleForm>
-		</content>
-	</Panel>
-            <!--Aditya changes start-->
-			<Toolbar visible="{= ${PainterKycDetails} !== null}">
-				<ToolbarSpacer/>
-                <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-				<Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}"/>
-    <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}"/>
-			</Toolbar>
-		<!--Aditya changes end-->
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+                    <f:content>
+                        <core:Title text="" />
+                        <Label text="{i18n>SelectedKYCDocument}" required="{=${oModelControl>/EditKyc}}" />
+                        <FlexBox>
+                            <ComboBox
+                                id="idKycEditComboNotNull"
+                                editable="{=${oModelControl>/EditKyc}}"
+                                required="{=${oModelControl>/EditKyc}}"
+                                visible="{= ${PainterKycDetails} !== null }"
+                                change="onKycChange"
+                                items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}"
+                                selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }"
+                            >
+                                <items>
+                                    <core:Item text="{KycType}" key="{Id}" />
+                                </items>
+                            </ComboBox>
+                            <ComboBox
+                                id="idKycEditCombo"
+                                required="{=${oModelControl>/EditKyc}}"
+                                editable="{=${oModelControl>/EditKyc}}"
+                                visible="{= ${PainterKycDetails} === null}"
+                                change="onKycChangeEdit"
+                                items="{path:'/MasterKycTypeSet',sorter:{path:'KycType'},filters:[{path:'IsArchived',operator:'EQ',value1:false}]}"
+                                selectedKey="{path:'oModelView>/PainterKycDetails/KycTypeId', type : 'com.knpl.pragati.ContactPainter.model.customInt' }"
+                            >
+                                <items>
+                                    <core:Item text="{KycType}" key="{Id}" />
+                                </items>
+                            </ComboBox>
+                        </FlexBox>
+                        <Label text="{path:'oModelView>/PainterKycDetails/KycTypeId',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} !== null }" />
+                        <Input
+                            id="kycIdNo"
+                            editable="{=${oModelControl>/EditKyc}}"
+                            required="{=${oModelControl>/EditKyc}}"
+                            change="onEditFieldKyc"
+                            visible="{= ${PainterKycDetails} !== null }"
+                            value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]'} }"
+                        />
+                        <Label text="{path:'oModelControl>/KycLabel',formatter:'.fmtLabel'}" required="{=${oModelControl>/EditKyc}}" visible="{= ${PainterKycDetails} === null}" />
+                        <Input
+                            id="kycIdNoEdit"
+                            editable="{=${oModelControl>/EditKyc}}"
+                            required="{=${oModelControl>/EditKyc}}"
+                            change="onEditFieldKyc"
+                            value="{path:'oModelView>/PainterKycDetails/GovtId',type : 'sap.ui.model.type.String', constraints:{ minLength:5,maxLength:20, search:'^[a-zA-z0-9]' } }"
+                            visible="{= ${PainterKycDetails} === null}"
+                        />
+                        <!-- <Input change="onEditFieldKyc" editable="{=${oModelControl>/EditKyc}}" id="kycIdNo" value="{path:'oModelView>/PainterKycDetails/GovtId'}" /> -->
+                        <core:Title text="" />
+                        <!-- <Label text="{i18n>Status}" visible="{= ${PainterKycDetails} === null? false: true }" /> -->
+                        <Label class="sapUiTinyMarginBegin" text="KYC Documents" />
+                        <FlexBox>
+                            <Button visible="{= ${PainterKycDetails} === null? false: true }" type="Emphasized" text="View" press="onKycView" />
+                            <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDocButton} }" type="Emphasized" text="Update Document" press="onAddKycDoc" />
+                            <!-- <Button class="sapUiTinyMarginBegin" visible="{= ${oModelControl>/AddKycDoc} }" text="Cancel" press="onCancelKycDoc" /> -->
+                        </FlexBox>
+                        <Label text="" visible="{=${oModelControl>/AddKycDoc}}" />
+                        <UploadCollection
+                            typeMissmatch="onUploadFileTypeMis"
+                            fileType="jpg,jpeg,png"
+                            id="idUploadCollection"
+                            visible="{=${oModelControl>/AddKycDoc}}"
+                            maximumFilenameLength="55"
+                            maximumFileSize="10"
+                            multiple="false"
+                            sameFilenameAllowed="true"
+                            instantUpload="false"
+                            noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload"
+                        />
+                        <Label text="" visible="{=${oModelControl>/AddKycDoc}}" />
+                        <Text visible="{=${oModelControl>/AddKycDoc}}" text="{i18n>FileUploadMessage}" />
+                    </f:content>
+                </f:SimpleForm>
+            </content>
+        </Panel>
+        <!--Aditya changes start-->
+        <Toolbar visible="{= ${PainterKycDetails} !== null}">
+            <ToolbarSpacer />
+            <Button text="{i18n>reject}" press="onRbKycStatus" type="Reject" />
+            <!-- <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>reject}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}" /> -->
+            <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>approve}" press="onRbKycStatus" type="Accept" visible="{= ${PainterKycDetails/Status} === 'INPROGRESS'}" />
+            <Button enabled="{path:'LoginInfo>/IsKYCUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}" />
+            <!-- <Button text="{i18n>rejectForcefully}" press="onRbKycStatus" type="Reject" visible="{= ${PainterKycDetails/Status} === 'APPROVED'}" /> -->
+        </Toolbar>
+        <!--Aditya changes end-->
     </VBox>
 </core:FragmentDefinition>
