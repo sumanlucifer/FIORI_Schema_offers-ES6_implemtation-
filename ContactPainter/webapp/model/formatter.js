@@ -69,7 +69,7 @@ sap.ui.define([
         },
         fmtCheckNull: function (mParam) {
 
-            if (mParam === null) {
+            if (mParam === null || mParam === "") {
                 return "NA"
             }
             return mParam
@@ -128,7 +128,7 @@ sap.ui.define([
             if (mParam1 === null) {
                 return "NA"
             }
-             if (mParam1 === 1) {
+            if (mParam1 === 1) {
                 return "Bank Merged, IFSC codeChanged";
             }
             if (mParam1 === 2) {
@@ -147,6 +147,7 @@ sap.ui.define([
                 return "Others"
             }
         },
+
         // added by deepanjali end
         fmtStatus: function (mParam) {
             var sLetter = "";
@@ -504,6 +505,9 @@ sap.ui.define([
                 newStatus = "Approved";
             } else if (sStatus === "REJECTED") {
                 newStatus = "Rejected";
+            }
+            else if (sStatus === "INPROGRESS") {
+                newStatus = "In Progress";
             }
             return newStatus;
         },

@@ -7,8 +7,8 @@
                         <smartTable:SmartTable
                             id="smartHistoryNameChange"
                             editable="false"
-                            beforeRebindTable="onBeforeReasonChangeHistory"
-                            entitySet="PainterKycActivationLog"
+                            beforeRebindTable="onBeforeResnChngeBnkHistory"
+                            entitySet="BankDetailsActivationLog"
                             tableType="ResponsiveTable"
                             showRowCount="true"
                             useExportToExcel="false"
@@ -19,7 +19,6 @@
                             placeToolbarInTable="true"
                             persistencyKey="HistoryPersistenceKey"
                             initialNoDataText="{i18n>tableNoDataText}"
-                            requestAtLeastFields="KycId"
                         >
                             <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
                                 <columns>
@@ -31,7 +30,7 @@
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "KycStatus", "leadingProperty": "KycStatus", "columnIndex": 1 ,"sortProperty": "KycStatus","filterProperty": "KycStatus"}' />
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "BankDetailsStatus", "leadingProperty": "BankDetailsStatus", "columnIndex": 1 ,"sortProperty": "BankDetailsStatus","filterProperty": "BankDetailsStatus"}' />
                                         </customData>
                                         <Text text="{i18n>Status}" />
                                     </Column>
@@ -47,24 +46,14 @@
                                         </customData>
                                         <Text text="{i18n>UpdatedBy}" />
                                     </Column>
-                                    <Column hAlign="Begin">
-                                        <customData>
-                                            <core:CustomData
-                                                key="p13nData"
-                                                value='\{"columnKey": "RejectionReasonTypeDetails/Rejection_Reason", "leadingProperty": "RejectionReasonTypeDetails/Rejection_Reason", "columnIndex": 4 ,"sortProperty": "RejectionReasonTypeDetails/Rejection_Reason","filterProperty": "RejectionReasonTypeDetails/Rejection_Reason"}'
-                                            />
-                                        </customData>
-                                        <Text text="{i18n>Reason1}" />
-                                    </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
                                         <cells>
                                             <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
-                                            <Text text="{path:'KycStatus',formatter:'.formatter.fmtStatus1'}" />
-                                            <Text text="{path:'Comment' ,formatter:'.formatter.fmtCheckNull'}" />
+                                            <Text text="{path:'BankDetailsStatus',formatter:'.formatter.fmtStatus1'}" />
+                                           <Text text="{path:'Comment' ,formatter:'.formatter.fmtCheckNull'}" />
                                             <Text text="{path:'UpdatedByDetails/Name',formatter:'.formatter.fmtDisplayUpdatedDetails2'}" />
-                                            <Text text="{path:'RejectionReasonTypeDetails/Rejection_Reason' ,formatter:'.formatter.fmtCheckNull'}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>

@@ -19,7 +19,6 @@
                             placeToolbarInTable="true"
                             persistencyKey="HistoryPersistenceKey"
                             initialNoDataText="{i18n>tableNoDataText}"
-                            requestAtLeastFields="KycId"
                         >
                             <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
                                 <columns>

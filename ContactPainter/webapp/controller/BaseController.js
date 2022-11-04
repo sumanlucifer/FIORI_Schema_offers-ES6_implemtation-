@@ -254,9 +254,24 @@ sap.ui.define([
         onDialogCloseNew: function () {
             var oView = this.getView(),
                 oModelContrl = oView.getModel("oModelControl2");
-
+            oModelContrl.setProperty("/Comment", " ");
+            oModelContrl.setProperty("/RejectionReasonTypeId", " ");
             console.log("Dialog Close");
             // added by deepanjali start
+
+            if (this._RsnChngeBnkHistoryDialog) {
+                this._RsnChngeBnkHistoryDialog.close();
+                this._RsnChngeBnkHistoryDialog.destroy();
+                delete this._RsnChngeBnkHistoryDialog;
+                return;
+            }
+            if (this.oRejBnkDialog) {
+                this.oRejBnkDialog.close();
+                this.oRejBnkDialog.destroy();
+                delete this.oRejBnkDialog;
+                return;
+            }
+
             if (this.oRejKYcDialog) {
                 this.oRejKYcDialog.close();
                 this.oRejKYcDialog.destroy();

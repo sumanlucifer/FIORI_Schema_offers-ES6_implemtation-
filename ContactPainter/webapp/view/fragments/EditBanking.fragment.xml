@@ -251,7 +251,6 @@
             <Text text="{i18n>PendingforSCBPennyDropValidation}" visible="{= ${PainterBankDetails/Status} === 'PENDING'}" />
             <ToolbarSpacer />
 
-            <!-- <Button text="{= ${PainterBankDetails/Status}=== 'INPROGRESS' ? 'Reject' : 'Reject Forcefully' }" press="onRbBankStatus" type="Reject" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'||${PainterBankDetails/Status} === 'PENDING'}"/> -->
             <Button
                 enabled="{path:'LoginInfo>/IsBankUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}"
                 text="{= ${PainterBankDetails/Status}=== 'INPROGRESS' ? 'Reject' : 'Reject Forcefully' }"
@@ -261,6 +260,7 @@
             />
             <Button enabled="{path:'LoginInfo>/IsBankUpdateAllowed',formatter:'.formatter.fmtEnableAccess1'}" text="{i18n>approve}" press="onRbBankStatus" type="Accept" visible="{= ${PainterBankDetails/Status} === 'INPROGRESS'}" />
         </Toolbar>
+
         <!--Aditya changes end-->
     </VBox>
 </core:FragmentDefinition>
