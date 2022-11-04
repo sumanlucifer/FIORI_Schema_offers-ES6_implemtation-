@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    <Dialog busyIndicatorDelay="0" class="sapUiContentPadding" id="ChangeStatus" title="{i18n>Addreasons}">
+        <content>
+            <f:SimpleForm id="RemarkForm" layout="ResponsiveGridLayout" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                <f:content>
+                    <Label required="true" text="{i18n>SelectKYCReasons}" />
+                    <Select
+                        forceSelection="false"
+                        selectedKey="{oModelControl2>/RejectionReasonTypeId}"
+                        items="{
+                                                                path: '/MasterRejectionReasonSet',
+                                                                sorter: { path: 'Id' },
+                                                                templateShareable: true
+                                                            }"
+                    >
+                        <core:Item key="{Id}" text="{Rejection_Reason}" />
+                    </Select>
+
+                    <Label text="{i18n>comment}" />
+                    <TextArea required="false" placeholder="{i18n>Addcomment}" maxLength="300" value="{path : 'oModelControl2>/Comment', type : 'sap.ui.model.type.String', constraints : {minLength :1 , maxLength :300 } }" />
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        <buttons>
+            <Button text="{i18n>Close}" press="onDialogCloseNew" />
+            <Button press="onRejectSubmit" type="Emphasized" text="{i18n>Submit}" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

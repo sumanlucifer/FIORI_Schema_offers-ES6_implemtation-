@@ -1,36 +1,61 @@
-<core:FragmentDefinition xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:FragmentDefinition
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
     <VBox width="100%">
-    <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="{i18n>KycDetails}"/>
-                <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error"/>
-                <ObjectStatus visible="{= ${PainterKycDetails} !== null}" text="{path:'PainterKycDetails/Status', formatter: '.fmtStatus'}" 
-                state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"/>
-			</OverflowToolbar>
-		</headerToolbar>
-		<content>
-        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
-            <f:content>
-                <core:Title text="{i18n>KYCDetails}"/>
-                <Label text="{i18n>SelectedKYCDocument}"/>
-                <Text text="{PainterKycDetails/KycTypeDetails/KycType}"/>
-                <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
-                <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
-                <Label text="{i18n>Status}"  visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
-                <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }"/>
-                 <core:Title text=" "/>
-                 <Label text="{i18n>CreatedBy}" />
- <Text text="{path:'PainterKycDetails/CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />  
- <Label text="{i18n>CreatedAt}" />
- <Text text="{path:'PainterKycDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
- <Label text="{i18n>LastUpdatedBy}" />
- <Text text="{path:'PainterKycDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" /> 
- <Label text="{i18n>LastUpdatedAt}" />
- <Text text="{path:'PainterKycDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
-            </f:content>
-        </f:SimpleForm>
-    </content>
-	</Panel>
+        <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{i18n>KycDetails}" />
+                    <ObjectStatus visible="{= ${PainterKycDetails} === null}" text="Not Submitted" state="Error" />
+                    <ObjectStatus
+                        visible="{= ${PainterKycDetails} !== null}"
+                        text="{path:'PainterKycDetails/Status', formatter: '.fmtStatus'}"
+                        state="{= ${PainterKycDetails/Status} === 'APPROVED'? 'Success' : undefined || ${PainterKycDetails/Status} === 'REJECTED'? 'Error' : undefined || ${PainterKycDetails/Status} === 'INPROGRESS'? 'Warning' : undefined || ${PainterKycDetails/Status} === 'PENDING'? 'Warning' : undefined}"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false">
+                    <f:content>
+                        <core:Title text="{i18n>KYCDetails}" />
+                        <Label text="{i18n>SelectedKYCDocument}" />
+                        <Text text="{PainterKycDetails/KycTypeDetails/KycType}" />
+                        <Label text="{PainterKycDetails/KycTypeDetails/KycType} Number" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <Text text="{PainterKycDetails/GovtId}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <Label text="{i18n>Status}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <Text text="{path:'PainterKycDetails/Status',formatter:'.fmtLowerCase'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <!-- added by deepanjali start -->
+                        <Label text="{i18n>comment}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <Text text="{path:'PainterKycDetails/Comment',formatter:'.formatter.fmtCheckNull'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <Label text="{i18n>Reason}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                        <!-- <Text text="{path:'PainterKycDetails/RejectionReasonTypeId',formatter:'.formatter.reasontypeText'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" /> -->
+                        <HBox width="100%" alignContent="Center">
+                            <items>
+                                <Text text="{path:'PainterKycDetails/RejectionReasonTypeId',formatter:'.formatter.reasontypeText'}" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                                <core:Icon src="sap-icon://message-information" press="onIconReasonHistoryPress" visible="{= ${PainterKycDetails/KycTypeDetails/KycType} !== null }" />
+                            </items>
+                        </HBox>
+
+                        <!-- added by deepanjali end -->
+                        <core:Title text=" " />
+                        <Label text="{i18n>CreatedBy}" />
+                        <Text text="{path:'PainterKycDetails/CreatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
+                        <Label text="{i18n>CreatedAt}" />
+                        <Text text="{path:'PainterKycDetails/CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
+                        <Label text="{i18n>LastUpdatedBy}" />
+                        <Text text="{path:'PainterKycDetails/UpdatedByDetails',formatter:'.formatter.fmtDisplayUpdatedDetails'}" />
+                        <Label text="{i18n>LastUpdatedAt}" />
+                        <Text text="{path:'PainterKycDetails/UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
+                    </f:content>
+                </f:SimpleForm>
+            </content>
+        </Panel>
     </VBox>
 </core:FragmentDefinition>

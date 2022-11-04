@@ -1,0 +1,70 @@
+<core:FragmentDefinition xmlns:commons="sap.suite.ui.commons" xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>NameChangeHistory}" contentHeight="1000px" contentWidth="1000px" titleAlignment="Center">
+        <content>
+            <IconTabBar expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" select="onIcnTabChange" selectedKey="{oModelControl>/IcnTabKey}">
+                <items>
+                    <IconTabFilter text="{i18n>History}" key="0">
+                        <smartTable:SmartTable
+                            id="smartHistoryNameChange"
+                            editable="false"
+                            beforeRebindTable="onBeforeResnChngeBnkHistory"
+                            entitySet="BankDetailsActivationLog"
+                            tableType="ResponsiveTable"
+                            showRowCount="true"
+                            useExportToExcel="false"
+                            useVariantManagement="false"
+                            useTablePersonalisation="true"
+                            demandPopin="true"
+                            enableAutoBinding="true"
+                            placeToolbarInTable="true"
+                            persistencyKey="HistoryPersistenceKey"
+                            initialNoDataText="{i18n>tableNoDataText}"
+                        >
+                            <Table growing="true" growingThreshold="10" growingScrollToLoad="false">
+                                <columns>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedAt", "leadingProperty": "UpdatedAt", "columnIndex": 0 ,"sortProperty": "UpdatedAt","filterProperty": "UpdatedAt"}' />
+                                        </customData>
+                                        <Text text="{i18n>UpdatedAt}" />
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "KycStatus", "leadingProperty": "KycStatus", "columnIndex": 1 ,"sortProperty": "KycStatus","filterProperty": "KycStatus"}' />
+                                        </customData>
+                                        <Text text="{i18n>Status}" />
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "Comment", "leadingProperty": "Comment", "columnIndex": 2 ,"sortProperty": "Comment","filterProperty": "Comment"}' />
+                                        </customData>
+                                        <Text text="{i18n>comment}" />
+                                    </Column>
+                                    <Column hAlign="Begin">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "UpdatedByDetails/Name", "leadingProperty": "UpdatedByDetails/Name", "columnIndex": 3 ,"sortProperty": "UpdatedByDetails/Name","filterProperty": "UpdatedByDetails/Name"}' />
+                                        </customData>
+                                        <Text text="{i18n>UpdatedBy}" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{path:'UpdatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
+                                            <Text text="{path:'KycStatus',formatter:'.formatter.fmtStatus1'}" />
+                                            <Text text="{Comment}" />
+                                            <Text text="{path:'UpdatedByDetails/Name',formatter:'.formatter.fmtDisplayUpdatedDetails2'}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </smartTable:SmartTable>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+        <endButton>
+            <Button type="Ghost" text="Close" press=".onDialogBnkCloseNew" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

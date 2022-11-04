@@ -68,7 +68,8 @@ sap.ui.define([
             }
         },
         fmtCheckNull: function (mParam) {
-            if (!mParam) {
+
+            if (mParam === null || mParam === "") {
                 return "NA"
             }
             return mParam
@@ -121,6 +122,33 @@ sap.ui.define([
                 return "Completed"
             }
         },
+        // added by deepanjali start
+        reasontypeText: function (mParam1) {
+
+            if (mParam1 === null) {
+                return "NA"
+            }
+            if (mParam1 === 1) {
+                return "Bank Merged, IFSC codeChanged";
+            }
+            if (mParam1 === 2) {
+                return "IFSC codeMissing";
+            }
+            if (mParam1 === 3) {
+                return "Picture Blur";
+            }
+            if (mParam1 === 4) {
+                return "Painter Namemismatch"
+            }
+            if (mParam1 === 5) {
+                return "Wrong Picattached"
+            }
+            if (mParam1 === 6) {
+                return "Others"
+            }
+        },
+
+        // added by deepanjali end
         fmtStatus: function (mParam) {
             var sLetter = "";
             if (mParam) {
@@ -191,26 +219,26 @@ sap.ui.define([
                             var point = "Points - " + pointData.RewardPoints;
                             return point;
                         } else
-                        if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
-                            var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
-                            return "Gift - " + giftData.RewardGiftName;
-                        } else
-                        if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
-                            var cash = "Cash - Rs. " + pointData["RewardCash"];
-                            return cash;
-                        } else if (pointData.RedemptionType === "MULTI_REWARDS") {
-                            var aString = [];
-                            if (pointData["RewardPoints"]) {
-                                aString.push("Points - " + pointData["RewardPoints"]);
-                            }
-                            if (pointData["GiftRedemptionId"]) {
-                                aString.push("Gift - " + pointData["RewardGiftName"]);
-                            }
-                            if (pointData["RewardCash"]) {
-                                aString.push("Cash - Rs." + pointData["RewardCash"]);
-                            }
-                            return aString.join(", ")
-                        }
+                            if (pointData.RedemptionType === "GIFT_REDEMPTION" && pointData["GiftRedemptionId"]) {
+                                var giftData = this.getView().getModel().getData("/" + pointData.GiftRedemption.__ref);
+                                return "Gift - " + giftData.RewardGiftName;
+                            } else
+                                if (pointData.RedemptionType === "BANK_TRANSFER" && pointData["RewardCash"]) {
+                                    var cash = "Cash - Rs. " + pointData["RewardCash"];
+                                    return cash;
+                                } else if (pointData.RedemptionType === "MULTI_REWARDS") {
+                                    var aString = [];
+                                    if (pointData["RewardPoints"]) {
+                                        aString.push("Points - " + pointData["RewardPoints"]);
+                                    }
+                                    if (pointData["GiftRedemptionId"]) {
+                                        aString.push("Gift - " + pointData["RewardGiftName"]);
+                                    }
+                                    if (pointData["RewardCash"]) {
+                                        aString.push("Cash - Rs." + pointData["RewardCash"]);
+                                    }
+                                    return aString.join(", ")
+                                }
                     }
                 }
             }
@@ -478,6 +506,9 @@ sap.ui.define([
             } else if (sStatus === "REJECTED") {
                 newStatus = "Rejected";
             }
+            else if (sStatus === "INPROGRESS") {
+                newStatus = "In Progress";
+            }
             return newStatus;
         },
         // workflow icons
@@ -553,12 +584,12 @@ sap.ui.define([
             //     return true
             // }
             if (mParam3) {
-                if(mParam3.hasOwnProperty("results")){
+                if (mParam3.hasOwnProperty("results")) {
                     if (mParam3["results"].length > 0) {
                         for (var x of mParam3["results"]) {
                             if (x["ZoneId"] == mParam1) {
                                 return true;
-    
+
                             }
                         }
                         return false;
@@ -573,12 +604,12 @@ sap.ui.define([
             //     return true
             // }
             if (mParam3) {
-                if(mParam3.hasOwnProperty("results")){
+                if (mParam3.hasOwnProperty("results")) {
                     if (mParam3["results"].length > 0) {
                         for (var x of mParam3["results"]) {
                             if (x["DivisionId"] == mParam1) {
                                 return true;
-    
+
                             }
                         }
                         return false;

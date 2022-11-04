@@ -6,7 +6,7 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
 
-], function (Controller, BusyIndicator, MessageToast, MessageBox,Filter,FilterOperator) {
+], function (Controller, BusyIndicator, MessageToast, MessageBox, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("com.knpl.pragati.ContactPainter.controller.BaseController", {
@@ -18,7 +18,7 @@ sap.ui.define([
         getRouter: function () {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
-        _dummyPromise:function(oParam1){
+        _dummyPromise: function (oParam1) {
             var promise = $.Deferred();
             promise.resolve(oParam1);
             return promise;
@@ -230,14 +230,14 @@ sap.ui.define([
                 oModel.setProperty("/PainterAddress/PrCityId", "");
                 oModel.setProperty("/PainterAddress/PrAddressLine1", "");
                 oModel.setProperty("/PainterAddress/PrTown", "");
-            }else if (sParam===true){
-                oModel.setProperty("/PainterAddress/PrPinCode",oModel.getProperty("/PainterAddress/PinCode"));
+            } else if (sParam === true) {
+                oModel.setProperty("/PainterAddress/PrPinCode", oModel.getProperty("/PainterAddress/PinCode"));
                 oModel.setProperty("/PainterAddress/PrStateId", oModel.getProperty("/PainterAddress/StateId"));
                 var oCity = oView.byId("cmbCity2");
                 oCity.clearSelection();
                 var oBindingCity = oCity.getBinding("items");
-                var aFilter = [(new Filter("StateId", FilterOperator.EQ,  oModel.getProperty("/PainterAddress/StateId")))];
-                if(oModel.getProperty("/PainterAddress/StateId")){
+                var aFilter = [(new Filter("StateId", FilterOperator.EQ, oModel.getProperty("/PainterAddress/StateId")))];
+                if (oModel.getProperty("/PainterAddress/StateId")) {
                     oBindingCity.filter(aFilter);
                 }
                 oModel.setProperty("/PainterAddress/PrCityId", oModel.getProperty("/PainterAddress/CityId"));
@@ -254,10 +254,38 @@ sap.ui.define([
         onDialogCloseNew: function () {
             var oView = this.getView(),
                 oModelContrl = oView.getModel("oModelControl2");
-      
+            oModelContrl.setProperty("/Comment", " ");
+            oModelContrl.setProperty("/RejectionReasonTypeId", " ");
             console.log("Dialog Close");
+            // added by deepanjali start
+
+            if (this._RsnChngeBnkHistoryDialog) {
+                this._RsnChngeBnkHistoryDialog.close();
+                this._RsnChngeBnkHistoryDialog.destroy();
+                delete this._RsnChngeBnkHistoryDialog;
+                return;
+            }
+            if (this.oRejBnkDialog) {
+                this.oRejBnkDialog.close();
+                this.oRejBnkDialog.destroy();
+                delete this.oRejBnkDialog;
+                return;
+            }
+
+            if (this.oRejKYcDialog) {
+                this.oRejKYcDialog.close();
+                this.oRejKYcDialog.destroy();
+                delete this.oRejKYcDialog;
+                return;
+            }
+            if (this._ReasonChangeHistoryDialog) {
+                this._ReasonChangeHistoryDialog.close();
+                this._ReasonChangeHistoryDialog.destroy();
+                delete this._ReasonChangeHistoryDialog;
+                return;
+            }
+            // added by deepanjali end
             if (this._RemarksDialog1) {
-              
                 this._RemarksDialog1.close();
                 this._RemarksDialog1.destroy();
                 delete this._RemarksDialog1;
@@ -277,7 +305,7 @@ sap.ui.define([
                 return;
             }
         },
-        onNavBack:function(){
+        onNavBack: function () {
             history.back();
         },
 
