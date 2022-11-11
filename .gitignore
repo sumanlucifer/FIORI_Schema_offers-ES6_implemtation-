@@ -1,4 +1,5 @@
 /mta_archives/
+/node_modules/
 /resources/
 
 *.env1
@@ -7,6 +8,8 @@
 *.env*
 */dist/
 */.gitignore
+*/node_modules/
+node_modules/
 *package-lock.json
 *.sh
 Deploy.sh
