@@ -55,6 +55,7 @@ sap.ui.define(
                             Escalate: "",
                             ApprovalStatus: ""
                         },
+                        languageCode: 'EN'
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
                     this.getView().setModel(oMdlCtrl, "oModelControl");
@@ -365,7 +366,7 @@ sap.ui.define(
 
                     var oView = this.getView();
                     var oCmbxSubType = oView.byId("idFileSubType");
-                    var oFilter = new Filter("ComplaintTypeId", FilterOperator.EQ, sKey);
+                    var oFilter = new Filter("LanguageCode", FilterOperator.EQ, "ZM");
                     oCmbxSubType.clearSelection();
                     oCmbxSubType.setValue("");
                     if (sKey == "") {
@@ -466,6 +467,13 @@ sap.ui.define(
                         strictParsing: false,
                     });
                     return oDateFormat.format(date);
+                },
+
+                fmtComplaintSubType: function(oCompSubType) {
+                    // debugger;
+                    if(oCompSubType !== undefined) {
+                        debugger;
+                    }
                 },
 
                 handleSortButtonPressed: function () {

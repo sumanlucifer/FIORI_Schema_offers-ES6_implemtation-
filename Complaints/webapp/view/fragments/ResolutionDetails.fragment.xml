@@ -56,13 +56,13 @@
 
 <!-- Product code scenerio -->
 <Label  visible="{= ${oModelView>/ResolutionType} === 2  }" text="{i18n>TtlRewardPointDetails}" design="Bold" />
-<l:Grid visible="{= ${oModelView>/ResolutionType} === 2  }"  defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
+<l:Grid visible="{= ${oModelView>/ResolutionType} === 2  }" defaultSpan="XL5 L5 M5 S12" hSpacing="1"   >
        <!-- Below fields are editable if Resolution ID is null -->
         <VBox>
             <Label  text="{i18n>LblCategory}" required="true" />
              <!-- Binded name property to display validation error  -->
             <!-- <ComboBox width="100%" change="filterProducts"   editable="{=  ${ResolutionId} === null }" -->
-  <ComboBox width="100%" change="filterProducts"    editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxCategoryType' }"
+            <ComboBox width="100%" change="filterProducts" editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxCategoryType' }"
                    selectedKey="{oModelControl>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }"  name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
                     <core:Item key="{Id}" text="{Category}" />
             </ComboBox>

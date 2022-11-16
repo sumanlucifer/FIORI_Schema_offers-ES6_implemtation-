@@ -34,9 +34,9 @@
             <f:content>
                 <core:Title text="{i18n>ComplaintDetails}" />
                 <Label text="{i18n>ComplaintType}" />
-                <ComboBox change="  " required="true" items="{path:'/MasterComplaintTypeSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" selectedKey="{path:'oModelView>/addComplaint/ComplaintTypeId',type  : 'sap.ui.model.type.String', constraints:{minLength:1} }">
+                <ComboBox change="onComplainTypeChange" required="true" items="{MasterComplaintType>/results}" selectedKey="{oModelView>/addComplaint/ComplaintTypeId}">
                     <items>
-                        <core:Item text="{ComplaintType}" key="{Id}" />
+                        <core:Item text="{MasterComplaintType>ComplaintType}" key="{MasterComplaintType>Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>ComplaintDetails}" />
@@ -45,20 +45,20 @@
                     enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }"
                     id="idCompainSubType"
                     required="true"
-                    items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters:[{path:'Id',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] }"
-                    selectedKey="{path:'oModelView>/addComplaint/ComplaintSubtypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }"
+                    items="{MasterComplaintSubType>/results}"
+                    selectedKey="{path:'oModelView>/addComplaint/ComplaintSubTypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }"
                 >
                     <items>
-                        <core:Item text="{ComplaintSubtype}" key="{Id}" />
+                        <core:Item text="{MasterComplaintSubType>ComplaintSubtype}" key="{MasterComplaintSubType>Id}" />
                     </items>
                 </ComboBox>
 
-                <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}" />
-                <VBox renderType="Bare" visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}">
+                <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/addComplaint/ComplaintSubTypeId} === '99'}" />
+                <VBox renderType="Bare" visible="{= ${oModelView>/addComplaint/ComplaintSubTypeId} === '99'}">
                     <TextArea maxLength="300" required="true" value="{path:'oModelView>/addComplaint/ComplaintDescription',type:'sap.ui.model.type.String',constraints:{minLength:1, maxLength: 300}}" />
                     <Label text="{i18n>TxtMaxLength}" />
                 </VBox>
-                <!-- <Text visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '99'}"  /> -->
+                <!-- <Text visible="{= ${oModelView>/addComplaint/ComplaintSubTypeId} === '99'}"  /> -->
                 <!-- Token Apply flow change 28/05/2021 -              -->
                 <!--     <Label visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" text="{i18n>TokenCode}" />
                 <Input visible="{= ${oModelView>/addComplaint/ComplaintSubtypeId} === '2' || ${oModelView>/addComplaint/ComplaintSubtypeId} === '3' }" value="{oModelControl>/tokenCodeValue}" editable="{oModelControl>/TokenCode}">
@@ -102,96 +102,92 @@
                 <Label text="{i18n>Depot}" />
                 <Text text="{oModelControl>/Depot}" />
                 <!-- <Text text="{ path: 'oModelControl>/DepotId' , formatter: '.formateDepotName' }"  /> -->
-                <!-- <Label text="{i18n>AddResolution}" />
-                <ComboBox id="resolution" change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId',type:'com.knpl.pragati.Complaints.model.cmbxDtype2'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}] }">
-                    <items>
-                        <core:Item text="{Resolution}" key="{Id}" />
-                    </items>
-                </ComboBox>
-                <Label />
-                <TextArea visible="{= ${oModelView>/addComplaint/ResolutionId} === 90  }"  value="{path:'oModelView>/addComplaint/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:100,search:'^[a-zA-Z0-9]{1}[wW]*'}}"></TextArea> -->
             </f:content>
         </f:SimpleForm>
-        <l:Grid defaultSpan="XL5 L5 M5 S12" hSpacing="1" visible="{= ${oModelControl>/resolutionDetail}}">
-            <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
-            <VBox renderType="Bare">
-                <Label text="{i18n>ResolutionType}" required="true" />
-                <Text text="{i18n>TxtResolution}" />
-                <ComboBox id="resolutionAddComplaint" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" items="{path:'/MasterResolutionSet',filters:[{path:'IsArchived',operator:'EQ',value1:false}]}" required="true">
-                    <items>
-                        <core:Item text="{Resolution}" key="{Id}" />
-                    </items>
+        <l:Grid defaultSpan="XL6 L6 M6 S12" hSpacing="1" visible="{= ${oModelControl>/resolutionDetail}}">
+        <Label text="{i18n>TtlResolutionDetails}" design="Bold" />
+        <!-- Status change to be handled by System -->
+        <VBox renderType="Bare">
+            <Label text="{i18n>ResolutionType}" required="true" />
+            <Text text="{i18n>TxtResolution}" />
+            <!-- ,type:'com.knpl.pragati.Complaints.model.cmbxDtype2' -->
+            <!-- <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" -->
+            <ComboBox id="resolution" change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId'}" items="{MasterResolution>/results}" required="true">
+                <items>
+                        <core:Item text="{MasterResolution>Resolution}" key="{MasterResolution>Id}" />
+                </items>
+            </ComboBox>
+            <TextArea maxLength="300" visible="{= +${oModelView>/ResolutionId} === 90  }" value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:300,search:'^[a-zA-Z0-9]{1}[wW]*'}}" />
+            <Text visible="{= ${oModelView>/addComplaint/ResolutionId} === 90  }" text="{i18n>TxtMaxLength}" />
+            <layoutData>
+                <l:GridData linebreak="true" />
+            </layoutData>
+        </VBox>
+        <VBox renderType="Bare">
+            <Label text="{i18n>Remark}" required="true" />
+            <TextArea showExceededText="false" maxLength="300" rows="4" cols="50" width="100%" value="{ path: 'oModelView>/addComplaint/Remark', type: 'sap.ui.model.type.String', constraints : {  maxLength : 300 }  }" required="false" />
+            <Text text="{i18n>TxtMaxLength}" />
+        </VBox>
+    </l:Grid>
+    <Label class="sapUiSmallMargin" visible="{= ${oModelView>/addComplaint/ResolutionId} === '8'}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
+
+    <l:Grid visible="{= ${oModelView>/addComplaint/ResolutionId} === '8'}" defaultSpan="XL12 L12 M12 S12" hSpacing="1" content="{oModelView>/addRewardPoint}">
+        <l:Grid id="idRewardDetails" defaultSpan="XL6 L6 M6 S12" hSpacing="1">
+            <VBox>
+                <Title class="sapUiTinyMarginBottom" text="Product {oModelView>ProductNum}" design="Bold" />
+                <Label text="{i18n>LblCategory}" required="true" />
+                <!-- Binded name property to display validation error  -->
+                <ComboBox
+                    width="100%"
+                    change="filterProducts"
+                    selectedKey="{ path: 'oModelView>CategoryCode', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }}"
+                    items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }"
+                    name="{oModelView>/PainterComplainProducts/ProductSKUCode}"
+                    required="true"
+                >
+                    <core:Item key="{Id}" text="{Category}" />
                 </ComboBox>
-                <TextArea
-                    maxLength="300"
-                    editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null }"
-                    visible="{= +${oModelView>/ResolutionId} === 90  }"
-                    value="{path:'oModelView>/ResolutionOthers',type:'sap.ui.model.type.String',constraints:{maxLength:300,search:'^[a-zA-Z0-9]{1}[wW]*'}}"
-                />
-                <Text visible="{= ${oModelView>/ResolutionId} === 90  }" text="{i18n>TxtMaxLength}" />
                 <layoutData>
                     <l:GridData linebreak="true" />
                 </layoutData>
             </VBox>
-            <VBox renderType="Bare">
-                <Label text="{i18n>Remark}" required="true" />
-                <TextArea showExceededText="false" maxLength="300" rows="4" cols="50" editable="{= !${oModelControl>/ComplainResolved} }" width="100%" value="{ path: 'oModelView>/Remark', type: 'sap.ui.model.type.String', constraints : {  maxLength : 300 }  }" required="false" />
-                <Text text="{i18n>TxtMaxLength}" />
+            <VBox>
+                <FlexBox alignItems="End" justifyContent="End">
+                    <Button icon="sap-icon://delete" type="Transparent" tooltip="Delete" press="onPressDelete" />
+                </FlexBox>
+                <Label text="{i18n>LblProduct}" required="true" />
+                <ComboBox id="idProduct1" required="true" width="100%" change="filterPacks" loadItems="fnLoadProductItems" selectedKey="{oModelView>ProductCode}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                    <core:Item key="{Id}" text="{ProductName}" />
+                </ComboBox>
+            </VBox>
+            <VBox>
+                <Label required="true" text="{i18n>LblPack}" />
+                <ComboBox change="onPackChange" required="true" id="idPacks" width="100%" selectedKey="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
+                    <core:Item key="{SkuCode}" text="{Description}" />
+                </ComboBox>
+            </VBox>
+            <VBox>
+                <Label required="true" text="{i18n>LblQuantity}" />
+                <ComboBox change="onPointsChange" required="true" selectedKey="{oModelView>PainterComplainProducts/ProductQuantity}" width="10%" items="{oModelControl>/aQuantity}">
+                    <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
+                </ComboBox>
+                <layoutData>
+                    <l:GridData linebreak="true" />
+                </layoutData>
+            </VBox>
+            <VBox>
+                <Label text="{i18n>Points}" />
+                <Input editable="false" value="{= (+${oModelView>PainterComplainProducts/Points})*(+${oModelView>PainterComplainProducts/ProductQuantity}) }" />
+                <layoutData>
+                    <l:GridData linebreak="true" />
+                </layoutData>
             </VBox>
         </l:Grid>
-
-        <Label class="sapUiSmallMargin" visible="{= ${oModelControl>/resolutionDetail}}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
-        <l:Grid visible="{= ${oModelControl>/resolutionDetail}}" defaultSpan="XL5 L5 M5 S12" hSpacing="1">
-            <!-- Below fields are editable if Resolution ID is null -->
-            <VBox items="{oModelView>/addRewardPoint}">
-                <items>
-                    <VBox width="100%">
-                        <Label class="sapUiSmallMarginTopBottom" text="Product {oModelView>ProductNum}" design="Bold" />
-                        <VBox>
-                            <Label text="{i18n>LblCategory}" required="true" />
-                            <ComboBox width="100%" change="filterProducts" selectedKey="{oModelView>CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }" name="{oModelView>PainterComplainProducts/ProductSKUCode}">
-                                <core:Item key="{Id}" text="{Category}" />
-                            </ComboBox>
-                            <layoutData>
-                                <l:GridData linebreak="true" />
-                            </layoutData>
-                        </VBox>
-                        <VBox>
-                            <Label text="{i18n>LblProduct}" required="true" />
-                            <ComboBox id="idProduct" width="100%" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
-                                <core:Item key="{Id}" text="{ProductName}" />
-                            </ComboBox>
-                        </VBox>
-                        <VBox>
-                            <Label required="true" text="{i18n>LblPack}" />
-                            <ComboBox change="onPackChange" id="idPacks" width="100%" selectedKey="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
-                                <core:Item key="{SkuCode}" text="{Description}" />
-                            </ComboBox>
-                        </VBox>
-                        <VBox>
-                            <Label required="true" text="{i18n>LblQuantity}" />
-                            <ComboBox change="onPointsChange" selectedKey="{path:'oModelView>PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}">
-                                <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
-                            </ComboBox>
-                            <layoutData>
-                                <l:GridData linebreak="true" />
-                            </layoutData>
-                        </VBox>
-                        <VBox>
-                            <Label text="{i18n>Points}" />
-                            <Input editable="false" value="{= (+${oModelView>PainterComplainProducts/Points})*(+${oModelView>PainterComplainProducts/ProductQuantity}) }" />
-                            <layoutData>
-                                <l:GridData linebreak="true" />
-                            </layoutData>
-                        </VBox>
-                    </VBox>
-                </items>
-            </VBox>
-        </l:Grid>
-        <VBox class="sapUiSmallMargin" visible="{= ${oModelControl>/resolutionDetail}}">
-            <FlexBox height="100px" alignItems="End" justifyContent="End">
-                <Button text="Add more" press="onPressAddMore" />
-            </FlexBox>
-        </VBox>
+    </l:Grid>
+    <l:Grid visible="{= ${oModelView>/addComplaint/ResolutionId} === '8'}" defaultSpan="XL12 L12 M12 S12" hSpacing="1">
+        <FlexBox height="100px" alignItems="End" justifyContent="End">
+            <Button text="Add more" press="onPressAddMore" />
+        </FlexBox>
+    </l:Grid>
     </VBox>
 </core:FragmentDefinition>
