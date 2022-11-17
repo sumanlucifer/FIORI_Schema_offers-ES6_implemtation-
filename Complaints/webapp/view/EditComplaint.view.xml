@@ -1,24 +1,35 @@
-<mvc:View height="100%" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="com.knpl.pragati.Complaints.controller.EditComplaint" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
-    <f:DynamicPage busy="{oModelControl>/PageBusy}"	stickySubheaderProvider="iconTabBar"
-			class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
+<mvc:View
+    height="100%"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    controllerName="com.knpl.pragati.Complaints.controller.EditComplaint"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+>
+    <f:DynamicPage busy="{oModelControl>/PageBusy}" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding" showFooter="true" id="dynamicPageId" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{ComplaintType/ComplaintType}"/>
+                    <Title text="{ComplaintType/ComplaintType}" />
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
-                        <Link text="{i18n>worklistTitle}" press="onNavBack"/>
+                        <Link text="{i18n>worklistTitle}" press="onNavBack" />
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{ComplaintCode}"/>
+                    <Label text="{ComplaintCode}" />
                 </f:expandedContent>
                 <f:snappedContent>
-                    <Label text="{ComplaintCode}"/>
+                    <Label text="{ComplaintCode}" />
                 </f:snappedContent>
                 <f:snappedTitleOnMobile>
-                    <Title text="{ComplaintType/ComplaintType}"/>
+                    <Title text="{ComplaintType/ComplaintType}" />
                 </f:snappedTitleOnMobile>
                 <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>btnValidateToken}" />
@@ -29,46 +40,46 @@
             <f:DynamicPageHeader pinnable="true">
                 <layout:HorizontalLayout allowWrapping="false">
                     <layout:VerticalLayout class="sapUiSmallMarginEnd">
-                        <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}"/>
-                        <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}"/>
+                        <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}" />
+                        <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}" />
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
-                        <Label  text="{i18n>ComplaintDetails}:"  />
-                        <ObjectAttribute  text="{ComplaintSubtype/ComplaintSubtype}"/>
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                        <Label text="{i18n>ComplaintDetails}:" />
+                        <ObjectAttribute text="{ComplaintSubtype/ComplaintSubtype}" />
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout  class="sapUiSmallMarginBeginEnd" visible="{= ${AssigneUserType} !== 'AGENT' &amp;&amp; ${AssigneUserType} !== null  }" >
-                         <Label text="{i18n>LblEscalationLevel}:" />
-                         <Text  text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }"  />
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${AssigneUserType} !== 'AGENT' &amp;&amp; ${AssigneUserType} !== null  }">
+                        <Label text="{i18n>LblEscalationLevel}:" />
+                        <Text text="{ path:'AssigneUserType' , formatter: '.formatter.AssigneUser'  }" />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <Label  text="{i18n>Status}:"/>
+                        <Label text="{i18n>Status}:" />
                         <!-- <ObjectStatus class="sapMObjectStatusLarge" text="{path:'ComplaintStatus',formatter:'.fmtStatus'}" state="None"/> -->
-                          <ObjectStatus class="sapMObjectStatusLarge" text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.fmtStatusHeader'}" state="None"/>
+                        <ObjectStatus class="sapMObjectStatusLarge" text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.fmtStatusHeader'}" state="None" />
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <IconTabBar select="onIcnTabChange" selectedKey="{oModelControl>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding" >
+            <IconTabBar select="onIcnTabChange" selectedKey="{oModelControl>/IcnTabKey}" expandable="false" expanded="true" id="iconTabBar" class="sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter  text="{i18n>Overview}" key="0" >
-                        <VBox id="idVbx" width="100%">
-                          </VBox>
-                          <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ResolutionDetails" type="XML"/>
-                          <VBox id="idProducts">
-                          </VBox>
-                        </IconTabFilter>
-                         <IconTabFilter  text="{i18n>History}" key="1" >
-                            <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML"/>
-                                <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/> -->
-                        </IconTabFilter>
-                          <IconTabFilter  text="Execution Log" key="2" >
-                           <VBox height="100%" width="100%">
-                                 <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/>
-                          </VBox>
-                        </IconTabFilter>
-                    </items>
-                </IconTabBar>
+                    <IconTabFilter text="{i18n>Overview}" key="0">
+                        <VBox id="idVbx" width="100%" />
+                            <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ResolutionDetails" type="XML" />
+                        <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.DisplayResolutionRewardDetails" type="XML" /> -->
+
+                        <VBox id="idProducts" />
+                    </IconTabFilter>
+                    <IconTabFilter text="{i18n>History}" key="1">
+                        <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.HistoryTable" type="XML" />
+                        <!-- <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML"/> -->
+                    </IconTabFilter>
+                    <IconTabFilter text="Execution Log" key="2">
+                        <VBox height="100%" width="100%">
+                            <core:Fragment fragmentName="com.knpl.pragati.Complaints.view.fragments.ExecutionLog" type="XML" />
+                        </VBox>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
         </f:content>
         <f:footer>
             <!-- <Toolbar>
@@ -78,20 +89,22 @@
                 <Button visible="{oModelControl>/workFlowFlag/Button2}" id="save" text="Save" type="Emphasized" press="handleSavePress"/>
             </Toolbar> -->
             <OverflowToolbar>
-              <ToolbarSpacer/>
-              <Button press="handleCancelPress" type="Ghost"  text="{i18n>Cancel}"  />
-              <Button press="onWithdraw"        visible="{= !${oModelControl>/ComplainResolved} }"  text="{i18n>btnWithdraw}" type="Negative"  />
-              <Button press="onPressEscalate"   visible="{= ${ComplaintTypeId} &lt; 4 &amp;&amp;  !${oModelControl>/ComplainResolved} &amp;&amp; ${oModelControl>/iComplaintLevel} === ${appView>/iUserLevel} &amp;&amp; ${appView>/iUserLevel} &lt; 4 }"   text="{i18n>Escalate}" type="Critical" />
-              <Button press=".onApproval(false)"   visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}"  type="Reject"  />
-              <Button press=".onApproval(true)"  visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }"  text="{i18n>btnApprove}" type="Accept"  />
-             <Button press="handleSavePress"    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ApprovalStatus} === null   }"   text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }" type="Emphasized" />
-          
-        
-          
-             
-             <!-- <Button text="{i18n>Reopen}" press="onReopeFrag"/> -->
-              <Button  type="Emphasized" visible="{= ${IsReopenAllowed} ? true: false}" text="{i18n>Reopen}" press="onReopeFrag"/>
-            <!-- <Button visible="{= ${ComplaintStatus} === 'RESOLVED' ? true &amp;&amp; ${IsReopenAllowed} === true ? true: false }" text="{i18n>Reopen}" press="onReopeFrag"/> -->
+                <ToolbarSpacer />
+                <Button press="handleCancelPress" type="Ghost" text="{i18n>Cancel}" />
+                <Button press="onWithdraw" visible="{= !${oModelControl>/ComplainResolved} }" text="{i18n>btnWithdraw}" type="Negative" />
+                <Button press="onPressEscalate" visible="{= ${ComplaintTypeId} &lt; 4 &amp;&amp;  !${oModelControl>/ComplainResolved} &amp;&amp; ${oModelControl>/iComplaintLevel} === ${appView>/iUserLevel} &amp;&amp; ${appView>/iUserLevel} &lt; 4 }" text="{i18n>Escalate}" type="Critical" />
+                <Button press=".onApproval(false)" visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnReject}" type="Reject" />
+                <Button press=".onApproval(true)" visible="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" text="{i18n>btnApprove}" type="Accept" />
+                <Button
+                    press="handleSavePress"
+                    visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ApprovalStatus} === null   }"
+                    text="{=  ${oModelView>/ResolutionType} === 2 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }"
+                    type="Emphasized"
+                />
+
+                <!-- <Button text="{i18n>Reopen}" press="onReopeFrag"/> -->
+                <Button type="Emphasized" visible="{= ${IsReopenAllowed} ? true: false}" text="{i18n>Reopen}" press="onReopeFrag" />
+                <!-- <Button visible="{= ${ComplaintStatus} === 'RESOLVED' ? true &amp;&amp; ${IsReopenAllowed} === true ? true: false }" text="{i18n>Reopen}" press="onReopeFrag"/> -->
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

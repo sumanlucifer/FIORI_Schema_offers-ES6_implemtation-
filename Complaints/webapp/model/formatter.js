@@ -149,6 +149,19 @@ sap.ui.define([], function () {
             }
             return false;
         },
+        fmtVisibleFunction: function (m1, m2, m3) {
+            // m1 = approvalstatus
+            // m2 = complianstatus
+            if(m3 === 8) {
+                return false;
+            }
+            if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
+                if (m1 === null) {
+                    return true;
+                }
+            }
+            return false;
+        },
         fmtDisplayUpdatedDetails: function (mParam1) {
             // mParam1 > createdbydetails/updatedby details
             if (!mParam1) {
@@ -197,6 +210,9 @@ sap.ui.define([], function () {
                 }
             }
             return true;
+        },
+        testing: function(mParam1, mParam2, mParam3) {
+            debugger;
         }
     };
 });

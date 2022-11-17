@@ -160,7 +160,8 @@ sap.ui.define(
                         ComplainReopenDialoge: {
                             ComplainReopenReasonId: "", ///added by deepanjali
                             ComplainReopenReason: "" ///added by deepanjali
-                        }
+                        },
+                        
                         // ComplainReopenReasonId: null ///added by deepanjali
                     };
                     /* Fields required for Post with PainterComplainProducts array index 0
@@ -366,13 +367,15 @@ sap.ui.define(
                             success: function (data) {
 
                                 //Modding Product data for UI, Should have been a object from backend
-                                if (data.PainterComplainProducts.results.length > 0) {
+                                if (data.PainterComplainProducts.results.length > 0 && data.ResolutionId !== 8) {
                                     data.PainterComplainProducts = data.PainterComplainProducts.results[0]
                                     oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
                                     oView.byId("idProduct").getBinding("items").filter([new Filter("ProductCategory/Id", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.CategoryCode)]);
                                     oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
                                     oView.byId("idPacks").setSelectedKey("");
                                     oView.byId("idPacks").getBinding("items").filter(new Filter("ProductCode", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.ProductCode));
+                                } else if (data.ResolutionId === 8) {
+
                                 } else {
                                     data.PainterComplainProducts = {
                                         PainterId: data.PainterId,
@@ -935,7 +938,7 @@ sap.ui.define(
                 onApproval: function (bAccept) {
                     var oModelView = this.getModel("oModelView"),
                         validation = this._minValidation(oModelView.getData());
-                    if (validation.length > 0) {
+                    if (validation.length > 0 ) {
                         MessageToast.show(validation);
                         return;
                     }

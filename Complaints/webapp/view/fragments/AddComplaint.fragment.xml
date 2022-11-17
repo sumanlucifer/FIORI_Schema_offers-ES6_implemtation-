@@ -112,7 +112,7 @@
             <Text text="{i18n>TxtResolution}" />
             <!-- ,type:'com.knpl.pragati.Complaints.model.cmbxDtype2' -->
             <!-- <ComboBox id="resolution" editable="{= !${oModelControl>/ComplainResolved} &amp;&amp; ${ResolutionId} === null  }" change="onChangeResolution" selectedKey="{path:'oModelView>/ResolutionId'}" -->
-            <ComboBox id="resolution" change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId'}" items="{MasterResolution>/results}" required="true">
+            <ComboBox id="resolution" change="onChangeResolution" selectedKey="{path:'oModelView>/addComplaint/ResolutionId', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }}" items="{MasterResolution>/results}" required="true">
                 <items>
                         <core:Item text="{MasterResolution>Resolution}" key="{MasterResolution>Id}" />
                 </items>
@@ -125,7 +125,7 @@
         </VBox>
         <VBox renderType="Bare">
             <Label text="{i18n>Remark}" required="true" />
-            <TextArea showExceededText="false" maxLength="300" rows="4" cols="50" width="100%" value="{ path: 'oModelView>/addComplaint/Remark', type: 'sap.ui.model.type.String', constraints : {  maxLength : 300 }  }" required="false" />
+            <TextArea showExceededText="false" maxLength="300" rows="4" cols="50" width="100%" value="{ path: 'oModelView>/addComplaint/Remark', type: 'sap.ui.model.type.String', constraints : {  maxLength : 300 }  }" required="true" />
             <Text text="{i18n>TxtMaxLength}" />
         </VBox>
     </l:Grid>
