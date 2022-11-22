@@ -54,64 +54,9 @@
        </VBox>
 </l:Grid>
 
-<!-- Product code scenerio -->
-<Label  visible="{= ${oModelView>/ResolutionType} === 2 }" text="{i18n>TtlRewardPointDetails}" design="Bold" />
-<l:Grid visible="{= ${oModelView>/ResolutionType} === 2}" defaultSpan="XL12 L12 M12 S12" hSpacing="1">
-       <!-- Below fields are editable if Resolution ID is null -->
-        <VBox>
-            <Label  text="{i18n>LblCategory}" required="true" />
-             <!-- Binded name property to display validation error  -->
-            <!-- <ComboBox width="100%" change="filterProducts"   editable="{=  ${ResolutionId} === null }" -->
-            <ComboBox width="100%" change="filterProducts" editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtCmbxCategoryType' }"
-                   selectedKey="{oModelControl>/CategoryCode}" items="{ path: '/MasterProductCategorySet',  sorter: { path: 'Category' }      }"  name="{oModelView>/PainterComplainProducts/ProductSKUCode}">
-                    <core:Item key="{Id}" text="{Category}" />
-            </ComboBox>
-              <layoutData>
-                 	<l:GridData linebreak="true"/>
-            </layoutData> 
-        </VBox>
-        <VBox >
-              <Label   text="{i18n>LblProduct}" required="true" />
-              <!-- <ComboBox id="idProduct" width="100%" change="filterPacks"  editable="{= ${oModelControl>/CategoryCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }"   -->
-                   <ComboBox id="idProduct" width="100%" change="filterPacks" 
-                   editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtProductCmbx' }" 
-                    selectedKey="{oModelControl>/ProductCode}"  name="{oModelView>/PainterComplainProducts/ProductSKUCode}" 
-                    items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
-                    <core:Item key="{Id}" text="{ProductName}" />
-            </ComboBox>
-        </VBox>
-        <VBox>
-            <Label required="true" text="{i18n>LblPack}" />
-            <!-- <ComboBox change="onPackChange" id="idPacks" editable="{= ${oModelControl>/ProductCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" width="100%" -->
-           <ComboBox change="onPackChange" id="idPacks" editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtPacksCmbx' }"  width="100%"            
-                      selectedKey="{oModelView>/PainterComplainProducts/ProductSKUCode}"
-                    items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
-                    <core:Item key="{SkuCode}" text="{Description}" />
-            </ComboBox> 
-        </VBox>
-      <VBox>
-            <Label required="true" text="{i18n>LblQuantity}" />
-            <!-- <ComboBox change="onPointsChange"
-            editable="{= ${oModelView>/PainterComplainProducts/ProductSKUCode}.length > 0 &amp;&amp;  ${ResolutionId} === null }" -->
-            <ComboBox change="onPointsChange"
-           editable="{parts:['ApprovalStatus','ComplaintStatus'], formatter:'.formatter.fmtQuantiyInp' }"
-            selectedKey="{path:'oModelView>/PainterComplainProducts/ProductQuantity'}" width="10%" items="{oModelControl>/aQuantity}" >
-                 <core:Item key="{oModelControl>key}" text="{oModelControl>value}" ></core:Item>
-            </ComboBox>
-             <layoutData>
-                 	<l:GridData linebreak="true"/>
-            </layoutData>
-        </VBox>
-        <VBox>
-            <Label  text="{i18n>Points}" />
-            <Input   editable="false" value="{= (+${oModelView>/PainterComplainProducts/Points})*(+${oModelView>/PainterComplainProducts/ProductQuantity}) }" />
-             <layoutData>
-                 	<l:GridData linebreak="true"/>
-            </layoutData>
-        </VBox>
-</l:Grid>
 
-    <!--This Grid will used when the Resolution id is 8-->
+
+    <!--This Grid will used when the Resolution id is 8 CR5-->
     <Label class="sapUiSmallMargin" visible="{= ${oModelView>/ResolutionId} === 8}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
 
     <l:Grid visible="{= ${oModelView>/ResolutionId} === 8}" defaultSpan="XL12 L12 M12 S12" hSpacing="1" content="{oModelView>/PainterComplainProducts/results}">
@@ -119,7 +64,6 @@
             <Title class="sapUiTinyMarginBottom" text="Product {oModelView>ProductNum}" design="Bold" />
             <VBox>
                 <Label text="{i18n>LblCategory}" required="true" />
-                <!-- Binded name property to display validation error  -->
                 <ComboBox
                     width="100%"
                     change="filterProducts"

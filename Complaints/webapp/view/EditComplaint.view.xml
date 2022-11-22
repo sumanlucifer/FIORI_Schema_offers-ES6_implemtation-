@@ -43,9 +43,13 @@
                         <ObjectAttribute title="{i18n>PainterName}" text="{Painter/Name}" />
                         <ObjectAttribute title="{i18n>MembershipId}" text="{Painter/MembershipCard}" />
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
                         <Label text="{i18n>ComplaintDetails}:" />
-                        <ObjectAttribute text="{ComplaintSubtype/ComplaintSubtype}" />
+                        <VBox items='{ComplaintSubtype}'>
+                                <!-- <Text text="{ComplaintSubtype}"/> -->
+                                <ObjectAttribute text="{ComplaintSubtype}" />
+                            </VBox>
+                        <!-- <ObjectAttribute text="{ComplaintSubtype/ComplaintSubtype}" /> -->
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${AssigneUserType} !== 'AGENT' &amp;&amp; ${AssigneUserType} !== null  }">
                         <Label text="{i18n>LblEscalationLevel}:" />

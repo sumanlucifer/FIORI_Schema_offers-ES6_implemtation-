@@ -6,9 +6,18 @@
             <Label text="{i18n>ComplaintId}" />
             <Text text="{ComplaintCode}" />
             <Label text="{i18n>ComplaintType}" />
-            <Text text="{ComplaintType/ComplaintType}" />
+            <!-- <Text text="{ComplaintType/ComplaintType}" />
+             -->
+             <VBox items='{ComplaintType}'>
+                                <Text text="{ComplaintType}"/>
+                            </VBox>
+                            
+                            
             <Label text="{i18n>ComplaintDetails}" />
-            <Text text="{ComplaintSubtype/ComplaintSubtype}" />
+            <!-- <Text text="{ComplaintSubtype/ComplaintSubtype}" /> -->
+            <VBox items='{ComplaintSubtype}'>
+                                <Text text="{ComplaintSubtype}"/>
+                            </VBox>
             <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/ComplaintSubtypeId} === 99}"  />
             <Text text="{ComplaintDescription}" visible="{= ${oModelView>/ComplaintSubtypeId} === 99}"   />
 

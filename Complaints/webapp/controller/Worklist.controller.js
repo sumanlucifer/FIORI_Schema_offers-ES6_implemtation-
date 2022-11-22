@@ -469,13 +469,6 @@ sap.ui.define(
                     return oDateFormat.format(date);
                 },
 
-                fmtComplaintSubType: function(oCompSubType) {
-                    // debugger;
-                    if(oCompSubType !== undefined) {
-                        debugger;
-                    }
-                },
-
                 handleSortButtonPressed: function () {
                     this.getViewSettingsDialog(
                         "com.knpl.pragati.Complaints.view.fragments.SortDialog"
@@ -483,6 +476,7 @@ sap.ui.define(
                         oViewSettingsDialog.open();
                     });
                 },
+                
                 getViewSettingsDialog: function (sDialogFragmentName) {
                     if (!this._ViewSortDialog) {
                         var othat = this;

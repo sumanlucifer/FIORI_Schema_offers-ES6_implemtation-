@@ -417,12 +417,12 @@ sap.ui.define(
                     }
                     //Setting remark
                     //setting the filtering for the scenario and Type Id
-                    var sComplainSubType = oModelView.getProperty("/ComplaintSubtypeId");
+                    var sComplainSubType = oModelView.getProperty("/ComplaintSubTypeId");
                     var sComplaintStatus = oModelView.getProperty("/ComplaintStatus");
                     var aResolutionFilter = [];
                     if (sComplainSubType !== "") {
                         aResolutionFilter.push(
-                            new Filter("TypeId", FilterOperator.EQ, sComplainSubType)
+                            new Filter("SubTypeCode", FilterOperator.EQ, sComplainSubType)
                         );
                         oView
                             .byId("FormattedText")
@@ -809,22 +809,22 @@ sap.ui.define(
                             }
                         }
                     }
-                    if (data.ResolutionType == 2) {
-                        if (!(data.PainterComplainProducts.ProductSKUCode)) {
-                            sMsg = this.getResourceBundle().getText("MSG_REQUIRED");
-                            aCtrlMessage.push({
-                                message: "MSG_CTRL_PRODUCT",
-                                target: "/PainterComplainProducts/ProductSKUCode"
-                            });
-                        }
-                        if (!(data.PainterComplainProducts.ProductQuantity)) {
-                            sMsg = this.getResourceBundle().getText("MSG_REQUIRED");
-                            aCtrlMessage.push({
-                                message: "MSG_CTRL_QUANTITY",
-                                target: "/PainterComplainProducts/ProductQuantity"
-                            });
-                        }
-                    }
+                    // if (data.ResolutionType == 2) {
+                    //     if (!(data.PainterComplainProducts.ProductSKUCode)) {
+                    //         sMsg = this.getResourceBundle().getText("MSG_REQUIRED");
+                    //         aCtrlMessage.push({
+                    //             message: "MSG_CTRL_PRODUCT",
+                    //             target: "/PainterComplainProducts/ProductSKUCode"
+                    //         });
+                    //     }
+                    //     if (!(data.PainterComplainProducts.ProductQuantity)) {
+                    //         sMsg = this.getResourceBundle().getText("MSG_REQUIRED");
+                    //         aCtrlMessage.push({
+                    //             message: "MSG_CTRL_QUANTITY",
+                    //             target: "/PainterComplainProducts/ProductQuantity"
+                    //         });
+                    //     }
+                    // }
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return sMsg;
                 },
@@ -918,11 +918,11 @@ sap.ui.define(
                     }
                     data.ResolutionId = !!(data.ResolutionId) ? +data.ResolutionId : data.ResolutionId;
                     //mod Products data into array format
-                    if (data.ResolutionType == 2) {
-                        data.PainterComplainProducts.Points = +data.PainterComplainProducts.Points;
-                        data.PainterComplainProducts.ProductQuantity = +data.PainterComplainProducts.ProductQuantity;
-                    }
-                    data.PainterComplainProducts = data.ResolutionType == 2 ? [data.PainterComplainProducts] : [];
+                    // if (data.ResolutionType == 2) {
+                    //     data.PainterComplainProducts.Points = +data.PainterComplainProducts.Points;
+                    //     data.PainterComplainProducts.ProductQuantity = +data.PainterComplainProducts.ProductQuantity;
+                    // }
+                    data.PainterComplainProducts = data.ResolutionType == 2 ? data.PainterComplainProducts : [];
                     //Parse RewardPoints
                     data.RewardPoints = !!(data.RewardPoints) ? +data.RewardPoints : null;
                 },

@@ -92,7 +92,7 @@ sap.ui.define(
                             ComplaintSubTypeId: "",
                             ResolutionId: "",
                             ResolutionType: "",
-                            Remark:"",
+                            Remark: "",
                             TokenCode: "",
                             RewardPoints: "",
                             RewardGiftId: "",
@@ -179,8 +179,12 @@ sap.ui.define(
                     }
                     this._getMasterComplaintType();
                 },
-
-                _getMasterComplaintSubType: function() {
+                /**
+                 * Getting Complaint Sub type data
+                 * @private
+                 * @return 
+                 */
+                _getMasterComplaintSubType: function () {
                     var that = this;
                     var oView = this.getView();
                     var oData = oView.getModel();
@@ -188,46 +192,42 @@ sap.ui.define(
                     var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
                     var sComplaintTypeCode = oModel.getProperty("/addComplaint/ComplaintTypeCode");
                     var sPath = "/MasterComplaintSubtypeSet";
-                    
+
                     oData.read(sPath, {
                         urlParameters: {
                             LanguageCode: sLanguageCode,
-                            ComplaintTypeCode : 1
+                            ComplaintTypeCode: sComplaintTypeCode
                         },
                         success: function (obj) {
-                            debugger;
                             var oMasterComplaintSubType = new JSONModel(obj);
                             that.getView().setModel(oMasterComplaintSubType, "MasterComplaintSubType");
-
                         },
-                        error: function () {
-
-                        }
+                        error: function () { }
                     })
                 },
 
-                _getMasterComplaintType: function() {
+                /**
+                 * Getting Complaint Type data
+                 * @private
+                 * @return 
+                 */
+                _getMasterComplaintType: function () {
                     var that = this;
                     var oView = this.getView();
                     var oData = oView.getModel();
                     var oModel = oView.getModel('oModelView');
                     var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
                     var sPath = "/MasterComplaintTypeSet"
-                    
+
                     oData.read(sPath, {
                         urlParameters: {
                             LanguageCode: sLanguageCode
                         },
                         success: function (obj) {
-                            debugger;
                             var oMasterComplaintType = new JSONModel(obj);
                             that.getView().setModel(oMasterComplaintType, "MasterComplaintType");
-                            // that._getMasterComplaintSubType();
-
                         },
-                        error: function () {
-
-                        }
+                        error: function () { }
                     })
                 },
 
@@ -242,7 +242,6 @@ sap.ui.define(
                             $select: 'ZoneId,Id,Mobile,Name,MembershipCard,Depot/Depot'
                         },
                         success: function (obj) {
-                            // console.log(obj)
                             oViewModel.setProperty(
                                 "/addCompAddData/MembershipCard",
                                 obj["MembershipCard"]
@@ -261,44 +260,93 @@ sap.ui.define(
 
                 },
 
+                /**
+                 * Event handler when we Select the Pack
+                 * @public 
+                 */
                 onPackChange: function (oEvent) {
                     var oSelectedItem = oEvent.getSource().getSelectedItem().getBindingContext().getObject(),
                         oModelView = this.getModel("oModelView");
-                    debugger;
                     oModelView.setProperty("/PainterComplainProducts/Points", oSelectedItem.Points);
                 },
 
+                /**
+                 * Event handler when we Select the Category filter the product 
+                 * @public 
+                 */
                 filterProducts: function (oEvent) {
+                    var aId = oEvent.getParameter("id").split("-");
+                    var iIndex = aId[aId.length - 1];
+                    var aAddRwdPoint = this._getRewardProductDetails(iIndex, "Product");
+                    var oProdCtrl = this._setProductControl(oEvent.getSource(), 3);
+                    this._resetAndfilter(oProdCtrl, aAddRwdPoint, "ProductCategory/Id");
+                },
+                /**
+                 * Clear the fields
+                 * @param {BigInteger} iIndex 
+                 * @param {String} param1 
+                 * @returns selected reward point details object
+                 */
+                _getRewardProductDetails: function (iIndex, param1) {
                     var oModelView = this.getView();
-                    var oAddRewardpoints = oModelView.getModel("oModelView").getProperty('/addRewardPoint');
-                    var aAddRwdPnt = oAddRewardpoints.length - 1;
-                    var aAddRwdPoint = oAddRewardpoints[aAddRwdPnt];
-                    this._resetAndfilter("idProduct1", aAddRwdPoint, "ProductCategory/Id");
+                    var oModelData = oModelView.getModel("oModelView");
+                    var oAddRewardpoints = oModelData.getProperty('/addRewardPoint');
+
+                    if (param1 === "Product") {
+                        oModelData.setProperty(`/addRewardPoint/${iIndex}/ProductCode`, '');
+                        oModelData.setProperty(`/addRewardPoint/${iIndex}/PainterComplainProducts/ProductSKUCode`, '');
+                        oModelData.setProperty(`/addRewardPoint/${iIndex}/PainterComplainProducts/ProductQuantity`, '');
+                    } else if (param1 === "Pack") {
+                        oModelData.setProperty(`/addRewardPoint/${iIndex}/PainterComplainProducts/ProductSKUCode`, '');
+                        oModelData.setProperty(`/addRewardPoint/${iIndex}/PainterComplainProducts/ProductQuantity`, '');
+                    }
+                    return oAddRewardpoints[iIndex];
                 },
-                filterPacks: function () {
-                    this._resetAndfilter("idPack1", "ProductCode", "ProductCode");
+
+                /**
+                 * Fetch the parent control
+                 * @param {Object} oCtrl 
+                 * @param {bigint} iIndex 
+                 * @returns Object of Parent Control
+                 */
+                _setProductControl: function (oCtrl, iIndex) {
+                    var oParentCtrl = oCtrl.getParent().getParent().getContent()[iIndex].getItems();
+                    return oParentCtrl[oParentCtrl.length - 1];
                 },
-                _resetAndfilter: function (sCtrlId, sPropertyKey, sFilterKey) {
-                    var oModelControl = this.getModel("oModelControl"),
-                        oModelView = this.getModel("oModelView");
-                    //Reset data fields
-                    oModelView.setProperty("/addRewardPoint/PainterComplainProducts/ProductSKUCode", "");
-                    oModelView.setProperty("/addRewardPoint/PainterComplainProducts/Points", "");
-                    oModelView.setProperty("/addRewardPoint/PainterComplainProducts/ProductQuantity", "");
-                    // oModelView.setProperty("/TokenCode", "");
-                    // oModelView.setProperty("/RewardPoints", "");
-                    //if arguments not passed then return without filtering
-                    if (!sCtrlId)
+
+                /**
+                 * Event handler when we select Product pack get filtered
+                 * @param {*} oEvent 
+                 */
+                filterPacks: function (oEvent) {
+                    var aId = oEvent.getParameter("id").split("-");
+                    var iIndex = aId[aId.length - 1];
+                    var aAddRwdPoint = this._getRewardProductDetails(iIndex, "Pack");
+                    var oProdCtrl = this._setProductControl(oEvent.getSource(), 4);
+                    this._resetAndfilter(oProdCtrl, aAddRwdPoint, "ProductCode");
+                },
+
+                /**
+                 * Filtering the Item aggregation
+                 * @param {Object} oCtrl 
+                 * @param {String} sPropertyKey 
+                 * @param {String} sFilterKey 
+                 * @returns
+                 */
+                _resetAndfilter: function (oCtrl, sPropertyKey, sFilterKey) {
+                    if (!oCtrl)
                         return;
-                    var oCtrl = this.getView().byId(sCtrlId);
-                    sPropertyKey.CategoryCode = 'CC';
-                        var sKey = sPropertyKey.CategoryCode;
-                        // sKey = oModelView.getProperty(sPropertyKey);
+
+                    var sKey;
+                    if (sFilterKey === "ProductCategory/Id") {
+                        sKey = sPropertyKey.CategoryCode;
+                    } else if (sFilterKey === "ProductCode") {
+                        sKey = sPropertyKey.ProductCode;
+                    }
                     oCtrl.getBinding("items").filter([new Filter(sFilterKey, FilterOperator.EQ, sKey)]);
                 },
 
                 onPressSave: function () {
-                    debugger;
                     this.sServiceURI = this.getOwnerComponent(this)
                         .getManifestObject()
                         .getEntry("/sap.app").dataSources.mainService.uri;
@@ -309,7 +357,7 @@ sap.ui.define(
                     var cTbleFamily = !oModel.getProperty("/EditTb1FDL");
                     var dTbleAssets = !oModel.getProperty("/EditTb2AST");
 
-                    if (bValidation == false) {
+                    if (!bValidation) {
                         MessageToast.show(
                             "Kindly input all the mandatory(*) fields to continue."
                         );
@@ -367,10 +415,15 @@ sap.ui.define(
                     });
                 },
 
+                /**
+                 * Deleting the Reward Point details
+                 * @param {*} oEvent 
+                 * @returns 
+                 */
                 onPressDelete: function (oEvent) {
                     var aIndex = oEvent.getParameter("id").split("-");
-                    var iIndex = aIndex[aIndex.length-1];
-                    var oParent = oEvent.getSource().getParent().getParent().getParent().getParent().getAggregation("content");;
+                    var iIndex = aIndex[aIndex.length - 1];
+                    var oParent = oEvent.getSource().getParent().getParent().getParent().getAggregation("content");
                     var oModel = this.getView().getModel("oModelView")
                     var oRewardPoint = oModel.getProperty("/addRewardPoint");
                     if (oParent.length === 1) {
@@ -495,32 +548,41 @@ sap.ui.define(
                     //   oView.byId("scenario").setSelectedKey("");
                     //   oView.byId("resolution").setSelectedKey("");
                 },
+
+                /**
+                 * Event Handler when we select Complaint Type filters the Complaint sub type field
+                 * @param {*} oEvent 
+                 */
                 onComplainTypeChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oViewModel = this.getView().getModel();
+                    var oView = this.getView();
+                    var oCmxCmplnSubType = oView.byId("idCompainSubType");
+                    oCmxCmplnSubType.clearSelection();
                     var sComplainTypeCode = oViewModel.getProperty("/MasterComplaintTypeSet(" + sKey + ")")["ComplaintTypeCode"];
                     this.getView().getModel("oModelView").setProperty("/addComplaint/ComplaintTypeCode", Number(sComplainTypeCode));
                     this._getMasterComplaintSubType();
 
                 },
 
-                _getResolutionType: function() {
+                /**
+                 * Fetching the resolution details and setting to model
+                 */
+                _getResolutionType: function () {
                     var that = this;
                     var oView = this.getView();
                     var oData = oView.getModel();
                     var oModel = oView.getModel('oModelView');
                     var sComplaintSubTypeCode = oModel.getProperty("/addComplaint/ComplaintSubtypeCode");
                     var sPath = "/MasterResolutionSet"
-                    
+
                     oData.read(sPath, {
                         urlParameters: {
                             $filter: `IsArchived eq false and SubTypeCode eq ${sComplaintSubTypeCode}`
                         },
                         success: function (obj) {
-                            debugger;
                             var oMasterResolution = new JSONModel(obj);
                             that.getView().setModel(oMasterResolution, "MasterResolution");
-
                         },
                         error: function () {
 
@@ -528,6 +590,10 @@ sap.ui.define(
                     })
                 },
 
+                /**
+                 * Event Handler on Change of Complaint Sub Type Resolution data get filtered
+                 * @param {*} oEvent 
+                 */
                 onComplainSubTypeChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
                     var oView = this.getView();
@@ -539,8 +605,6 @@ sap.ui.define(
                     if (sKey == "2" || sKey == "3") {
                         oViewModel.setProperty("/addComplaint/RewardPoints", "");
                         oViewModel.setProperty("/addComplaint/TokenCode", "");
-                        // oModelControl.setProperty("/tokenCodeValue", "");
-                        // oModelControl.setProperty("/TokenCode", true);
                     }
                     // clearning the inreview and the resolution
                     oViewModel.setProperty("/addComplaint/ComplaintSubtypeCode", sComplainSubTypeCode);
@@ -726,7 +790,6 @@ sap.ui.define(
                         "/addCompAddData/MembershipCard",
                         obj["MembershipCard"]
                     );
-                    //  debugger;
                     oViewModel.setProperty("/addCompAddData/Mobile", obj["Mobile"]);
                     oViewModel.setProperty("/addCompAddData/Name", obj["Name"]);
                     oViewModel.setProperty("/addComplaint/PainterId", obj["Id"]);
@@ -770,21 +833,21 @@ sap.ui.define(
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelView");
                     var oMasterResolutionModel = oView.getModel();
-                    var iResolutionType = oMasterResolutionModel.getProperty("/MasterResolutionSet(" + sKey + ")")["TypeId"];
-                    
+                    var iResolutionType = oMasterResolutionModel.getProperty("/MasterResolutionSet(" + sKey + ")")["SubTypeCode"];
+
                     if (sKey !== 90) {
                         oModel.setProperty("/addComplaint/ResolutionOthers", "");
                     }
-                    if(sKey === "8") {
+                    if (sKey === "8") {
                         this._getMasterProductCategory();
                     }
                     oModel.setProperty("/addComplaint/ResolutionId", sKey);
                     oModel.setProperty("/addComplaint/ResolutionType", iResolutionType);
-                    
+
                     // console.log(sKey)
                 },
 
-                _getMasterProductCategory: function() {
+                _getMasterProductCategory: function () {
                     var that = this;
                     var oView = this.getView();
                     var oData = oView.getModel();
@@ -885,42 +948,40 @@ sap.ui.define(
                     }
                 },
                 onExit: function () { },
-                onPressAddMore: function () {
-                    debugger;
+                /**
+                 * Event handler when se click on Add More Button 
+                 * New Fields will be added (Category, Product, Pack, Quantity)
+                 * @param {*} oEvent 
+                 */
+                onPressAddMore: function (oEvent) {
                     var oModel = this.getView().getModel("oModelView");
-                    var oFamiDtlMdl = oModel.getProperty("/addRewardPoint");
-                    var bFlag = true;
-                    this.productNumber = this.productNumber + 1;
+                    var oRwdDtlMdl = oModel.getProperty("/addRewardPoint");
                     var oValidator = new Validator();
-                    var oVbox = this.getView().byId("idRewardDetails");
-                    var bValidation = oValidator.validate(oVbox, true);
+                    var oGrid = this.getView().byId("idRewardDetails");
+                    var bValidation = oValidator.validate(oGrid, true);
 
-                    if (bValidation !== false) {
-                        if (bFlag == true) {
-                            oFamiDtlMdl.push({
-                                "ProductNum": this.productNumber,
-                                "CategoryCode": "",
-                                "ProductCode": "",
-                                "PainterComplainProducts": {
-                                    "ProductSKUCode": "",
-                                    "ProductQuantity": "",
-                                    "Points": "",
-                                }
-                            });
+                    if (bValidation) {
+                        this.productNumber = this.productNumber + 1;
+                        oRwdDtlMdl.push({
+                            "ProductNum": this.productNumber,
+                            "CategoryCode": "",
+                            "ProductCode": "",
+                            "PainterComplainProducts": {
+                                "ProductSKUCode": "",
+                                "ProductQuantity": "",
+                                "Points": "",
+                            }
+                        });
 
-                            oModel.setProperty("/addRewardPoint", oFamiDtlMdl);
-                            oModel.refresh(true);
-                            //relvalue and editable properties are added here and will be removed in the postsave function
-                        }
+                        oModel.setProperty("/addRewardPoint", oRwdDtlMdl);
+                        oModel.refresh(true);
+
                     } else {
                         MessageToast.show(
                             "Kindly input all the mandatory(*) fields to continue."
                         );
 
                     }
-                },
-                fnLoadProductItems: function() {
-                    debugger;
                 }
             }
         );

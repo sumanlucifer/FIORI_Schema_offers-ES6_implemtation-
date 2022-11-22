@@ -123,10 +123,8 @@ sap.ui.define(
                     } else {
                       if (oInternalValue !== "") {
                         // Validate Non manditory fields idf not empty
-                        //debugger;
                         oControlBinding.getType().validateValue(oInternalValue);
 
-                        //debugger;
                       } // Non Manditory fields remove the value property
                       else {
                         var sPathB = oControlBinding.getPath();
