@@ -161,7 +161,7 @@ sap.ui.define(
                             ComplainReopenReasonId: "", ///added by deepanjali
                             ComplainReopenReason: "" ///added by deepanjali
                         },
-                        
+                        rBtnVsbl: false
                         // ComplainReopenReasonId: null ///added by deepanjali
                     };
                     /* Fields required for Post with PainterComplainProducts array index 0
@@ -374,8 +374,14 @@ sap.ui.define(
                                     oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
                                     oView.byId("idPacks").setSelectedKey("");
                                     oView.byId("idPacks").getBinding("items").filter(new Filter("ProductCode", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.ProductCode));
-                                } else if (data.ResolutionId === 8) {
-
+                                } 
+                                // Changing product status to approved
+                                else if (data.ResolutionId === 8) {
+                                    var productNum = 1;
+                                    for(var i of data.PainterComplainProducts.results) {
+                                        i.Status = 'APPROVE';
+                                        i.ProductNum = productNum++;
+                                    }
                                 } else {
                                     data.PainterComplainProducts = {
                                         PainterId: data.PainterId,
@@ -399,6 +405,7 @@ sap.ui.define(
                         });
                     });
                 },
+                
                 _setInitData: function () {
                     //var promise = jQuery.Deferred();
                     var oView = this.getView();
@@ -1201,6 +1208,34 @@ sap.ui.define(
                     var oMessageProcessor = this.getModel("oModelView");
                     this._oMessageManager = sap.ui.getCore().getMessageManager();
                     this._oMessageManager.registerMessageProcessor(oMessageProcessor);
+                },
+                /**
+                 * Event handler when we select radio button
+                 * Changing the status of the product
+                 * @param {*} oEvent 
+                 */
+                fnProductAprvRjct: function(oEvent) {
+                    var sId = oEvent.getParameter("id").split("-");
+                    var iId = sId[sId.length-1];
+                    var iKey = oEvent.getParameter("selectedIndex");
+                    var oModel = this.getView().getModel("oModelView");
+                    if(iKey === 0) {
+                        oModel.setProperty(`/PainterComplainProducts/results/${iId}/Status`, 'APPROVE');
+                    } else if (iKey === 1) {
+                        oModel.setProperty(`/PainterComplainProducts/results/${iId}/Status`, 'REJECT');
+                    }
+
+                },
+
+                /**
+                 * Event Handler when we click on check box
+                 * making visible Approve or Reject Radio Button
+                 * @param {*} oEvent 
+                 */
+                fnAprvRjctVsbl: function(oEvent) {
+                    debugger;
+                    var sKey = oEvent.getParameter("selected");
+                    this.getView().getModel('oModelControl').setProperty("/rBtnVsbl", sKey);
                 }
             }
         );

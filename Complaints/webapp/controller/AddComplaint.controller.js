@@ -613,6 +613,8 @@ sap.ui.define(
                     if (complaintTypeId === '1' && sKey === '2') {
                         oModelControl.setProperty("/resolutionDetail", true);
                         this._getResolutionType();
+                    } else {
+                        oModelControl.setProperty("/resolutionDetail", false);
                     }
                 },
                 onSenarioChange: function (oEvent) {

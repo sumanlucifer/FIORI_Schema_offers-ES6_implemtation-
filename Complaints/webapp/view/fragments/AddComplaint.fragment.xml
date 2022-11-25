@@ -110,7 +110,6 @@
             visible="{= ${oModelControl>/resolutionDetail}}"
             editable="false"
             layout="ResponsiveGridLayout"
-            title="{i18n>AddComplaintDetails}"
             labelSpanXL="12"
             labelSpanL="12"
             labelSpanM="12"
