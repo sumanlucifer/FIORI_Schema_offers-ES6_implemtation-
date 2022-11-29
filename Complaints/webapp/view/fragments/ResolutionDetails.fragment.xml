@@ -111,7 +111,7 @@
             </VBox>
             <VBox visible="{oModelControl>/rBtnVsbl}">
                 <Label text="{i18n>approveReject}" labelFor="idAprvRjct" />
-				<RadioButtonGroup select="fnProductAprvRjct" selectedIndex="0" columns="2" id="idAprvRjct">
+				<RadioButtonGroup select="fnProductAprvRjct" selectedIndex="{= ${oModelView>Status} === 'APPROVED' ? 0 : ${oModelView>Status} === 'REJECTED' ? 1 : -1 }" columns="2" id="idAprvRjct">
 					<RadioButton text="{i18n>approve}" />
 					<RadioButton text="{i18n>reject}" />
 				</RadioButtonGroup>

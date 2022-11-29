@@ -367,22 +367,22 @@ sap.ui.define(
                             success: function (data) {
 
                                 //Modding Product data for UI, Should have been a object from backend
-                                if (data.PainterComplainProducts.results.length > 0 && data.ResolutionId !== 8) {
-                                    data.PainterComplainProducts = data.PainterComplainProducts.results[0]
-                                    oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
-                                    oView.byId("idProduct").getBinding("items").filter([new Filter("ProductCategory/Id", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.CategoryCode)]);
-                                    oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
-                                    oView.byId("idPacks").setSelectedKey("");
-                                    oView.byId("idPacks").getBinding("items").filter(new Filter("ProductCode", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.ProductCode));
-                                } 
-                                // Changing product status to approved
-                                else if (data.ResolutionId === 8) {
+                                if (data.PainterComplainProducts.results.length > 0 ) {
+                                    // data.PainterComplainProducts = data.PainterComplainProducts.results[0]
+                                    // oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
+                                    // oView.byId("idProduct").getBinding("items").filter([new Filter("ProductCategory/Id", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.CategoryCode)]);
+                                    // oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
+                                    // oView.byId("idPacks").setSelectedKey("");
+                                    // oView.byId("idPacks").getBinding("items").filter(new Filter("ProductCode", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.ProductCode));
+
+                                    //CR5 Changes
                                     var productNum = 1;
                                     for(var i of data.PainterComplainProducts.results) {
-                                        i.Status = 'APPROVE';
                                         i.ProductNum = productNum++;
                                     }
-                                } else {
+                                } 
+                                // Changing product status to approved
+                                 else {
                                     data.PainterComplainProducts = {
                                         PainterId: data.PainterId,
                                         Points: "",
@@ -892,6 +892,12 @@ sap.ui.define(
                     var oData = oView.getModel();
                     var sPath = oView.getElementBinding().getPath();
                     var oViewData = oView.getModel("oModelView").getData();
+
+                    if(oViewData.PainterComplainProducts.results.length > 0) {
+                        for(let i = 0; i < oViewData.PainterComplainProducts.results.length; i++) {
+                                delete oViewData.PainterComplainProducts.results[i].ProductNum
+                            }
+                    }
                     // oViewData.Remark = oViewData.Remark.replace(/(\n|\r|\t)/g, ' ');
                     var oPayload = {};
                     //cloning
@@ -949,9 +955,16 @@ sap.ui.define(
                         MessageToast.show(validation);
                         return;
                     }
+                    this._updateProductStatus(bAccept);
                     oModelView.setProperty("/ApprovalStatus", bAccept ? "APPROVED" : "REJECTED");
                     oModelView.setProperty("/ComplaintStatus", "RESOLVED");
                     this._postDataToSave();
+                },
+                _updateProductStatus: function(bAccept) {
+                    var oModelView = this.getView().getModel('oModelView');
+                    for(let i of oModelView.getData().PainterComplainProducts.results) {
+                        i.Status = bAccept ? 'APPROVED' : 'REJECTED';
+                    }
                 },
                 onChangeResolution: function (oEvent) {
                     var oView = this.getView();
@@ -1220,9 +1233,9 @@ sap.ui.define(
                     var iKey = oEvent.getParameter("selectedIndex");
                     var oModel = this.getView().getModel("oModelView");
                     if(iKey === 0) {
-                        oModel.setProperty(`/PainterComplainProducts/results/${iId}/Status`, 'APPROVE');
+                        oModel.setProperty(`/PainterComplainProducts/results/${iId}/Status`, 'APPROVED');
                     } else if (iKey === 1) {
-                        oModel.setProperty(`/PainterComplainProducts/results/${iId}/Status`, 'REJECT');
+                        oModel.setProperty(`/PainterComplainProducts/results/${iId}/Status`, 'REJECTED');
                     }
 
                 },

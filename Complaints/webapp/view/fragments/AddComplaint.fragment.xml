@@ -157,7 +157,7 @@
                 </layoutData>
             </VBox>
             <FlexBox alignItems="End" justifyContent="End">
-                <Button icon="sap-icon://delete" type="Transparent" tooltip="Delete" press="onPressDelete" />
+                <Button icon="sap-icon://delete" visible="{oModelControl>/dBtn}" type="Transparent" tooltip="Delete" press="onPressDelete" />
             </FlexBox>
             <VBox id="idCategorySection">
                 <Label text="{i18n>LblCategory}" required="true" />
@@ -176,19 +176,19 @@
             </VBox>
             <VBox id="idProductSection">
                 <Label text="{i18n>LblProduct}" required="true" />
-                <ComboBox id="idProduct1" required="true" width="100%" change="filterPacks" selectedKey="{oModelView>ProductCode}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
+                <ComboBox id="idProduct1" required="true" width="100%" change="filterPacks" selectedKey="{ path: 'oModelView>ProductCode', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }}" name="{oModelView>/PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterProductSet',    sorter: { path: 'ProductName' }      }">
                     <core:Item key="{Id}" text="{ProductName}" />
                 </ComboBox>
             </VBox>
             <VBox id="idPackSection">
                 <Label required="true" text="{i18n>LblPack}" />
-                <ComboBox change="onPackChange" required="true" id="idPacks" width="100%" selectedKey="{oModelView>PainterComplainProducts/ProductSKUCode}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
+                <ComboBox change="onPackChange" required="true" id="idPacks" width="100%" selectedKey="{ path: 'oModelView>PainterComplainProducts/ProductSKUCode', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }}" items="{ path: '/MasterRepProductSkuSet', parameters : { expand : 'ProductDetails' }, sorter: { path: 'ProductCode' }   }">
                     <core:Item key="{SkuCode}" text="{Description}" />
                 </ComboBox>
             </VBox>
             <VBox id="idQtySection">
                 <Label required="true" text="{i18n>LblQuantity}" />
-                <ComboBox change="onPointsChange" required="true" selectedKey="{oModelView>PainterComplainProducts/ProductQuantity}" width="100%" items="{oModelControl>/aQuantity}">
+                <ComboBox change="onPointsChange" required="true" selectedKey="{path: 'oModelView>PainterComplainProducts/ProductQuantity', type : 'sap.ui.model.type.String', constraints:{ minLength:1 }}" width="100%" items="{oModelControl>/aQuantity}">
                     <core:Item key="{oModelControl>key}" text="{oModelControl>value}" />
                 </ComboBox>
                 <layoutData>

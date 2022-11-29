@@ -112,8 +112,8 @@ sap.ui.define(
                             "ProductCode": "",
                             "PainterComplainProducts": {
                                 "ProductSKUCode": "",
-                                "ProductQuantity": "",
-                                "Points": "",
+                                "ProductQuantity": 0,
+                                "Points": 0,
                             }
                         }]
                     });
@@ -164,6 +164,7 @@ sap.ui.define(
                             value: "10",
                             key: 10
                         }],
+                        dBtn: false
                     };
 
                     var oModelControl = new JSONModel(oDataControl);
@@ -266,8 +267,10 @@ sap.ui.define(
                  */
                 onPackChange: function (oEvent) {
                     var oSelectedItem = oEvent.getSource().getSelectedItem().getBindingContext().getObject(),
-                        oModelView = this.getModel("oModelView");
-                    oModelView.setProperty("/PainterComplainProducts/Points", oSelectedItem.Points);
+                        sId = oEvent.getParameter('id').split('-')[oEvent.getParameter('id').split('-').length-1],
+                        oModelView = this.getModel("oModelView").getProperty("/addRewardPoint")[Number(sId)];
+                        oModelView.PainterComplainProducts.Points = Number(oSelectedItem.Points);
+                        // oModelView.setProperty("addRewardPoint/"+oId+"/PainterComplainProducts/Points", oSelectedItem.Points);
                 },
 
                 /**
@@ -380,7 +383,6 @@ sap.ui.define(
                         data.push(oAddRewardDetails[i].PainterComplainProducts);
                     }
                     oViewModel.setProperty("/addComplaint/PainterComplainProducts", data);
-                    oViewModel.setProperty("/addComplaint/LanguageCode", "ZM");
                 },
 
                 _postDataToSave: function () {
@@ -429,8 +431,12 @@ sap.ui.define(
                     if (oParent.length === 1) {
                         return false;
                     }
+
                     oRewardPoint.splice(iIndex, 1);
                     oModel.setProperty("/addRewardPoint", oRewardPoint);
+                    if(oRewardPoint.length === 1) {
+                        this.getView().getModel('oModelControl').setProperty('/dBtn', false);
+                    }
                     this.productNumber = this.productNumber - 1;
                 },
 
@@ -976,6 +982,7 @@ sap.ui.define(
                         });
 
                         oModel.setProperty("/addRewardPoint", oRwdDtlMdl);
+                        this.getView().getModel('oModelControl').setProperty('/dBtn', true);
                         oModel.refresh(true);
 
                     } else {

@@ -92,7 +92,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="20" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'CreatedAt',descending:true}, filters:[{path:'ComplaintSubtypeCode',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false},{path:'LanguageCode',operator:'EQ',value1: 'ZM'}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype', select:'Id,ComplaintTypeCode,ComplaintSubtypeCode,ParentComplaintId,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="20" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'Id',descending:true}, filters:[{path:'ComplaintSubtypeCode',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype', select:'Id,ComplaintTypeCode,ComplaintSubtypeCode,ParentComplaintId,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
