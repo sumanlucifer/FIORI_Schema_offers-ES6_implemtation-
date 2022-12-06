@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
     "sap/m/library",
-    "sap/m/MessageToast"
-], function (Controller, UIComponent, mobileLibrary, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/model/json/JSONModel"
+], function (Controller, UIComponent, mobileLibrary, MessageToast, JSONModel) {
     "use strict";
     // shortcut for sap.m.URLHelper
     var URLHelper = mobileLibrary.URLHelper;
@@ -106,6 +107,58 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailSubject"),
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
-        }
+        },
+        /**
+         * Getting Complaint Type data
+         * @private
+         * @return 
+         */
+        _getMasterComplaintType: function () {
+            var that = this;
+            var oView = this.getView();
+            var oData = oView.getModel();
+            var oModel = oView.getModel('oModelView');
+            var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
+            var sPath = "/MasterComplaintTypeSet"
+
+            oData.read(sPath, {
+                urlParameters: {
+                    LanguageCode: sLanguageCode
+                },
+                success: function (obj) {
+                    var oMasterComplaintType = new JSONModel(obj);
+                    that.getView().setModel(oMasterComplaintType, "MasterComplaintType");
+                },
+                error: function () { }
+            })
+        },
+        /**
+                 * Getting Complaint Sub type data
+                 * @private
+                 * @return 
+                 */
+         _getMasterComplaintSubType: function () {
+            var that = this;
+            var oView = this.getView();
+            var oData = oView.getModel();
+            var oModel = oView.getModel('oModelView');
+            var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
+            var sComplaintTypeCode = oModel.getProperty("/addComplaint/ComplaintTypeCode");
+            var sPath = "/MasterComplaintSubtypeSet";
+
+            // IsArchived:false
+
+            oData.read(sPath, {
+                urlParameters: {
+                    LanguageCode: sLanguageCode,
+                    ComplaintTypeCode: sComplaintTypeCode
+                },
+                success: function (obj) {
+                    var oMasterComplaintSubType = new JSONModel(obj);
+                    that.getView().setModel(oMasterComplaintSubType, "MasterComplaintSubType");
+                },
+                error: function () { }
+            })
+        },
     });
 });

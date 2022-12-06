@@ -180,57 +180,7 @@ sap.ui.define(
                     }
                     this._getMasterComplaintType();
                 },
-                /**
-                 * Getting Complaint Sub type data
-                 * @private
-                 * @return 
-                 */
-                _getMasterComplaintSubType: function () {
-                    var that = this;
-                    var oView = this.getView();
-                    var oData = oView.getModel();
-                    var oModel = oView.getModel('oModelView');
-                    var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
-                    var sComplaintTypeCode = oModel.getProperty("/addComplaint/ComplaintTypeCode");
-                    var sPath = "/MasterComplaintSubtypeSet";
 
-                    oData.read(sPath, {
-                        urlParameters: {
-                            LanguageCode: sLanguageCode,
-                            ComplaintTypeCode: sComplaintTypeCode
-                        },
-                        success: function (obj) {
-                            var oMasterComplaintSubType = new JSONModel(obj);
-                            that.getView().setModel(oMasterComplaintSubType, "MasterComplaintSubType");
-                        },
-                        error: function () { }
-                    })
-                },
-
-                /**
-                 * Getting Complaint Type data
-                 * @private
-                 * @return 
-                 */
-                _getMasterComplaintType: function () {
-                    var that = this;
-                    var oView = this.getView();
-                    var oData = oView.getModel();
-                    var oModel = oView.getModel('oModelView');
-                    var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
-                    var sPath = "/MasterComplaintTypeSet"
-
-                    oData.read(sPath, {
-                        urlParameters: {
-                            LanguageCode: sLanguageCode
-                        },
-                        success: function (obj) {
-                            var oMasterComplaintType = new JSONModel(obj);
-                            that.getView().setModel(oMasterComplaintType, "MasterComplaintType");
-                        },
-                        error: function () { }
-                    })
-                },
 
                 _getPainterDetails: function (mParam) {
                     var oView = this.getView();
@@ -267,10 +217,10 @@ sap.ui.define(
                  */
                 onPackChange: function (oEvent) {
                     var oSelectedItem = oEvent.getSource().getSelectedItem().getBindingContext().getObject(),
-                        sId = oEvent.getParameter('id').split('-')[oEvent.getParameter('id').split('-').length-1],
+                        sId = oEvent.getParameter('id').split('-')[oEvent.getParameter('id').split('-').length - 1],
                         oModelView = this.getModel("oModelView").getProperty("/addRewardPoint")[Number(sId)];
-                        oModelView.PainterComplainProducts.Points = Number(oSelectedItem.Points);
-                        // oModelView.setProperty("addRewardPoint/"+oId+"/PainterComplainProducts/Points", oSelectedItem.Points);
+                    oModelView.PainterComplainProducts.Points = Number(oSelectedItem.Points);
+                    // oModelView.setProperty("addRewardPoint/"+oId+"/PainterComplainProducts/Points", oSelectedItem.Points);
                 },
 
                 /**
@@ -377,7 +327,7 @@ sap.ui.define(
                     var oAddCompData = oViewModel.getProperty("/addComplaint");
                     var data = [];
                     for (var i = 0; i < oAddRewardDetails.length; i++) {
-                        delete oAddRewardDetails[i].PainterComplainProducts.Points;
+                        // delete oAddRewardDetails[i].PainterComplainProducts.Points;
                         oAddRewardDetails[i].PainterComplainProducts.PainterId = oAddCompData.PainterId;
                         oAddRewardDetails[i].PainterComplainProducts.ProductQuantity = Number(oAddRewardDetails[i].PainterComplainProducts.ProductQuantity);
                         data.push(oAddRewardDetails[i].PainterComplainProducts);
@@ -434,7 +384,7 @@ sap.ui.define(
 
                     oRewardPoint.splice(iIndex, 1);
                     oModel.setProperty("/addRewardPoint", oRewardPoint);
-                    if(oRewardPoint.length === 1) {
+                    if (oRewardPoint.length === 1) {
                         this.getView().getModel('oModelControl').setProperty('/dBtn', false);
                     }
                     this.productNumber = this.productNumber - 1;
@@ -569,6 +519,57 @@ sap.ui.define(
                     this.getView().getModel("oModelView").setProperty("/addComplaint/ComplaintTypeCode", Number(sComplainTypeCode));
                     this._getMasterComplaintSubType();
 
+                },
+                /**
+                 * Getting Complaint Sub type data
+                 * @private
+                 * @return 
+                 */
+                _getMasterComplaintSubType: function () {
+                    var that = this;
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oModel = oView.getModel('oModelView');
+                    var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
+                    var sComplaintTypeCode = oModel.getProperty("/addComplaint/ComplaintTypeCode");
+                    var sPath = "/MasterComplaintSubtypeSet";
+
+                    oData.read(sPath, {
+                        urlParameters: {
+                            LanguageCode: sLanguageCode,
+                            ComplaintTypeCode: sComplaintTypeCode
+                        },
+                        success: function (obj) {
+                            var oMasterComplaintSubType = new JSONModel(obj);
+                            that.getView().setModel(oMasterComplaintSubType, "MasterComplaintSubType");
+                        },
+                        error: function () { }
+                    })
+                },
+
+                /**
+                 * Getting Complaint Type data
+                 * @private
+                 * @return 
+                 */
+                _getMasterComplaintType: function () {
+                    var that = this;
+                    var oView = this.getView();
+                    var oData = oView.getModel();
+                    var oModel = oView.getModel('oModelView');
+                    var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
+                    var sPath = "/MasterComplaintTypeSet"
+
+                    oData.read(sPath, {
+                        urlParameters: {
+                            LanguageCode: sLanguageCode
+                        },
+                        success: function (obj) {
+                            var oMasterComplaintType = new JSONModel(obj);
+                            that.getView().setModel(oMasterComplaintType, "MasterComplaintType");
+                        },
+                        error: function () { }
+                    })
                 },
 
                 /**

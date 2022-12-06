@@ -77,7 +77,6 @@ sap.ui.define(
                         }
                     }
 
-
                     //console.log("Init View");
                 },
                 _onRouteMatched: function () {
@@ -141,6 +140,14 @@ sap.ui.define(
                     c1.then(function () {
                         c2 = othat._initLoginFilterTable1()
                     })
+                    var oViewData = new JSONModel({
+                        addComplaint: {
+                            LanguageCode: "EN",
+                            ComplaintTypeCode: ""
+                        }
+                    })
+                    this.getView().setModel(oViewData, "oModelView");
+                    this._getMasterComplaintType();
                 },
                 _initLoginFilterTable1: function () {
                     var promise = $.Deferred();
@@ -363,17 +370,20 @@ sap.ui.define(
                 },
                 onComplaintsChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
-
+                    var oViewModel = this.getView().getModel();
                     var oView = this.getView();
                     var oCmbxSubType = oView.byId("idFileSubType");
-                    var oFilter = new Filter("LanguageCode", FilterOperator.EQ, "ZM");
+                    // var oFilter = new Filter("LanguageCode", FilterOperator.EQ, "EN");
                     oCmbxSubType.clearSelection();
                     oCmbxSubType.setValue("");
-                    if (sKey == "") {
-                        oCmbxSubType.getBinding("items").filter(null);
-                    } else {
-                        oCmbxSubType.getBinding("items").filter(oFilter);
-                    }
+                    var sComplainTypeCode = oViewModel.getProperty("/MasterComplaintTypeSet(" + sKey + ")")["ComplaintTypeCode"];
+                    this.getView().getModel("oModelView").setProperty("/addComplaint/ComplaintTypeCode", Number(sComplainTypeCode));
+                    this._getMasterComplaintSubType();
+                    // if (sKey == "") {
+                    //     oCmbxSubType.getBinding("items").filter(null);
+                    // } else {
+                    //     oCmbxSubType.getBinding("items").filter(oFilter);
+                    // }
                 },
                 onZoneChange: function (oEvent) {
                     var sId = oEvent.getSource().getSelectedKey();

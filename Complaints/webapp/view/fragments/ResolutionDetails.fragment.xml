@@ -59,6 +59,7 @@
     <!--This Grid will used when the Resolution id is 8 CR5-->
     <l:Grid visible="{= ${oModelView>/ResolutionId} === 8}" defaultSpan="XL12 L12 M12 S12" hSpacing="1" >
         <Label text="{i18n>TtlRewardPointDetails}" design="Bold" />
+        
         <CheckBox select="fnAprvRjctVsbl" text="{i18n>aprvPdctIndvly}" visible="{= ${appView>/iUserLevel} &gt; 1 &amp;&amp; ${ApprovalStatus} === 'PENDING' }" />
     </l:Grid>
     <l:Grid visible="{= ${oModelView>/ResolutionId} === 8}" defaultSpan="XL12 L12 M12 S12" hSpacing="1" content="{oModelView>/PainterComplainProducts/results}">

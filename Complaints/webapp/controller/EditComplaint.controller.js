@@ -835,7 +835,7 @@ sap.ui.define(
                     if (aCtrlMessage.length) this._genCtrlMessages(aCtrlMessage);
                     return sMsg;
                 },
-                handleSavePress: function () {
+                handleSavePress: function (oEvent) {
                     /*
                      var oValidator = new Validator();
                      var oVbox = this.getView().byId("idVbx");
@@ -847,11 +847,19 @@ sap.ui.define(
                      }
                      */
                     var oModelView = this.getView().getModel("oModelView"),
-                        validation = this._validation(oModelView.getData());
+                        validation = this._validation(oModelView.getData()),
+                        sBtnText = oEvent.getSource().getProperty('text');
                     //Validations
                     if (validation.length > 0) {
                         MessageToast.show(validation);
                         return;
+                    }
+
+                    if(sBtnText === 'Resolve') {
+                        var aRewardDetails = oModelView.getProperty('/PainterComplainProducts/results');
+                        for(let item of aRewardDetails) {
+                            item.Status = 'APPROVED';
+                        }
                     }
                     //Sending for approval message
                     if (oModelView.getProperty("/ResolutionType") == 2 && this.getModel("appView").getProperty("/iUserLevel") < 2) {
@@ -950,12 +958,15 @@ sap.ui.define(
                 },
                 onApproval: function (bAccept) {
                     var oModelView = this.getModel("oModelView"),
+                        bRBtnVsbl = this.getModel("oModelControl").getProperty("/rBtnVsbl"),
                         validation = this._minValidation(oModelView.getData());
                     if (validation.length > 0 ) {
                         MessageToast.show(validation);
                         return;
                     }
-                    this._updateProductStatus(bAccept);
+                    if(bRBtnVsbl === false) {
+                        this._updateProductStatus(bAccept);
+                    }
                     oModelView.setProperty("/ApprovalStatus", bAccept ? "APPROVED" : "REJECTED");
                     oModelView.setProperty("/ComplaintStatus", "RESOLVED");
                     this._postDataToSave();
