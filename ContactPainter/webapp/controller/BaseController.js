@@ -310,6 +310,15 @@ sap.ui.define([
         },
 
         /**
+         * Removing Extra spaces and special characters from string
+         * @param {String} sName 
+         * @returns String 
+         */
+        _fmtString: function (sName) {
+            return sName.replace(/[^a-zA-Z0-9]+/g, ' ').trim();
+        },
+
+        /**
          * Adds a history entry in the FLP page history
          * @public
          * @param {object} oEntry An entry object to add to the hierachy array as expected from the ShellUIService.setHierarchy method
