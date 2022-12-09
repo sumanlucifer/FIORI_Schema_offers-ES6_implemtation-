@@ -152,7 +152,7 @@ sap.ui.define([], function () {
         fmtVisibleFunction: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            if(m3 === 8) {
+            if(m3 === 39) {
                 return false;
             }
             if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {

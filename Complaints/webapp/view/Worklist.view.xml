@@ -14,15 +14,15 @@
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintType" label="{i18n>ComplaintType}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox change="onComplaintsChange" placeholder="{i18n>Enter} {i18n>ComplaintType}" items="{path:'MasterComplaintType>/results',sorter:{path:'ComplaintType'}}" selectedKey="{oModelControl>/filterBar/ComplaintTypeId}">
-                                        <core:Item text="{MasterComplaintType>ComplaintType}" key="{MasterComplaintType>Id}"/>
+                                    <ComboBox change="onComplaintsChange" placeholder="{i18n>Enter} {i18n>ComplaintType}" items="{path:'/MasterComplaintTypeSet',sorter:{path:'ComplaintType'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}] }" selectedKey="{oModelControl>/filterBar/ComplaintTypeId}">
+                                        <core:Item text="{ComplaintType}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintDetails" label="{i18n>ComplaintDetails}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ComplaintTypeId}!== '' }" id="idFileSubType"  placeholder="{i18n>Enter} {i18n>ComplaintDetails}" items="{path:'MasterComplaintSubType>/results',sorter:{path:'ComplaintSubtype'} }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
-                                        <core:Item text="{MasterComplaintSubType>ComplaintSubtype}" key="{MasterComplaintSubType>Id}"/>
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ComplaintTypeId}!== '' }" id="idFileSubType"  placeholder="{i18n>Enter} {i18n>ComplaintDetails}" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}] }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
+                                        <core:Item text="{ComplaintSubtype}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>

@@ -113,52 +113,52 @@ sap.ui.define([
          * @private
          * @return 
          */
-        _getMasterComplaintType: function () {
-            var that = this;
-            var oView = this.getView();
-            var oData = oView.getModel();
-            var oModel = oView.getModel('oModelView');
-            var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
-            var sPath = "/MasterComplaintTypeSet"
+        // _getMasterComplaintType: function () {
+        //     var that = this;
+        //     var oView = this.getView();
+        //     var oData = oView.getModel();
+        //     var oModel = oView.getModel('oModelView');
+        //     var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
+        //     var sPath = "/MasterComplaintTypeSet"
 
-            oData.read(sPath, {
-                urlParameters: {
-                    LanguageCode: sLanguageCode
-                },
-                success: function (obj) {
-                    var oMasterComplaintType = new JSONModel(obj);
-                    that.getView().setModel(oMasterComplaintType, "MasterComplaintType");
-                },
-                error: function () { }
-            })
-        },
+        //     oData.read(sPath, {
+        //         urlParameters: {
+        //             LanguageCode: sLanguageCode
+        //         },
+        //         success: function (obj) {
+        //             var oMasterComplaintType = new JSONModel(obj);
+        //             that.getView().setModel(oMasterComplaintType, "MasterComplaintType");
+        //         },
+        //         error: function () { }
+        //     })
+        // },
         /**
                  * Getting Complaint Sub type data
                  * @private
                  * @return 
                  */
-         _getMasterComplaintSubType: function () {
-            var that = this;
-            var oView = this.getView();
-            var oData = oView.getModel();
-            var oModel = oView.getModel('oModelView');
-            var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
-            var sComplaintTypeCode = oModel.getProperty("/addComplaint/ComplaintTypeCode");
-            var sPath = "/MasterComplaintSubtypeSet";
+        //  _getMasterComplaintSubType: function () {
+        //     var that = this;
+        //     var oView = this.getView();
+        //     var oData = oView.getModel();
+        //     var oModel = oView.getModel('oModelView');
+        //     var sLanguageCode = oModel.getProperty("/addComplaint/LanguageCode");
+        //     var sComplaintTypeCode = oModel.getProperty("/addComplaint/ComplaintTypeCode");
+        //     var sPath = "/MasterComplaintSubtypeSet";
 
-            // IsArchived:false
+        //     // IsArchived:false
 
-            oData.read(sPath, {
-                urlParameters: {
-                    LanguageCode: sLanguageCode,
-                    ComplaintTypeCode: sComplaintTypeCode
-                },
-                success: function (obj) {
-                    var oMasterComplaintSubType = new JSONModel(obj);
-                    that.getView().setModel(oMasterComplaintSubType, "MasterComplaintSubType");
-                },
-                error: function () { }
-            })
-        },
+        //     oData.read(sPath, {
+        //         urlParameters: {
+        //             LanguageCode: sLanguageCode,
+        //             ComplaintTypeCode: sComplaintTypeCode
+        //         },
+        //         success: function (obj) {
+        //             var oMasterComplaintSubType = new JSONModel(obj);
+        //             that.getView().setModel(oMasterComplaintSubType, "MasterComplaintSubType");
+        //         },
+        //         error: function () { }
+        //     })
+        // },
     });
 });

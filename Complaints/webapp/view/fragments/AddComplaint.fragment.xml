@@ -33,9 +33,9 @@
             <f:content>
                 <core:Title text="{i18n>ComplaintDetails}" />
                 <Label text="{i18n>ComplaintType}" />
-                <ComboBox change="onComplainTypeChange" required="true" items="{MasterComplaintType>/results}" selectedKey="{oModelView>/addComplaint/ComplaintTypeId}">
+                <ComboBox id="idAddComplaintType" change="onComplainTypeChange" required="true" items="{path:'/MasterComplaintTypeSet',sorter:{path:'ComplaintType'}, filters:[{path:'LanguageCode', operator:'EQ', value1:'EN'}]}" selectedKey="{oModelView>/addComplaint/ComplaintTypeId}">
                     <items>
-                        <core:Item text="{MasterComplaintType>ComplaintType}" key="{MasterComplaintType>Id}" />
+                        <core:Item text="{ComplaintType}" key="{Id}" />
                     </items>
                 </ComboBox>
                 <Label text="{i18n>ComplaintDetails}" />
@@ -44,11 +44,11 @@
                     enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }"
                     id="idCompainSubType"
                     required="true"
-                    items="{MasterComplaintSubType>/results}"
+                    items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}] }"
                     selectedKey="{path:'oModelView>/addComplaint/ComplaintSubTypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }"
                 >
                     <items>
-                        <core:Item text="{MasterComplaintSubType>ComplaintSubtype}" key="{MasterComplaintSubType>Id}" />
+                        <core:Item text="{ComplaintSubtype}" key="{Id}" />
                     </items>
                 </ComboBox>
 
@@ -146,9 +146,9 @@
         </f:SimpleForm>
 
     <!--Reward Product Details-->
-    <Label class="sapUiSmallMargin" visible="{= ${oModelView>/addComplaint/ResolutionId} === '8'}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
+    <Label class="sapUiSmallMargin" visible="{= ${oModelView>/addComplaint/ResolutionId} === '39'}" text="{i18n>TtlRewardPointDetails}" design="Bold" />
 
-    <l:Grid id="idRewardDetails" visible="{= ${oModelView>/addComplaint/ResolutionId} === '8'}" defaultSpan="XL12 L12 M12 S12" hSpacing="1" content="{oModelView>/addRewardPoint}">
+    <l:Grid id="idRewardDetails" visible="{= ${oModelView>/addComplaint/ResolutionId} === '39'}" defaultSpan="XL12 L12 M12 S12" hSpacing="1" content="{oModelView>/addRewardPoint}">
         <l:Grid visible="true" defaultSpan="XL6 L6 M6 S12" hSpacing="1" >
             <VBox >
                 <Title class="sapUiTinyMarginBottom" text="Product {oModelView>ProductNum}" design="Bold" />
@@ -204,7 +204,7 @@
             </VBox>
         </l:Grid>
     </l:Grid>
-    <l:Grid visible="{= ${oModelView>/addComplaint/ResolutionId} === '8'}" defaultSpan="XL12 L12 M12 S12" hSpacing="1">
+    <l:Grid visible="{= ${oModelView>/addComplaint/ResolutionId} === '39'}" defaultSpan="XL12 L12 M12 S12" hSpacing="1">
         <FlexBox height="100px" alignItems="End" justifyContent="End">
             <Button text="Add more" press="onPressAddMore" />
         </FlexBox>
