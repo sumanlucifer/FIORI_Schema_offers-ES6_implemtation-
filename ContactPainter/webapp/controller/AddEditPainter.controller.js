@@ -335,6 +335,7 @@ sap.ui.define(
                     }
 
                 },
+                
                 _CheckExpertise: function () {
                     var oView = this.getView();
                     var oModelControl = oView.getModel("oModelControl");
@@ -377,6 +378,9 @@ sap.ui.define(
                             Mobile: SMobile2
                         });
                     }
+
+                    //Removing Extra spaces and Special Characters from Full Name
+                    oPainterData.Name = this._fmtString(oPainterData.Name);
 
                     //Getting the data for the PainterAddress
                     var oPainterAddress = this._ReturnObjects(
