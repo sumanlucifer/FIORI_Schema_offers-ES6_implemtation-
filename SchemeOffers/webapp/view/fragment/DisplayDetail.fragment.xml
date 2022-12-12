@@ -396,7 +396,6 @@
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
-
         <Toolbar class="sapUiSmallMarginTop sapUiSmallMarginBottom">
             <Title titleStyle="H3" text="3. {i18n>formApplicableLbl10}" />
         </Toolbar>

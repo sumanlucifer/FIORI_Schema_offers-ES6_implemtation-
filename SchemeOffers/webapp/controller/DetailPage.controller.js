@@ -71,7 +71,6 @@ sap.ui.define(
                 });
             },
             _onObjectMatched: function (oEvent) {
-
                 var oProp = window.decodeURIComponent(
                     oEvent.getParameter("arguments").prop
                 );
@@ -91,7 +90,6 @@ sap.ui.define(
                 this._SetDisplayData(oProp, sMode);
             },
             _SetDisplayData: function (oProp, sMode) {
-
                 var oView = this.getView();
                 var oData = {
                     ImageUploaded: "", // Have to check again,
@@ -526,7 +524,6 @@ sap.ui.define(
                 });
             },
             _setViewData2: function (oData) {
-
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModelControl2 = oView.getModel("oModelControl2");
@@ -902,7 +899,6 @@ sap.ui.define(
                 return promise;
             },
             handleEditPress: function () {
-
                 this._toggleButtonsAndView(true);
                 var oView = this.getView();
                 var oCtrl2Model = oView.getModel("oModelControl3");
