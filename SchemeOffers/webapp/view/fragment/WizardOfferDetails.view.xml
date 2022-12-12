@@ -19,7 +19,8 @@
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicableProducts" type="XML"/>
                 </content>
             </WizardStep>
-            <WizardStep id="OptionalInfoStep" title="{i18n>formApplicableLbl10}" activate="onActivate">
+            <!-- added visible property for Targeted offer screen Deepanjali -->
+            <WizardStep  id="OptionalInfoStep" title="{i18n>formApplicableLbl10}" activate="onActivate">
                 <content>
                     <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML"/>
                 </content>

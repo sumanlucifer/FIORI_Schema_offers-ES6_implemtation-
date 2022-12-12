@@ -476,8 +476,13 @@ sap.ui.define(
                 var oView = this.getView();
                 var oSource = oEvent.getSource().getSelectedItem();
                 var sKey = oEvent.getSource().getSelectedKey();
+                // added by deepanjali start
+                // if (sKey !== "7")
+                // this.getView().getModel("oModelControl").setProperty("/Table/Table2", []);
+                // added by deepanjali end
                 var object = oSource.getBindingContext().getObject();
                 var oModelControl = oView.getModel("oModelControl");
+
                 oModelControl.setProperty("/OfferType", object);
                 this._OfferTypeFieldsSet();
                 this._OfferTypeFieldSet2(sKey);
@@ -888,7 +893,7 @@ sap.ui.define(
                     LanguageCode: "",
                     file: null,
                     fileName: ""
-                   
+
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);
 
@@ -915,7 +920,7 @@ sap.ui.define(
                     oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     oView.getModel("oModelControl").setProperty("bNew", true, oContext);
-                  
+
 
                     var isValid = this.checkFileName(pdfname);
                     if (!isValid) {
@@ -2495,9 +2500,11 @@ sap.ui.define(
                 }
             },
             onRbChnageMain: function (oEvent) {
+
                 var oView = this.getView();
                 var oSource = oEvent.getSource();
                 var sKey = oSource.getSelectedIndex();
+
                 var sPath = oSource.getBinding("selectedIndex").getPath();
                 var sPathArray = sPath.split("/");
                 var oModelControl = oView.getModel("oModelControl");
@@ -2520,6 +2527,14 @@ sap.ui.define(
                 if (aChkTblData2.indexOf(sPathArray[2]) >= 0) {
                     this._CreateBonusRewardTable();
                 }
+
+                // added by deepanjali start 
+                var sText = oEvent.getSource().getSelectedButton().getText();
+                if (sText == "All") {
+                    oModelControl.setProperty("/Text", sText);
+                }
+
+                // added by deepanjali end 
             },
             _CheckCondProdTable: function () {
                 this.getView().getModel("oModelControl").setProperty("/Table/Table6", []);
@@ -3329,16 +3344,27 @@ sap.ui.define(
                 oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
             },
             onPackTokenUpdate: function (oEvent) {
+
                 if (oEvent.getParameter("type") === "removed") {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oEvent.getSource().getBinding("tokens").getPath();
                     var aArray = oModel.getProperty(sPath);
+                    var oProdTable = oModel.getProperty("/Table/Table2");
                     var aNewArray;
                     var aRemovedTokens = oEvent.getParameter("removedTokens");
                     var aRemovedKeys = [];
                     aRemovedTokens.forEach(function (item) {
                         aRemovedKeys.push(item.getKey());
+
+                        // added by deepanjali start
+                        var sSelectedOfrTpe = oModel.getData().OfferType.OfferType;
+                        if (sSelectedOfrTpe === 'Product Slab Offer') {
+                            var sSelectedIndex = oProdTable.findIndex((ob) => ob.Id === aRemovedKeys.toString());
+                            var sSelectedObj = oProdTable.splice(sSelectedIndex, 1);
+                            oModel.setProperty("/Table/Table2", oProdTable);
+                        }
+                        // added by deepanjali end
                     });
                     aNewArray = aArray.filter(function (item) {
                         return aRemovedKeys.indexOf(item["Id"]) < 0;
@@ -3490,6 +3516,7 @@ sap.ui.define(
                 }
             },
             _handlePackValueHelpConfirm: function (oEvent) {
+                debugger;
                 var oSelected = oEvent.getParameter("selectedContexts");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3522,6 +3549,49 @@ sap.ui.define(
                 oView
                     .getModel("oModelControl")
                     .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
+
+                // added by deepanjali for pack slab offer condition Start
+                var aExistingSlab = oModel.getProperty("/Table/Table2");
+
+                var sSelectedOfferType = oModel.getData().OfferType.OfferType;
+                if (sSelectedOfferType === 'Product Slab Offer') {
+                    var aSelectedPackData = aProds;
+                    var packItemModel = aExistingSlab.map(function (item) {
+                        return {
+                            Id: item.Id,
+                            ProductName: item.ProductName,
+                            ProductCode: (aSelectedPackData.filter(o2 => item.Id === o2.ProductCode).map(ele => ele.Name)).toString(),
+                            RewardGiftId: null,
+                            RewardGiftName: "",
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            RewardPoints: "",
+                            RewardCash: "",
+                            editable: true
+
+                        };
+                    });
+
+                    // var packItemModel = aSelectedPackData.map(function (item) {
+                    //     return {
+                    //         Name: item.Name,
+                    //         Id: item.Id,
+                    //         RewardGiftId: null,
+                    //         RewardGiftName: "",
+                    //         RequiredVolume: "",
+                    //         RequiredPoints: "",
+                    //         RewardPoints: "",
+                    //         RewardCash: "",
+                    //         editable: true,
+
+                    //     };
+                    // });
+
+
+                    oModel.setProperty("/Table/Table2", packItemModel);
+
+                }
+                // added by deepanjali for pack column in slab creation end
                 this._handleProdValueHelpClose();
                 if (aNumber == "1") {
                     this._CheckCondContriTable();
@@ -3531,17 +3601,29 @@ sap.ui.define(
                 this._handleProdValueHelpClose();
             },
             onProdTokenUpdate: function (oEvent) {
+
                 if (oEvent.getParameter("type") === "removed") {
                     var oView = this.getView();
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oEvent.getSource().getBinding("tokens").getPath();
                     var aArray = oModel.getProperty(sPath);
+                    var oProdTable = oModel.getProperty("/Table/Table2");
                     var aNewArray;
                     var aRemovedTokens = oEvent.getParameter("removedTokens");
                     var aRemovedKeys = [];
+
                     aRemovedTokens.forEach(function (item) {
                         aRemovedKeys.push(item.getKey());
+                        // added by deepanjali start
+                        var sSelectedOfrTpe = oModel.getData().OfferType.OfferType;
+                        if (sSelectedOfrTpe === 'Product Slab Offer') {
+                            var sSelectedIndex = oProdTable.findIndex((ob) => ob.Id === aRemovedKeys.toString());
+                            var sSelectedObj = oProdTable.splice(sSelectedIndex, 1);
+                            oModel.setProperty("/Table/Table2", oProdTable);
+                        }
+                        // added by deepanjali end
                     });
+
                     aNewArray = aArray.filter(function (item) {
                         return aRemovedKeys.indexOf(item["Id"]) < 0;
                     });
@@ -3563,13 +3645,16 @@ sap.ui.define(
                     this._CheckCondContriTable();
                 }
             },
+            // product value help open
             handleProdValueHelp: function (oEvent) {
+
                 var oView = this.getView();
                 var aPath = oEvent
                     .getSource()
                     .getBinding("tokens")
                     .getPath()
                     .split("/");
+
                 var sParam1 = aPath[aPath.length - 1];
                 var oModelControl = oView.getModel("oModelControl");
                 oModelControl.setProperty("/Dialog/ProdVH", sParam1);
@@ -3595,10 +3680,14 @@ sap.ui.define(
                 var sPath = mParam1;
                 this._FilterForProds1(mParam1);
             },
+
+            // product value help open confirm
             _handleProdValueHelpConfirm: function (oEvent) {
+
                 var oSelected = oEvent.getParameter("selectedContexts");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
+
                 var aField = oModel.getProperty("/Dialog/ProdVH");
                 var aNumber = aField.match(/\d+$/)[0];
                 var aProds = [],
@@ -3623,8 +3712,35 @@ sap.ui.define(
                         aProds.push(oModel.getProperty("/MultiCombo/AppProd" + aNumber)[i]);
                 }
 
+
                 oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
                 oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
+
+                // added by deepanjali for product slab offer condition Start
+                var sSelectedOfferType = oModel.getData().OfferType.OfferType;
+                if (sSelectedOfferType === 'Product Slab Offer') {
+                    var aSelectedProdData = aProds;
+
+                    var itemModel = aSelectedProdData.map(function (item) {
+                        return {
+                            ProductName: item.Name,
+                            ProductCode: "All",
+                            Id: item.Id,
+                            RewardGiftId: null,
+                            RewardGiftName: "",
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            RewardPoints: "",
+                            RewardCash: "",
+                            editable: true,
+
+                        };
+                    });
+                    oModel.setProperty("/Table/Table2", itemModel);
+
+                }
+                // added by deepanjali for product column in slab creation end
+
                 this._handleProdValueHelpClose();
                 // calling this method to destroy the dialog so that remembeslections get resetted
                 if (aNumber == "1") {
@@ -4855,7 +4971,7 @@ sap.ui.define(
                 var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
                 // if (bAllProdSelected === 0) {
                 //     var oDataTbl = oModel
-                //         .getProperty("/Table/Table2")
+                //         .getProperty("/Table/image.png")
                 //         .map(function (a) {
                 //             return Object.assign({}, a);
                 //         });
@@ -6307,7 +6423,7 @@ sap.ui.define(
                     // oPayLoad["MaxPercentage"] = Max;
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
                     //console.log(oPayLoad);
-                    //debugger;
+
 
                 }
                 promise.resolve(oPayLoad);
