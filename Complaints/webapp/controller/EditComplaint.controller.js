@@ -862,7 +862,7 @@ sap.ui.define(
                         }
                     }
                     //Sending for approval message
-                    if (oModelView.getProperty("/ResolutionType") == 2 && this.getModel("appView").getProperty("/iUserLevel") < 2) {
+                    if (oModelView.getProperty("/ResolutionType") == 16 && this.getModel("appView").getProperty("/iUserLevel") < 2) {
                         var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
                         MessageBox.confirm(
                             this.getResourceBundle().getText("MSG_APPROVAL_CONFIRMATION", [oModelView.getProperty("/ComplaintCode")]), {
@@ -883,7 +883,7 @@ sap.ui.define(
                     var oModel = this.getView().getModel("oModelView"),
                         //For Roles
                         appViewModel = this.getView().getModel("appView");
-                    if (oModel.getProperty("/ResolutionType") == 2) {
+                    if (oModel.getProperty("/ResolutionType") == 16) {
                         oModel.setProperty("/ComplaintStatus",
                             appViewModel.getProperty("/iUserLevel") > 1 ? "RESOLVED" : "INREVIEW");
                         oModel.setProperty("/ApprovalStatus",
@@ -943,7 +943,7 @@ sap.ui.define(
                     //     data.PainterComplainProducts.Points = +data.PainterComplainProducts.Points;
                     //     data.PainterComplainProducts.ProductQuantity = +data.PainterComplainProducts.ProductQuantity;
                     // }
-                    data.PainterComplainProducts = data.ResolutionType == 2 ? data.PainterComplainProducts : [];
+                    data.PainterComplainProducts = data.ResolutionType == 16 ? data.PainterComplainProducts : [];
                     //Parse RewardPoints
                     data.RewardPoints = !!(data.RewardPoints) ? +data.RewardPoints : null;
                 },
@@ -1257,7 +1257,6 @@ sap.ui.define(
                  * @param {*} oEvent 
                  */
                 fnAprvRjctVsbl: function(oEvent) {
-                    debugger;
                     var sKey = oEvent.getParameter("selected");
                     this.getView().getModel('oModelControl').setProperty("/rBtnVsbl", sKey);
                 }

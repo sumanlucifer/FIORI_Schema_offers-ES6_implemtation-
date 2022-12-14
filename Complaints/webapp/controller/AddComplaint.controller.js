@@ -78,6 +78,7 @@ sap.ui.define(
                     var sId = oEvent.getParameter("arguments").Id;
                     this._initData("add", "", sId);
                 },
+                
                 _GetServiceData: function () { },
                 _initData: function (mParMode, mKey, mPainterId) {
                     var oViewModel = new JSONModel({
@@ -350,6 +351,11 @@ sap.ui.define(
                     var oPayLoad = this._ReturnObjects(oAddCompData);
                     var othat = this;
                     var oData = this.getView().getModel();
+                    //
+                    if(oPayLoad.ComplaintTypeId === 7) {
+                        oPayLoad.ComplaintSubTypeId = 23;
+                        oPayLoad.ComplaintSubtypeCode = 16;
+                    }
 
                     var c1, c2;
                     c1 = this._postCreateData(oPayLoad);
@@ -523,6 +529,8 @@ sap.ui.define(
                     var oViewModel = this.getView().getModel();
                     var oView = this.getView();
                     var oCmbxSubType = oView.byId("idCompainSubType");
+                    var oModeView = this.getView().getModel("oModelView");
+                    var oModelControl = this.getView().getModel("oModelControl");
                     var sComplainTypeCode = oViewModel.getProperty("/MasterComplaintTypeSet(" + sKey + ")")["ComplaintTypeCode"];
                     var oFilter = new Filter("ComplaintTypeCode", FilterOperator.EQ, Number(sComplainTypeCode));
                     this.getView().getModel("oModelView").setProperty("/addComplaint/ComplaintTypeCode", Number(sComplainTypeCode));
@@ -532,6 +540,13 @@ sap.ui.define(
                         oCmbxSubType.getBinding("items").filter(null);
                     } else {
                         oCmbxSubType.getBinding("items").filter(oFilter);
+                    }
+
+                    if(sKey === "7") {
+                        oModelControl.setProperty("/resolutionDetail", true);
+                        this._getResolutionType();
+                    }  else {
+                        oModelControl.setProperty("/resolutionDetail", false);
                     }
 
                 },
@@ -600,7 +615,7 @@ sap.ui.define(
 
                     oData.read(sPath, {
                         urlParameters: {
-                            $filter: `IsArchived eq false and SubTypeCode eq ${sComplaintSubTypeCode}`
+                            $filter: 'IsArchived eq false and SubTypeCode eq 16'
                         },
                         success: function (obj) {
                             var oMasterResolution = new JSONModel(obj);
@@ -632,12 +647,7 @@ sap.ui.define(
                     oViewModel.setProperty("/addComplaint/ComplaintSubtypeCode", sComplainSubTypeCode);
                     oViewModel.setProperty("/addComplaint/ComplaintDescription", "");
 
-                    if (aAddComplaint.ComplaintTypeCode === 5 && aAddComplaint.ComplaintSubtypeCode === 16) {
-                        oModelControl.setProperty("/resolutionDetail", true);
-                        this._getResolutionType();
-                    } else {
-                        oModelControl.setProperty("/resolutionDetail", false);
-                    }
+                    
                 },
                 onSenarioChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();

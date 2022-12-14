@@ -41,10 +41,10 @@
                 <Label text="{i18n>ComplaintDetails}" />
                 <ComboBox
                     change="onComplainSubTypeChange"
-                    enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' }"
+                    enabled="{= ${oModelView>/addComplaint/ComplaintTypeId}!== '' &amp;&amp;  ${oModelView>/addComplaint/ComplaintTypeId}!== '7'}"
                     id="idCompainSubType"
                     required="true"
-                    items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}] }"
+                    items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}, {path: 'IsArchived',operator: 'EQ',value1: false}] }"
                     selectedKey="{path:'oModelView>/addComplaint/ComplaintSubTypeId',type : 'sap.ui.model.type.String',constraints:{minLength:1} }"
                 >
                     <items>

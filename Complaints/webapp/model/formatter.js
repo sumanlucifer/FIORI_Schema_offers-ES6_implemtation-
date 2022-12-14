@@ -210,9 +210,7 @@ sap.ui.define([], function () {
                 }
             }
             return true;
-        },
-        testing: function(mParam1, mParam2, mParam3) {
-            debugger;
         }
+        
     };
 });
