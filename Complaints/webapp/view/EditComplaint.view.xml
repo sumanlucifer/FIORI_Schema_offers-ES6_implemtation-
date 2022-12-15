@@ -45,11 +45,7 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" >
                         <Label text="{i18n>ComplaintDetails}:" />
-                        <VBox items='{ComplaintSubtype}'>
-                                <!-- <Text text="{ComplaintSubtype}"/> -->
-                                <ObjectAttribute text="{ComplaintSubtype}" />
-                            </VBox>
-                        <!-- <ObjectAttribute text="{ComplaintSubtype/ComplaintSubtype}" /> -->
+                                <ObjectAttribute text="{parts: ['ComplaintSubtype', 'oModelControl>/ComplaintSubtype'],formatter:'.formatter.fmtComplaintType'}" />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiSmallMarginBeginEnd" visible="{= ${AssigneUserType} !== 'AGENT' &amp;&amp; ${AssigneUserType} !== null  }">
                         <Label text="{i18n>LblEscalationLevel}:" />

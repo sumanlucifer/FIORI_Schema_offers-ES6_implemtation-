@@ -161,7 +161,10 @@ sap.ui.define(
                             ComplainReopenReasonId: "", ///added by deepanjali
                             ComplainReopenReason: "" ///added by deepanjali
                         },
-                        rBtnVsbl: false
+                        rBtnVsbl: false,
+                        ComplaintType : "ComplaintType",
+                        ComplaintSubtype: "ComplaintSubtype",
+                        ProbingSteps: ""
                         // ComplainReopenReasonId: null ///added by deepanjali
                     };
                     /* Fields required for Post with PainterComplainProducts array index 0

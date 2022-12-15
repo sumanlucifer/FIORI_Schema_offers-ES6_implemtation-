@@ -8,16 +8,19 @@
             <Label text="{i18n>ComplaintType}" />
             <!-- <Text text="{ComplaintType/ComplaintType}" />
              -->
-             <VBox items='{ComplaintType}'>
+             <!-- <VBox items='{ComplaintType}'>
                                 <Text text="{ComplaintType}"/>
-                            </VBox>
-                            
+                            </VBox> -->
+            <Text text="{parts: ['ComplaintType', 'oModelControl>/ComplaintType'],formatter:'.formatter.fmtComplaintType'}"/>
+                   
                             
             <Label text="{i18n>ComplaintDetails}" />
             <!-- <Text text="{ComplaintSubtype/ComplaintSubtype}" /> -->
-            <VBox items='{ComplaintSubtype}'>
+            <!-- <VBox items='{ComplaintSubtype}'>
                                 <Text text="{ComplaintSubtype}"/>
-                            </VBox>
+                            </VBox> -->
+            <Text text="{parts: ['ComplaintSubtype', 'oModelControl>/ComplaintSubtype'], formatter: '.formatter.fmtComplaintType'}"/>
+
             <Label text="{i18n>ComplainDescription}" visible="{= ${oModelView>/ComplaintSubtypeId} === 99}"  />
             <Text text="{ComplaintDescription}" visible="{= ${oModelView>/ComplaintSubtypeId} === 99}"   />
 
@@ -40,7 +43,7 @@
             </VBox>
 
             <Label text="{i18n>ProbingSteps}"/>
-            	<FormattedText  id="FormattedText" htmlText="{ path:'ProbingSteps' ,formatter:'.fmtProbingSteps' }"/>
+            <FormattedText  id="FormattedText" htmlText="{oModelControl>/ProbingSteps}"/>
 
             <core:Title text="{i18n>PainterDetails}" />
             <Label text="{i18n>PainterName}" />

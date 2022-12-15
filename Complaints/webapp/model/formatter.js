@@ -40,12 +40,12 @@ sap.ui.define([], function () {
         REFERENCED_SUBFLOW_FAILED: "sap-icon://process"
     }
     return {
-		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
+        /**
+         * Rounds the number unit value to 2 digits
+         * @public
+         * @param {string} sValue the number string to be rounded
+         * @returns {string} sValue with 2 digits rounded
+         */
         numberUnit: function (sValue) {
             if (!sValue) {
                 return "";
@@ -152,7 +152,7 @@ sap.ui.define([], function () {
         fmtVisibleFunction: function (m1, m2, m3) {
             // m1 = approvalstatus
             // m2 = complianstatus
-            if(m3 === 39) {
+            if (m3 === 39) {
                 return false;
             }
             if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {
@@ -177,12 +177,12 @@ sap.ui.define([], function () {
             //     return true
             // }
             if (mParam3) {
-                if(mParam3.hasOwnProperty("results")){
+                if (mParam3.hasOwnProperty("results")) {
                     if (mParam3["results"].length > 0) {
                         for (var x of mParam3["results"]) {
                             if (x["ZoneId"] == mParam1) {
                                 return true;
-    
+
                             }
                         }
                         return false;
@@ -197,12 +197,12 @@ sap.ui.define([], function () {
             //     return true
             // }
             if (mParam3) {
-                if(mParam3.hasOwnProperty("results")){
+                if (mParam3.hasOwnProperty("results")) {
                     if (mParam3["results"].length > 0) {
                         for (var x of mParam3["results"]) {
                             if (x["DivisionId"] == mParam1) {
                                 return true;
-    
+
                             }
                         }
                         return false;
@@ -211,18 +211,21 @@ sap.ui.define([], function () {
             }
             return true;
         },
-        
-        //Formatting complaint type and complaint sub type according to English language
-        fmtComplaintType: function(cType, type) {
-            var oModel = this.getView().getModel();
-            for (var i of cType) {
-                if(oModel.getProperty("/"+i).LanguageCode === 'EN')
-                {
-                    return oModel.getProperty("/"+i)[type];
-                }
 
+        //Formatting complaint type and complaint sub type according to English language
+        fmtComplaintType: function (cType, type) {
+            var oModel = this.getView().getModel();
+            if (cType) {
+                for (var i of cType) {
+                    if (oModel.getProperty("/" + i).LanguageCode === 'EN') {
+                        if(type === "ComplaintSubtype")
+                            var sProbingSteps = oModel.getProperty("/" + i).ProbingSteps;
+                            this.getView().getModel("oModelControl").setProperty("/ProbingSteps", sProbingSteps ? sProbingSteps : "NA");
+                        return oModel.getProperty("/" + i)[type];
+                    }
+
+                }
             }
         }
-        
     };
 });
