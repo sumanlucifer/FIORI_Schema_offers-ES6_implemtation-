@@ -53,8 +53,10 @@ sap.ui.define(
                             DivisionId: "",
                             DepotId: "",
                             Escalate: "",
-                            ApprovalStatus: ""
+                            ApprovalStatus: "",
                         },
+                        ComplaintType : "ComplaintType",
+                        ComplaintSubtype: "ComplaintSubtype",
                         languageCode: 'EN'
                     };
                     var oMdlCtrl = new JSONModel(oDataControl);
@@ -651,7 +653,7 @@ sap.ui.define(
                             this.getResourceBundle().getText("worklistNoDataWithSearchText")
                         );
                     }
-                },
+                }
             }
         );
     }

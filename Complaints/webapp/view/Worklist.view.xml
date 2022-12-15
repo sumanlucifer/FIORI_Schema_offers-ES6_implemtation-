@@ -21,7 +21,7 @@
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="ComplaintDetails" label="{i18n>ComplaintDetails}" visibleInFilterBar="true" class="searchFieldLabelHidden">
                                 <fb:control>
-                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ComplaintTypeId}!== '' }" id="idFileSubType"  placeholder="{i18n>Enter} {i18n>ComplaintDetails}" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}] }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
+                                    <ComboBox enabled="{= ${oModelControl>/filterBar/ComplaintTypeId}!== '' }" id="idFileSubType"  placeholder="{i18n>Enter} {i18n>ComplaintDetails}" items="{path:'/MasterComplaintSubtypeSet',sorter:{path:'ComplaintSubtype'},filters: [{path: 'LanguageCode',operator: 'EQ',value1: 'EN'}, {path: 'IsArchived',operator: 'EQ',value1: false}] }" selectedKey="{oModelControl>/filterBar/ComplaintSubTypeId}">
                                         <core:Item text="{ComplaintSubtype}" key="{Id}"/>
                                     </ComboBox>
                                 </fb:control>
@@ -92,7 +92,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table" growing="true" growingThreshold="20" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'Id',descending:true}, filters:[{path:'ComplaintSubtypeCode',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype', select:'Id,ComplaintTypeCode,ComplaintSubtypeCode,ParentComplaintId,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype,CreatedAt,ComplaintStatus' }}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
+            <Table id="table" growing="true" growingThreshold="20" updateFinished="onUpdateFinished" width="auto" items="{path: '/PainterComplainsSet',sorter:{path:'Id',descending:true}, filters:[{path:'ComplaintSubtypeCode',operator:'NE',value1:1},{path:'IsArchived',operator:'EQ',value1:false}] , parameters:{expand:'ComplaintType,Painter,ComplaintSubtype', select:'Id,ComplaintTypeCode,ComplaintSubtypeCode,ParentComplaintId,Painter/Name,Painter/Mobile,Painter/MembershipCard,ComplaintCode,ComplaintType/ComplaintType,ComplaintSubtype/ComplaintSubtype, CreatedAt,ComplaintStatus'}}" noDataText="{i18n>tableNoDataText}" growingScrollToLoad="false">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="{worklistView>/worklistTableTitle}"/>
@@ -135,13 +135,8 @@
                             <Text text="{Painter/MembershipCard}"/>
                             <Text text="{Painter/Mobile}"/>
                             <Text text="{ComplaintCode}"/>
-                            <!--Complaint Type and Complaint Sub Type shows an array-->
-                            <VBox items='{ComplaintType}'>
-                                <Text text="{ComplaintType}"/>
-                            </VBox>
-                            <VBox items='{ComplaintSubtype}'>
-                                <Text text="{ComplaintSubtype}"/>
-                            </VBox>
+                            <Text text="{parts: ['ComplaintType', 'oModelControl>/ComplaintType'],formatter:'.formatter.fmtComplaintType'}"/>
+                            <Text text="{parts: ['ComplaintSubtype', 'oModelControl>/ComplaintSubtype'], formatter: '.formatter.fmtComplaintType'}"/>
                             <Text text="{path:'CreatedAt',formatter:'.fmtDate'}"/>
                             <ObjectStatus text="{parts:['ComplaintStatus','ParentComplaintId'],formatter:'.fmtStatusHeader'}" state="{= ${ComplaintStatus} === 'RESOLVED' || ${ComplaintStatus} === 'WITHDRAWN'  ? 'Success' : 'Error' }"/>
                         </cells>

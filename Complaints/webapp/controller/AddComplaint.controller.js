@@ -913,7 +913,7 @@ sap.ui.define(
                 _showFormFragment: function (sFragmentName) {
                     var objSection = this.getView().byId("oVbxSmtTbl");
                     var oView = this.getView();
-                    objSection.destroyItems();
+                    // objSection.destroyItems();
                     var othat = this;
                     this._getFormFragment(sFragmentName).then(function (oVBox) {
                         oView.addDependent(oVBox);
@@ -925,15 +925,15 @@ sap.ui.define(
                 _getFormFragment: function (sFragmentName) {
                     var oView = this.getView();
                     var othat = this;
-                    // if (!this._formFragments) {
-                    this._formFragments = Fragment.load({
-                        id: oView.getId(),
-                        name: "com.knpl.pragati.Complaints.view.fragments." + sFragmentName,
-                        controller: othat,
-                    }).then(function (oFragament) {
-                        return oFragament;
-                    });
-                    // }
+                    if (!this._formFragments) {
+                        this._formFragments = Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.Complaints.view.fragments." + sFragmentName,
+                            controller: othat,
+                        }).then(function (oFragament) {
+                            return oFragament;
+                        });
+                    }
 
                     return this._formFragments;
                 },
