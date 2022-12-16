@@ -90,6 +90,8 @@ sap.ui.define(
                     // added by deepanjali start
                     LanguageCode: "",
                     offerTypeVisibility: true,
+                    IsVisibleSlabCreation:true,
+                    ApbleProductsTargetVisible: false,
                     // languageDDVisible: true,
                     // added by deepanjali end
                     EndDate: "",
@@ -239,8 +241,8 @@ sap.ui.define(
                         Table11: [],
                         Table12: [],
                         // added by deepanjali for slab creation condition start //
-                        TableSlab:[]
-                          // added by deepanjali for slab creation condition end //
+                        TableSlab: []
+                        // added by deepanjali for slab creation condition end //
                         // added by deepanjali end // 
 
                     },
@@ -322,11 +324,10 @@ sap.ui.define(
                     StartDate: null,
                     // added by deepanjali start
                     LanguageCode: "",
-
-
                     // added by deepanjali end
                     EndDate: null,
                     IsSpecificZone: false,
+                
                     IsSpecificDivision: false,
                     IsSpecificDepot: false,
                     IsSpecificApplicableProductCategory: false,

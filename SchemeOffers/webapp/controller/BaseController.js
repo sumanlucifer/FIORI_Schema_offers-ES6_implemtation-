@@ -463,14 +463,42 @@ sap.ui.define(
             },
             onOfferTypeChanged: function (oEvent) {
                 var oView = this.getView();
+
+
+                var oModelControl = oView.getModel("oModelControl");
+
                 var oSource = oEvent.getSource().getSelectedItem();
                 var sKey = oEvent.getSource().getSelectedKey();
                 // added by deepanjali start
-                // if (sKey !== "7")
-                // this.getView().getModel("oModelControl").setProperty("/Table/Table2", []);
+                if (sKey === "2") {
+
+                    oModelControl.setProperty("/ApplicableProductsVisible", false);
+                    oModelControl.setProperty("/ApbleProductsTargetVisible", true);
+                    oModelControl.setProperty("/IsVisibleSlabCreation", false);
+                    oView.byId("OptionalInfoStep").setTitle("");
+                    oView.byId("ContributionCndtn").setTitle("");
+                    oView.byId("wzdStep4").setTitle("");
+                    oView.byId("wzdStep5").setTitle("");
+
+
+
+                }
+                else {
+                    oModelControl.setProperty("/ApplicableProductsVisible", true);
+                    oModelControl.setProperty("/ApbleProductsTargetVisible", false);
+                    oModelControl.setProperty("/IsVisibleSlabCreation", true);
+
+                    oView.byId("OptionalInfoStep").setTitle("Slab Creation");
+                    oView.byId("ContributionCndtn").setTitle("Contribution Condition");
+                    oView.byId("wzdStep4").setTitle("Applicable Painters");
+                    oView.byId("wzdStep5").setTitle("Bonus Reward");
+
+
+
+                }
                 // added by deepanjali end
                 var object = oSource.getBindingContext().getObject();
-                var oModelControl = oView.getModel("oModelControl");
+                // var oModelControl = oView.getModel("oModelControl");
                 oModelControl.setProperty("/OfferType", object);
                 this._OfferTypeFieldsSet();
                 this._OfferTypeFieldSet2(sKey);
@@ -2465,6 +2493,8 @@ sap.ui.define(
                             };
                         });
                     }
+                    oModelControl.setProperty("/AppPacksValueState", "None");
+                    oModelControl.setProperty("/AppPacksValueStateText", "");
                     oModelControl.setProperty("/Table/Table2", packCode);
                 }
                 else if (sKey == 1) {
@@ -2485,6 +2515,8 @@ sap.ui.define(
                             };
                         });
                     }
+                    oModelControl.setProperty("/AppPacksValueState", "None");
+                    oModelControl.setProperty("/AppPacksValueStateText", "");
                     oModelControl.setProperty("/Table/Table2", ProdpackCode);
                 }
                 // added by deepanjali end 
@@ -3364,12 +3396,47 @@ sap.ui.define(
                         controller: this,
                     }).then(
                         function (oValueHelpDialog) {
+
+                            // oValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
+
+ 
+
+                            //     if (oEvent.key === "Escape") {
+                
+                 
+                
+                            //         oEvent.stopPropagation();
+                
+                 
+                
+                            //         oEvent.preventDefault();
+                            //     }
+                            // });
+
+
+
+
                             this._PackValueHelpDialog = oValueHelpDialog;
                             this.getView().addDependent(this._PackValueHelpDialog);
                             this._OpenPackValueHelp(sParam1);
                         }.bind(this)
                     );
                 } else {
+
+                    // this._PackValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
+
+ 
+                    //     if (oEvent.key === "Escape") {
+        
+         
+        
+                    //         oEvent.stopPropagation();
+        
+         
+        
+                    //         oEvent.preventDefault();
+                    //     }
+                    // });
                     this._OpenPackValueHelp(sParam1);
                 }
             },
@@ -3476,6 +3543,23 @@ sap.ui.define(
                 }
             },
             _handlePackValueHelpConfirm: function (oEvent) {
+
+
+
+                // this._PackValueHelpDialog._dialog.attachBrowserEvent("click", function(oEvent) {
+
+ 
+                //     if (oEvent) {
+    
+     
+    
+                //         oEvent.stopPropagation();
+    
+     
+    
+                //         oEvent.preventDefault();
+                //     }
+                // });
                 var oSelected = oEvent.getParameter("selectedContexts");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3553,22 +3637,32 @@ sap.ui.define(
                         );
                     };
                     if (compareTwoArrayOfObjects(aExistingSlab, aProds) === false) {
-                        MessageToast.show(
-                            "Please select all packs for specific products."
-                        )
+                        // MessageToast.show(
+                        //     "Please select all packs for specific products."
+                        // )
+                        oModel.setProperty("/AppPacksValueState", "Error");
+                        oModel.setProperty("/AppPacksValueStateText", "Please select all packs for specific products.");
+
+
+                        oModel.setProperty("/MultiCombo/AppPacks1", []);
+                        return false;
+
                     }
+
                     else {
+                        oModel.setProperty("/AppPacksValueState", "None");
+                        oModel.setProperty("/AppPacksValueStateText", "");
                         oModel.setProperty("/Table/Table2", packItemModel);
                     }
                 }
                 // added by deepanjali for pack column in slab creation end
-                this._handleProdValueHelpClose();
+                // this._handleProdValueHelpClose();
                 if (aNumber == "1") {
                     this._CheckCondContriTable();
                 } else if (aNumber == "4") {
                     this._CreateBonusRewardTable();
                 }
-                this._handleProdValueHelpClose();
+                // this._handleProdValueHelpClose();
             },
             onProdTokenUpdate: function (oEvent) {
                 if (oEvent.getParameter("type") === "removed") {

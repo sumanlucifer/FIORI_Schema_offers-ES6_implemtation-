@@ -109,7 +109,7 @@
                     </f:formElements>
                 </f:FormContainer> -->
             <!-- added by deepanali for Targeted Offer start -->
-            <f:FormContainer title="{i18n>RedemtionCycle}" visible="{= ${oModelView>/OfferTypeId}===1 || ${oModelView>/OfferTypeId}===2}">
+            <f:FormContainer title="{i18n>RedemtionCycle}" visible="{= ${oModelView>/OfferTypeId}===1 || ${oModelView>/OfferTypeId}===2 || ${oModelView>/OfferTypeId}===7}">
                 <!-- <f:FormContainer title="{i18n>RedemtionCycle}" visible="{= ${oModelView>/OfferTypeId}===1}"> -->
                 <!-- added by deepanali for Targeted Offer end -->
 
