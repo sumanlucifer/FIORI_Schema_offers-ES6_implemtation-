@@ -15,7 +15,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{ComplaintType/ComplaintType}" />
+                    <Title text="{parts: ['ComplaintType', 'oModelControl>/ComplaintType'],formatter:'.formatter.fmtComplaintType'}" />
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs currentLocationText="{i18n>UpdateComplaints}">
@@ -29,7 +29,7 @@
                     <Label text="{ComplaintCode}" />
                 </f:snappedContent>
                 <f:snappedTitleOnMobile>
-                    <Title text="{ComplaintType/ComplaintType}" />
+                    <Title text="{parts: ['ComplaintType', 'oModelControl>/ComplaintType'],formatter:'.formatter.fmtComplaintType'}" />
                 </f:snappedTitleOnMobile>
                 <f:actions>
                     <Button press="onPressOpenTokenDialog" type="Emphasized" text="{i18n>btnValidateToken}" />
@@ -99,7 +99,7 @@
                 <Button
                     press="handleSavePress"
                     visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ApprovalStatus} === null   }"
-                    text="{=  ${oModelView>/ResolutionType} === 16 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }"
+                    text="{=  ${oModelView>/ResolutionType} === 2 || ${oModelView>/ResolutionType} === 16 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }"
                     type="Emphasized"
                 />
 

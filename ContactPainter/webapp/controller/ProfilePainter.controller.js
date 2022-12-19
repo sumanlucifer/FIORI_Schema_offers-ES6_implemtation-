@@ -852,7 +852,7 @@ sap.ui.define(
                             expand: 'ComplaintType,Painter,ComplaintSubtype',
                         },
                         templateShareable: true,
-                        filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.NE, 1)],
+                        filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeCode", FilterOperator.NE, 1)],
                         sorter: new Sorter("CreatedAt", true)
                     })
                 } else if (sId.match("condomationSection")) {

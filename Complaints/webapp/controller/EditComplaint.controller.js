@@ -370,7 +370,7 @@ sap.ui.define(
                             success: function (data) {
 
                                 //Modding Product data for UI, Should have been a object from backend
-                                if (data.PainterComplainProducts.results.length > 0 ) {
+                                if (data.PainterComplainProducts.results.length > 0 && data.ResolutionId === 39 ) {
                                     // data.PainterComplainProducts = data.PainterComplainProducts.results[0]
                                     // oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
                                     // oView.byId("idProduct").getBinding("items").filter([new Filter("ProductCategory/Id", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.CategoryCode)]);
@@ -384,11 +384,24 @@ sap.ui.define(
                                         i.ProductNum = productNum++;
                                     }
                                 } 
-                                // Changing product status to approved
-                                 else {
+                                 else if(data.ResolutionType === 2) {
+                                    data.PainterComplainProducts = data.PainterComplainProducts.results[0]
+                                    oView.getModel("oModelControl").setProperty("/CategoryCode", data.PainterComplainProducts.ProductPackDetails.CategoryCode);
+                                    oView.byId("idProduct").getBinding("items").filter([new Filter("ProductCategory/Id", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.CategoryCode)]);
+                                    oView.getModel("oModelControl").setProperty("/ProductCode", data.PainterComplainProducts.ProductPackDetails.ProductCode);
+                                    oView.byId("idPacks").setSelectedKey("");
+                                    oView.byId("idPacks").getBinding("items").filter(new Filter("ProductCode", FilterOperator.EQ, data.PainterComplainProducts.ProductPackDetails.ProductCode));
+
                                     data.PainterComplainProducts = {
                                         PainterId: data.PainterId,
-                                        Points: "",
+                                        Points: data.PainterComplainProducts.Points,
+                                        ProductQuantity: data.PainterComplainProducts.ProductQuantity,
+                                        ProductSKUCode: data.PainterComplainProducts.ProductSKUCode
+                                    };
+                                } else {
+                                    data.PainterComplainProducts = {
+                                        PainterId: data.PainterId,
+                                        Points: 0,
                                         ProductQuantity: "",
                                         ProductSKUCode: ""
                                     };
@@ -505,11 +518,11 @@ sap.ui.define(
                     var oModelControl = this.getModel("oModelControl"),
                         oModelView = this.getModel("oModelView");
                     //Reset data fields
-                    oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
-                    oModelView.setProperty("/PainterComplainProducts/Points", "");
-                    oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
-                    oModelView.setProperty("/TokenCode", "");
-                    oModelView.setProperty("/RewardPoints", "");
+                    // oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
+                    // oModelView.setProperty("/PainterComplainProducts/Points", "");
+                    // oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
+                    // oModelView.setProperty("/TokenCode", "");
+                    // oModelView.setProperty("/RewardPoints", "");
                     //if arguments not passed then return without filtering
                     if (!sCtrlId)
                         return;
@@ -858,14 +871,14 @@ sap.ui.define(
                         return;
                     }
 
-                    if(sBtnText === 'Resolve') {
-                        var aRewardDetails = oModelView.getProperty('/PainterComplainProducts/results');
+                    var aRewardDetails = oModelView.getProperty('/PainterComplainProducts/results');
+                    if(sBtnText === 'Resolve' && aRewardDetails) {
                         for(let item of aRewardDetails) {
                             item.Status = 'APPROVED';
                         }
                     }
                     //Sending for approval message
-                    if (oModelView.getProperty("/ResolutionType") == 16 && this.getModel("appView").getProperty("/iUserLevel") < 2) {
+                    if ((oModelView.getProperty("/ResolutionType") == 16 || oModelView.getProperty("/ResolutionType") == 2) && this.getModel("appView").getProperty("/iUserLevel") < 2) {
                         var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
                         MessageBox.confirm(
                             this.getResourceBundle().getText("MSG_APPROVAL_CONFIRMATION", [oModelView.getProperty("/ComplaintCode")]), {
@@ -886,7 +899,7 @@ sap.ui.define(
                     var oModel = this.getView().getModel("oModelView"),
                         //For Roles
                         appViewModel = this.getView().getModel("appView");
-                    if (oModel.getProperty("/ResolutionType") == 16) {
+                    if (oModel.getProperty("/ResolutionType") == 16 || oModel.getProperty("/ResolutionType") == 2) {
                         oModel.setProperty("/ComplaintStatus",
                             appViewModel.getProperty("/iUserLevel") > 1 ? "RESOLVED" : "INREVIEW");
                         oModel.setProperty("/ApprovalStatus",
@@ -904,7 +917,7 @@ sap.ui.define(
                     var sPath = oView.getElementBinding().getPath();
                     var oViewData = oView.getModel("oModelView").getData();
 
-                    if(oViewData.PainterComplainProducts.results.length > 0) {
+                    if(oViewData.PainterComplainProducts.results && oViewData.PainterComplainProducts.results.length > 0) {
                         for(let i = 0; i < oViewData.PainterComplainProducts.results.length; i++) {
                                 delete oViewData.PainterComplainProducts.results[i].ProductNum
                             }
@@ -942,11 +955,11 @@ sap.ui.define(
                     }
                     data.ResolutionId = !!(data.ResolutionId) ? +data.ResolutionId : data.ResolutionId;
                     //mod Products data into array format
-                    // if (data.ResolutionType == 2) {
-                    //     data.PainterComplainProducts.Points = +data.PainterComplainProducts.Points;
-                    //     data.PainterComplainProducts.ProductQuantity = +data.PainterComplainProducts.ProductQuantity;
-                    // }
-                    data.PainterComplainProducts = data.ResolutionType == 16 ? data.PainterComplainProducts : [];
+                    if (data.ResolutionType == 2) {
+                        data.PainterComplainProducts.Points = Number(data.PainterComplainProducts.Points);
+                        data.PainterComplainProducts.ProductQuantity = Number(data.PainterComplainProducts.ProductQuantity);
+                    }
+                    data.PainterComplainProducts = data.ResolutionType == 16 ? data.PainterComplainProducts : data.ResolutionType == 2 ? [data.PainterComplainProducts] : [];
                     //Parse RewardPoints
                     data.RewardPoints = !!(data.RewardPoints) ? +data.RewardPoints : null;
                 },
