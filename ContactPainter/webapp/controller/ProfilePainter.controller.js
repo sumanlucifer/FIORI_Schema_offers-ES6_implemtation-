@@ -4058,7 +4058,7 @@ sap.ui.define(
                     "/PainterId"
                 );
                 var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.parameters["expand"] = "ProductDetails,Offer";
+                oBindingParams.parameters["expand"] = "ProductDetails,Offer,ComplaintProductDetails";
                 var oFinancialYear = this._getfinanceYear(),
                     aFilters = [],
                     //check if CreatedAt is Passed in filter or Not

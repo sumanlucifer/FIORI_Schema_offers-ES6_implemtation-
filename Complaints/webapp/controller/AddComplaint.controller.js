@@ -393,7 +393,6 @@ sap.ui.define(
                     var productNumber = 1;
                     for (let i of oRewardPoint) {
                         i.ProductNum = productNumber++;
-
                     }
 
                     oModel.setProperty("/addRewardPoint", oRewardPoint);
