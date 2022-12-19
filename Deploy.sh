@@ -7,7 +7,7 @@ case $1 in
 
   U)
     SPACE="UAT"
-    VER=mta_archives/knpl-influencer-web_1.0.0.mtar
+    VER=mta_archives/knpl-influencer-web_1.0.1.mtar
     ;;
 
   *)
