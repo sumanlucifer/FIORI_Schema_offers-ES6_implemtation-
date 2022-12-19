@@ -975,12 +975,13 @@ sap.ui.define(
                 onApproval: function (bAccept) {
                     var oModelView = this.getModel("oModelView"),
                         bRBtnVsbl = this.getModel("oModelControl").getProperty("/rBtnVsbl"),
-                        validation = this._minValidation(oModelView.getData());
+                        validation = this._minValidation(oModelView.getData()),
+                        ResolutionType = oModelView.getProperty("/ResolutionType");
                     if (validation.length > 0 ) {
                         MessageToast.show(validation);
                         return;
                     }
-                    if(bRBtnVsbl === false) {
+                    if(bRBtnVsbl === false && ResolutionType === 16) {
                         this._updateProductStatus(bAccept);
                     }
                     oModelView.setProperty("/ApprovalStatus", bAccept ? "APPROVED" : "REJECTED");

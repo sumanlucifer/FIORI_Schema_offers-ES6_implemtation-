@@ -78,7 +78,7 @@ sap.ui.define(
                     var sId = oEvent.getParameter("arguments").Id;
                     this._initData("add", "", sId);
                 },
-                
+
                 _GetServiceData: function () { },
                 _initData: function (mParMode, mKey, mPainterId) {
                     var oViewModel = new JSONModel({
@@ -352,7 +352,7 @@ sap.ui.define(
                     var othat = this;
                     var oData = this.getView().getModel();
                     //
-                    if(oPayLoad.ComplaintTypeId === 7) {
+                    if (oPayLoad.ComplaintTypeId === 7) {
                         oPayLoad.ComplaintSubTypeId = 23;
                         oPayLoad.ComplaintSubtypeCode = 16;
                     }
@@ -389,11 +389,18 @@ sap.ui.define(
                     }
 
                     oRewardPoint.splice(iIndex, 1);
+
+                    var productNumber = 1;
+                    for (let i of oRewardPoint) {
+                        i.ProductNum = productNumber++;
+
+                    }
+
                     oModel.setProperty("/addRewardPoint", oRewardPoint);
                     if (oRewardPoint.length === 1) {
                         this.getView().getModel('oModelControl').setProperty('/dBtn', false);
                     }
-                    this.productNumber = this.productNumber - 1;
+                    // this.productNumber = this.productNumber - 1;
                 },
 
                 _postCreateData: function (oPayLoad) {
@@ -542,10 +549,10 @@ sap.ui.define(
                         oCmbxSubType.getBinding("items").filter(oFilter);
                     }
 
-                    if(sKey === "7") {
+                    if (sKey === "7") {
                         oModelControl.setProperty("/resolutionDetail", true);
                         this._getResolutionType();
-                    }  else {
+                    } else {
                         oModelControl.setProperty("/resolutionDetail", false);
                     }
 
@@ -647,7 +654,7 @@ sap.ui.define(
                     oViewModel.setProperty("/addComplaint/ComplaintSubtypeCode", sComplainSubTypeCode);
                     oViewModel.setProperty("/addComplaint/ComplaintDescription", "");
 
-                    
+
                 },
                 onSenarioChange: function (oEvent) {
                     var sKey = oEvent.getSource().getSelectedKey();
