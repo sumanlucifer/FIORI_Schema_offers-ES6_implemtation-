@@ -624,7 +624,7 @@ sap.ui.define([
             if (cType) {
                 for (var i of cType) {
                     if (oModel.getProperty("/" + i).LanguageCode === 'EN') {
-q                        return oModel.getProperty("/" + i)[type];
+                        return oModel.getProperty("/" + i)[type];
                     }
 
                 }
