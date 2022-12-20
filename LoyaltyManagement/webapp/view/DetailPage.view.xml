@@ -87,9 +87,10 @@
                                         <Text class="sapUiTinyMarginTop" text="{RewardPoints}" />
                                     </form:fields>
                                 </form:FormElement>
-                                <form:FormElement label="Product Details" visible="{= ${ProductDetails}!==null}">
+                                <form:FormElement label="Product Details" visible="{= ${ComplaintProductDetails}!==null}">
                                     <form:fields >
-                                        <Text class="sapUiTinyMarginTop" text="{ProductDetails/ProductDetails}" />
+                                        <Text class="sapUiTinyMarginTop" text="{= ${ComplaintProductDetails/ProductDetails}}" />
+
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement label="Offer Title" visible="{= ${Offer}!== null}">
