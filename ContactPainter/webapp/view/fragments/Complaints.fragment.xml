@@ -44,8 +44,8 @@
                         <Text text="{Painter/MembershipCard}" />
                         <Text text="{Painter/Mobile}" /> -->
                         <Text text="{ComplaintCode}" />
-                        <Text text="{ComplaintType/ComplaintType}" />
-                        <Text text="{ComplaintSubtype/ComplaintSubtype}" />
+                        <Text text="{parts: ['ComplaintType', 'oModelControl2>/ComplaintType'],formatter:'.formatter.fmtComplaintType'}"/>
+                        <Text text="{parts: ['ComplaintSubtype', 'oModelControl2>/ComplaintSubtype'], formatter: '.formatter.fmtComplaintType'}"/>
                         <Text text="{path:'CreatedAt',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}" />
                         <ObjectStatus text="{path:'ComplaintStatus',formatter:'.fmtLowerCase'}" />
                     </cells>

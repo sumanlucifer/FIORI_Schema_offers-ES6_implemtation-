@@ -187,7 +187,9 @@ sap.ui.define(
                     RejectionReasonTypeId: "",
                     kycId: "",
                     // added by deepanjali end
-                    resourcePath: "com.knpl.pragati.ContactPainter"
+                    resourcePath: "com.knpl.pragati.ContactPainter",
+                    ComplaintType : "ComplaintType",
+                    ComplaintSubtype: "ComplaintSubtype"
                 };
                 var oView = this.getView();
                 var oModel = new JSONModel(oData);
