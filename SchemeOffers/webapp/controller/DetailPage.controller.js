@@ -1889,7 +1889,7 @@ sap.ui.define(
             //     return [true, ""]
             // },
             _postDataToSave: function (bFileFlag) {
-                debugger;
+                ;
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c5B, c6, c7, c8;
                 var othat = this;
                 c1 = othat._CreatePayloadPart1();
@@ -1941,7 +1941,7 @@ sap.ui.define(
                 });
             },
             _UpdateOffer: function (oPayLoad) {
-                debugger;
+                ;
                 var promise = jQuery.Deferred();
                 var othat = this;
                 var oView = this.getView();
@@ -2478,7 +2478,7 @@ sap.ui.define(
                 oSrc.data("dataValue", sValue);
             },
             onDetailPageSave: function () {
-                debugger;
+                ;
                 var oView = this.getView();
                 var oValidate = new Validator();
                 var oForm = oView.byId("FormDisplay");
@@ -2504,7 +2504,7 @@ sap.ui.define(
                 //     })
                 // }
                 // console.log(delPainters);
-                //debugger;
+                //;
                 //1. Detail Page End Date Change
                 oViewData["EndDate"] = new Date(
                     oViewData["EndDate"].setHours(23, 59, 59, 999)
@@ -2568,7 +2568,7 @@ sap.ui.define(
                 this._postPublishSave();
             },
             _postPublishSave: function () {
-                debugger;
+                ;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelDisplay");
                 var publishData = oModelView.getData();

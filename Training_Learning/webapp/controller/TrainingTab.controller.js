@@ -2297,7 +2297,7 @@ sap.ui.define(
                 // othat.getView().getModel("oModelView").refresh(true);
                 Promise.all([othat._loadEditTrainingDetail(mode), othat._loadEditQuestion(mode)]).then(function () {
                     //FIX: POP on cancel
-                    // debugger;
+                    // ;
                     // othat.getModel("oModelView").attachPropertyChange("oModelView", othat.onModelPropertyChange, othat);
                 })
             },

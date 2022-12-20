@@ -827,7 +827,7 @@ sap.ui.define([
         },
 
         onActiveInActive: function (oEvent) {
-            debugger;
+            ;
             var sPath = oEvent.getSource().getBindingContext().getPath();
             var data = sPath + "/Status";
             var that = this;

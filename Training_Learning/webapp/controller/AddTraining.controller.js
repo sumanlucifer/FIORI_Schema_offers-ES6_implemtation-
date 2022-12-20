@@ -353,7 +353,7 @@ sap.ui.define(
                 //     var sPath = "/oAddTraining",
                 //         oButton = oEvent.getSource();
 
-                //     debugger;
+                //     ;
                 //     // var iIndex = oEvent.getSource().getBindingContext("oModelView").getPath().match(/\d$/g);
                 //     var Questionnaire = oEvent.getSource().getBindingContext("oModelView").getObject();
                 //     var clientObject = this.convertToClientObject(Questionnaire);

@@ -132,7 +132,7 @@ sap.ui.define(
                                                 }
 
 
-                                                //debugger;
+                                                //;
                                             } // Non Manditory fields remove the value property
                                             else {
                                                 var sPathB = oControlBinding.getPath();

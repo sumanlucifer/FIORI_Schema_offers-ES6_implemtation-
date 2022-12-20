@@ -886,7 +886,7 @@ sap.ui.define([
         },
 
         fmtCheckLanguage: function (mParam1, mParam2) {
-            // debugger;
+            // ;
             for (var x in mParam2) {
                 if (mParam2[x]["LanguageCode"] === mParam1) {
                     return false;
@@ -920,7 +920,7 @@ sap.ui.define([
             this.getModel("oModelView").refresh();
 
             // for hide add translation button
-            debugger;
+            ;
             this.getModel("oModelView").setProperty("/matched", true);
             var masterLanguageLength = this.getModel("appView").getProperty("/masterLanguageLength");
             if (masterLanguageLength === clientObject.length) {

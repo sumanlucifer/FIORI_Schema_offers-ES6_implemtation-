@@ -2298,7 +2298,7 @@ sap.ui.define(
                 }
             },
             onRbBankStatus: function (oEvent) {
-                debugger;
+                ;
                 /*Deepanjali changes start*/
                 // this.StatusTxt = oEvent.getSource().getProperty('text');
                 var oView = this.getView();
