@@ -866,7 +866,7 @@ sap.ui.define(
                             expand: 'PainterComplainProducts, PainterComplainProducts/ProductPackDetails, PainterComplainProducts/ProductPackDetails/ProductCategoryDetails',
                         },
                         templateShareable: true,
-                        filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeId", FilterOperator.EQ, 1), new Filter("ApprovalStatus", FilterOperator.EQ, "APPROVED")],
+                        filters: [new Filter("PainterId", FilterOperator.EQ, oPainterId), new Filter("IsArchived", FilterOperator.EQ, false), new Filter("ComplaintSubtypeCode", FilterOperator.EQ, 1), new Filter("ApprovalStatus", FilterOperator.EQ, "APPROVED")],
                         sorter: new Sorter("CreatedAt", true)
                     })
                 } else if (sId.match("tokenSection")) {
