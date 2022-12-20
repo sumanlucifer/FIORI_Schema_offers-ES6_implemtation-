@@ -76,7 +76,7 @@ sap.ui.define([
 			this.oRouter.navTo("detail", {layout: "TwoColumnsMidExpanded", tab: this._tab});
 		},
 		_onItemMatched: function (oEvent) {
-            debugger;
+            ;
             this._fields = window.decodeURIComponent(oEvent.getParameter("arguments").fields);
             this._prop = window.decodeURIComponent(oEvent.getParameter("arguments").prop);
             this._mode = oEvent.getParameter("arguments").mode;

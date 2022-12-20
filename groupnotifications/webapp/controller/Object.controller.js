@@ -688,7 +688,7 @@ sap.ui.define([
         //  * Optional? @param aCustomParam - Custom paramter
         //  */
         // bindTable: function (sTableId, sPath, oTemplate, aFilters, sExpand, sSelect, oSorter, oCustomParam) {
-        // 	// debugger;
+        // 	// ;
         // 	var oBindSettings = {
         // 		path: sPath,
         // 		template: oTemplate.clone(),
@@ -837,7 +837,7 @@ sap.ui.define([
                                     // var update=this._oValueHelpDialog.update();
                                     // update.then(
                                     //     function(){
-                                    //         debugger;
+                                    //         ;
                                     //         this._oValueHelpDialog.setBusy(false)
                                     //     }
 

@@ -712,7 +712,7 @@ sap.ui.define([
                 },
 
                 // onFilterBarSearchPainter: function (oEvent) {
-                //     //   debugger;
+                //     //   ;
                 //     var afilterBar = oEvent.getParameter("selectionSet"),
                 //         aFilters = [];
 

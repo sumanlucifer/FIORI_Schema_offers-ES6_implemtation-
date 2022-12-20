@@ -107,7 +107,7 @@ sap.ui.define([], function () {
         },
         ////////// Category Type//////////
         fmtCmbxCategoryType: function (m1, m2) {
-            debugger;
+            ;
             // m1 = approvalstatus
             // m2 = complianstatus
             if (m2 == "REGISTERED" || m2 == "INREVIEW" || m2 == "REOPEN") {

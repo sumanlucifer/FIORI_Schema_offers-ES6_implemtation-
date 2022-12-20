@@ -274,7 +274,7 @@ sap.ui.define(
             },
 
             onPressSave: function (status) {
-                debugger;
+                ;
                 var bValidateForm = this._ValidateForm();
                 if (bValidateForm) {
                     this._postDataToSave(status);
@@ -318,7 +318,7 @@ sap.ui.define(
                 return new Promise((resolve, reject) => {
                     oDataModel.update("/" + sProp, oPayLoad, {
                         success: function (data) {
-                            debugger;
+                            ;
                             MessageToast.show(othat.geti18nText("Message2"));
                             // oModelDisplay.setProperty("/SiteImageId", data["Id"]);
                             oModelDisplay.setProperty("/PageBusy", false);

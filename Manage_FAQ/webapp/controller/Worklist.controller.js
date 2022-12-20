@@ -210,7 +210,7 @@ sap.ui.define([
             var aCurrentFilterValues = [];
             var oViewFilter = this.getView().getModel("worklistView").getProperty("/filterBar");
             var aFlaEmpty = true;
-            debugger;
+            ;
             for (let prop in oViewFilter) {
                 if (oViewFilter[prop]) {
                     console.log(oViewFilter[prop]);
@@ -305,7 +305,7 @@ sap.ui.define([
         getFiltersfromFB: function () {
             var oFBCtrl = this.getView().byId("filterbar"),
                 aFilters = [];
-            debugger;
+            ;
             oFBCtrl.getAllFilterItems().forEach(function (ele) {
                 if (ele.getControl().getSelectedKey()) {
                     aFilters.push(new Filter(ele.getName(), FilterOperator.EQ, ele.getControl().getSelectedKey()));

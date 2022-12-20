@@ -6307,7 +6307,7 @@ sap.ui.define(
                     // oPayLoad["MaxPercentage"] = Max;
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
                     //console.log(oPayLoad);
-                    //debugger;
+                    //;
 
                 }
                 promise.resolve(oPayLoad);
