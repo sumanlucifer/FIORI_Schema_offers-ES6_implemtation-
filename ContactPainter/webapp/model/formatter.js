@@ -617,6 +617,18 @@ sap.ui.define([
                 }
             }
             return true;
+        },
+        //Formatting complaint type and complaint sub type according to English language
+        fmtComplaintType: function (cType, type) {
+            var oModel = this.getView().getModel();
+            if (cType) {
+                for (var i of cType) {
+                    if (oModel.getProperty("/" + i).LanguageCode === 'EN') {
+q                        return oModel.getProperty("/" + i)[type];
+                    }
+
+                }
+            }
         }
     };
 });
