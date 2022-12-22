@@ -57,7 +57,7 @@
                                     </Column>
                                     <Column hAlign="Begin">
                                         <customData>
-                                            <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintProductDetails/ProductDetails", "leadingProperty": "ComplaintProductDetails", "columnIndex": 5}'/>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "ComplaintProductDetails", "leadingProperty": "ComplaintProductDetails", "columnIndex": 5}'/>
                                         </customData>
                                          <Text text="{i18n>ProductDetails}"/>
                                     </Column>
@@ -76,7 +76,7 @@
                                                <Text text="{path:'TotalPoints'}" />
                                                <Text text="{path:'CreatedAt',type:'sap.ui.model.odata.type.DateTime',formatOptions:{pattern:'dd/MM/yyyy h:mm a'}}"/>
                                                 <Text text="{path:'PointTransactionType', formatter:'.fmtLowerCase'}" />
-                                                <Text text="{= ${ComplaintProductDetails/ProductDetails}=== null ? 'NA' : ${ComplaintProductDetails/ProductDetails} } " />
+                                                <Text text="{= ${ComplaintProductDetails}=== null ? 'NA' : ${ComplaintProductDetails/ProductDetails} } " />
                                                  <Text text="{= ${Offer}=== null ? 'NA' : ${Offer/OfferCode} } " />
                                          </cells>      
                                     </ColumnListItem>
