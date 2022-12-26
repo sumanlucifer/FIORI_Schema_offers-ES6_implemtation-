@@ -134,6 +134,7 @@
                 <core:Title text="{i18n>SecurityQuestions}" />
                 <Label text="{i18n>Question}" />
                 <ComboBox required="true" items="{path:'/MasterSecurityQuestionSet',sorter:{path:'Question'},filters:[{path:'IsArchived',operator:'EQ',value1:false}] }" valueStateText="Enter a valid value" selectedKey="{path:'oModelView>/Preference/SecurityQuestionId',type : 'com.knpl.pragati.ContactPainter.model.customInt' }">
+                
                     <items>
                         <core:Item text="{Question}" key="{Id}" />
                     </items>

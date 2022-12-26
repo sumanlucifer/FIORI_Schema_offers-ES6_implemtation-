@@ -1468,6 +1468,10 @@ sap.ui.define(
                         delete prop["editable"];
                     }
                 }
+
+                //Removing Extra spaces and Special Characters from Full Name
+                oPayload.Name = this._fmtString(oPayload.Name);
+
                 // setting up contact number data
                 var aPainterSecContact = [];
                 var SMobile1 = JSON.parse(

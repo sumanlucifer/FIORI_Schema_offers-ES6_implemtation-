@@ -350,6 +350,7 @@ sap.ui.define(
                     oView.setBusy(true);
                     var oViewModel = oView.getModel("oModelView");
 
+                    
                     var oModelCtrl = oView.getModel("oModelControl");
                     var oPainterData = this._ReturnObjects(
                         oViewModel.getProperty("/PainterDetails")
