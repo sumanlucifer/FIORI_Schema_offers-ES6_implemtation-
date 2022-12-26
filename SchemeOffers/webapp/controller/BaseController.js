@@ -3379,6 +3379,7 @@ sap.ui.define(
                 }
             },
             handlePackValueHelp: function (oEvent) {
+
                 var oView = this.getView();
                 var aPath = oEvent
                     .getSource()
@@ -3399,16 +3400,16 @@ sap.ui.define(
 
                             // oValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
 
- 
+
 
                             //     if (oEvent.key === "Escape") {
-                
-                 
-                
+
+
+
                             //         oEvent.stopPropagation();
-                
-                 
-                
+
+
+
                             //         oEvent.preventDefault();
                             //     }
                             // });
@@ -3425,15 +3426,15 @@ sap.ui.define(
 
                     // this._PackValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
 
- 
+
                     //     if (oEvent.key === "Escape") {
-        
-         
-        
+
+
+
                     //         oEvent.stopPropagation();
-        
-         
-        
+
+
+
                     //         oEvent.preventDefault();
                     //     }
                     // });
@@ -3543,20 +3544,21 @@ sap.ui.define(
                 }
             },
             _handlePackValueHelpConfirm: function (oEvent) {
+                debugger;
 
 
 
                 // this._PackValueHelpDialog._dialog.attachBrowserEvent("click", function(oEvent) {
 
- 
+
                 //     if (oEvent) {
-    
-     
-    
+
+
+
                 //         oEvent.stopPropagation();
-    
-     
-    
+
+
+
                 //         oEvent.preventDefault();
                 //     }
                 // });
@@ -3572,7 +3574,8 @@ sap.ui.define(
                     aProds.push({
                         Name: oBj["Description"],
                         Id: oBj["SkuCode"],
-                        ProductCode: oBj["ProductCode"]
+                        ProductCode: oBj["ProductCode"],
+                        SKUCode: oBj["SkuCode"]
                     });
                 }
                 // Append multi select value with previous select
@@ -4970,10 +4973,14 @@ sap.ui.define(
                 return promise;
             },
             _CreatePayLoadPart4: function (oPayLoad) {
+                debugger;
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-                var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
+                var sSelectedProd = oModel.getProperty("/Rbtn/AppProd1");
+                var sSelectedPack = oModel.getProperty("/Rbtn/AppPacks1");
+                var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
+
                 var aFinalArray = [];
                 //if (bRewardSelected === 0) {
                 var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
@@ -4987,6 +4994,12 @@ sap.ui.define(
                     "RewardCash",
                 ];
                 aFinalArray = oDataTbl.filter(function (ele) {
+
+
+
+
+
+
                     for (var a in aCheckProp) {
                         if (ele[aCheckProp[a]] === "") {
                             ele[aCheckProp[a]] = null;
@@ -5012,10 +5025,42 @@ sap.ui.define(
                             }
                         }
                     }
+
+
+
+
+
+
                     delete ele["editable"];
+                    delete ele["ProductName"];
+                    ele["ProductCode"] = ele["Id"];
+                    ele["RewardRatioType"] = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
+                    // ele["SKUCode"] = (sSelectedProd === 1 && sSelectedPack === 1) ? " " : "";
+                    delete ele["Id"];
                     return ele;
                 });
-                oPayLoad["OfferRewardRatio"] = aFinalArray;
+              
+
+                var aItem = aFinalArray;
+                aItem = aItem.map(function (item) {
+                    return {
+                      
+                        RewardGiftId: item.RewardGiftId,
+                        RewardGiftName: item.RewardGiftName,
+                        RequiredVolume: item.RequiredVolume,
+                        RequiredPoints: item.RequiredPoints,
+                        RewardPoints: item.RewardPoints,
+                        RewardCash: item.RewardCash,
+                        RewardRatioType: 1,
+                        OfferRewardRatioProduct: [
+                            {
+                                ProductCode: item.ProductCode,
+                            }
+                        ]
+                    };
+                });
+                oPayLoad["OfferRewardRatio"] = aItem;
+
                 promise.resolve(oPayLoad);
                 return promise;
                 //}
