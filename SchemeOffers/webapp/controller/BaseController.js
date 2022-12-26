@@ -463,15 +463,11 @@ sap.ui.define(
             },
             onOfferTypeChanged: function (oEvent) {
                 var oView = this.getView();
-
-
                 var oModelControl = oView.getModel("oModelControl");
-
                 var oSource = oEvent.getSource().getSelectedItem();
                 var sKey = oEvent.getSource().getSelectedKey();
                 // added by deepanjali start
                 if (sKey === "2") {
-
                     oModelControl.setProperty("/ApplicableProductsVisible", false);
                     oModelControl.setProperty("/ApbleProductsTargetVisible", true);
                     oModelControl.setProperty("/IsVisibleSlabCreation", false);
@@ -479,22 +475,15 @@ sap.ui.define(
                     oView.byId("ContributionCndtn").setTitle("");
                     oView.byId("wzdStep4").setTitle("");
                     oView.byId("wzdStep5").setTitle("");
-
-
-
                 }
                 else {
                     oModelControl.setProperty("/ApplicableProductsVisible", true);
                     oModelControl.setProperty("/ApbleProductsTargetVisible", false);
                     oModelControl.setProperty("/IsVisibleSlabCreation", true);
-
                     oView.byId("OptionalInfoStep").setTitle("Slab Creation");
                     oView.byId("ContributionCndtn").setTitle("Contribution Condition");
                     oView.byId("wzdStep4").setTitle("Applicable Painters");
                     oView.byId("wzdStep5").setTitle("Bonus Reward");
-
-
-
                 }
                 // added by deepanjali end
                 var object = oSource.getBindingContext().getObject();
@@ -2499,7 +2488,7 @@ sap.ui.define(
                 }
                 else if (sKey == 1) {
                     var sSelectedArray = oModelControl.getProperty("/Table/Table2");
-                    if (sSelectedArray.length > 0) {
+                    // if (sSelectedArray.length > 0) {
                         var ProdpackCode = sSelectedArray.map(function (item) {
                             return {
                                 Id: item.Id,
@@ -2514,7 +2503,7 @@ sap.ui.define(
                                 editable: true
                             };
                         });
-                    }
+                    // }
                     oModelControl.setProperty("/AppPacksValueState", "None");
                     oModelControl.setProperty("/AppPacksValueStateText", "");
                     oModelControl.setProperty("/Table/Table2", ProdpackCode);
@@ -3379,7 +3368,6 @@ sap.ui.define(
                 }
             },
             handlePackValueHelp: function (oEvent) {
-
                 var oView = this.getView();
                 var aPath = oEvent
                     .getSource()
@@ -3397,44 +3385,21 @@ sap.ui.define(
                         controller: this,
                     }).then(
                         function (oValueHelpDialog) {
-
                             // oValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
-
-
-
                             //     if (oEvent.key === "Escape") {
-
-
-
                             //         oEvent.stopPropagation();
-
-
-
                             //         oEvent.preventDefault();
                             //     }
                             // });
-
-
-
-
                             this._PackValueHelpDialog = oValueHelpDialog;
                             this.getView().addDependent(this._PackValueHelpDialog);
                             this._OpenPackValueHelp(sParam1);
                         }.bind(this)
                     );
                 } else {
-
                     // this._PackValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
-
-
                     //     if (oEvent.key === "Escape") {
-
-
-
                     //         oEvent.stopPropagation();
-
-
-
                     //         oEvent.preventDefault();
                     //     }
                     // });
@@ -3544,21 +3509,9 @@ sap.ui.define(
                 }
             },
             _handlePackValueHelpConfirm: function (oEvent) {
-                debugger;
-
-
-
                 // this._PackValueHelpDialog._dialog.attachBrowserEvent("click", function(oEvent) {
-
-
                 //     if (oEvent) {
-
-
-
                 //         oEvent.stopPropagation();
-
-
-
                 //         oEvent.preventDefault();
                 //     }
                 // });
@@ -3609,7 +3562,8 @@ sap.ui.define(
                             RequiredPoints: "",
                             RewardPoints: "",
                             RewardCash: "",
-                            editable: true
+                            SKUCode: (aSelectedPackData.filter(o2 => item.Id === o2.ProductCode).map(ele => ele.SKUCode)).toString(),
+                            editable: true,
                         };
                     });
                     // var packItemModel = aSelectedPackData.map(function (item) {
@@ -3645,13 +3599,9 @@ sap.ui.define(
                         // )
                         oModel.setProperty("/AppPacksValueState", "Error");
                         oModel.setProperty("/AppPacksValueStateText", "Please select all packs for specific products.");
-
-
                         oModel.setProperty("/MultiCombo/AppPacks1", []);
                         return false;
-
                     }
-
                     else {
                         oModel.setProperty("/AppPacksValueState", "None");
                         oModel.setProperty("/AppPacksValueStateText", "");
@@ -3780,6 +3730,7 @@ sap.ui.define(
                 oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
                 oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
                 // added by deepanjali for product slab offer condition Start
+               
                 var sSelectedOfferType = oModel.getData().OfferType.OfferType;
                 if (sSelectedOfferType === 'Product Slab Offer') {
                     var aSelectedProdData = aProds;
@@ -4973,14 +4924,13 @@ sap.ui.define(
                 return promise;
             },
             _CreatePayLoadPart4: function (oPayLoad) {
-                debugger;
+
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 var sSelectedProd = oModel.getProperty("/Rbtn/AppProd1");
                 var sSelectedPack = oModel.getProperty("/Rbtn/AppPacks1");
                 var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
-
                 var aFinalArray = [];
                 //if (bRewardSelected === 0) {
                 var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
@@ -4994,12 +4944,6 @@ sap.ui.define(
                     "RewardCash",
                 ];
                 aFinalArray = oDataTbl.filter(function (ele) {
-
-
-
-
-
-
                     for (var a in aCheckProp) {
                         if (ele[aCheckProp[a]] === "") {
                             ele[aCheckProp[a]] = null;
@@ -5025,42 +4969,40 @@ sap.ui.define(
                             }
                         }
                     }
-
-
-
-
-
-
                     delete ele["editable"];
+                    if()
                     delete ele["ProductName"];
                     ele["ProductCode"] = ele["Id"];
                     ele["RewardRatioType"] = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
-                    // ele["SKUCode"] = (sSelectedProd === 1 && sSelectedPack === 1) ? " " : "";
                     delete ele["Id"];
                     return ele;
                 });
-              
-
+                var sCheck = (sSelectedProd === 1 && sSelectedPack === 1) ? true : false;
                 var aItem = aFinalArray;
                 aItem = aItem.map(function (item) {
+
                     return {
-                      
                         RewardGiftId: item.RewardGiftId,
                         RewardGiftName: item.RewardGiftName,
                         RequiredVolume: item.RequiredVolume,
                         RequiredPoints: item.RequiredPoints,
                         RewardPoints: item.RewardPoints,
                         RewardCash: item.RewardCash,
-                        RewardRatioType: 1,
+                        RewardRatioType: (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1,
                         OfferRewardRatioProduct: [
                             {
                                 ProductCode: item.ProductCode,
                             }
-                        ]
-                    };
+                        ],
+                        // adding below property based on multiplepack specific condition
+                        ...(sCheck && {
+                            OfferRewardRatioPack:
+                                item.SKUCode.split(",").map(function (item) { return { SKUCode: item } })
+                        })
+                    }
                 });
-                oPayLoad["OfferRewardRatio"] = aItem;
 
+                oPayLoad["OfferRewardRatio"] = aItem;
                 promise.resolve(oPayLoad);
                 return promise;
                 //}
