@@ -2489,20 +2489,20 @@ sap.ui.define(
                 else if (sKey == 1) {
                     var sSelectedArray = oModelControl.getProperty("/Table/Table2");
                     // if (sSelectedArray.length > 0) {
-                        var ProdpackCode = sSelectedArray.map(function (item) {
-                            return {
-                                Id: item.Id,
-                                ProductName: item.ProductName,
-                                ProductCode: "",
-                                RewardGiftId: null,
-                                RewardGiftName: "",
-                                RequiredVolume: "",
-                                RequiredPoints: "",
-                                RewardPoints: "",
-                                RewardCash: "",
-                                editable: true
-                            };
-                        });
+                    var ProdpackCode = sSelectedArray.map(function (item) {
+                        return {
+                            Id: item.Id,
+                            ProductName: item.ProductName,
+                            ProductCode: "",
+                            RewardGiftId: null,
+                            RewardGiftName: "",
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            RewardPoints: "",
+                            RewardCash: "",
+                            editable: true
+                        };
+                    });
                     // }
                     oModelControl.setProperty("/AppPacksValueState", "None");
                     oModelControl.setProperty("/AppPacksValueStateText", "");
@@ -3730,7 +3730,7 @@ sap.ui.define(
                 oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
                 oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
                 // added by deepanjali for product slab offer condition Start
-               
+
                 var sSelectedOfferType = oModel.getData().OfferType.OfferType;
                 if (sSelectedOfferType === 'Product Slab Offer') {
                     var aSelectedProdData = aProds;
@@ -4928,6 +4928,8 @@ sap.ui.define(
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
+                var sOfferType = oModel.getData().OfferType.Id;
+
                 var sSelectedProd = oModel.getProperty("/Rbtn/AppProd1");
                 var sSelectedPack = oModel.getProperty("/Rbtn/AppPacks1");
                 var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
@@ -4970,14 +4972,15 @@ sap.ui.define(
                         }
                     }
                     delete ele["editable"];
-                    if()
                     delete ele["ProductName"];
                     ele["ProductCode"] = ele["Id"];
-                    ele["RewardRatioType"] = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
+
                     delete ele["Id"];
                     return ele;
                 });
                 var sCheck = (sSelectedProd === 1 && sSelectedPack === 1) ? true : false;
+                var sProdSlabofferRewrdRatio = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
+                var sRewardRatio = (sOfferType !== 7) ? 0 : sProdSlabofferRewrdRatio;
                 var aItem = aFinalArray;
                 aItem = aItem.map(function (item) {
 
@@ -4988,16 +4991,16 @@ sap.ui.define(
                         RequiredPoints: item.RequiredPoints,
                         RewardPoints: item.RewardPoints,
                         RewardCash: item.RewardCash,
-                        RewardRatioType: (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1,
-                        OfferRewardRatioProduct: [
+                        RewardRatioType: sRewardRatio,
+                        OfferRewardRatioProduct: (sOfferType === 7) ? [
                             {
                                 ProductCode: item.ProductCode,
                             }
-                        ],
+                        ] : [],
                         // adding below property based on multiplepack specific condition
                         ...(sCheck && {
-                            OfferRewardRatioPack:
-                                item.SKUCode.split(",").map(function (item) { return { SKUCode: item } })
+                            OfferRewardRatioPack: (sOfferType === 7) ?
+                                item.SKUCode.split(",").map(function (item) { return { SKUCode: item } }) : []
                         })
                     }
                 });
