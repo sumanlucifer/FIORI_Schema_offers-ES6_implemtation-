@@ -1,12 +1,6 @@
-<mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.AddOfferPage" height="100%"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:layout="sap.ui.layout"
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:form="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
+<mvc:View controllerName="com.knpl.pragati.SchemeOffers.controller.AddOfferPage" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
     <Page id="idAddOfferPage" class="actionPage" showFooter="true" busy="{AddOfferViewModel>/busy}">
-       <headerContent>
+        <headerContent>
             <Bar>
                 <contentLeft>
                     <Breadcrumbs currentLocationText="{i18n>currentBreadcrumbText}">
@@ -17,30 +11,24 @@
         </headerContent>
 
         <content>
-        <layout:VerticalLayout width="100%">
+            <layout:VerticalLayout width="100%">
                 <Toolbar>
                     <Title level="H1" text="{i18n>AddTitle}" />
-                    
                 </Toolbar>
-                 <VBox width="100%" id="oVbxSmtTbl" />
-                 	<!-- <mvc:XMLView
+                <VBox width="100%" id="oVbxSmtTbl" />
+                <!-- <mvc:XMLView
 							id="wizardViewBranching"
 							async="true"
 						
 							viewName="com.knpl.pragati.SchemeOffers.view.fragment.WizardOfferDetails" /> -->
-        </layout:VerticalLayout>
-          
-
-           
-            
-        
+            </layout:VerticalLayout>
         </content>
-           <footer>
+        <footer>
             <OverflowToolbar>
-				<ToolbarSpacer/>
-                <Button text="{i18n>cancelBtnText}" type="Transparent" press="onPressCancel"/>
-                <Button text="{i18n>saveBtnText}" type="Emphasized" press="onPressSave"/>
-			</OverflowToolbar>
+                <ToolbarSpacer />
+                <Button text="{i18n>cancelBtnText}" type="Transparent" press="onPressCancel" />
+                <Button text="{i18n>saveBtnText}" type="Emphasized" press="onPressSave" />
+            </OverflowToolbar>
         </footer>
     </Page>
 </mvc:View>

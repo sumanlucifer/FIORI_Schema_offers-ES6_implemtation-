@@ -14,7 +14,6 @@ sap.ui.define(
         "sap/ui/core/util/Export",
         "sap/ui/core/util/ExportTypeCSV",
         "../model/formatter"
-
     ],
     function (
         Controller,
@@ -87,7 +86,6 @@ sap.ui.define(
                 this._navToHome();
             },
             onFileUploadChange: function (oEvent) {
-
                 //console.log(oEvent);
                 var oFileUploder = oEvent.getSource();
                 if (oEvent.getParameter("newValue")) {
@@ -95,7 +93,6 @@ sap.ui.define(
                 }
             },
             _verifyImages: function (files, oFileUploder) {
-
                 var file = files; //I'm doing just for one element (Iterato over it and do for many)
                 var obj = this; // to get access of the methods inside the other functions
                 var reader = new FileReader();
@@ -142,9 +139,58 @@ sap.ui.define(
                     this.onUploadPainter1();
                 }
             },
+            onFileUploadChangeCSV: function (oEvent) {
+
+                //console.log(oEvent);
+                var oFileUploder = oEvent.getSource();
+                if (oEvent.getParameter("newValue")) {
+                    this.onUploadApplProduct();
+                }
+            },
+            // calling target offer upload csv api
+            onUploadApplProduct: function () {
+
+
+                var that = this;
+                var fU = this.getView().byId("idOfferFileUploaderCSV");
+                // var domRef = fU.getFocusDomRef();
+                // var file = domRef.files[0];
+                var domRef = fU.oFileUpload;
+                var file = domRef.files[0];
+                var oView = that.getView();
+                var dataModel = oView.getModel("oModelControl");
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterTargetPointsSet(0)/$value",
+                    data: file,
+                    method: "PUT",
+                    headers: that.getView().getModel().getHeaders(),
+                    contentType: "text/csv",
+                    processData: false,
+                    statusCode: {
+                        206: function (result) {
+                            that._SuccessPainter(result, 206);
+                        },
+                        200: function (result) {
+                            that._SuccessPainter(result, 200);
+                        },
+                        202: function (result) {
+                            that._SuccessPainter(result, 202);
+                        },
+                        400: function (result) {
+                            that._SuccessPainter(result, 400);
+                        }
+                    },
+                    error: function (error) {
+                        that._Error(error);
+                    }
+                };
+                $.ajax(settings);
+
+            },
             onUploadComplete: function (oEvent) { },
             /// calling upload api///
             onUploadPainter1: function () {
+            
                 var that = this;
                 var fU = this.getView().byId("idOfferFileUploader");
                 // var domRef = fU.getFocusDomRef();
@@ -185,7 +231,6 @@ sap.ui.define(
                 var that = this;
                 var oView = that.getView();
                 var oModelView = oView.getModel("oModelControl");
-
                 oModelView.setProperty("/busy", false);
                 var aPainters = [];
                 if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
@@ -293,18 +338,14 @@ sap.ui.define(
                         mimeType: "application/vnd.ms-excel",
                         charset: "utf-8",
                         fileExtension: "xls",
-
                     }),
                     // Pass in the model created above
                     models: othat.getView().getModel("oModelControl"),
-
                     // binding information for the rows aggregation
                     rows: {
                         path: "/ofragmentModel"
                     },
-
                     // column definitions with column name and binding info for the content
-
                     columns: [{
                         name: "Row",
                         template: {
@@ -332,16 +373,13 @@ sap.ui.define(
                     }
                     ]
                 });
-
                 // download exported file
-
                 oExport.saveFile().catch(function (oError) {
                     MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                 }).then(function () {
                     oExport.destroy();
                 });
             },
-
             onSelectAll: function (oeve) {
                 var isSelected = oeve.getSource().getSelected();
                 var oView = this.getView();
@@ -474,10 +512,31 @@ sap.ui.define(
             },
             onOfferTypeChanged: function (oEvent) {
                 var oView = this.getView();
+                var oModelControl = oView.getModel("oModelControl");
                 var oSource = oEvent.getSource().getSelectedItem();
                 var sKey = oEvent.getSource().getSelectedKey();
+                // added by deepanjali start
+                if (sKey === "2") {
+                    oModelControl.setProperty("/ApplicableProductsVisible", false);
+                    oModelControl.setProperty("/ApbleProductsTargetVisible", true);
+                    oModelControl.setProperty("/IsVisibleSlabCreation", false);
+                    oView.byId("OptionalInfoStep").setTitle("");
+                    oView.byId("ContributionCndtn").setTitle("");
+                    oView.byId("wzdStep4").setTitle("");
+                    oView.byId("wzdStep5").setTitle("");
+                }
+                else {
+                    oModelControl.setProperty("/ApplicableProductsVisible", true);
+                    oModelControl.setProperty("/ApbleProductsTargetVisible", false);
+                    oModelControl.setProperty("/IsVisibleSlabCreation", true);
+                    oView.byId("OptionalInfoStep").setTitle("Slab Creation");
+                    oView.byId("ContributionCndtn").setTitle("Contribution Condition");
+                    oView.byId("wzdStep4").setTitle("Applicable Painters");
+                    oView.byId("wzdStep5").setTitle("Bonus Reward");
+                }
+                // added by deepanjali end
                 var object = oSource.getBindingContext().getObject();
-                var oModelControl = oView.getModel("oModelControl");
+                // var oModelControl = oView.getModel("oModelControl");
                 oModelControl.setProperty("/OfferType", object);
                 this._OfferTypeFieldsSet();
                 this._OfferTypeFieldSet2(sKey);
@@ -880,23 +939,18 @@ sap.ui.define(
             },
             // added by deepanjali start 
             onAddProductPack: function () {
-
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl").getProperty("/Table/Table11");
-
                 oModel.push({
                     LanguageCode: "",
                     file: null,
                     fileName: ""
-                   
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table11", oModel);
-
             },
             onAddPamphlet: function () {
                 var oView = this.getView();
                 var oPamphletModel = oView.getModel("oModelControl").getProperty("/Table/Table12");
-
                 oPamphletModel.push({
                     LanguageCode: "",
                     file: null,
@@ -904,44 +958,32 @@ sap.ui.define(
                 });
                 oView.getModel("oModelControl").setProperty("/Table/Table12", oPamphletModel);
             },
-
             onChangePdf: function (oEvent) {
-
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
-
                 if (oEvent.getParameter("files").length > 0) {
                     var pdfname = oEvent.getParameter("files")[0].name;
                     oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     oView.getModel("oModelControl").setProperty("bNew", true, oContext);
-                  
-
                     var isValid = this.checkFileName(pdfname);
                     if (!isValid) {
                         MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
                     }
-
-
                 }
             },
-
             onChangePamPdf: function (oEvent) {
                 var oView = this.getView();
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
-
                 if (oEvent.getParameter("files").length > 0) {
                     var imagename = oEvent.getParameter("files")[0].name;
                     oView.getModel("oModelControl").setProperty("file", oEvent.getParameter("files")[0], oContext);
                     oView.getModel("oModelControl").setProperty("fileName", oEvent.getParameter("newValue"), oContext);
                     oView.getModel("oModelControl").setProperty("pNew", true, oContext);
-
                     var isValid = this.checkFileName(imagename);
                     if (!isValid) {
                         MessageBox.show("File names can't contain the following characters: &  ? < > # { } [] % ~ / \.");
                     }
-
-
                 }
             },
             checkFileName: function (fileName) {
@@ -954,11 +996,8 @@ sap.ui.define(
                 else {
                     return false;
                 }
-
             },
-
             onDeleteFile: function (oEvent) {
-
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
                 //oModel.setProperty("bNew", true);
@@ -1009,15 +1048,11 @@ sap.ui.define(
             onPressRemovepamplet: function (sPath, aPamplet) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-
                 var index = parseInt(sPath[sPath.length - 1]);
                 var delItems = [];
-
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-
                 //To DO promises for sync
                 for (var i = 0; i <= aPamplet.length; i++) {
-
                     if (i == index) {
                         delItems = aPamplet[i];
                         if (delItems.MediaName != null) {
@@ -1036,35 +1071,25 @@ sap.ui.define(
                                     var sMessage = "Pamplet Deleted!";
                                     MessageToast.show(sMessage);
                                     oModel.refresh(true);
-
                                 },
                                 error: function () { },
                             })
-
                         }
                         else {
                             aPamplet.splice(i);
                         }
                     }
-
-
                 };
-
-
                 oModel.refresh(true);
             },
             onPressRemoveCatalogue: function (sPath, aCatalogue) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-
                 var index = parseInt(sPath[sPath.length - 1]);
                 var delItems = [];
-
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-
                 //To DO promises for sync
                 for (var i = 0; i <= aCatalogue.length; i++) {
-
                     if (i == index) {
                         delItems = aCatalogue[i];
                         if (delItems.MediaName != null) {
@@ -1083,45 +1108,32 @@ sap.ui.define(
                                     var sMessage = "Banner Deleted!";
                                     MessageToast.show(sMessage);
                                     oModel.refresh(true);
-
                                 },
                                 error: function () { },
                             })
-
                         }
                         else {
                             aCatalogue.splice(i);
                         }
                     }
-
-
                 };
-
-
                 oModel.refresh(true);
             },
-
             openPdf: function (oEvent) {
-
                 var oView = this.getView();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + oContext.getProperty("LanguageCode");
-
                 sap.m.URLHelper.redirect(sSource, true);
             },
             openPamdf: function (oEvent) {
-
                 var oView = this.getView();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 var oContext = oEvent.getSource().getBindingContext("oModelControl");
                 var sSource = "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + oContext.getProperty("LanguageCode");
-
                 sap.m.URLHelper.redirect(sSource, true);
             },
             // added by deepanjali end 
-
-
             onSaveGenericBonusReward: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -2327,7 +2339,6 @@ sap.ui.define(
                     }
                     oModel.refresh();
                 }
-
             },
             onPressSaveCondition3: function (oEvent) {
                 var oView = this.getView();
@@ -2501,6 +2512,52 @@ sap.ui.define(
                 var sPath = oSource.getBinding("selectedIndex").getPath();
                 var sPathArray = sPath.split("/");
                 var oModelControl = oView.getModel("oModelControl");
+                // added by deepanjali start 
+                if (sKey == 0) {
+                    var sSelectedArray = oModelControl.getProperty("/Table/Table2");
+                    if (sSelectedArray.length > 0) {
+                        var packCode = sSelectedArray.map(function (item) {
+                            return {
+                                Id: item.Id,
+                                ProductName: item.ProductName,
+                                ProductCode: "All",
+                                RewardGiftId: null,
+                                RewardGiftName: "",
+                                RequiredVolume: "",
+                                RequiredPoints: "",
+                                RewardPoints: "",
+                                RewardCash: "",
+                                editable: true
+                            };
+                        });
+                    }
+                    oModelControl.setProperty("/AppPacksValueState", "None");
+                    oModelControl.setProperty("/AppPacksValueStateText", "");
+                    oModelControl.setProperty("/Table/Table2", packCode);
+                }
+                else if (sKey == 1) {
+                    var sSelectedArray = oModelControl.getProperty("/Table/Table2");
+                    // if (sSelectedArray.length > 0) {
+                    var ProdpackCode = sSelectedArray.map(function (item) {
+                        return {
+                            Id: item.Id,
+                            ProductName: item.ProductName,
+                            ProductCode: "",
+                            RewardGiftId: null,
+                            RewardGiftName: "",
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            RewardPoints: "",
+                            RewardCash: "",
+                            editable: true
+                        };
+                    });
+                    // }
+                    oModelControl.setProperty("/AppPacksValueState", "None");
+                    oModelControl.setProperty("/AppPacksValueStateText", "");
+                    oModelControl.setProperty("/Table/Table2", ProdpackCode);
+                }
+                // added by deepanjali end 
                 if (sKey == 1) {
                     oModelControl.setProperty("/MultiEnabled/" + sPathArray[2], true);
                 } else {
@@ -3334,6 +3391,7 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oEvent.getSource().getBinding("tokens").getPath();
                     var aArray = oModel.getProperty(sPath);
+                    var oProdTable = oModel.getProperty("/Table/Table2");
                     var aNewArray;
                     var aRemovedTokens = oEvent.getParameter("removedTokens");
                     var aRemovedKeys = [];
@@ -3349,11 +3407,9 @@ sap.ui.define(
                     var aNumber = mParam1.match(/\d+$/)[0];
                     //console.log(aNumber);
                     if (aNumber == "1") {
-
                     } else if (aNumber == "4") {
                         this._CreateBonusRewardTable();
                     }
-
                     // if this token update is triggered from apppacks1
                     if (mParam1 === "AppPacks1") {
                         this._CheckCondContriTable();
@@ -3378,12 +3434,24 @@ sap.ui.define(
                         controller: this,
                     }).then(
                         function (oValueHelpDialog) {
+                            // oValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
+                            //     if (oEvent.key === "Escape") {
+                            //         oEvent.stopPropagation();
+                            //         oEvent.preventDefault();
+                            //     }
+                            // });
                             this._PackValueHelpDialog = oValueHelpDialog;
                             this.getView().addDependent(this._PackValueHelpDialog);
                             this._OpenPackValueHelp(sParam1);
                         }.bind(this)
                     );
                 } else {
+                    // this._PackValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
+                    //     if (oEvent.key === "Escape") {
+                    //         oEvent.stopPropagation();
+                    //         oEvent.preventDefault();
+                    //     }
+                    // });
                     this._OpenPackValueHelp(sParam1);
                 }
             },
@@ -3490,6 +3558,12 @@ sap.ui.define(
                 }
             },
             _handlePackValueHelpConfirm: function (oEvent) {
+                // this._PackValueHelpDialog._dialog.attachBrowserEvent("click", function(oEvent) {
+                //     if (oEvent) {
+                //         oEvent.stopPropagation();
+                //         oEvent.preventDefault();
+                //     }
+                // });
                 var oSelected = oEvent.getParameter("selectedContexts");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3502,10 +3576,10 @@ sap.ui.define(
                     aProds.push({
                         Name: oBj["Description"],
                         Id: oBj["SkuCode"],
-                        ProductCode: oBj["ProductCode"]
+                        ProductCode: oBj["ProductCode"],
+                        SKUCode: oBj["SkuCode"]
                     });
                 }
-
                 // Append multi select value with previous select
                 for (var i = 0; i < oModel.getProperty("/MultiCombo/AppPacks" + aNumber).length; i++) {
                     var flag = false;
@@ -3518,17 +3592,79 @@ sap.ui.define(
                     if (!flag)
                         aProds.push(oModel.getProperty("/MultiCombo/AppPacks" + aNumber)[i]);
                 }
-
                 oView
                     .getModel("oModelControl")
                     .setProperty("/MultiCombo/AppPacks" + aNumber, aProds);
-                this._handleProdValueHelpClose();
+                // added by deepanjali for pack slab offer condition Start
+                var aExistingSlab = oModel.getProperty("/Table/Table2");
+                var sSelectedOfferType = oModel.getData().OfferType.OfferType;
+                if (sSelectedOfferType === 'Product Slab Offer') {
+                    var aSelectedPackData = aProds;
+                    var packItemModel = aExistingSlab.map(function (item) {
+                        return {
+                            Id: item.Id,
+                            ProductName: item.ProductName,
+                            ProductCode: (aSelectedPackData.filter(o2 => item.Id === o2.ProductCode).map(ele => ele.Name)).toString(),
+                            RewardGiftId: null,
+                            RewardGiftName: "",
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            RewardPoints: "",
+                            RewardCash: "",
+                            SKUCode: (aSelectedPackData.filter(o2 => item.Id === o2.ProductCode).map(ele => ele.SKUCode)).toString(),
+                            editable: true,
+                        };
+                    });
+                    // var packItemModel = aSelectedPackData.map(function (item) {
+                    //     return {
+                    //         Name: item.Name,
+                    //         Id: item.Id,
+                    //         RewardGiftId: null,
+                    //         RewardGiftName: "",
+                    //         RequiredVolume: "",
+                    //         RequiredPoints: "",
+                    //         RewardPoints: "",
+                    //         RewardCash: "",
+                    //         editable: true,
+                    //     };
+                    // });
+                    var compareTwoArrayOfObjects = (
+                        aExistingSlab,
+                        aProds
+                    ) => {
+                        return (
+                            aProds.length > 0 &&
+                            aExistingSlab.every((element_1) =>
+                                aProds.some(
+                                    (element_2) =>
+                                        element_1.Id === element_2.ProductCode
+                                )
+                            )
+                        );
+                    };
+                    if (compareTwoArrayOfObjects(aExistingSlab, aProds) === false) {
+                        // MessageToast.show(
+                        //     "Please select all packs for specific products."
+                        // )
+                        oModel.setProperty("/AppPacksValueState", "Error");
+                        oModel.setProperty("/AppPacksValueStateText", "Please select all packs for specific products.");
+                        oModel.setProperty("/MultiCombo/AppPacks1", []);
+                        return false;
+                    }
+                    else {
+                        oModel.setProperty("/AppPacksValueState", "None");
+                        oModel.setProperty("/AppPacksValueStateText", "");
+                        oModel.setProperty("/Table/Table2", packItemModel);
+                    }
+                }
+                // added by deepanjali for pack column in slab creation end
+                // this._handleProdValueHelpClose();
                 if (aNumber == "1") {
                     this._CheckCondContriTable();
                 } else if (aNumber == "4") {
                     this._CreateBonusRewardTable();
                 }
-                this._handleProdValueHelpClose();
+                // this._handleProdValueHelpClose();
             },
             onProdTokenUpdate: function (oEvent) {
                 if (oEvent.getParameter("type") === "removed") {
@@ -3536,11 +3672,27 @@ sap.ui.define(
                     var oModel = oView.getModel("oModelControl");
                     var sPath = oEvent.getSource().getBinding("tokens").getPath();
                     var aArray = oModel.getProperty(sPath);
+                    var oProdTable = oModel.getProperty("/Table/Table2");
+                    var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
                     var aNewArray;
                     var aRemovedTokens = oEvent.getParameter("removedTokens");
                     var aRemovedKeys = [];
                     aRemovedTokens.forEach(function (item) {
                         aRemovedKeys.push(item.getKey());
+                        // added by deepanjali start
+                        var sSelectedOfrTpe = oModel.getData().OfferType.OfferType;
+                        if (sSelectedOfrTpe === 'Product Slab Offer') {
+                            // slab table clear based on product value help token clear
+                            var sSelectedIndex = oProdTable.findIndex((ob) => ob.Id === aRemovedKeys.toString());
+                            var sSelectedObj = oProdTable.splice(sSelectedIndex, 1);
+                            oModel.setProperty("/Table/Table2", oProdTable);
+                            //pack valuehelp token clear based on product
+                            var aFilteredPackData = aPackData.filter(function (ob) {
+                                return ob.ProductCode !== aRemovedKeys.toString();
+                            });
+                            oModel.setProperty("/MultiCombo/AppPacks1", aFilteredPackData);
+                        }
+                        // added by deepanjali end
                     });
                     aNewArray = aArray.filter(function (item) {
                         return aRemovedKeys.indexOf(item["Id"]) < 0;
@@ -3563,6 +3715,7 @@ sap.ui.define(
                     this._CheckCondContriTable();
                 }
             },
+            // product value help open
             handleProdValueHelp: function (oEvent) {
                 var oView = this.getView();
                 var aPath = oEvent
@@ -3595,6 +3748,7 @@ sap.ui.define(
                 var sPath = mParam1;
                 this._FilterForProds1(mParam1);
             },
+            // product value help open confirm
             _handleProdValueHelpConfirm: function (oEvent) {
                 var oSelected = oEvent.getParameter("selectedContexts");
                 var oView = this.getView();
@@ -3622,9 +3776,30 @@ sap.ui.define(
                     if (!flag)
                         aProds.push(oModel.getProperty("/MultiCombo/AppProd" + aNumber)[i]);
                 }
-
                 oModel.setProperty("/MultiCombo/AppProd" + aNumber, aProds);
                 oModel.setProperty("/MultiCombo/AppPacks" + aNumber, []);
+                // added by deepanjali for product slab offer condition Start
+
+                var sSelectedOfferType = oModel.getData().OfferType.OfferType;
+                if (sSelectedOfferType === 'Product Slab Offer') {
+                    var aSelectedProdData = aProds;
+                    var itemModel = aSelectedProdData.map(function (item) {
+                        return {
+                            ProductName: item.Name,
+                            ProductCode: "All",
+                            Id: item.Id,
+                            RewardGiftId: null,
+                            RewardGiftName: "",
+                            RequiredVolume: "",
+                            RequiredPoints: "",
+                            RewardPoints: "",
+                            RewardCash: "",
+                            editable: true,
+                        };
+                    });
+                    oModel.setProperty("/Table/Table2", itemModel);
+                }
+                // added by deepanjali for product column in slab creation end
                 this._handleProdValueHelpClose();
                 // calling this method to destroy the dialog so that remembeslections get resetted
                 if (aNumber == "1") {
@@ -3636,7 +3811,6 @@ sap.ui.define(
                 this._handleProdValueHelpClose();
             },
             _handleProdValueHelpClose: function () {
-
                 if (this._ProdValueHelpDialog) {
                     this._ProdValueHelpDialog.destroy();
                     delete this._ProdValueHelpDialog;
@@ -4456,7 +4630,6 @@ sap.ui.define(
             },
             // postdata
             _CreatePayloadPart3: function (oPayLoad) {
-
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModelControl = oView.getModel("oModelControl");
@@ -4514,7 +4687,6 @@ sap.ui.define(
                     aDataDivision = [];
                 var aDataPainter = [];
                 if (oModelControl.getProperty("/mode") === "edit") {
-
                     aDataPCat1 =
                         oModelViewData["OfferApplicableProductCategory"]["results"];
                     aDataPCat2 = oModelViewData["OfferBuyerProductCategory"]["results"];
@@ -4804,7 +4976,11 @@ sap.ui.define(
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
-                var bRewardSelected = oModel.getProperty("/Rbtn/Rewards");
+                var sOfferType = oModel.getData().OfferType.Id;
+
+                var sSelectedProd = oModel.getProperty("/Rbtn/AppProd1");
+                var sSelectedPack = oModel.getProperty("/Rbtn/AppPacks1");
+                var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
                 var aFinalArray = [];
                 //if (bRewardSelected === 0) {
                 var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
@@ -4844,9 +5020,40 @@ sap.ui.define(
                         }
                     }
                     delete ele["editable"];
+                    delete ele["ProductName"];
+                    ele["ProductCode"] = ele["Id"];
+
+                    delete ele["Id"];
                     return ele;
                 });
-                oPayLoad["OfferRewardRatio"] = aFinalArray;
+                var sCheck = (sSelectedProd === 1 && sSelectedPack === 1) ? true : false;
+                var sProdSlabofferRewrdRatio = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
+                var sRewardRatio = (sOfferType !== 7) ? 0 : sProdSlabofferRewrdRatio;
+                var aItem = aFinalArray;
+                aItem = aItem.map(function (item) {
+
+                    return {
+                        RewardGiftId: item.RewardGiftId,
+                        RewardGiftName: item.RewardGiftName,
+                        RequiredVolume: item.RequiredVolume,
+                        RequiredPoints: item.RequiredPoints,
+                        RewardPoints: item.RewardPoints,
+                        RewardCash: item.RewardCash,
+                        RewardRatioType: sRewardRatio,
+                        OfferRewardRatioProduct: (sOfferType === 7) ? [
+                            {
+                                ProductCode: item.ProductCode,
+                            }
+                        ] : [],
+                        // adding below property based on multiplepack specific condition
+                        ...(sCheck && {
+                            OfferRewardRatioPack: (sOfferType === 7) ?
+                                item.SKUCode.split(",").map(function (item) { return { SKUCode: item } }) : []
+                        })
+                    }
+                });
+
+                oPayLoad["OfferRewardRatio"] = aItem;
                 promise.resolve(oPayLoad);
                 return promise;
                 //}
@@ -4855,7 +5062,7 @@ sap.ui.define(
                 var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
                 // if (bAllProdSelected === 0) {
                 //     var oDataTbl = oModel
-                //         .getProperty("/Table/Table2")
+                //         .getProperty("/Table/image.png")
                 //         .map(function (a) {
                 //             return Object.assign({}, a);
                 //         });
@@ -5179,9 +5386,7 @@ sap.ui.define(
                         );
                         oModelControl.setProperty(sPath1 + "/StartDate", null);
                         return;
-
                     }
-
                 }
                 return;
             },
@@ -5216,7 +5421,6 @@ sap.ui.define(
                         );
                         oModelControl.setProperty(sPath2 + "/EndDate", null);
                         return;
-
                     }
                 }
             },
@@ -5663,18 +5867,14 @@ sap.ui.define(
                         mimeType: "application/vnd.ms-excel",
                         charset: "utf-8",
                         fileExtension: "xls",
-
                     }),
                     // Pass in the model created above
                     models: othat.getView().getModel("oModelControl3"),
-
                     // binding information for the rows aggregation
                     rows: {
                         path: "/ofragmentModel"
                     },
-
                     // column definitions with column name and binding info for the content
-
                     columns: [{
                         name: "Row",
                         template: {
@@ -5702,9 +5902,7 @@ sap.ui.define(
                     }
                     ]
                 });
-
                 // download exported file
-
                 oExport.saveFile().catch(function (oError) {
                     MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
                 }).then(function () {
@@ -5740,7 +5938,6 @@ sap.ui.define(
                     //         .setProperty("/MultiCombo/Painters", itemModel);
                 }
             },
-
             onpressfrag2: function (itemModel) {
                 //this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
@@ -5807,7 +6004,6 @@ sap.ui.define(
                 if (oData["OfferDeselectedPainter"].length > 0) {
                     this._UpdateOfferDelPainters(oData);
                 }
-
                 this._CsvDialoge.close();
             },
             _UpdateOfferDelPainters: function (oPayLoad) {
@@ -5827,7 +6023,6 @@ sap.ui.define(
                         },
                         error: function (data) {
                             MessageToast.show("Error Uploading Painters.");
-
                             reject(data);
                         },
                     });
@@ -5841,12 +6036,9 @@ sap.ui.define(
                 oModel.setProperty("/Table/Table10", []);
                 oModelView.setProperty("/MinPercentage", null);
                 oModelView.setProperty("/MaxPercentage", null);
-
             },
             onPressAddCndtnV1: function (oEvent) {
-
                 if (oEvent !== "add") {
-
                 } else {
                     var oModel = this.getView().getModel("oModelControl");
                     var oFamiDtlMdl = oModel.getProperty("/Table/Table9");
@@ -5879,7 +6071,6 @@ sap.ui.define(
                         //relvalue and editable properties are added here and will be removed in the postsave function
                     }
                     oModel.refresh();
-
                 }
             },
             onRemovedCndtn: function (oEvent) {
@@ -5899,7 +6090,6 @@ sap.ui.define(
                 var oModel = oView.getModel("oModelControl");
                 var oModelView = oView.getModel("oModelView");
                 var ContributionCondition = oModelView.getProperty("/ContributionCondition");
-
                 var oObject = oEvent
                     .getSource()
                     .getBindingContext("oModelControl")
@@ -5942,7 +6132,6 @@ sap.ui.define(
                         );
                         return;
                     }
-
                 } else if (ContributionCondition === 2) {
                     if (
                         !oObject["SkuCode"] ||
@@ -5954,7 +6143,6 @@ sap.ui.define(
                             "Kindly Enter Pack,Min & Max fields To Continue."
                         );
                         return;
-
                     }
                     if (oObject["MinPercentage"] > oObject["MaxPercentage"]) {
                         MessageToast.show(
@@ -5973,8 +6161,6 @@ sap.ui.define(
                         return;
                     }
                 }
-
-
                 if (bFlag && cFlag) {
                     oObject["editable"] = false;
                     // if (!oObject["RewardGiftName"]) {
@@ -6044,7 +6230,6 @@ sap.ui.define(
                 oModel.setProperty("/Table/Table10", []);
                 oModelView.setProperty("/MinPercentage", null);
                 oModelView.setProperty("/MaxPercentage", null);
-
             },
             onValueHelpProductsTable3: function (oEvent) {
                 var oView = this.getView();
@@ -6260,18 +6445,14 @@ sap.ui.define(
                                     ele[aCheckProp[a]] = ele[aCheckProp[a]];
                                 }
                             }
-
                         }
                         delete ele["editable"];
                         return ele;
                     });
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
-
-
                 }
                 ///for combination condition
                 if ((bContributionCondition === 1 || bContributionCondition === 2) && (bContributionType === 1)) {
-
                     var oDataTbl = oModelCtrl
                         .getProperty("/Table/Table10")
                         .map(function (a) {
@@ -6298,7 +6479,6 @@ sap.ui.define(
                                     ele[aCheckProp[a]] = ele[aCheckProp[a]];
                                 }
                             }
-
                         }
                         delete ele["editable"];
                         return ele;
@@ -6307,8 +6487,6 @@ sap.ui.define(
                     // oPayLoad["MaxPercentage"] = Max;
                     oPayLoad["OfferContributionRatio"] = aFinalArray;
                     //console.log(oPayLoad);
-                    //;
-
                 }
                 promise.resolve(oPayLoad);
                 return promise;
@@ -6477,9 +6655,7 @@ sap.ui.define(
                 }
             },
             onPressAddCndtnV2: function (oEvent) {
-
                 if (oEvent !== "add") {
-
                 } else {
                     var oModel = this.getView().getModel("oModelControl");
                     var oFamiDtlMdl = oModel.getProperty("/Table/Table10");
@@ -6512,7 +6688,6 @@ sap.ui.define(
                         //relvalue and editable properties are added here and will be removed in the postsave function
                     }
                     oModel.refresh();
-
                 }
             },
             onRemovedCndtn2: function (oEvent) {
@@ -6550,7 +6725,6 @@ sap.ui.define(
                 }
                 if (ContributionCondition === 1) {
                     //console.log("1")
-
                     if (!oObject["ProductCode"]) {
                         MessageToast.show(
                             "Kindly Enter Product,Min & Max fields To Continue."
@@ -6559,7 +6733,6 @@ sap.ui.define(
                     }
                 }
                 if (ContributionCondition === 2) {
-
                     if (!oObject["SkuCode"]) {
                         MessageToast.show(
                             "Kindly Enter Pack,Min & Max fields To Continue."
@@ -6647,7 +6820,6 @@ sap.ui.define(
             //         this._OpenPackValueHelp(sParam1);
             //     }
             // },
-
             /**
              * Adds a history entry in the FLP page history
              * @public

@@ -1,50 +1,42 @@
-<mvc:View height="100%" controllerName="com.knpl.pragati.SchemeOffers.controller.wizard"
-    xmlns:form="sap.ui.layout.form"
-    xmlns:core="sap.ui.core"
-    xmlns:u="sap.ui.unified"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:f="sap.f"
-    xmlns="sap.m">
-
-
-    <Wizard id="CreateProductWizard" finishButtonText="Finish" currentStep="wzdStep6" class="sapUiResponsivePadding--header sapUiResponsivePadding--content">
+<mvc:View height="100%" controllerName="com.knpl.pragati.SchemeOffers.controller.wizard" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns="sap.m">
+    <Wizard  id="CreateProductWizard" finishButtonText="Finish" currentStep="wzdStep6" class="sapUiResponsivePadding--header sapUiResponsivePadding--content">
         <steps>
             <WizardStep id="ProductTypeStep" title="{i18n>BasicInformation}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.BasicInformation" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.BasicInformation" type="XML" />
                 </content>
             </WizardStep>
             <WizardStep id="ProductInfoStep" title="{i18n>ApplicableProducts}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicableProducts" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicableProducts" type="XML" />
                 </content>
             </WizardStep>
-            <WizardStep id="OptionalInfoStep" title="{i18n>formApplicableLbl10}" activate="onActivate">
+            <!-- added visible property for slab creation for Targeted offer screen Deepanjali -->
+            <WizardStep  visible="{oModelControl>/IsVisibleSlabCreation}" id="OptionalInfoStep" title="{i18n>formApplicableLbl10}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatio" type="XML" />
                 </content>
             </WizardStep>
-            <WizardStep id="ContributionCndtn" title="{i18n>formApplicableLbl18}" activate="onActivate">
+            <WizardStep visible="{oModelControl>/IsVisibleSlabCreation}" id="ContributionCndtn" title="{i18n>formApplicableLbl18}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ContributionCondition" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ContributionCondition" type="XML" />
                 </content>
             </WizardStep>
-            <WizardStep id="wzdStep4" title="{i18n>formApplicablepainter}" activate="onActivate">
+            <WizardStep visible="{oModelControl>/IsVisibleSlabCreation}" id="wzdStep4" title="{i18n>formApplicablepainter}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicablePainters" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.ApplicablePainters" type="XML" />
                 </content>
             </WizardStep>
-            <WizardStep id="wzdStep5" title="{i18n>formBonusReward}" activate="onActivate">
+            <WizardStep visible="{oModelControl>/IsVisibleSlabCreation}" id="wzdStep5" title="{i18n>formBonusReward}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatioBonus" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.RewardRatioBonus" type="XML" />
                 </content>
             </WizardStep>
             <WizardStep id="wzdStep6" title="{i18n>AdditionalInformation}" activate="onActivate">
                 <content>
-                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.AddInformation" type="XML"/>
+                    <core:Fragment fragmentName="com.knpl.pragati.SchemeOffers.view.fragment.AddInformation" type="XML" />
                 </content>
             </WizardStep>
         </steps>
     </Wizard>
-
 </mvc:View>

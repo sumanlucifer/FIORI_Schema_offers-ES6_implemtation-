@@ -35,38 +35,11 @@
                             />
                         </f:fields>
                     </f:FormElement>
-
+                    <!-- added by deepanjali for Language start  -->
                     <f:FormElement>
-                        <f:label>
-                            <!-- <Label text="{i18n>OfferImage}" required="false" /> -->
-                            <Label text="{i18n>selectprelang}" required="true" />
-                        </f:label>
-                        <f:fields>
-                            <Select
-                                forceSelection="false"
-                                selectedKey="{oModelControl>/LanguageCode}"
-                                items="{
-                                                                path: '/MasterLanguageSet',
-                                                                sorter: { path: 'Id' },
-                                                                templateShareable: true
-                                                            }"
-                            >
-                                <core:Item key="{LanguageCode}" text="{Language}" />
-                            </Select>
-
-                            <!-- <u:FileUploader change="onFileUploadChange" placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload" /> -->
-                        </f:fields>
+                        <!-- <u:FileUploader change="onFileUploadChange" placeholder="{i18n>UploadNewImage}" width="100%" typeMissmatch="onUploadMisMatch" fileType="jpg,jpeg,png" id="idFileUpload" name="schemeImgFileUpload" /> -->
                     </f:FormElement>
-                    <!-- <f:FormElement>
-                        <f:fields>
-                            <Text text="{i18n>FileUploadMessage}" />
-                        </f:fields>
-                    </f:FormElement> -->
-                    <!-- <f:FormElement label="{i18n>Attachment}" visible="{= ${oModelControl>/ImageLoaded} }">
-                        <f:fields>
-                            <Link text="{i18n>ExistingAttachment}" press="onViewAttachment" />
-                        </f:fields>
-                    </f:FormElement> -->
+                    <!-- added by deepanjali for Language end  -->
                 </f:formElements>
             </f:FormContainer>
 
