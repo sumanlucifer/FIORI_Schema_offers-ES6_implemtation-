@@ -87,6 +87,7 @@ sap.ui.define([
                 ComplaintTypeId: 1,
                 ComplaintSubtypeCode: 1,
                 ComplaintTypeCode: 1,
+                LanguageCode: 'EN',
                 PainterComplainProducts: [{
                     PainterId: "",//integer
                     ProductSKUCode: "",
