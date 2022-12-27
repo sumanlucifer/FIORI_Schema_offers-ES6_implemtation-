@@ -404,7 +404,7 @@ sap.ui.define(
                                     Points: 0,
                                     ProductQuantity: "",
                                     ProductSKUCode: "",
-                                    Status: "Pending"
+                                    Status: "PENDING"
                                 };
                             }
                             //Put previous escalate flag to false
