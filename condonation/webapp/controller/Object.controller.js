@@ -83,17 +83,16 @@ sap.ui.define([
                 ComplaintStatus: "RESOLVED",
                 ApprovalStatus: "PENDING",
                 ResolutionType:2,
-                ComplaintSubTypeId: 1,
+                ComplaintSubtypeId: 1,
                 ComplaintTypeId: 1,
-                ComplaintSubtypeCode: 1,
+                ComplaninSubTypeCode: 1,
                 ComplaintTypeCode: 1,
-                LanguageCode: 'EN',
                 PainterComplainProducts: [{
                     PainterId: "",//integer
                     ProductSKUCode: "",
                     ProductQuantity: 1,//integer
                     Points: 0,//integer
-
+                    Status: "APPROVED"
                 }]
             }
             var oModel1 = new JSONModel(oDataView);
