@@ -139,9 +139,58 @@ sap.ui.define(
                     this.onUploadPainter1();
                 }
             },
+            onFileUploadChangeCSV: function (oEvent) {
+
+                //console.log(oEvent);
+                var oFileUploder = oEvent.getSource();
+                if (oEvent.getParameter("newValue")) {
+                    this.onUploadApplProduct();
+                }
+            },
+            // calling target offer upload csv api
+            onUploadApplProduct: function () {
+
+
+                var that = this;
+                var fU = this.getView().byId("idOfferFileUploaderCSV");
+                // var domRef = fU.getFocusDomRef();
+                // var file = domRef.files[0];
+                var domRef = fU.oFileUpload;
+                var file = domRef.files[0];
+                var oView = that.getView();
+                var dataModel = oView.getModel("oModelControl");
+                var settings = {
+                    url: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterTargetPointsSet(0)/$value",
+                    data: file,
+                    method: "PUT",
+                    headers: that.getView().getModel().getHeaders(),
+                    contentType: "text/csv",
+                    processData: false,
+                    statusCode: {
+                        206: function (result) {
+                            that._SuccessPainter(result, 206);
+                        },
+                        200: function (result) {
+                            that._SuccessPainter(result, 200);
+                        },
+                        202: function (result) {
+                            that._SuccessPainter(result, 202);
+                        },
+                        400: function (result) {
+                            that._SuccessPainter(result, 400);
+                        }
+                    },
+                    error: function (error) {
+                        that._Error(error);
+                    }
+                };
+                $.ajax(settings);
+
+            },
             onUploadComplete: function (oEvent) { },
             /// calling upload api///
             onUploadPainter1: function () {
+            
                 var that = this;
                 var fU = this.getView().byId("idOfferFileUploader");
                 // var domRef = fU.getFocusDomRef();
@@ -4924,7 +4973,6 @@ sap.ui.define(
                 return promise;
             },
             _CreatePayLoadPart4: function (oPayLoad) {
-
                 var promise = jQuery.Deferred();
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");

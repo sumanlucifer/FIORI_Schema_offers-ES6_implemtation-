@@ -122,17 +122,17 @@
                                 </layoutData>
                             </MultiInput>
                             <u:FileUploader
-                                id="idOfferFileUploader1"
+                                id="idOfferFileUploaderCSV"
                                 sameFilenameAllowed="false"
                                 uploadComplete="onUploadComplete"
-                                change="onFileUploadChange1"
+                                change="onFileUploadChangeCSV"
                                 buttonOnly="true"
-                                placeholder="{i18n>DownloadSample}"
-                                buttonText="{i18n>DownloadSample}"
+                                placeholder="{i18n>placeHolder1}"
+                                buttonText="{i18n>upload}"
                                 typeMissmatch="onUploadMisMatch1"
                                 fileType="text,csv"
                             />
-                            <Button text="{i18n>upload}" press="uplaodCsv" />
+                            <Button text="{i18n>DownloadSample}" press="uplaodCsv" />
                         </f:fields>
                     </f:FormElement>
                 </f:formElements>
