@@ -99,7 +99,7 @@
                 <Button
                     press="handleSavePress"
                     visible="{= !${oModelControl>/ComplainResolved} &amp;&amp;  ${ApprovalStatus} === null   }"
-                    text="{=  ${oModelView>/ResolutionType} === 2 || ${oModelView>/ResolutionType} === 16 &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }"
+                    text="{= (${oModelView>/ResolutionType} === 2 || ${oModelView>/ResolutionType} === 16) &amp;&amp;  ${appView>/iUserLevel} &lt; 2 ? ${i18n>btnSendForApproval} : ${i18n>btnResolve}  }"
                     type="Emphasized"
                 />
 

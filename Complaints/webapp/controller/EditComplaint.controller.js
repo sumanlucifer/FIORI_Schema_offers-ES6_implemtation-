@@ -403,7 +403,8 @@ sap.ui.define(
                                     PainterId: data.PainterId,
                                     Points: 0,
                                     ProductQuantity: "",
-                                    ProductSKUCode: ""
+                                    ProductSKUCode: "",
+                                    Status: "Pending"
                                 };
                             }
                             //Put previous escalate flag to false
@@ -518,11 +519,11 @@ sap.ui.define(
                 var oModelControl = this.getModel("oModelControl"),
                     oModelView = this.getModel("oModelView");
                 //Reset data fields
-                // oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
-                // oModelView.setProperty("/PainterComplainProducts/Points", "");
-                // oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
-                // oModelView.setProperty("/TokenCode", "");
-                // oModelView.setProperty("/RewardPoints", "");
+                oModelView.setProperty("/PainterComplainProducts/ProductSKUCode", "");
+                oModelView.setProperty("/PainterComplainProducts/Points", "");
+                oModelView.setProperty("/PainterComplainProducts/ProductQuantity", "");
+                oModelView.setProperty("/TokenCode", "");
+                oModelView.setProperty("/RewardPoints", "");
                 //if arguments not passed then return without filtering
                 if (!sCtrlId)
                     return;
@@ -863,6 +864,7 @@ sap.ui.define(
                  }
                  */
                 var oModelView = this.getView().getModel("oModelView"),
+                    oModelControl = this.getView().getModel("oModelControl"),
                     validation = this._validation(oModelView.getData()),
                     sBtnText = oEvent.getSource().getProperty('text');
                 //Validations
@@ -872,11 +874,18 @@ sap.ui.define(
                 }
 
                 var aRewardDetails = oModelView.getProperty('/PainterComplainProducts/results');
-                if (sBtnText === 'Resolve' && aRewardDetails) {
-                    for (let item of aRewardDetails) {
-                        item.Status = 'APPROVED';
+                if (sBtnText === 'Resolve' && oModelControl.getProperty("/rBtnVsbl") !== true) {
+                    if (aRewardDetails) {
+                        for (let item of aRewardDetails) {
+                            item.Status = 'APPROVED';
+                        }
+                    } else {
+                        oModelView.setProperty('/PainterComplainProducts/Status', 'APPROVED');
                     }
                 }
+
+
+
                 //Sending for approval message
                 if ((oModelView.getProperty("/ResolutionType") == 16 || oModelView.getProperty("/ResolutionType") == 2) && this.getModel("appView").getProperty("/iUserLevel") < 2) {
                     var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
@@ -959,7 +968,7 @@ sap.ui.define(
                     data.PainterComplainProducts.Points = Number(data.PainterComplainProducts.Points);
                     data.PainterComplainProducts.ProductQuantity = Number(data.PainterComplainProducts.ProductQuantity);
                 }
-                data.PainterComplainProducts = data.ResolutionType == 16 ? data.PainterComplainProducts : data.ResolutionType == 2 ? {results : [data.PainterComplainProducts]} : [];
+                data.PainterComplainProducts = data.ResolutionType == 16 ? data.PainterComplainProducts : data.ResolutionType == 2 ? { results: [data.PainterComplainProducts] } : [];
                 //Parse RewardPoints
                 data.RewardPoints = !!(data.RewardPoints) ? +data.RewardPoints : null;
             },
