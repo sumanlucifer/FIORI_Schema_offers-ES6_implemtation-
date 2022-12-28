@@ -205,21 +205,55 @@ sap.ui.define(
                 oModelView.setProperty("/busy", false);
                 var aPainters = [];
                 if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
-                    if (result.PainterTargetPointsUploadedData.length == 0) {
+                    if (result.PainterTargetPointsUploadResponse.PainterTargetPointsUploadList.length == 0) {
                         MessageToast.show("MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
-                      
+
                     }
                     else {
-                        var selectedItems = result.PainterTargetPointsUploadedData;
-                        var itemModel = selectedItems.map(function (item) {
-                            return {
-                                errorMessage: item.errorMessage,
-                                mobileNumber: item.mobileNumber,
-                                productName: item.productName,
-                                rowNo: item.rowNo,
-                                uploadStatus: item.uploadStatus
-                            };
-                        });
+                        var selectedItems = result.PainterTargetPointsUploadResponse.PainterTargetPointsUploadList;
+                        var aOfferRewardRatio = [];
+                        var itemModel = [];
+
+                        //Pushing CSV Uploaded data into itemmodel 
+                        selectedItems.forEach(item => {
+                            itemModel.push({
+                                errorMessage: item.ErrorMessage,
+                                mobileNumber: item.PainterMobile,
+                                productName: item.ProductName,
+                                rowNo: item.RowNumber,
+                                uploadStatus: item.UploadStatus
+                            });
+                            if (item.UploadStatus) {
+                                if (item.OfferRewardRatioType === 1) {
+                                    aOfferRewardRatio.push({
+                                        "PainterId": item.PainterId,
+                                        "RewardGiftId": null, 
+                                        "RewardGiftName": null,
+                                        "RequiredVolume": null,
+                                        "RequiredPoints": Number(item.TargetedPoints),
+                                        "RewardPoints": null,
+                                        "RewardCash": Number(item.RewardAmount),
+                                        "RewardRatioType": item.OfferRewardRatioType,
+                                        "OfferRewardRatioProduct": item.OfferRewardRatioProduct,
+                                    })
+                                } else if (item.OfferRewardRatioType === 2) {
+                                    aOfferRewardRatio.push({
+                                        "PainterId": item.PainterId,
+                                        "RewardGiftId": null, 
+                                        "RewardGiftName": null,
+                                        "RequiredVolume": null,
+                                        "RequiredPoints": Number(item.TargetedPoints),
+                                        "RewardPoints": null,
+                                        "RewardCash": Number(item.RewardAmount),
+                                        "RewardRatioType": item.OfferRewardRatioType,
+                                        "OfferRewardRatioPack": item.OfferRewardRatioPack
+                                    })
+                                }
+                            }
+                        })
+
+
+                        oView.getModel("oModelView").setProperty("/OfferRewardRatio", aOfferRewardRatio);
                         that.onpressfragProduct(itemModel);
                         // that.getView().byId("idOfferFileUploaderCSV").setValue("");
                     }
@@ -322,7 +356,7 @@ sap.ui.define(
             },
 
             onpressfrag: function (itemModel) {
-               
+
                 this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
                 oView.getModel("oModelControl").setProperty("/ofragmentModel", itemModel);
@@ -5119,6 +5153,7 @@ sap.ui.define(
                 var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
                 var aFinalArray = [];
                 //if (bRewardSelected === 0) {
+                if(sOfferType !== 2) {
                 var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
                     return Object.assign({}, a);
                 });
@@ -5190,6 +5225,7 @@ sap.ui.define(
                 });
 
                 oPayLoad["OfferRewardRatio"] = aItem;
+            }
                 promise.resolve(oPayLoad);
                 return promise;
                 //}

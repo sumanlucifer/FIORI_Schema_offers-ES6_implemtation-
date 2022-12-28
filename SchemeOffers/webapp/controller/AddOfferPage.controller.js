@@ -472,12 +472,9 @@ sap.ui.define(
                 var oWizardView = oView.byId("wizardViewBranching");
                 var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                 var bFlagValidate = oValidate.validate(oSteps, true);
-                //// commented by deepanjali///// 
-                // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                 var bFileFlag = false;
-                // commented by deepanjali for targeted offer type start
-                // var aTableValidation = this._CheckTableValidation();
-                  // commented by deepanjali for targeted offer type end
+                var aTableValidation = this._CheckTableValidation();
                 var aTableBonusValidation = this._CheckTableBonusValidation()
                 var bTableCondition1 = this._CheckTableCondition1();
                 var bTableCondition2 = this._CheckTableCondition2();
@@ -490,20 +487,17 @@ sap.ui.define(
                     return;
                 }
                 //check if it has file
-                /// commented by deepanjali
-                // if (sFile !== undefined) {
-                //     bFileFlag = true;
-                // }
-                // if (!bFileFlag) {
-                //     //MessageToast.show("Kindly upload an image to continue.");
-                //     //return
-                // }
-                  // commented by deepanjali for targeted offer type start
-                // if (!aTableValidation[0]) {
-                //     MessageToast.show(aTableValidation[1]);
-                //     return;
-                // }
-                  // commented by deepanjali for targeted offer type end
+                if (sFile !== undefined) {
+                    bFileFlag = true;
+                }
+                if (!bFileFlag) {
+                    MessageToast.show("Kindly upload an image to continue.");
+                    return
+                }
+                if (!aTableValidation[0]) {
+                    MessageToast.show(aTableValidation[1]);
+                    return;
+                }
                 if (!aTableBonusValidation[0]) {
                     MessageToast.show(aTableBonusValidation[1]);
                     return;
