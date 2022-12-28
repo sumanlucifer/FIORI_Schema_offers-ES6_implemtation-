@@ -472,8 +472,7 @@ sap.ui.define(
                 var oWizardView = oView.byId("wizardViewBranching");
                 var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                 var bFlagValidate = oValidate.validate(oSteps, true);
-                //// commented by deepanjali///// 
-                // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                 var bFileFlag = false;
                 var aTableValidation = this._CheckTableValidation();
                 var aTableBonusValidation = this._CheckTableBonusValidation()
@@ -488,14 +487,13 @@ sap.ui.define(
                     return;
                 }
                 //check if it has file
-                /// commented by deepanjali
-                // if (sFile !== undefined) {
-                //     bFileFlag = true;
-                // }
-                // if (!bFileFlag) {
-                //     //MessageToast.show("Kindly upload an image to continue.");
-                //     //return
-                // }
+                if (sFile !== undefined) {
+                    bFileFlag = true;
+                }
+                if (!bFileFlag) {
+                    MessageToast.show("Kindly upload an image to continue.");
+                    return
+                }
                 if (!aTableValidation[0]) {
                     MessageToast.show(aTableValidation[1]);
                     return;
@@ -538,7 +536,7 @@ sap.ui.define(
                 // this.getView().byId("startDate").setMinDate(new Date());
 
             },
-
+          
             _postDataToSave: function (bFileFlag) {
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7, c8;
                 var othat = this;
@@ -571,6 +569,7 @@ sap.ui.define(
                                                         c7 = othat._uploadBanner(oData);
                                                         othat._uploadPhamplet(oData);
                                                     }).then(function (oData) {
+                                                        // othat.uploadTrigger();
                                                         // c8 = othat._uploadPhamplet(oData);
 
                                                     })
