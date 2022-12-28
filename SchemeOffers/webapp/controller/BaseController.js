@@ -142,23 +142,34 @@ sap.ui.define(
             onFileUploadChangeCSV: function (oEvent) {
 
                 //console.log(oEvent);
-                var oFileUploder = oEvent.getSource();
-                if (oEvent.getParameter("newValue")) {
-                    this.onUploadApplProduct();
-                }
+                this.onUploadApplProduct();
+                // var oFileUploder = oEvent.getSource();
+                // if (oEvent.getParameter("newValue")) {
+
+                // }
             },
             // calling target offer upload csv api
             onUploadApplProduct: function () {
 
 
-                var that = this;
+
                 var fU = this.getView().byId("idOfferFileUploaderCSV");
                 // var domRef = fU.getFocusDomRef();
                 // var file = domRef.files[0];
                 var domRef = fU.oFileUpload;
                 var file = domRef.files[0];
+
+                // this.getView().getModel("oModelControl").setProperty("/oTargtUpodfile", file);
+                this.uploadTrigger(file);
+
+
+            },
+
+            uploadTrigger: function (file) {
+                var that = this;
                 var oView = that.getView();
                 var dataModel = oView.getModel("oModelControl");
+                var oFile = dataModel.getProperty("/oTargtUpodfile");
                 var settings = {
                     url: "/KNPL_PAINTER_API/api/v2/odata.svc/PainterTargetPointsSet(0)/$value",
                     data: file,
@@ -168,16 +179,16 @@ sap.ui.define(
                     processData: false,
                     statusCode: {
                         206: function (result) {
-                            that._SuccessPainter(result, 206);
+                            that._SuccessProduct(result, 206);
                         },
                         200: function (result) {
-                            that._SuccessPainter(result, 200);
+                            that._SuccessProduct(result, 200);
                         },
                         202: function (result) {
-                            that._SuccessPainter(result, 202);
+                            that._SuccessProduct(result, 202);
                         },
                         400: function (result) {
-                            that._SuccessPainter(result, 400);
+                            that._SuccessProduct(result, 400);
                         }
                     },
                     error: function (error) {
@@ -185,12 +196,65 @@ sap.ui.define(
                     }
                 };
                 $.ajax(settings);
+            },
 
+            _SuccessProduct: function (result, oStatus) {
+                var that = this;
+                var oView = that.getView();
+                var oModelView = oView.getModel("oModelControl");
+                oModelView.setProperty("/busy", false);
+                var aPainters = [];
+                if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
+                    if (result.PainterTargetPointsUploadedData.length == 0) {
+                        MessageToast.show("MSG_NO_RECORD_FOUND_IN_UPLOADED_FILE");
+                      
+                    }
+                    else {
+                        var selectedItems = result.PainterTargetPointsUploadedData;
+                        var itemModel = selectedItems.map(function (item) {
+                            return {
+                                errorMessage: item.errorMessage,
+                                mobileNumber: item.mobileNumber,
+                                productName: item.productName,
+                                rowNo: item.rowNo,
+                                uploadStatus: item.uploadStatus
+                            };
+                        });
+                        that.onpressfragProduct(itemModel);
+                        // that.getView().byId("idOfferFileUploaderCSV").setValue("");
+                    }
+
+
+                }
+            },
+            onpressfragProduct: function (itemModel) {
+                // this._PainterMultiDialoge = this.getView().byId("Painters1");
+                var oView = this.getView();
+                oView.getModel("oModelControl").setProperty("/ofragmentProModel", itemModel);
+                return new Promise(function (resolve, reject) {
+                    if (!this._CsvProductDialoge) {
+                        Fragment.load({
+                            id: oView.getId(),
+                            name: "com.knpl.pragati.SchemeOffers.view.fragment.UploadCsvProduct",
+                            controller: this,
+                        }).then(
+                            function (oDialog) {
+                                this._CsvProductDialoge = oDialog;
+                                oView.addDependent(this._CsvProductDialoge);
+                                this._CsvProductDialoge.open();
+                                resolve();
+                            }.bind(this)
+                        );
+                    } else {
+                        this._CsvProductDialoge.open();
+                        resolve();
+                    }
+                }.bind(this));
             },
             onUploadComplete: function (oEvent) { },
             /// calling upload api///
             onUploadPainter1: function () {
-            
+
                 var that = this;
                 var fU = this.getView().byId("idOfferFileUploader");
                 // var domRef = fU.getFocusDomRef();
@@ -231,6 +295,7 @@ sap.ui.define(
                 var that = this;
                 var oView = that.getView();
                 var oModelView = oView.getModel("oModelControl");
+
                 oModelView.setProperty("/busy", false);
                 var aPainters = [];
                 if (oStatus === 200 || oStatus === 202 || oStatus === 206) {
@@ -255,12 +320,9 @@ sap.ui.define(
                     //         .setProperty("/MultiCombo/Painters", itemModel);
                 }
             },
-            _Error: function (error) {
-                var oView = this.getView();
-                oView.getModel("oModelControl").setProperty("/busy", false);
-                MessageToast.show(error.responseText.toString());
-            },
+
             onpressfrag: function (itemModel) {
+               
                 this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
                 oView.getModel("oModelControl").setProperty("/ofragmentModel", itemModel);
@@ -284,6 +346,13 @@ sap.ui.define(
                     }
                 }.bind(this));
             },
+
+            _Error: function (error) {
+                var oView = this.getView();
+                oView.getModel("oModelControl").setProperty("/busy", false);
+                MessageToast.show(error.responseText.toString());
+            },
+
             onSelection: function (oeve) {
                 var oView = this.getView();
                 var sValue = oeve.getSource().getSelectedKey();
@@ -329,6 +398,73 @@ sap.ui.define(
                 //console.log(itemModel);
                 this._CsvDialoge.close();
             },
+            //  added by deepanjali for product start for target offer type start
+            onSaveUploadProduct: function () {
+
+                this._CsvProductDialoge.close();
+            },
+
+            onDataExportProduct: function (oEvent) {
+                var othat = this;
+                var oExport = new Export({
+                    // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                    exportType: new ExportTypeCSV({
+                        separatorChar: "\t",
+                        mimeType: "application/vnd.ms-excel",
+                        charset: "utf-8",
+                        fileExtension: "xls",
+                    }),
+                    // Pass in the model created above
+                    models: othat.getView().getModel("oModelControl"),
+                    // binding information for the rows aggregation
+                    rows: {
+                        path: "/ofragmentProModel"
+                    },
+                    // column definitions with column name and binding info for the content
+                    columns: [{
+                        name: "Row",
+                        template: {
+                            content: "{rowNo}"
+                        }
+                    },
+                    {
+                        name: "Name",
+                        template: {
+                            content: "{productName}"
+                        }
+                    }, {
+                        name: "Mobile",
+                        template: {
+                            content: "{mobileNumber}"
+                        }
+                    }, {
+                        name: "Message",
+                        template: {
+                            content: {
+                                parts: ["errorMessage"]
+
+                            }
+                        }
+                    },
+                    {
+                        name: "Status",
+                        template: {
+                            content: {
+                                parts: ["uploadStatus"],
+                                formatter: formatter.UploadStatus
+                            }
+                        }
+                    }
+                    ]
+                });
+                // download exported file
+                oExport.saveFile().catch(function (oError) {
+                    MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                }).then(function () {
+                    oExport.destroy();
+                });
+            },
+            //  added by deepanjali for product start for target offer type end
             onDataExport: function (oEvent) {
                 var othat = this;
                 var oExport = new Export({
@@ -5938,6 +6074,8 @@ sap.ui.define(
                     //         .setProperty("/MultiCombo/Painters", itemModel);
                 }
             },
+
+
             onpressfrag2: function (itemModel) {
                 //this._PainterMultiDialoge = this.getView().byId("Painters1");
                 var oView = this.getView();
