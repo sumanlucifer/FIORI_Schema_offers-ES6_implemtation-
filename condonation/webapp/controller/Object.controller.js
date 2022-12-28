@@ -85,7 +85,7 @@ sap.ui.define([
                 ResolutionType:2,
                 ComplaintSubTypeId: 1,
                 ComplaintTypeId: 1,
-                ComplaninSubtypeCode: 1,
+                ComplaintSubtypeCode: 1,
                 LanguageCode: "EN",
                 ComplaintTypeCode: 1,
                 PainterComplainProducts: [{
