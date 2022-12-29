@@ -90,7 +90,7 @@ sap.ui.define(
                     // added by deepanjali start
                     LanguageCode: "",
                     offerTypeVisibility: true,
-                    IsVisibleSlabCreation:true,
+                    IsVisibleSlabCreation: true,
                     ApbleProductsTargetVisible: false,
                     // languageDDVisible: true,
                     // added by deepanjali end
@@ -327,7 +327,7 @@ sap.ui.define(
                     // added by deepanjali end
                     EndDate: null,
                     IsSpecificZone: false,
-                
+
                     IsSpecificDivision: false,
                     IsSpecificDepot: false,
                     IsSpecificApplicableProductCategory: false,
@@ -474,64 +474,66 @@ sap.ui.define(
                 var oWizardView = oView.byId("wizardViewBranching");
                 var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                 var bFlagValidate = oValidate.validate(oSteps, true);
-                // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
-                // var bFileFlag = false;
-                if(oModelData.OfferType.Id !== 2) //Validate reward ratio table if Offer type not eq Targeted offer
+
+                if (oModelData.OfferType.Id !== 2) { //Validate reward ratio table if Offer type not eq Targeted offer
+
+                    var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                    var bFileFlag = false;
                     var aTableValidation = this._CheckTableValidation();
-                var aTableBonusValidation = this._CheckTableBonusValidation()
-                var bTableCondition1 = this._CheckTableCondition1();
-                var bTableCondition2 = this._CheckTableCondition2();
-                var bTableCondition3 = this._CheckTableCondition3();
-                var bTableCondition4 = this._CheckTableCondition4();
-                var bTableCondition5 = this._CheckTableCondition5();
-                var bTableCondition6 = this._CheckTableCondition6();
-                if (bFlagValidate == false) {
-                    MessageToast.show("Kindly Input All the Mandatory(*) fields.");
-                    return;
-                }
-                //check if it has file
-                // if (sFile !== undefined) {
-                //     bFileFlag = true;
-                // }
-                // if (!bFileFlag) {
-                //     MessageToast.show("Kindly upload an image to continue.");
-                //     return
-                // }
-                if (!aTableValidation[0]) {
-                    MessageToast.show(aTableValidation[1]);
-                    return;
-                }
-                if (!aTableBonusValidation[0]) {
-                    MessageToast.show(aTableBonusValidation[1]);
-                    return;
-                }
-                if (!bTableCondition1[0]) {
-                    MessageToast.show(bTableCondition1[1]);
-                    return;
-                }
-                if (!bTableCondition2[0]) {
-                    MessageToast.show(bTableCondition2[1]);
-                    return;
-                }
-                if (!bTableCondition3[0]) {
-                    MessageToast.show(bTableCondition3[1]);
-                    return;
-                }
-                if (!bTableCondition4[0]) {
-                    MessageToast.show(bTableCondition4[1]);
-                    return;
-                }
-                if (!bTableCondition5[0]) {
-                    MessageToast.show(bTableCondition5[1]);
-                    return;
-                }
-                if (!bTableCondition6[0]) {
-                    MessageToast.show(bTableCondition6[1]);
-                    return;
-                }
+                    var aTableBonusValidation = this._CheckTableBonusValidation()
+                    var bTableCondition1 = this._CheckTableCondition1();
+                    var bTableCondition2 = this._CheckTableCondition2();
+                    var bTableCondition3 = this._CheckTableCondition3();
+                    var bTableCondition4 = this._CheckTableCondition4();
+                    var bTableCondition5 = this._CheckTableCondition5();
+                    var bTableCondition6 = this._CheckTableCondition6();
+                    if (bFlagValidate == false) {
+                        MessageToast.show("Kindly Input All the Mandatory(*) fields.");
+                        return;
+                    }
+                    //check if it has file
+                    if (sFile !== undefined) {
+                        bFileFlag = true;
+                    }
+                    if (!bFileFlag) {
+                        MessageToast.show("Kindly upload an image to continue.");
+                        return
+                    }
+                    if (!aTableValidation[0]) {
+                        MessageToast.show(aTableValidation[1]);
+                        return;
+                    }
+                    if (!aTableBonusValidation[0]) {
+                        MessageToast.show(aTableBonusValidation[1]);
+                        return;
+                    }
+                    if (!bTableCondition1[0]) {
+                        MessageToast.show(bTableCondition1[1]);
+                        return;
+                    }
+                    if (!bTableCondition2[0]) {
+                        MessageToast.show(bTableCondition2[1]);
+                        return;
+                    }
+                    if (!bTableCondition3[0]) {
+                        MessageToast.show(bTableCondition3[1]);
+                        return;
+                    }
+                    if (!bTableCondition4[0]) {
+                        MessageToast.show(bTableCondition4[1]);
+                        return;
+                    }
+                    if (!bTableCondition5[0]) {
+                        MessageToast.show(bTableCondition5[1]);
+                        return;
+                    }
+                    if (!bTableCondition6[0]) {
+                        MessageToast.show(bTableCondition6[1]);
+                        return;
+                    }
 
+                }
                 //validate the data
-
                 this._postDataToSave(bFileFlag);
             },
 
@@ -539,7 +541,7 @@ sap.ui.define(
                 // this.getView().byId("startDate").setMinDate(new Date());
 
             },
-          
+
             _postDataToSave: function (bFileFlag) {
                 var c1, c1B, c2, c3, c4, c5, c5A, c5A1, c5A2, c6, c7, c8;
                 var othat = this;
