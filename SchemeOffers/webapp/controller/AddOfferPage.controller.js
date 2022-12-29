@@ -472,8 +472,8 @@ sap.ui.define(
                 var oWizardView = oView.byId("wizardViewBranching");
                 var oSteps = oWizardView.byId("CreateProductWizard").getSteps();
                 var bFlagValidate = oValidate.validate(oSteps, true);
-                var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
-                var bFileFlag = false;
+                // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                // var bFileFlag = false;
                 var aTableValidation = this._CheckTableValidation();
                 var aTableBonusValidation = this._CheckTableBonusValidation()
                 var bTableCondition1 = this._CheckTableCondition1();
@@ -487,13 +487,13 @@ sap.ui.define(
                     return;
                 }
                 //check if it has file
-                if (sFile !== undefined) {
-                    bFileFlag = true;
-                }
-                if (!bFileFlag) {
-                    MessageToast.show("Kindly upload an image to continue.");
-                    return
-                }
+                // if (sFile !== undefined) {
+                //     bFileFlag = true;
+                // }
+                // if (!bFileFlag) {
+                //     MessageToast.show("Kindly upload an image to continue.");
+                //     return
+                // }
                 if (!aTableValidation[0]) {
                     MessageToast.show(aTableValidation[1]);
                     return;
