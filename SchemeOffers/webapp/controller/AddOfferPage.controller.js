@@ -467,6 +467,8 @@ sap.ui.define(
             },
             onPressSave: function () {
                 var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+                var oModelData = oModel.getData();
                 var oValidate = new Validator();
                 var oForm = oView.byId("vBoxForms");
                 var oWizardView = oView.byId("wizardViewBranching");
@@ -474,7 +476,8 @@ sap.ui.define(
                 var bFlagValidate = oValidate.validate(oSteps, true);
                 // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                 // var bFileFlag = false;
-                var aTableValidation = this._CheckTableValidation();
+                if(oModelData.OfferType.Id !== 2) //Validate reward ratio table if Offer type not eq Targeted offer
+                    var aTableValidation = this._CheckTableValidation();
                 var aTableBonusValidation = this._CheckTableBonusValidation()
                 var bTableCondition1 = this._CheckTableCondition1();
                 var bTableCondition2 = this._CheckTableCondition2();

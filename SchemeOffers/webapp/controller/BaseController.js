@@ -4387,13 +4387,15 @@ sap.ui.define(
                 var oModel = oView.getModel("oModelControl");
                 var oModelData = oModel.getData();
                 var oData = oModelData["Table"]["Table2"];
-                if (oModelData["Table"]["Table2"].length == 0) {
+                //Check reward ratio table empty 
+                if (oModelData["Table"]["Table2"].length == 0 ) { 
                     return [
                         false,
                         "Kindly Enter the data in the Reward Ratio Table to Continue.",
                     ];
                 }
                 var bFlag = true;
+                //Check reward ratio table in editable state
                 oModelData["Table"]["Table2"].forEach(function (a) {
                     if (a.hasOwnProperty("editable")) {
                         if (a["editable"]) {
