@@ -477,7 +477,7 @@ sap.ui.define(
 
                 if (oModelData.OfferType.Id !== 2) { //Validate reward ratio table if Offer type not eq Targeted offer
 
-                    var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
+                    // var sFile = oWizardView.byId("idFileUpload").oFileUpload.files[0];
                     var bFileFlag = false;
                     var aTableValidation = this._CheckTableValidation();
                     var aTableBonusValidation = this._CheckTableBonusValidation()
@@ -492,13 +492,13 @@ sap.ui.define(
                         return;
                     }
                     //check if it has file
-                    if (sFile !== undefined) {
-                        bFileFlag = true;
-                    }
-                    if (!bFileFlag) {
-                        MessageToast.show("Kindly upload an image to continue.");
-                        return
-                    }
+                    // if (sFile !== undefined) {
+                    //     bFileFlag = true;
+                    // }
+                    // if (!bFileFlag) {
+                    //     MessageToast.show("Kindly upload an image to continue.");
+                    //     return
+                    // }
                     if (!aTableValidation[0]) {
                         MessageToast.show(aTableValidation[1]);
                         return;
