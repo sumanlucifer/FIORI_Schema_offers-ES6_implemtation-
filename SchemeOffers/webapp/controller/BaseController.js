@@ -150,9 +150,6 @@ sap.ui.define(
             },
             // calling target offer upload csv api
             onUploadApplProduct: function () {
-
-
-
                 var fU = this.getView().byId("idOfferFileUploaderCSV");
                 // var domRef = fU.getFocusDomRef();
                 // var file = domRef.files[0];
@@ -199,6 +196,7 @@ sap.ui.define(
             },
 
             _SuccessProduct: function (result, oStatus) {
+
                 var that = this;
                 var oView = that.getView();
                 var oModelView = oView.getModel("oModelControl");
@@ -219,7 +217,7 @@ sap.ui.define(
                             itemModel.push({
                                 errorMessage: item.ErrorMessage,
                                 mobileNumber: item.PainterMobile,
-                                productName: item.ProductName,
+                                productName: item.ProductName ? item.ProductName : item.PackName,
                                 rowNo: item.RowNumber,
                                 uploadStatus: item.UploadStatus
                             });
@@ -227,7 +225,7 @@ sap.ui.define(
                                 if (item.OfferRewardRatioType === 1) {
                                     aOfferRewardRatio.push({
                                         "PainterId": item.PainterId,
-                                        "RewardGiftId": null, 
+                                        "RewardGiftId": null,
                                         "RewardGiftName": null,
                                         "RequiredVolume": null,
                                         "RequiredPoints": Number(item.TargetedPoints),
@@ -239,7 +237,7 @@ sap.ui.define(
                                 } else if (item.OfferRewardRatioType === 2) {
                                     aOfferRewardRatio.push({
                                         "PainterId": item.PainterId,
-                                        "RewardGiftId": null, 
+                                        "RewardGiftId": null,
                                         "RewardGiftName": null,
                                         "RequiredVolume": null,
                                         "RequiredPoints": Number(item.TargetedPoints),
@@ -1191,6 +1189,85 @@ sap.ui.define(
                     }
                 );
             },
+            onPressRemoveCatalogue: function (sPath, aCatalogue) {
+                var oView = this.getView();
+                var oModel = oView.getModel("oModelControl");
+
+
+                var index = parseInt(sPath[sPath.length - 1]);
+                var delItems = [];
+                var property = this._property;
+
+
+                // var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                //To DO promises for sync
+
+
+
+                for (var i = 0; i <= aCatalogue.length; i++) {
+
+                    if (i == index) {
+                        delItems = aCatalogue[i];
+                        if (delItems.MediaName != null) {
+                            oModel.setProperty("/bBusy", true);
+                            jQuery.ajax({
+                                method: "DELETE",
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + property + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                // data: delItems,
+                                success: function (data) {
+                                    // aCatalogue.splice(i);
+                                    oModel.setProperty("/bBusy", false);
+                                    aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                                    var sMessage = "Banner Deleted!";
+                                    MessageToast.show(sMessage);
+                                    oModel.refresh(true);
+
+                                },
+                                error: function () { },
+                            })
+
+                        }
+                        else {
+                            aCatalogue.splice(i);
+                        }
+                    }
+
+
+                };
+
+                // for (var i = 0; i <= aCatalogue.length; i++) {
+                //     if (i == index) {
+                //         delItems = aCatalogue[i];
+                //         if (delItems.MediaName != null) {
+                //             oModel.setProperty("/bBusy", true);
+                //             jQuery.ajax({
+                //                 method: "DELETE",
+                //                 url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + "OfferSet(" + oId + ")/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
+                //                 cache: false,
+                //                 contentType: false,
+                //                 processData: false,
+                //                 // data: delItems,
+                //                 success: function (data) {
+                //                     // aCatalogue.splice(i);
+                //                     oModel.setProperty("/bBusy", false);
+                //                     aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
+                //                     var sMessage = "Banner Deleted!";
+                //                     MessageToast.show(sMessage);
+                //                     oModel.refresh(true);
+                //                 },
+                //                 error: function () { },
+                //             })
+                //         }
+                //         else {
+                //             aCatalogue.splice(i);
+                //         }
+                //     }
+                // };
+                oModel.refresh(true);
+            },
             onPhampDeleteFile: function (oEvent) {
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -1220,16 +1297,19 @@ sap.ui.define(
                 var oModel = oView.getModel("oModelControl");
                 var index = parseInt(sPath[sPath.length - 1]);
                 var delItems = [];
-                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
+                var property = this._property;
+                // var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
                 //To DO promises for sync
+
                 for (var i = 0; i <= aPamplet.length; i++) {
+
                     if (i == index) {
                         delItems = aPamplet[i];
                         if (delItems.MediaName != null) {
                             oModel.setProperty("/bBusy", true);
                             jQuery.ajax({
                                 method: "DELETE",
-                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + delItems.LanguageCode,
+                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + property + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
                                 cache: false,
                                 contentType: false,
                                 processData: false,
@@ -1241,54 +1321,51 @@ sap.ui.define(
                                     var sMessage = "Pamplet Deleted!";
                                     MessageToast.show(sMessage);
                                     oModel.refresh(true);
+
                                 },
                                 error: function () { },
                             })
+
                         }
                         else {
                             aPamplet.splice(i);
                         }
                     }
+
+
                 };
+
+                // for (var i = 0; i <= aPamplet.length; i++) {
+                //     if (i == index) {
+                //         delItems = aPamplet[i];
+                //         if (delItems.MediaName != null) {
+                //             oModel.setProperty("/bBusy", true);
+                //             jQuery.ajax({
+                //                 method: "DELETE",
+                //                 url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=pamphlet&language_code=" + delItems.LanguageCode,
+                //                 cache: false,
+                //                 contentType: false,
+                //                 processData: false,
+                //                 // data: delItems,
+                //                 success: function (data) {
+                //                     // aCatalogue.splice(i);
+                //                     oModel.setProperty("/bBusy", false);
+                //                     aPamplet.splice(parseInt(sPath[sPath.length - 1]), 1);
+                //                     var sMessage = "Pamplet Deleted!";
+                //                     MessageToast.show(sMessage);
+                //                     oModel.refresh(true);
+                //                 },
+                //                 error: function () { },
+                //             })
+                //         }
+                //         else {
+                //             aPamplet.splice(i);
+                //         }
+                //     }
+                // };
                 oModel.refresh(true);
             },
-            onPressRemoveCatalogue: function (sPath, aCatalogue) {
-                var oView = this.getView();
-                var oModel = oView.getModel("oModelControl");
-                var index = parseInt(sPath[sPath.length - 1]);
-                var delItems = [];
-                var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
-                //To DO promises for sync
-                for (var i = 0; i <= aCatalogue.length; i++) {
-                    if (i == index) {
-                        delItems = aCatalogue[i];
-                        if (delItems.MediaName != null) {
-                            oModel.setProperty("/bBusy", true);
-                            jQuery.ajax({
-                                method: "DELETE",
-                                url: "/KNPL_PAINTER_API/api/v2/odata.svc/" + oProp + "/$value?doc_type=banner&language_code=" + delItems.LanguageCode,
-                                cache: false,
-                                contentType: false,
-                                processData: false,
-                                // data: delItems,
-                                success: function (data) {
-                                    // aCatalogue.splice(i);
-                                    oModel.setProperty("/bBusy", false);
-                                    aCatalogue.splice(parseInt(sPath[sPath.length - 1]), 1);
-                                    var sMessage = "Banner Deleted!";
-                                    MessageToast.show(sMessage);
-                                    oModel.refresh(true);
-                                },
-                                error: function () { },
-                            })
-                        }
-                        else {
-                            aCatalogue.splice(i);
-                        }
-                    }
-                };
-                oModel.refresh(true);
-            },
+
             openPdf: function (oEvent) {
                 var oView = this.getView();
                 var oProp = oView.getModel("oModelControl3").getProperty("/bindProp");
@@ -3565,9 +3642,33 @@ sap.ui.define(
                     var aNewArray;
                     var aRemovedTokens = oEvent.getParameter("removedTokens");
                     var aRemovedKeys = [];
+                    var aRemovedText = [];
                     aRemovedTokens.forEach(function (item) {
                         aRemovedKeys.push(item.getKey());
+                        aRemovedText.push(item.getText());
                     });
+                    // added by Deepanjali for on pack deletion slab  table data gets updated
+                    var sDeletedPackToken = aRemovedText.toString();
+                    var aSlabTable = oModel.getProperty("/Table/Table2"),
+
+                        aSlabTable = aSlabTable.map(function (item) {
+                            return {
+                                Id: item.Id,
+                                ProductName: item.ProductName,
+                                ProductCode: item.ProductCode.split(",").filter(o2 => sDeletedPackToken !== o2).toString(),
+                                RequiredPoints: item.RequiredPoints,
+                                RequiredVolume: item.RequiredVolume,
+                                RewardCash: item.RewardCash,
+                                RewardGiftId: item.RewardGiftId,
+                                RewardGiftName: item.RewardGiftName,
+                                RewardPoints: item.RewardPoints,
+                                SKUCode: item.SKUCode,
+                                editable: item.editable,
+                            };
+                        });
+
+                    oModel.setProperty("/Table/Table2", aSlabTable);
+
                     aNewArray = aArray.filter(function (item) {
                         return aRemovedKeys.indexOf(item["Id"]) < 0;
                     });
@@ -3604,24 +3705,14 @@ sap.ui.define(
                         controller: this,
                     }).then(
                         function (oValueHelpDialog) {
-                            // oValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
-                            //     if (oEvent.key === "Escape") {
-                            //         oEvent.stopPropagation();
-                            //         oEvent.preventDefault();
-                            //     }
-                            // });
+
                             this._PackValueHelpDialog = oValueHelpDialog;
                             this.getView().addDependent(this._PackValueHelpDialog);
                             this._OpenPackValueHelp(sParam1);
                         }.bind(this)
                     );
                 } else {
-                    // this._PackValueHelpDialog.attachBrowserEvent("keydown", function(oEvent) {
-                    //     if (oEvent.key === "Escape") {
-                    //         oEvent.stopPropagation();
-                    //         oEvent.preventDefault();
-                    //     }
-                    // });
+
                     this._OpenPackValueHelp(sParam1);
                 }
             },
@@ -3728,12 +3819,7 @@ sap.ui.define(
                 }
             },
             _handlePackValueHelpConfirm: function (oEvent) {
-                // this._PackValueHelpDialog._dialog.attachBrowserEvent("click", function(oEvent) {
-                //     if (oEvent) {
-                //         oEvent.stopPropagation();
-                //         oEvent.preventDefault();
-                //     }
-                // });
+
                 var oSelected = oEvent.getParameter("selectedContexts");
                 var oView = this.getView();
                 var oModel = oView.getModel("oModelControl");
@@ -3785,19 +3871,7 @@ sap.ui.define(
                             editable: true,
                         };
                     });
-                    // var packItemModel = aSelectedPackData.map(function (item) {
-                    //     return {
-                    //         Name: item.Name,
-                    //         Id: item.Id,
-                    //         RewardGiftId: null,
-                    //         RewardGiftName: "",
-                    //         RequiredVolume: "",
-                    //         RequiredPoints: "",
-                    //         RewardPoints: "",
-                    //         RewardCash: "",
-                    //         editable: true,
-                    //     };
-                    // });
+
                     var compareTwoArrayOfObjects = (
                         aExistingSlab,
                         aProds
@@ -3813,9 +3887,7 @@ sap.ui.define(
                         );
                     };
                     if (compareTwoArrayOfObjects(aExistingSlab, aProds) === false) {
-                        // MessageToast.show(
-                        //     "Please select all packs for specific products."
-                        // )
+
                         oModel.setProperty("/AppPacksValueState", "Error");
                         oModel.setProperty("/AppPacksValueStateText", "Please select all packs for specific products.");
                         oModel.setProperty("/MultiCombo/AppPacks1", []);
@@ -4228,11 +4300,7 @@ sap.ui.define(
                         return;
                     }
                 }
-                // if (oStartDate < new Date().setHours(0, 0, 0, 0)) {
-                //     MessageToast.show("Kindly enter a date greater than current date");
-                //     oModelControl.setProperty(sPath + "/StartDate", null);
-                //     return;
-                // }
+
             },
             onEndDateBRRChange: function (oEvent) {
                 var oView = this.getView();
@@ -4257,11 +4325,7 @@ sap.ui.define(
                         return;
                     }
                 }
-                // if (oEndDate < new Date().setHours(0, 0, 0, 0)) {
-                //     MessageToast.show("Kindly enter a date greater than current date");
-                //     oModelControl.setProperty(sPath + "/EndDate", null);
-                //     return;
-                // }
+
             },
             _propertyToBlank: function (aArray, aModel2) {
                 var aProp = aArray;
@@ -4388,7 +4452,7 @@ sap.ui.define(
                 var oModelData = oModel.getData();
                 var oData = oModelData["Table"]["Table2"];
                 //Check reward ratio table empty 
-                if (oModelData["Table"]["Table2"].length == 0 ) { 
+                if (oModelData["Table"]["Table2"].length == 0) {
                     return [
                         false,
                         "Kindly Enter the data in the Reward Ratio Table to Continue.",
@@ -5155,141 +5219,86 @@ sap.ui.define(
                 var aPackData = oModel.getProperty("/MultiCombo/AppPacks1");
                 var aFinalArray = [];
                 //if (bRewardSelected === 0) {
-                if(sOfferType !== 2) {
-                var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
-                    return Object.assign({}, a);
-                });
-                var aCheckProp = [
-                    "RequiredVolume",
-                    "RequiredPoints",
-                    "RewardPoints",
-                    "RewardGiftName",
-                    "RewardCash",
-                ];
-                aFinalArray = oDataTbl.filter(function (ele) {
-                    for (var a in aCheckProp) {
-                        if (ele[aCheckProp[a]] === "") {
-                            ele[aCheckProp[a]] = null;
-                        }
-                        if (aCheckProp[a] === "RequiredVolume") {
-                            if (ele[aCheckProp[a]]) {
-                                ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                if (sOfferType !== 2) {
+                    var oDataTbl = oModel.getProperty("/Table/Table2").map(function (a) {
+                        return Object.assign({}, a);
+                    });
+                    var aCheckProp = [
+                        "RequiredVolume",
+                        "RequiredPoints",
+                        "RewardPoints",
+                        "RewardGiftName",
+                        "RewardCash",
+                    ];
+                    aFinalArray = oDataTbl.filter(function (ele) {
+                        for (var a in aCheckProp) {
+                            if (ele[aCheckProp[a]] === "") {
+                                ele[aCheckProp[a]] = null;
+                            }
+                            if (aCheckProp[a] === "RequiredVolume") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                }
+                            }
+                            if (aCheckProp[a] === "RequiredPoints") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                }
+                            }
+                            if (aCheckProp[a] === "RewardPoints") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                }
+                            }
+                            if (aCheckProp[a] === "RewardCash") {
+                                if (ele[aCheckProp[a]]) {
+                                    ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
+                                }
                             }
                         }
-                        if (aCheckProp[a] === "RequiredPoints") {
-                            if (ele[aCheckProp[a]]) {
-                                ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                            }
-                        }
-                        if (aCheckProp[a] === "RewardPoints") {
-                            if (ele[aCheckProp[a]]) {
-                                ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                            }
-                        }
-                        if (aCheckProp[a] === "RewardCash") {
-                            if (ele[aCheckProp[a]]) {
-                                ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                            }
-                        }
-                    }
-                    delete ele["editable"];
-                    delete ele["ProductName"];
-                    ele["ProductCode"] = ele["Id"];
+                        delete ele["editable"];
+                        delete ele["ProductName"];
+                        ele["ProductCode"] = ele["Id"];
 
-                    delete ele["Id"];
-                    return ele;
-                });
-                var sCheck = (sSelectedProd === 1 && sSelectedPack === 1) ? true : false;
-                var sProdSlabofferRewrdRatio = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
-                var sRewardRatio = (sOfferType !== 7) ? 0 : sProdSlabofferRewrdRatio;
-                var aItem = aFinalArray;
-                aItem = aItem.map(function (item) {
+                        delete ele["Id"];
+                        return ele;
+                    });
+                    var sCheck = (sSelectedProd === 1 && sSelectedPack === 1) ? true : false;
+                    var sProdSlabofferRewrdRatio = (sSelectedProd === 1 && sSelectedPack === 1) ? 2 : 1;
+                    var sRewardRatio = (sOfferType !== 7) ? 0 : sProdSlabofferRewrdRatio;
+                    var aItem = aFinalArray;
+                    aItem = aItem.map(function (item) {
 
-                    return {
-                        RewardGiftId: item.RewardGiftId,
-                        RewardGiftName: item.RewardGiftName,
-                        RequiredVolume: item.RequiredVolume,
-                        RequiredPoints: item.RequiredPoints,
-                        RewardPoints: item.RewardPoints,
-                        RewardCash: item.RewardCash,
-                        RewardRatioType: sRewardRatio,
-                        OfferRewardRatioProduct: (sOfferType === 7) ? [
-                            {
-                                ProductCode: item.ProductCode,
-                            }
-                        ] : [],
-                        // adding below property based on multiplepack specific condition
-                        ...(sCheck && {
-                            OfferRewardRatioPack: (sOfferType === 7) ?
-                                item.SKUCode.split(",").map(function (item) { return { SKUCode: item } }) : []
-                        })
-                    }
-                });
+                        return {
+                            RewardGiftId: item.RewardGiftId,
+                            RewardGiftName: item.RewardGiftName,
+                            RequiredVolume: item.RequiredVolume,
+                            RequiredPoints: item.RequiredPoints,
+                            RewardPoints: item.RewardPoints,
+                            RewardCash: item.RewardCash,
+                            RewardRatioType: sRewardRatio,
+                            OfferRewardRatioProduct: (sOfferType === 7) ? [
+                                {
+                                    ProductCode: item.ProductCode,
+                                }
+                            ] : [],
+                            // adding below property based on multiplepack specific condition
+                            ...(sCheck && {
+                                OfferRewardRatioPack: (sOfferType === 7) ?
+                                    item.SKUCode.split(",").map(function (item) { return { SKUCode: item } }) : []
+                            })
+                        }
+                    });
 
-                oPayLoad["OfferRewardRatio"] = aItem;
-            }
+                    oPayLoad["OfferRewardRatio"] = aItem;
+                }
                 promise.resolve(oPayLoad);
                 return promise;
                 //}
                 // this menas that specific is selected we will check first
                 // if packs all is selected and products data will be displayed
                 var bAllProdSelected = oModel.getProperty("/Rbtn/AppPacks1");
-                // if (bAllProdSelected === 0) {
-                //     var oDataTbl = oModel
-                //         .getProperty("/Table/image.png")
-                //         .map(function (a) {
-                //             return Object.assign({}, a);
-                //         });
-                //     var aCheckProp = [
-                //         "RequiredVolume",
-                //         "RequiredPoints",
-                //         "RewardPoints",
-                //         //"RewardGiftId",
-                //         "RewardCash",
-                //     ];
-                //     aFinalArray = oDataTbl.filter(function (ele) {
-                //         for (var a in aCheckProp) {
-                //             if (ele[aCheckProp[a]] === "") {
-                //                 ele[aCheckProp[a]] = null;
-                //             } else {
-                //                 ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                //             }
-                //         }
-                //         delete ele["editable"]
-                //         return ele;
-                //     });
-                //     oPayLoad["OfferRewardRatio"] = aFinalArray;
-                //     promise.resolve(oPayLoad);
-                //     return promise;
-                // }
-                // if (bAllProdSelected === 1) {
-                //     var oDataTbl = oModel
-                //         .getProperty("/Table/Table2")
-                //         .map(function (a) {
-                //             return Object.assign({}, a);
-                //         });
-                //     var aCheckProp = [
-                //         "RequiredVolume",
-                //         "RequiredPoints",
-                //         "RewardPoints",
-                //         //"RewardGiftId",
-                //         "RewardCash",
-                //     ];
-                //     aFinalArray = oDataTbl.filter(function (ele) {
-                //         for (var a in aCheckProp) {
-                //             if (ele[aCheckProp[a]] === "") {
-                //                 ele[aCheckProp[a]] = null;
-                //             } else {
-                //                 ele[aCheckProp[a]] = parseInt(ele[aCheckProp[a]]);
-                //             }
-                //         }
-                //         delete ele["editable"]
-                //         return ele;
-                //     });
-                //     oPayLoad["OfferRewardRatio"] = aFinalArray;
-                //     promise.resolve(oPayLoad);
-                //     return promise;
-                // }
+
             },
             _CreatePayLoadPart5: function (oPayLoad) {
                 var promise = jQuery.Deferred();
@@ -5670,15 +5679,7 @@ sap.ui.define(
                             }
                         }
                     }
-                    // if (oRewardDt12.length >= sLength) {
-                    //     MessageToast.show(
-                    //         "For the current Offer type we can add only " +
-                    //         sLength +
-                    //         " item(s)."
-                    //     );
-                    //     bFlag = false;
-                    //     return;
-                    // }
+
                     if (bFlag == true) {
                         oRewardDt12.push({
                             editable: true,
@@ -6152,16 +6153,7 @@ sap.ui.define(
                     "OfferDeselectedPainter": []
                 };
                 var xUnique = new Set();
-                // var iGetSelIndices = oView.byId("idPainterDialog").getSelectedIndices();
-                // var selectedData = iGetSelIndices.map(i => fragmentData[i]);
-                // var itemModel = selectedItems.map(function (item) {
-                //     return {
-                //         PainterName: item.PainterName,
-                //         PainterId: item.Id
-                //     };
-                // });
-                // oView.getModel("oModelControl3")
-                //     .setProperty("/ValuehelpDel/Painters", itemModel);
+
                 selectedItems.forEach(function (ele) {
                     if (xUnique.has(ele.Id) == false) {
                         oData["OfferDeselectedPainter"].push({

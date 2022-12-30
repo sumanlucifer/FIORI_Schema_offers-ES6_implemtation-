@@ -140,10 +140,10 @@
                     <cells>
                         <!-- added by deepanjali start -->
                         <VBox>
-                            <Input editable="false" value="{path:'oModelControl>ProductName'}" placeholder="{i18n>placeHolder3}" width="100%" />
+                            <Input tooltip="{oModelControl>ProductName}" editable="false" value="{path:'oModelControl>ProductName'}" placeholder="{i18n>placeHolder3}" width="100%" />
                         </VBox>
                         <VBox>
-                            <Input editable="false" value="{path:'oModelControl>ProductCode'}" placeholder="{i18n>placeHolder3}" width="100%" />
+                            <Input tooltip="{oModelControl>ProductCode}" editable="false" value="{path:'oModelControl>ProductCode'}" placeholder="{i18n>placeHolder3}" width="100%" />
                         </VBox>
                         <!-- added by deepanjali end -->
                         <VBox visible="{= ${oModelView>/InputType}===0 }">
