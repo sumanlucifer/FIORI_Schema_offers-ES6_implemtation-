@@ -399,11 +399,19 @@ sap.ui.define(
             onProPacSelection: function (oEvent) {
                 debugger;
                 var oView = this.getView();
+                var oModelView = this.getView().getModel("oModelView")
                 var oSource = oEvent.getSource();
                 var sKey = oSource.getSelectedIndex();
                 var sPath = oSource.getBinding("selectedIndex").getPath();
                 var sPathArray = sPath.split("/");
                 var oModelControl = oView.getModel("oModelControl");
+                if(sKey === 0) {
+                    oView.getModel("oNameType").setProperty("/Type", "Product Name")
+                    oModelControl.setProperty("/Rbtn/AppPacks1", 0);
+                } else {
+                    oView.getModel("oNameType").setProperty("/Type", "Pack Name");
+                    oModelControl.setProperty("/Rbtn/AppPacks1", 1);
+                }
                 oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
             },
             //  added by deepanjali for targted offer type end 
@@ -4867,7 +4875,7 @@ sap.ui.define(
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
                     IsMultiRewardAllowed: "MultiReward",
-                    IS_SPECIFIC_APPLICABLE_PACK: "MutliProduct",
+                    // IS_SPECIFIC_APPLICABLE_PACK: "MutliProduct",
                     IsSpecificAchieverCount: "AddFlag"
                 };
                 var oModelControl = oView.getModel("oModelControl");

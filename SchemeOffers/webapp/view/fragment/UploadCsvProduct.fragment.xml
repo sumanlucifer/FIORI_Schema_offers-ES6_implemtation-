@@ -13,7 +13,7 @@
                         </Column>
 
                         <Column width="28%">
-                            <Text text="{i18n>PRODUCT_NAME}" />
+                            <Text text="{oNameType>/Type}" />
                         </Column>
                         <Column width="20%">
                             <Text text="{i18n>TARGETED_POINTS}" />

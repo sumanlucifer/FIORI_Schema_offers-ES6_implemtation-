@@ -357,7 +357,7 @@ sap.ui.define(
                     ContributionType: 0, //added for contribution-condition
                     OfferContributionRatio: [],
                     IsMultiRewardAllowed: false,
-                    IS_SPECIFIC_APPLICABLE_PACK: 0, // added by deepanjali for target offer type upload product/pack
+                    // IS_SPECIFIC_APPLICABLE_PACK: 0, // added by deepanjali for target offer type upload product/pack
                     OfferStatus: null,
                     OfferApplicableProductCategory: [],
                     BonusInputType: 0,
@@ -378,6 +378,11 @@ sap.ui.define(
                 oView.setModel(oViewMOdel, "oModelView");
                 oView.setModel(oConrtrolModel, "oModelControl");
 
+                var nameType = {
+                    Type: "Product Name"
+                }
+                var oNameType = new JSONModel(nameType);
+                oView.setModel(oNameType, "oNameType");
                 // adding the fragment
                 this._showFormFragment("ChangeDetail2");
                 //get products data
