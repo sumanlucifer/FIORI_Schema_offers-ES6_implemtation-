@@ -219,6 +219,8 @@ sap.ui.define(
                                 mobileNumber: item.PainterMobile,
                                 productName: item.ProductName ? item.ProductName : item.PackName,
                                 rowNo: item.RowNumber,
+                                TargetedPoints: item.TargetedPoints,
+                                RewardAmount: item.RewardAmount,
                                 uploadStatus: item.UploadStatus
                             });
                             if (item.UploadStatus) {
@@ -393,6 +395,18 @@ sap.ui.define(
                 else
                     oView.getModel("oModelView").setProperty("/IsMultiRewardAllowed", false);
             },
+            //  added by deepanjali for targted offer type start 
+            onProPacSelection: function (oEvent) {
+                debugger;
+                var oView = this.getView();
+                var oSource = oEvent.getSource();
+                var sKey = oSource.getSelectedIndex();
+                var sPath = oSource.getBinding("selectedIndex").getPath();
+                var sPathArray = sPath.split("/");
+                var oModelControl = oView.getModel("oModelControl");
+                oModelControl.setProperty("/Rbtn/" + sPathArray[2], sKey);
+            },
+            //  added by deepanjali for targted offer type end 
             onRbRRDialogAddInfo: function (oEvent) {
                 var oView = this.getView();
                 oView.getModel("oModelControl").setProperty("/Table/Table8", []);
@@ -4127,6 +4141,7 @@ sap.ui.define(
                 }
             },
             onRbAppPainter: function (oEvent) {
+                debugger;
                 var iIndex = oEvent.getSource().getSelectedIndex();
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelView");
@@ -4352,6 +4367,7 @@ sap.ui.define(
                 oModelView.refresh(true);
             },
             _RbtnReset: function (aArray, aModel2 = true) {
+                debugger;
                 var aProp = aArray;
                 var oView = this.getView();
                 var oModelView = oView.getModel("oModelView");
@@ -4609,6 +4625,7 @@ sap.ui.define(
                 oEvent.getSource().getParent().close();
             },
             GetPainterCount: function () {
+                debugger;
                 var oView = this.getView();
                 var oModelC = oView.getModel("oModelControl");
                 var oModelV = oView.getModel("oModelView");
@@ -4850,6 +4867,7 @@ sap.ui.define(
                     IsSpecificBonusPack: "AppPacks4",
                     IsSpecificBonusRewardRatio: "BRewards",
                     IsMultiRewardAllowed: "MultiReward",
+                    IS_SPECIFIC_APPLICABLE_PACK: "MutliProduct",
                     IsSpecificAchieverCount: "AddFlag"
                 };
                 var oModelControl = oView.getModel("oModelControl");

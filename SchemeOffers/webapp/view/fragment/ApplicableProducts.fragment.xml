@@ -113,7 +113,7 @@
                 <f:formElements>
                     <f:FormElement class="sapUiLargeMarginBottom" label="{i18n>uploadtargetpainter}" visible="{oModelControl>/ApbleProductsTargetVisible}">
                         <f:fields>
-                            <RadioButtonGroup columns="2" select="onRbChnageMain1">
+                            <RadioButtonGroup columns="2" selectedIndex="{oModelControl>/Rbtn/MutliProduct}" select="onProPacSelection">
                                 <buttons>
                                     <RadioButton text="{i18n>formLabelProduct}" />
                                     <RadioButton text="{i18n>Pack}" />
@@ -125,10 +125,11 @@
                         <f:fields>
                             <VBox>
                                 <u:FileUploader id="idOfferFileUploaderCSV" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server" uploadComplete="onUploadComplete" />
+                                <HBox>
+                                    <Button text="Upload File" press="onFileUploadChangeCSV" />
 
-                                <Button text="Upload File" press="onFileUploadChangeCSV" />
-
-                                <Button type="Emphasized" text="{i18n>DownloadSample}" press="uplaodCsv" />
+                                    <Button class="sapUiTinyMarginBegin" type="Emphasized" text="{i18n>DownloadSample}" press="uplaodCsv" />
+                                </HBox>
                             </VBox>
                         </f:fields>
                     </f:FormElement>

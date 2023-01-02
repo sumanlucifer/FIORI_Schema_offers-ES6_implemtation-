@@ -197,6 +197,7 @@ sap.ui.define(
                         BrReqPercent: 0,
                         Bns2ReqPercent: 0,
                         MultiReward: 0,
+                        MutliProduct: 0, //added by deepanjali for product/pack target offer type
                         AddFlag: 0
 
 
@@ -356,6 +357,7 @@ sap.ui.define(
                     ContributionType: 0, //added for contribution-condition
                     OfferContributionRatio: [],
                     IsMultiRewardAllowed: false,
+                    IS_SPECIFIC_APPLICABLE_PACK: 0, // added by deepanjali for target offer type upload product/pack
                     OfferStatus: null,
                     OfferApplicableProductCategory: [],
                     BonusInputType: 0,

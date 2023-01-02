@@ -150,6 +150,7 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
             return "NA";
         },
         fmtCheckNull2: function (mParam1) {
+            debugger;
             if (mParam1) {
                 return mParam1;
             }
