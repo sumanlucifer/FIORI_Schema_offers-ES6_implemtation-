@@ -128,7 +128,9 @@
                                 <HBox>
                                     <Button text="Upload File" press="onFileUploadChangeCSV" />
 
-                                    <Button class="sapUiTinyMarginBegin" type="Emphasized" text="{i18n>DownloadSample}" press="uplaodCsv" />
+                                    <!-- <Button class="sapUiTinyMarginBegin" type="Emphasized" text="{i18n>DownloadSample}" press="uplaodCsv" /> -->
+                                    <Button class="sapUiTinyMarginBegin" id="pack" type="Emphasized" text="Sample CSV Pack" press="downloadSampleProPacCsv" />
+                                    <Button class="sapUiTinyMarginBegin" id="product" type="Emphasized" text="Sample CSV product" press="downloadSampleProPacCsv" />
                                 </HBox>
                             </VBox>
                         </f:fields>

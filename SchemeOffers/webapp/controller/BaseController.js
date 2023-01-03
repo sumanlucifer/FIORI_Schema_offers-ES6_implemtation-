@@ -13,7 +13,8 @@ sap.ui.define(
         "com/knpl/pragati/SchemeOffers/controller/Validator",
         "sap/ui/core/util/Export",
         "sap/ui/core/util/ExportTypeCSV",
-        "../model/formatter"
+        "../model/formatter",
+        "sap/ui/export/Spreadsheet"
     ],
     function (
         Controller,
@@ -28,7 +29,8 @@ sap.ui.define(
         Validator,
         Export,
         ExportTypeCSV,
-        formatter
+        formatter,
+        Spreadsheet
     ) {
         "use strict";
         return Controller.extend(
@@ -161,9 +163,84 @@ sap.ui.define(
 
 
             },
+            createColumnConfig: function (result) {
+                result = result.split(',');
+                var aCols = [];
 
-            uploadTrigger: function (file) {
+                result.forEach(element => {
+                    aCols.push({
+                        name: element,
+                    });
+                });
+
+                return aCols;
+            },
+
+            downloadSampleProPacCsv: function (oEvent) {
+                var fType = oEvent.getParameter('id').split('--')[oEvent.getParameter('id').split('--').length - 1]
                 var that = this;
+                var settings = {
+                    url: `/KNPL_PAINTER_API/api/v2/odata.svc/PainterTargetPointsSet(0)/$value?file_type=${fType}`,
+                    method: "GET",
+                    headers: that.getView().getModel().getHeaders(),
+                    contentType: "text/csv",
+                    processData: false,
+                    statusCode: {
+                        200: function (result) {
+
+                            var othat = this;
+                            var oExport = new Export({
+                                // Type that will be used to generate the content. Own ExportType's can be created to support other formats
+                                exportType: new ExportTypeCSV({
+                                    separatorChar: "\t",
+                                    mimeType: "application/vnd.ms-excel",
+                                    charset: "utf-8",
+                                    fileExtension: "xls",
+                                }),
+                                // Pass in the model created above
+                                models: that.getView().getModel("oModelControl"),
+                                // binding information for the rows aggregation
+                                rows: {
+                                    path: result
+                                },
+                                // column definitions with column name and binding info for the content
+                                columns: that.createColumnConfig(result)
+                                                        });
+                            // download exported file
+                            oExport.saveFile().catch(function (oError) {
+                                MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+                            }).then(function () {
+                                oExport.destroy();
+                            });
+
+
+
+                            //     var aCols, aProducts, oSettings, oSheet;
+
+                            //     aCols = that.createColumnConfig(result);
+                            //     aProducts = that.getView().getModel().getProperty('/');
+
+                            //     oSettings = {
+                            //         workbook: { columns: aCols },
+                            //     };
+
+                            //     oSheet = new Spreadsheet(oSettings);
+                            //     oSheet.build()
+                            //         .then(function () {
+                            //             MessageToast.show('Spreadsheet export has finished');
+                            //         })
+                            //         .finally(oSheet.destroy);
+                            }
+                        },
+                        error: function (error) {
+                            that._Error(error);
+                        }
+                    };
+                    $.ajax(settings);
+                },
+
+                    uploadTrigger: function (file) {
+                        var that = this;
                 var oView = that.getView();
                 var dataModel = oView.getModel("oModelControl");
                 var oFile = dataModel.getProperty("/oTargtUpodfile");
@@ -405,7 +482,7 @@ sap.ui.define(
                 var sPath = oSource.getBinding("selectedIndex").getPath();
                 var sPathArray = sPath.split("/");
                 var oModelControl = oView.getModel("oModelControl");
-                if(sKey === 0) {
+                if (sKey === 0) {
                     oView.getModel("oNameType").setProperty("/Type", "Product Name")
                     oModelControl.setProperty("/Rbtn/AppPacks1", 0);
                 } else {
